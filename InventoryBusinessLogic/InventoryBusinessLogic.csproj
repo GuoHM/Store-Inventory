@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CatalogueBusinessLogic.cs" />
+    <Compile Include="EmailBusinessLogic.cs" />
     <Compile Include="Entity\Adjustment.cs" />
     <Compile Include="Entity\AdjustmentItem.cs" />
     <Compile Include="Entity\AspNetRoles.cs" />

@@ -6,8 +6,9 @@ using System.Web.Mvc;
 
 namespace InventoryWeb.Controllers
 {
-    public class ManageRequestController : Controller
+    public class StoreClerkController : Controller
     {
+   
         public ActionResult RaiseRequest()
         {
             return View();

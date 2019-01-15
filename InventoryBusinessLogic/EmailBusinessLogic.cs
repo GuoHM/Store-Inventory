@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace InventoryBusinessLogic
 {
-    class EmailBusinessLogic
+    public class EmailBusinessLogic
     {
         private static string FROM_ADDRESS = "team3adproject@outlook.com";
         private static string CREDENTIALS = "ADproject";

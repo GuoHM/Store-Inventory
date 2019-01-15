@@ -8,8 +8,16 @@ namespace InventoryBusinessLogic.Entity
 
     public partial class AspNetUsers
     {
-        [Key]
-        [Column(Order = 0)]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public AspNetUsers()
+        {
+            Adjustment = new HashSet<Adjustment>();
+            Department = new HashSet<Department>();
+            Department1 = new HashSet<Department>();
+            PurchaseOrder = new HashSet<PurchaseOrder>();
+            Request = new HashSet<Request>();
+        }
+
         public string Id { get; set; }
 
         [StringLength(256)]
@@ -33,8 +41,7 @@ namespace InventoryBusinessLogic.Entity
 
         public int AccessFailedCount { get; set; }
 
-        [Key]
-        [Column(Order = 1)]
+        [Required]
         [StringLength(20)]
         public string UserName { get; set; }
 
@@ -44,6 +51,21 @@ namespace InventoryBusinessLogic.Entity
         [StringLength(20)]
         public string UserType { get; set; }
 
-        public virtual Department Department { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Adjustment> Adjustment { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Department> Department { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Department> Department1 { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PurchaseOrder> PurchaseOrder { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Request> Request { get; set; }
+
+        public virtual Department Department2 { get; set; }
     }
 }

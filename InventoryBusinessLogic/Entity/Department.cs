@@ -12,17 +12,17 @@ namespace InventoryBusinessLogic.Entity
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Department()
         {
-            AspNetUsers = new HashSet<AspNetUsers>();
+            AspNetUsers2 = new HashSet<AspNetUsers>();
             Order = new HashSet<Order>();
         }
 
         [StringLength(20)]
         public string DepartmentID { get; set; }
 
-        [StringLength(20)]
+        [StringLength(128)]
         public string DepartmentRep { get; set; }
 
-        [StringLength(20)]
+        [StringLength(128)]
         public string DepartmentHead { get; set; }
 
         [StringLength(50)]
@@ -37,8 +37,12 @@ namespace InventoryBusinessLogic.Entity
         [Column(TypeName = "date")]
         public DateTime? DepartmentHeadEndDate { get; set; }
 
+        public virtual AspNetUsers AspNetUsers { get; set; }
+
+        public virtual AspNetUsers AspNetUsers1 { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AspNetUsers> AspNetUsers { get; set; }
+        public virtual ICollection<AspNetUsers> AspNetUsers2 { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order> Order { get; set; }

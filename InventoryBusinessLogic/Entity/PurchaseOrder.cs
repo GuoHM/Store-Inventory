@@ -29,11 +29,13 @@ namespace InventoryBusinessLogic.Entity
         [StringLength(200)]
         public string DeliverAddress { get; set; }
 
-        [StringLength(20)]
+        [StringLength(128)]
         public string OrderBy { get; set; }
 
         [Column(TypeName = "date")]
         public DateTime? ExpectedDate { get; set; }
+
+        public virtual AspNetUsers AspNetUsers { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseItem> PurchaseItem { get; set; }

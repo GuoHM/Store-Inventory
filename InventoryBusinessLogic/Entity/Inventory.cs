@@ -51,6 +51,31 @@ namespace InventoryBusinessLogic.Entity
                 .Property(e => e.UserType)
                 .IsUnicode(false);
 
+            modelBuilder.Entity<AspNetUsers>()
+                .HasMany(e => e.Adjustment)
+                .WithOptional(e => e.AspNetUsers)
+                .HasForeignKey(e => e.Supervisor);
+
+            modelBuilder.Entity<AspNetUsers>()
+                .HasMany(e => e.Department)
+                .WithOptional(e => e.AspNetUsers)
+                .HasForeignKey(e => e.DepartmentRep);
+
+            modelBuilder.Entity<AspNetUsers>()
+                .HasMany(e => e.Department1)
+                .WithOptional(e => e.AspNetUsers1)
+                .HasForeignKey(e => e.DepartmentHead);
+
+            modelBuilder.Entity<AspNetUsers>()
+                .HasMany(e => e.PurchaseOrder)
+                .WithOptional(e => e.AspNetUsers)
+                .HasForeignKey(e => e.OrderBy);
+
+            modelBuilder.Entity<AspNetUsers>()
+                .HasMany(e => e.Request)
+                .WithOptional(e => e.AspNetUsers)
+                .HasForeignKey(e => e.UserID);
+
             modelBuilder.Entity<Catalogue>()
                 .Property(e => e.Category)
                 .IsUnicode(false);
@@ -80,6 +105,11 @@ namespace InventoryBusinessLogic.Entity
             modelBuilder.Entity<Department>()
                 .Property(e => e.CollectionPoint)
                 .IsUnicode(false);
+
+            modelBuilder.Entity<Department>()
+                .HasMany(e => e.AspNetUsers2)
+                .WithOptional(e => e.Department2)
+                .HasForeignKey(e => e.DepartmentID);
 
             modelBuilder.Entity<Order>()
                 .Property(e => e.OrderStatus)

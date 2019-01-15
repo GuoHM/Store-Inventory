@@ -21,10 +21,12 @@ namespace InventoryBusinessLogic.Entity
         [Column(TypeName = "date")]
         public DateTime? Date { get; set; }
 
-        [StringLength(20)]
+        [StringLength(128)]
         public string Supervisor { get; set; }
 
         public int? TotalPrice { get; set; }
+
+        public virtual AspNetUsers AspNetUsers { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AdjustmentItem> AdjustmentItem { get; set; }

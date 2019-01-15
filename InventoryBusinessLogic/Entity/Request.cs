@@ -12,7 +12,7 @@ namespace InventoryBusinessLogic.Entity
         [StringLength(20)]
         public string RequestID { get; set; }
 
-        [StringLength(20)]
+        [StringLength(128)]
         public string UserID { get; set; }
 
         [StringLength(20)]
@@ -29,6 +29,8 @@ namespace InventoryBusinessLogic.Entity
         public string RequestStatus { get; set; }
 
         public DateTime? RequestDate { get; set; }
+
+        public virtual AspNetUsers AspNetUsers { get; set; }
 
         public virtual Catalogue Catalogue { get; set; }
 

@@ -10,8 +10,8 @@ var TableInit = function() {
 	var oTableInit = new Object();
 	oTableInit.Init = function() {
         $('#SearchItemTable').bootstrapTable({
-            method: 'get',
-            //url : "/admin/api/enrollment-student",
+            method: 'post',
+            url : "http://172.23.225.128/InventoryWebAPI/api/Catalogue",
             //toolbar: '#toolbar',                //工具按钮用哪个容器
             striped: true, // 是否显示行间隔色
             cache: false, // 是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
@@ -42,7 +42,7 @@ var TableInit = function() {
                 title: 'ItemName',
                 sortable: true,
                 sortable: true,
-                field: 'id.courseid'
+                field: 'Description'
             }, {
                 align: "center",
                 title: 'Quantity',
@@ -50,7 +50,7 @@ var TableInit = function() {
                 sortable: true,
                 //field : 'ID',
                 //events: operateEvents,
-                //formatter: InputTextBox
+                formatter: InputTextBox
             }, {
                 align: "center",
                 title: 'Select',
@@ -58,7 +58,7 @@ var TableInit = function() {
                 sortable: true,
                 //field : 'ID',
                 //events: operateEvents,
-                //formatter: operateFormatter
+                formatter: selectItem
             }
             ],
             formatLoadingMessage: function () {
@@ -103,18 +103,12 @@ var TableInit = function() {
                 align: "center",
                 title: 'Quantity',
                 sortable: true,
-                sortable: true,
-                //field : 'ID',
-                //events: operateEvents,
-                //formatter: InputTextBox
+                sortable: true
             }, {
                 align: "center",
-                title: 'Select',
+                title: 'Remove',
                 sortable: true,
-                sortable: true,
-                //field : 'ID',
-                //events: operateEvents,
-                //formatter: operateFormatter
+                sortable: true
             }
             ],
             formatLoadingMessage: function () {
@@ -137,13 +131,12 @@ var TableInit = function() {
 		        '<input type="text" maxlength="5" class="form-control" placeholder="CourseID" id="quantity">'
 		        ].join('');
     }
-    function operateFormatter(value, row, index) {
+    function selectItem(value, row, index) {
         return [
-            '<a href="javascript:void(0)" title="Edit">',
-            '<span class="glyphicon glyphicon-plus"></span>',
-            '</a>',
+            '<input type="button" value="Select" onclick="selectItem(this)" class="btn btn-primary" />',
         ].join('');
     }
+   
 	operateEvents = {
 			'click .like': function (e, value, row, index) {
 				$("#editEnrollmentModal").modal('show');

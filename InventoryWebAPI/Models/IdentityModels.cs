@@ -21,7 +21,7 @@ namespace InventoryWebAPI.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("Inventory", throwIfV1Schema: false)
         {
         }
         

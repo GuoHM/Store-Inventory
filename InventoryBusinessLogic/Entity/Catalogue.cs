@@ -51,6 +51,7 @@ namespace InventoryBusinessLogic.Entity
         public string BinNumber { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [Newtonsoft.Json.JsonIgnore]
         public virtual ICollection<AdjustmentItem> AdjustmentItem { get; set; }
 
         public virtual Supplier Supplier { get; set; }
@@ -60,9 +61,11 @@ namespace InventoryBusinessLogic.Entity
         public virtual Supplier Supplier5 { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [Newtonsoft.Json.JsonIgnore]
         public virtual ICollection<PurchaseItem> PurchaseItem { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [Newtonsoft.Json.JsonIgnore]
         public virtual ICollection<Request> Request { get; set; }
     }
 }

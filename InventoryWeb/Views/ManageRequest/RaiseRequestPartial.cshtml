@@ -1,13 +1,92 @@
-﻿<form class="form-inline" id="toolbar">
-    <div class="form-group">
-        <label for="sel1">Search:</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control" id="SearchField" name="SearchField" placeholder="Key in anything you want to search">
-        </div>
-    </div>
-    <div class="form-group">
-        <input type="button" value="submit" id="submit-course" class="btn btn-default">
-    </div>
-</form>
+﻿
+<div class="row">
+    <div class="col-xs-6">
+        <div class="panel-body" style="padding-bottom: 0px;">
+            <div class="panel panel-default">
+                <div class="panel-heading">Searched Itemed</div>
+                <div class="panel-body">
+                    <table id="SearchItemTable">
+                        <tr>
+                            <td>aaaaaa</td>
 
-<table id=""></table>
+                            <td><input type="number" class="form-control" placeholder="CourseID" id="quantity"></td>
+
+                            <td>
+                                <input type="button" value="Select" onclick="selectItem(this)" class="btn btn-primary" />
+
+
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>bbbbb</td>
+
+                            <td><input type="number" class="form-control" placeholder="CourseID" id="quantity"></td>
+
+                            <td>
+                                <input type="button" value="Select" onclick="selectItem(this)" class="btn btn-primary" />
+
+
+
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="col-xs-6">
+        <div class="panel-body" style="padding-bottom: 0px;">
+            <div class="panel panel-default">
+                <div class="panel-heading">Item Added</div>
+                <div class="panel-body">
+                    <table id="ItemAddedTable"></table>
+                    <div style="margin-top:8px">
+                        <input type="button" value="Confirm" onclick="" class="btn btn-primary" style="float:right" />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script src="~/Scripts/bootstrap-table.js"></script>
+<script src="~/Scripts/tables/SearchItemTable.js"></script>
+<script src="~/Scripts/bootstrap-table-export.js"></script>
+<script src="//rawgit.com/hhurz/tableExport.jquery.plugin/master/tableExport.js"></script>
+
+<script type="text/javascript">
+    function selectItem(obj) {
+        var ItemAddedTable = document.getElementById("ItemAddedTable");
+        var SearchItemTable = document.getElementById("SearchItemTable");
+        var node = ItemAddedTable.rows[1];
+        if (node && node.cells[0].innerHTML == "No matching records found") {
+            node.parentNode.removeChild(node);
+        }
+        var rows = obj.parentNode.parentNode.rowIndex;
+        var objInput = SearchItemTable.getElementsByClassName("form-control");
+        var quantity = objInput[rows - 1].value;
+        if (quantity == "") {
+            alert("Please input quantity!");
+        } else {
+            var itemName = SearchItemTable.rows[rows].cells[0].innerHTML;
+            $("#ItemAddedTable").append("<tr><td>" + itemName + "</td><td>" + quantity + "</td><td><input type='button'  value='remove' class='btn btn-danger' onclick='remove(this)'/></td></tr>");
+            $(obj).parents("tr").remove();
+        }
+    }
+    function remove(obj) {
+        var rows = obj.parentNode.parentNode.rowIndex;
+        var itemName = document.getElementById("ItemAddedTable").rows[rows].cells[0].innerHTML;
+        $("#SearchItemTable").append("<tr><td>" + itemName + "</td><td><input type='number' class='form-control' placeholder='CourseID' id='quantity'></td><td><input type='button'  value='Select' class='btn btn-primary' onclick='selectItem(this)'/></td></tr>");
+        $(obj).parents("tr").remove();
+    }
+
+
+
+
+</script>

@@ -135,38 +135,61 @@ var TableInit = function () {
                 title: 'ItemCode',
                 sortable: true,
                 sortable: true,
-                field: 'id.courseid'
+                field: 'Description'
             }, {
                 align: "center",
                 title: 'Description',
                 sortable: true,
-                sortable: true
+                sortable: true,
+                //field : 'ID',
+                //events: operateEvents,
+                //formatter: InputTextBox
             }, {
                 align: "center",
                 title: 'Quantity',
                 sortable: true,
-                sortable: true
+                sortable: true,
+                //field : 'ID',
+                //events: operateEvents,
+                //formatter: InputTextBox
             }, {
-                    align: "center",
-                    title: 'Quantity',
-                    sortable: true,
-                    sortable: true
-                }, {
-                    align: "center",
-                    title: 'Total Price',
-                    sortable: true,
-                    sortable: true
-                }, {
-                    align: "center",
-                    title: 'Supplier',
-                    sortable: true,
-                    sortable: true
-                }, {
-                    align: "center",
-                    title: 'Remove',
-                    sortable: true,
-                    sortable: true
-                }
+                align: "center",
+                title: 'Reorder Quantity',
+                sortable: true,
+                sortable: true,
+                //field : 'ID',
+                //events: operateEvents,
+                //formatter: selectItem
+            }, {
+                align: "center",
+                title: 'Order Quantity',
+                sortable: true,
+                sortable: true,
+                //field : 'ID',
+                //events: operateEvents,
+                //formatter: selectItem
+            }, {
+                align: "center",
+                title: 'Total Price',
+                sortable: true,
+                sortable: true,
+            }, {
+                align: "center",
+                title: 'Supplier',
+                sortable: true,
+                sortable: true,
+                //field : 'ID',
+                //events: operateEvents,
+                //formatter: selectItem
+            }, {
+                align: "center",
+                title: 'Remove',
+                sortable: true,
+                sortable: true,
+                //field : 'ID',
+                //events: operateEvents,
+                //formatter: selectItem
+            }
             ],
             formatLoadingMessage: function () {
                 return "loading...";

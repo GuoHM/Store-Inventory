@@ -5,6 +5,7 @@ namespace InventoryBusinessLogic.Entity
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using Newtonsoft.Json;
 
     [Table("Catalogue")]
     public partial class Catalogue
@@ -54,10 +55,12 @@ namespace InventoryBusinessLogic.Entity
         [Newtonsoft.Json.JsonIgnore]
         public virtual ICollection<AdjustmentItem> AdjustmentItem { get; set; }
 
+        [Newtonsoft.Json.JsonIgnore]
         public virtual Supplier Supplier { get; set; }
 
+        [Newtonsoft.Json.JsonIgnore]
         public virtual Supplier Supplier4 { get; set; }
-
+        [Newtonsoft.Json.JsonIgnore]
         public virtual Supplier Supplier5 { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

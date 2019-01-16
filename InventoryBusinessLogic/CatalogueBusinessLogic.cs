@@ -9,8 +9,8 @@ namespace InventoryBusinessLogic
 {
     public class CatalogueBusinessLogic
     {
-        public static Inventory inventory = new Inventory();
-        public static List<Catalogue> getAllCatalogue()
+        public Inventory inventory = new Inventory();
+        public  List<Catalogue> getAllCatalogue()
         {
             return inventory.Catalogue.ToList();
         }

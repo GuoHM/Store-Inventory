@@ -14,14 +14,14 @@ namespace InventoryBusinessLogic
             // The code provided will print ‘Hello World’ to the console.
             // Press Ctrl+F5 (or go to Debug > Start Without Debugging) to run your app.
             Console.WriteLine("Hello World!");
-            UserBusinessLogic userBusinessLogic = new UserBusinessLogic();
+            //UserBusinessLogic userBusinessLogic = new UserBusinessLogic();
           
-            foreach(Catalogue c in CatalogueBusinessLogic.getAllCatalogue())
-            {
-                Console.WriteLine(c.Description);
-            }
+            //foreach(Catalogue c in CatalogueBusinessLogic.getAllCatalogue())
+            //{
+            //    Console.WriteLine(c.Description);
+            //}
             
-            Console.ReadKey();
+            //Console.ReadKey();
 
             // Go to http://aka.ms/dotnet-get-started-console to continue learning how to build a console app! 
         }

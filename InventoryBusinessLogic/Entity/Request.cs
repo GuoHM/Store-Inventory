@@ -32,6 +32,7 @@ namespace InventoryBusinessLogic.Entity
 
         public virtual AspNetUsers AspNetUsers { get; set; }
 
+        [Newtonsoft.Json.JsonIgnore]
         public virtual Catalogue Catalogue { get; set; }
 
         public virtual Order Order { get; set; }

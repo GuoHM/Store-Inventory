@@ -20,9 +20,9 @@ namespace InventoryBusinessLogic.Entity
         public string ItemID { get; set; }
 
         public int? Quantity { get; set; }
-
+        [Newtonsoft.Json.JsonIgnore]
         public virtual Catalogue Catalogue { get; set; }
-
+        [Newtonsoft.Json.JsonIgnore]
         public virtual PurchaseOrder PurchaseOrder { get; set; }
     }
 }

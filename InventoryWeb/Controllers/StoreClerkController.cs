@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace InventoryWeb.Controllers
 {
+    [Authorize(Roles ="StoreClerk")]
     public class StoreClerkController : Controller
     {
    

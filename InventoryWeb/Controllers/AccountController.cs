@@ -79,7 +79,25 @@ namespace InventoryWeb.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    var user = await UserManager.FindAsync(model.UserName, model.Password);
+                    var roles = await UserManager.GetRolesAsync(user.Id);
+
+                    if (roles.Contains("StoreClerk"))
+                    {
+                        return RedirectToAction("RaiseRequest", "StoreClerk");
+                    }
+                    //else if (roles.Contains("Requestor"))
+                    //{
+                    //    return RedirectToAction("Caterer", "Home");
+                    //}
+                    //else if (roles.Contains("Admin"))
+                    //{
+                    //    return RedirectToAction("Admin", "Home");
+                    //}
+                    else
+                    {
+                        return RedirectToLocal(returnUrl);
+                    }
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:

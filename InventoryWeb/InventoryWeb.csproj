@@ -351,6 +351,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\Inventory123 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\bootstrapValidator.min.js" />
@@ -364,7 +365,10 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Scripts\tables\SearchItemTable.js" />
+    <Content Include="Scripts\PurchaseItemChoose.js" />
+    <Content Include="Scripts\RaiseRequestChoose.js" />
+    <Content Include="Scripts\tables\PurchaseOrder.js" />
+    <Content Include="Scripts\tables\RaiseRequest.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -403,6 +407,7 @@
     <Content Include="Views\StoreClerk\RaiseRequest.cshtml" />
     <Content Include="Views\StoreClerk\SideBar.cshtml" />
     <Content Include="Views\ManageRequest\RaiseRequestPartial.cshtml" />
+    <Content Include="Views\StoreClerk\PurchaseOrder.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -14,5 +14,10 @@ namespace InventoryWeb.Controllers
         {
             return View();
         }
+
+        public ActionResult PurchaseOrder()
+        {
+            return View();
+        }
     }
 }

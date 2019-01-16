@@ -10,8 +10,8 @@ var TableInit = function() {
 	var oTableInit = new Object();
 	oTableInit.Init = function() {
         $('#SearchItemTable').bootstrapTable({
-            method: 'post',
-            url : "http://172.23.225.128/InventoryWebAPI/api/Catalogue",
+            method: 'get',
+            //url: 'http://inventorywebapi20190116011936.azurewebsites.net/api/Catalogue',
             //toolbar: '#toolbar',                //工具按钮用哪个容器
             striped: true, // 是否显示行间隔色
             cache: false, // 是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
@@ -24,7 +24,7 @@ var TableInit = function() {
             pageSize: 10, // 每页的记录行数（*）
             pageList: [10, 25, 50, 100], // 可供选择的每页的行数（*）
             search: true, //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
-            strictSearch: true,
+            strictSearch: false,
             queryParamsType: "",
             showRefresh: true, // 是否显示刷新按钮
             minimumCountColumns: 2, // 最少允许的列数

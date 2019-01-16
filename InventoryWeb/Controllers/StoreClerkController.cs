@@ -19,5 +19,10 @@ namespace InventoryWeb.Controllers
         {
             return View();
         }
+
+        public ActionResult AdjustmentVoucher()
+        {
+            return View();
+        }
     }
 }

@@ -367,6 +367,8 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\PurchaseItemChoose.js" />
     <Content Include="Scripts\RaiseRequestChoose.js" />
+    <Content Include="Scripts\tables\AdjustmentVoucher.js" />
+    <Content Include="Scripts\AdjustmentVoucherChoose.js" />
     <Content Include="Scripts\tables\PurchaseOrder.js" />
     <Content Include="Scripts\tables\RaiseRequest.js" />
     <Content Include="Web.config" />
@@ -408,6 +410,7 @@
     <Content Include="Views\StoreClerk\SideBar.cshtml" />
     <Content Include="Views\ManageRequest\RaiseRequestPartial.cshtml" />
     <Content Include="Views\StoreClerk\PurchaseOrder.cshtml" />
+    <Content Include="Views\StoreClerk\AdjustmentVoucher.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,67 @@
+﻿
+@{
+    ViewBag.Title = "AdjustmentVoucher";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-xs-2 column">
+    @Html.Partial("~/Views/StoreClerk/SideBar.cshtml")
+</div>
+<div class="col-xs-10 column">
+    <div class="panel-body" style="padding-bottom: 0px;">
+        <div class="panel panel-default">
+            <div class="panel-heading">Searched Itemed</div>
+            <div class="panel-body">
+                <table id="SearchItemTable">
+                    <tr>
+                        <td>aaaaaa</td>
+                        <td>123</td>
+                        <td>324342</td>
+           
+                        <td><input type="number" class="form-control" placeholder="CourseID" id="quantity"></td>
+                        
+                        <td>
+                            <input type="button" value="Select" onclick="selectItem(this)" class="btn btn-primary" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>bbbbb</td>
+                        <td>54353</td>
+                        <td>345345675</td>
+                  
+                        <td><input type="number" class="form-control" placeholder="CourseID" id="quantity"></td>
+
+                       
+                        <td>
+                            <input type="button" value="Select" onclick="selectItem(this)" class="btn btn-primary" />
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="panel-body" style="padding-bottom: 0px;">
+        <div class="panel panel-default">
+            <div class="panel-heading">Item Added</div>
+            <div class="panel-body">
+                <table id="ItemAddedTable"></table>
+                <div style="margin-top:8px">
+                    <input type="button" value="Confirm" onclick="" class="btn btn-primary" style="float:right" />
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script src="~/Scripts/bootstrap-table.js"></script>
+    <script src="~/Scripts/tables/AdjustmentVoucher.js"></script>
+    <script src="~/Scripts/bootstrap-table-export.js"></script>
+    <script src="//rawgit.com/hhurz/tableExport.jquery.plugin/master/tableExport.js"></script>
+    <script src="~/Scripts/AdjustmentVoucherChoose.js"></script>
+</div>
+
+
+
+

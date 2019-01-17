@@ -17,6 +17,9 @@ namespace InventoryWeb.Controllers
         OrderBusinessLogic orderBusinessLogic = new OrderBusinessLogic();
         UserBusinessLogic userBusinessLogic = new UserBusinessLogic();
         ManageRequestBusinessLogic manageRequestBusinessLogic = new ManageRequestBusinessLogic();
+
+      
+
         // GET: Request
         [HttpPost]
         public ActionResult SaveRequest()
@@ -60,7 +63,7 @@ namespace InventoryWeb.Controllers
             }
             return new JsonResult();
         }
-
+   
 
            
     }

@@ -25,9 +25,8 @@ namespace InventoryBusinessLogic.Entity
         [StringLength(100)]
         public string Reason { get; set; }
 
-        [Newtonsoft.Json.JsonIgnore]
         public virtual Adjustment Adjustment { get; set; }
-        [Newtonsoft.Json.JsonIgnore]
+
         public virtual Catalogue Catalogue { get; set; }
     }
 }

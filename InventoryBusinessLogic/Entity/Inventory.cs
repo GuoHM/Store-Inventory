@@ -115,10 +115,6 @@ namespace InventoryBusinessLogic.Entity
                 .Property(e => e.OrderStatus)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<Order>()
-                .Property(e => e.Remarks)
-                .IsUnicode(false);
-
             modelBuilder.Entity<PurchaseOrder>()
                 .Property(e => e.DeliverAddress)
                 .IsUnicode(false);
@@ -127,6 +123,10 @@ namespace InventoryBusinessLogic.Entity
                 .HasMany(e => e.PurchaseItem)
                 .WithRequired(e => e.PurchaseOrder)
                 .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Request>()
+                .Property(e => e.Remarks)
+                .IsUnicode(false);
 
             modelBuilder.Entity<Supplier>()
                 .Property(e => e.SupplierName)

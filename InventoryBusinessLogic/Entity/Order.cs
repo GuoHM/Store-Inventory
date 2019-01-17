@@ -28,8 +28,8 @@ namespace InventoryBusinessLogic.Entity
 
         public double? TotalPrice { get; set; }
 
-        [StringLength(300)]
-        public string Remarks { get; set; }
+        [Column(TypeName = "image")]
+        public byte[] Signature { get; set; }
 
         public virtual Department Department { get; set; }
 

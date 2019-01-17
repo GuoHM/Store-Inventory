@@ -9,8 +9,7 @@ namespace InventoryBusinessLogic.Entity
     [Table("Request")]
     public partial class Request
     {
-        [StringLength(20)]
-        public string RequestID { get; set; }
+        public int RequestID { get; set; }
 
         [StringLength(128)]
         public string UserID { get; set; }
@@ -30,9 +29,11 @@ namespace InventoryBusinessLogic.Entity
 
         public DateTime? RequestDate { get; set; }
 
+        [StringLength(500)]
+        public string Remarks { get; set; }
+
         public virtual AspNetUsers AspNetUsers { get; set; }
 
-        [Newtonsoft.Json.JsonIgnore]
         public virtual Catalogue Catalogue { get; set; }
 
         public virtual Order Order { get; set; }

@@ -7,12 +7,13 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
+    <script src="~/Scripts/Constant.js"></script>
 
 </head>
 <body>
     @Html.Partial("_NavBar")
     <div class="container body-content">
-        <div class="containner" style="margin-top: 5%;">
+        <div class="containner" style="margin-top: 2%;">
             <div class="row clearfix">
                 @RenderBody()
             </div>

@@ -19,5 +19,9 @@ namespace InventoryBusinessLogic
         {
             return inventory.Catalogue.Where(x => x.Description == description).First();
         }
+        public Catalogue getCatalogueById(string catalogueId)
+        {
+            return inventory.Catalogue.Where(x => x.ItemID == catalogueId).First();
+        }
     }
 }

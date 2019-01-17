@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 using InventoryBusinessLogic.Entity;
 namespace InventoryBusinessLogic
 {
-    class ManageRequestBusinessLogic
+    public class ManageRequestBusinessLogic
     {
         Inventory inventory = new Inventory();
 
-        public void ApproveOrRejectRequest(string RequestId, string RequestStatus)
+        public void ApproveOrRejectRequest(int RequestId, string RequestStatus)
         {
             var request = inventory.Request.Where(x => x.RequestID == RequestId).First();
             request.RequestStatus = RequestStatus;
@@ -20,6 +20,10 @@ namespace InventoryBusinessLogic
         public List<Request> GetAllRequests()
         {
             return inventory.Request.ToList();
+        }
+        public Request GetRequestById(int requestId)
+        {
+            return inventory.Request.Where(x => x.RequestID == requestId).First();
         }
 
     }

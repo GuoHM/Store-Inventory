@@ -5,6 +5,7 @@ namespace InventoryBusinessLogic.Entity
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using Newtonsoft.Json;
 
     [Table("PurchaseOrder")]
     public partial class PurchaseOrder
@@ -35,11 +36,14 @@ namespace InventoryBusinessLogic.Entity
         [Column(TypeName = "date")]
         public DateTime? ExpectedDate { get; set; }
 
+        [JsonIgnore]
         public virtual AspNetUsers AspNetUsers { get; set; }
 
+        [JsonIgnore]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseItem> PurchaseItem { get; set; }
 
+        [JsonIgnore]
         public virtual Supplier Supplier { get; set; }
     }
 }

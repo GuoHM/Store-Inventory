@@ -6,9 +6,11 @@ using System.Net.Http;
 using System.Web.Http;
 using InventoryBusinessLogic;
 using InventoryBusinessLogic.Entity;
+using System.Web.Http.Cors;
 
 namespace InventoryWebAPI.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class CatalogueController : ApiController
     {
         CatalogueBusinessLogic catalogue = new CatalogueBusinessLogic();

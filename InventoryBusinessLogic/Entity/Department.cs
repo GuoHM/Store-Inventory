@@ -5,6 +5,7 @@ namespace InventoryBusinessLogic.Entity
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using Newtonsoft.Json;
 
     [Table("Department")]
     public partial class Department
@@ -36,15 +37,17 @@ namespace InventoryBusinessLogic.Entity
 
         [Column(TypeName = "date")]
         public DateTime? DepartmentHeadEndDate { get; set; }
-
+        [JsonIgnore]
         public virtual AspNetUsers AspNetUsers { get; set; }
-
+        [JsonIgnore]
         public virtual AspNetUsers AspNetUsers1 { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [JsonIgnore]
         public virtual ICollection<AspNetUsers> AspNetUsers2 { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [JsonIgnore]
         public virtual ICollection<Order> Order { get; set; }
     }
 }

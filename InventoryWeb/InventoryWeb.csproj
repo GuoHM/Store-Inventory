@@ -330,6 +330,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\DepartmentHeadController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RequestController.cs" />
@@ -380,6 +381,7 @@
     <Content Include="Scripts\RaiseRequestChoose.js" />
     <Content Include="Scripts\tables\AdjustmentVoucher.js" />
     <Content Include="Scripts\AdjustmentVoucherChoose.js" />
+    <Content Include="Scripts\tables\ApproveOrRejectRequest.js" />
     <Content Include="Scripts\tables\PurchaseOrder.js" />
     <Content Include="Scripts\tables\RaiseRequest.js" />
     <Content Include="Web.config">
@@ -424,6 +426,9 @@
     <Content Include="Views\ManageRequest\RaiseRequestPartial.cshtml" />
     <Content Include="Views\StoreClerk\PurchaseOrder.cshtml" />
     <Content Include="Views\StoreClerk\AdjustmentVoucher.cshtml" />
+    <Content Include="Views\ManageRequest\ApproveOrRejectRequestPartial.cshtml" />
+    <Content Include="Views\DepartmentHead\ApproveOrRequestView.cshtml" />
+    <Content Include="Views\DepartmentHead\SideBar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

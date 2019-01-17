@@ -76,8 +76,8 @@ var TableInit = function () {
                 sortable: true,
                 sortable: true,
                 //field : 'ID',
-                //events: operateEvents,
-                formatter: selectItem
+                events: operateEvents,
+                    formatter: selectItem
             }
             ],
             formatLoadingMessage: function () {
@@ -96,16 +96,23 @@ var TableInit = function () {
         };
         return temp;
     };
-    function InputTextBox(value, row, index) {
+   
+    function selectItem() {
         return [
-            '<input type="text" maxlength="5" class="form-control" placeholder="quantity" id="quantity">'
+            '<input type="button" id="view" value="View Details"  class="btn btn-primary" />',
         ].join('');
     }
-    function selectItem(value, row, index) {
-        return [
-            '<input type="button" value="Select" onclick="selectItem(this)" class="btn btn-primary" />',
-        ].join('');
+
+    function openPopup() {
+        $("#ApproveRequestModal").modal('show');
     }
+    operateEvents = {
+        'click #view': function (e, value, row, index) {
+            $("#ApproveRequestModal").modal('show');
+        }
+    };
+    
+   
     return oTableInit;
 };
 

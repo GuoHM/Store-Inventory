@@ -1,0 +1,11 @@
+﻿<h2>Departments List</h2>
+<ul>
+    @for (int i = 0; i < ViewBag.DeptList.Count; i++)
+    {
+        <li>
+            <a href="Show/@ViewBag.DeptList[i].DepartmentID">
+                @ViewBag.DeptList[i].DepartmentName
+            </a>
+        </li>
+    }
+</ul>

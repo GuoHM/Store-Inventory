@@ -330,6 +330,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\StoreClerkController.cs" />
@@ -422,9 +423,11 @@
     <Content Include="Views\ManageRequest\RaiseRequestPartial.cshtml" />
     <Content Include="Views\StoreClerk\PurchaseOrder.cshtml" />
     <Content Include="Views\StoreClerk\AdjustmentVoucher.cshtml" />
+    <Content Include="Views\Show.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Department\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

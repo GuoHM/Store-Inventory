@@ -14,5 +14,10 @@ namespace InventoryBusinessLogic
         {
             return inventory.Catalogue.ToList();
         }
+
+        public Catalogue getCatalogueByDescription(string description)
+        {
+            return inventory.Catalogue.Where(x => x.Description == description).First();
+        }
     }
 }

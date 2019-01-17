@@ -8,13 +8,18 @@ using InventoryBusinessLogic.Entity;
 namespace InventoryBusinessLogic
 {
     
-    class UserBusinessLogic
+    public class UserBusinessLogic
     {
         Inventory inventory = new Inventory();
 
         public List<AspNetUsers> getAllUser()
         {
             return inventory.AspNetUsers.ToList();
+        }
+
+        public AspNetUsers getUserByID(string ID)
+        {
+            return inventory.AspNetUsers.Where(x => x.Id == ID).First();
         }
 
     }

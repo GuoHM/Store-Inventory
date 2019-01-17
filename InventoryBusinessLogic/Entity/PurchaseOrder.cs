@@ -35,14 +35,11 @@ namespace InventoryBusinessLogic.Entity
         [Column(TypeName = "date")]
         public DateTime? ExpectedDate { get; set; }
 
-        [Newtonsoft.Json.JsonIgnore]
         public virtual AspNetUsers AspNetUsers { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        [Newtonsoft.Json.JsonIgnore]
         public virtual ICollection<PurchaseItem> PurchaseItem { get; set; }
 
-        [Newtonsoft.Json.JsonIgnore]
         public virtual Supplier Supplier { get; set; }
     }
 }

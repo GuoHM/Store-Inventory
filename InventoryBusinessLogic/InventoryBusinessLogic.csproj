@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CatalogueBusinessLogic.cs" />
+    <Compile Include="DepartmentBusinessLogic.cs" />
     <Compile Include="EmailBusinessLogic.cs" />
     <Compile Include="Entity\Adjustment.cs" />
     <Compile Include="Entity\AdjustmentItem.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="Entity\Request.cs" />
     <Compile Include="Entity\Supplier.cs" />
     <Compile Include="ManageRequestBusinessLogic.cs" />
+    <Compile Include="OrderBusinessLogic.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserBusinessLogic.cs" />

@@ -13,6 +13,9 @@ namespace InventoryWeb.Controllers
 {
     public class RequestController : Controller
     {
+        CatalogueBusinessLogic catalogueBusinessLogic = new CatalogueBusinessLogic();
+        OrderBusinessLogic orderBusinessLogic = new OrderBusinessLogic();
+        UserBusinessLogic userBusinessLogic = new UserBusinessLogic();
         // GET: Request
         [HttpPost]
         public ActionResult SaveRequest()
@@ -22,13 +25,27 @@ namespace InventoryWeb.Controllers
             string username = User.Identity.GetUserId();
             JavaScriptSerializer js = new JavaScriptSerializer();
             var list = js.Deserialize<List<SelectedList>>(stream);
-            CatalogueBusinessLogic catalogueBusinessLogic = new CatalogueBusinessLogic();
             if (list.Any())
             {
                 foreach (var item in list)
                 {
                     Catalogue catalogue = catalogueBusinessLogic.getCatalogueByDescription(item.description);
-
+                    Request request = new Request();
+                    request.Needed = Convert.ToInt32(item.quantity);
+                    request.ItemID = catalogue.ItemID;
+                    request.RequestDate = DateTime.Now;
+                    request.UserID = User.Identity.GetUserId();
+                    request.OrderID = orderBusinessLogic.generateOrderIDById(User.Identity.GetUserId());
+                    Order order = orderBusinessLogic.GetOrderByOrderId(request.OrderID);
+                    if (order == null)
+                    {
+                        //order do not exist,insert
+                        order = new Order();
+                        order.OrderID = request.OrderID;
+                        order.DepartmentID = userBusinessLogic.getUserByID(User.Identity.GetUserId()).DepartmentID;
+                        order.OrderDate = DateTime.Now;
+                    }
+                    order.TotalPrice += request.Needed * catalogue.Price;
                 }
             }
             return View();

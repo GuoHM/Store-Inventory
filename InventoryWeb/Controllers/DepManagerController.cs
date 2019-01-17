@@ -41,6 +41,11 @@ namespace InventoryWeb.Controllers
             return View("Index");
         }
 
+        public ActionResult ApproveOrReject()
+        {
+            return View();
+        }
+
 
 
     }

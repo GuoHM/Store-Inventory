@@ -16,6 +16,7 @@ namespace InventoryWeb.Controllers
         CatalogueBusinessLogic catalogueBusinessLogic = new CatalogueBusinessLogic();
         OrderBusinessLogic orderBusinessLogic = new OrderBusinessLogic();
         UserBusinessLogic userBusinessLogic = new UserBusinessLogic();
+        ManageRequestBusinessLogic manageRequestBusinessLogic = new ManageRequestBusinessLogic();
         // GET: Request
         [HttpPost]
         public ActionResult SaveRequest()
@@ -44,11 +45,20 @@ namespace InventoryWeb.Controllers
                         order.OrderID = request.OrderID;
                         order.DepartmentID = userBusinessLogic.getUserByID(User.Identity.GetUserId()).DepartmentID;
                         order.OrderDate = DateTime.Now;
+                        order.TotalPrice = 0;
+                        order.TotalPrice += request.Needed * catalogue.Price;
+                        orderBusinessLogic.addOrder(order);                        
+                    } else
+                    {
+                        order.TotalPrice += request.Needed * catalogue.Price;
+                        orderBusinessLogic.updateOrder(order);
                     }
-                    order.TotalPrice += request.Needed * catalogue.Price;
+                    manageRequestBusinessLogic.addRequest(request);
+
+
                 }
             }
-            return View();
+            return new JsonResult();
         }
 
 

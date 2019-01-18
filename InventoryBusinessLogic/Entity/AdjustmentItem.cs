@@ -11,8 +11,8 @@ namespace InventoryBusinessLogic.Entity
     {
         [Key]
         [Column(Order = 0)]
-        [StringLength(20)]
-        public string AdjustmentID { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int AdjustmentID { get; set; }
 
         [Key]
         [Column(Order = 1)]

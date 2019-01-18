@@ -15,8 +15,7 @@ namespace InventoryBusinessLogic.Entity
             PurchaseItem = new HashSet<PurchaseItem>();
         }
 
-        [StringLength(20)]
-        public string PurchaseOrderID { get; set; }
+        public int PurchaseOrderID { get; set; }
 
         [StringLength(20)]
         public string SupplierID { get; set; }
@@ -34,6 +33,9 @@ namespace InventoryBusinessLogic.Entity
 
         [Column(TypeName = "date")]
         public DateTime? ExpectedDate { get; set; }
+
+        [StringLength(20)]
+        public string PurchaseOrderStatus { get; set; }
 
         public virtual AspNetUsers AspNetUsers { get; set; }
 

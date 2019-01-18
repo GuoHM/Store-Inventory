@@ -30,6 +30,10 @@ namespace InventoryBusinessLogic.Entity
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Adjustment>()
+                .Property(e => e.AdjustmentStatus)
+                .IsFixedLength();
+
+            modelBuilder.Entity<Adjustment>()
                 .HasMany(e => e.AdjustmentItem)
                 .WithRequired(e => e.Adjustment)
                 .WillCascadeOnDelete(false);
@@ -118,6 +122,10 @@ namespace InventoryBusinessLogic.Entity
             modelBuilder.Entity<PurchaseOrder>()
                 .Property(e => e.DeliverAddress)
                 .IsUnicode(false);
+
+            modelBuilder.Entity<PurchaseOrder>()
+                .Property(e => e.PurchaseOrderStatus)
+                .IsFixedLength();
 
             modelBuilder.Entity<PurchaseOrder>()
                 .HasMany(e => e.PurchaseItem)

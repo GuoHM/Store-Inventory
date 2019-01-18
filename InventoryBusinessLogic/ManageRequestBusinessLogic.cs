@@ -26,6 +26,12 @@ namespace InventoryBusinessLogic
             return inventory.Request.Where(x => x.RequestID == requestId).First();
         }
 
+        public void addRequest(Request request)
+        {
+            inventory.Request.Add(request);
+            inventory.SaveChanges();
+        }
+
     }
 }
 

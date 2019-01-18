@@ -20,11 +20,11 @@ namespace InventoryBusinessLogic
         {
             string result="";
             string departmentID = inventory.AspNetUsers.Where(x => x.Id == id).First().DepartmentID;
-            result += departmentID + GetWeekOfYear();
+            result += departmentID + GetWeekOfYear() + DateTime.Now.Year;
             return result;
         }
 
-        private int GetWeekOfYear()
+        private string GetWeekOfYear()
         {
             //1. find the last day in firstweek of this year
             int firstWeekend = 7 - Convert.ToInt32(DateTime.Parse(DateTime.Today.Year + "-1-1").DayOfWeek);
@@ -33,17 +33,39 @@ namespace InventoryBusinessLogic
             int currentDay = DateTime.Today.DayOfYear;
 
             //3. (today - the first weekend day)/7
-            return Convert.ToInt32(Math.Ceiling((currentDay - firstWeekend) / 7.0)) + 1;
+            int code =  Convert.ToInt32(Math.Ceiling((currentDay - firstWeekend) / 7.0)) + 1;
+            if (code < 10)
+            {
+                return "0" + code;
+            }
+            return ""+code;
         }
 
         public Order GetOrderByOrderId(string orderid)
         {
-            return inventory.Order.Where(x => x.OrderID == orderid).First();          
+            try
+            {
+                return inventory.Order.Where(x => x.OrderID == orderid).First();
+            } catch (Exception)
+            {
+                return null;
+            }         
         }
 
         public void addOrder(Order order)
         {
             inventory.Order.Add(order);
+            inventory.SaveChanges();
+        }
+
+        public void updateOrder(Order order)
+        {
+            Order update = inventory.Order.Where(x => x.OrderID == order.OrderID).First();
+            update.OrderDate = order.OrderDate;
+            update.OrderStatus = order.OrderStatus;
+            update.TotalPrice = order.TotalPrice;
+            update.Signature = order.Signature;
+            update.DepartmentID = order.DepartmentID;
             inventory.SaveChanges();
         }
 

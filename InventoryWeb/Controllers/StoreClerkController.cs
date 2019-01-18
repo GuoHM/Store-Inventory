@@ -24,5 +24,10 @@ namespace InventoryWeb.Controllers
         {
             return View();
         }
+
+        public ActionResult ManageInventory()
+        {
+            return View();
+        }
     }
 }

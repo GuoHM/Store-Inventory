@@ -1,4 +1,4 @@
-﻿function selectItem(obj) {
+﻿    function selectItem(obj) {
     var ItemAddedTable = document.getElementById("ItemAddedTable");
     var SearchItemTable = document.getElementById("SearchItemTable");
     var node = ItemAddedTable.rows[1];

@@ -15,6 +15,8 @@ namespace InventoryWeb.Controllers
     public class StoreClerkController : Controller
     {
         CatalogueBusinessLogic catalogueBusinessLogic = new CatalogueBusinessLogic();
+        SupplierBusinessLogic supplierBusinessLogic = new SupplierBusinessLogic();
+        PurchaseOrderBusinessLogic purchaseOrderBusinessLogic = new PurchaseOrderBusinessLogic();
 
         public ActionResult RaiseRequest()
         {
@@ -47,18 +49,31 @@ namespace InventoryWeb.Controllers
             string username = User.Identity.GetUserId();
             JavaScriptSerializer js = new JavaScriptSerializer();
             var list = js.Deserialize<List<SelectedList>>(stream);
+            double totalPrice = 0;
+            string supplierID = "";
             if (list.Any())
             {
+                PurchaseOrder purchaseOrder = new PurchaseOrder();
+                Supplier supplier = supplierBusinessLogic.FindSupplierById(supplierID);
+                purchaseOrder.SupplierID = supplierID;
+                purchaseOrder.TotalPrice = 0;
+                purchaseOrder.PurchaseDate = DateTime.Now;
+                purchaseOrder.OrderBy = User.Identity.GetUserId();
+                purchaseOrder.PurchaseOrderStatus = "Unfullfill";
+                purchaseOrderBusinessLogic.addPurchaseOrder(purchaseOrder);
                 foreach (var item in list)
                 {
                     Catalogue catalogue = catalogueBusinessLogic.getCatalogueById(item.itemID);
-                    PurchaseOrder purchaseOrder = new PurchaseOrder();
-                    //purchaseOrder.
                     PurchaseItem purchaseItem = new PurchaseItem();
                     purchaseItem.ItemID = catalogue.ItemID;
-                    //purchaseItem.
+                    purchaseItem.Quantity = Convert.ToInt32(item.quantity);
+                    totalPrice += Convert.ToInt32(item.totalPrice);
+                    purchaseItem.PurchaseOrderID = purchaseOrderBusinessLogic.generatePurchaseOrderID();
+                    supplierID = catalogue.Supplier1;
                 }
-            }
+                purchaseOrder.TotalPrice = totalPrice;
+
+            }          
             return new JsonResult();
         }
 
@@ -67,6 +82,8 @@ namespace InventoryWeb.Controllers
             public string itemID { get; set; }
 
             public string quantity { get; set; }
+
+            public string totalPrice { get; set; }
         }
     }
 

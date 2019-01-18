@@ -35,7 +35,7 @@ function postData() {
         url: "/Request/SaveRequest",
         type: "post",
         dataType: "text",
-        async: false,
+        async: true,
         data: JSON.stringify(jsonlist),
         success: function (data) {
             $('#successModal').modal('show');

@@ -34,16 +34,17 @@ function postData() {
     $.ajax({
         url: SERVER_NAME + "/Request/SaveRequest",
         type: "post",
-        dataType: "json",
+        dataType: "text",
         async: false,
         data: JSON.stringify(jsonlist),
         success: function (data) {
-
+            $('#successModal').modal('show');
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             alert(XMLHttpRequest.status);
             alert(XMLHttpRequest.readyState);
             alert(textStatus);
-        }
+        },
+        
     });
 }

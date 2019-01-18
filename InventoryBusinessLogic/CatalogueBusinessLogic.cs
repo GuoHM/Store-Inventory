@@ -21,7 +21,13 @@ namespace InventoryBusinessLogic
         }
         public Catalogue getCatalogueById(string catalogueId)
         {
-            return inventory.Catalogue.Where(x => x.ItemID == catalogueId).First();
+            try
+            {
+                return inventory.Catalogue.Where(x => x.ItemID == catalogueId).First();
+            } catch (Exception)
+            {
+                return null;
+            }
         }
     }
 }

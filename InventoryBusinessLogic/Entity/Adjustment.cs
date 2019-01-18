@@ -15,8 +15,7 @@ namespace InventoryBusinessLogic.Entity
             AdjustmentItem = new HashSet<AdjustmentItem>();
         }
 
-        [StringLength(20)]
-        public string AdjustmentID { get; set; }
+        public int AdjustmentID { get; set; }
 
         [Column(TypeName = "date")]
         public DateTime? Date { get; set; }
@@ -25,6 +24,9 @@ namespace InventoryBusinessLogic.Entity
         public string Supervisor { get; set; }
 
         public int? TotalPrice { get; set; }
+
+        [StringLength(20)]
+        public string AdjustmentStatus { get; set; }
 
         public virtual AspNetUsers AspNetUsers { get; set; }
 

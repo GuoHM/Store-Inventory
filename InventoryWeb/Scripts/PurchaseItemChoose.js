@@ -33,6 +33,32 @@ function remove(obj) {
     var totalprice = ItemAddedTable.rows[rows].cells[5].innerHTML;
     var supplier = ItemAddedTable.rows[rows].cells[6].innerHTML;
     var price = totalprice / orderQuantity;
-    $("#SearchItemTable").append("<tr><td>" + itemCode + "</td><td>" + Description + "</td><td>" + Quantity + "</td><td>" + ReorderQuantity + "</td><td><input type='number' class='form-control' placeholder='Please input the quantity'></td><td>" + price + "</td><td>" + supplier + "</td><td><input type='button'  value='Select' class='btn btn-primary' onclick='selectItem(this)'/></td></tr>");
+    $("#SearchItemTable").append("<tr><td>" + itemCode + "</td><td>" + Description + "</td><td>" + Quantity + "</td><td>" + ReorderQuantity + "</td><td><input type='number' class='form-control' placeholder='Quantity'></td><td>" + price + "</td><td>" + supplier + "</td><td><input type='button'  value='Select' class='btn btn-primary' onclick='selectItem(this)'/></td></tr>");
      $(obj).parents("tr").remove();
+}
+function postData() {
+    var tab = document.getElementById("ItemAddedTable");
+    var rows = tab.rows;
+    var jsonlist = new Array(rows.length - 1);
+    for (var i = 1; i < rows.length; i++) {
+        var jsonObj = { "itemID": rows[i].cells[0].innerHTML, "quantity": rows[i].cells[4].innerHTML };
+        jsonlist[i - 1] = jsonObj;
+    }
+    //alert(JSON.stringify(jsonlist));
+    $.ajax({
+        url: "/Request/SaveRequest",
+        type: "post",
+        dataType: "text",
+        async: false,
+        data: JSON.stringify(jsonlist),
+        success: function (data) {
+            $('#successModal').modal('show');
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            alert(XMLHttpRequest.status);
+            alert(XMLHttpRequest.readyState);
+            alert(textStatus);
+        },
+
+    });
 }

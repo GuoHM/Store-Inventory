@@ -50,16 +50,12 @@ var TableInit = function() {
                 title: 'Quantity',
                 sortable: true,
                 sortable: true,
-                //field : 'ID',
-                //events: operateEvents,
                 formatter: InputTextBox
             }, {
                 align: "center",
                 title: 'Select',
                 sortable: true,
                 sortable: true,
-                //field : 'ID',
-                //events: operateEvents,
                 formatter: selectItem
             }
             ],
@@ -118,19 +114,10 @@ var TableInit = function() {
             }
         });
     };
-	
 
-	// params
-	oTableInit.queryParams = function(params) {
-
-		var temp = {
-            courseid : $("#courseid").val()
-		};
-		return temp;
-	};
 	function InputTextBox(value, row, index) {
 		return [       
-		        '<input type="text" maxlength="5" class="form-control" placeholder="quantity" id="quantity">'
+		        '<input type="number" max="9999" min="0" class="form-control" placeholder="Quantity" id="quantity">'
 		        ].join('');
     }
     function selectItem(value, row, index) {
@@ -153,3 +140,4 @@ var ButtonInit = function() {
 
 	return oInit;
 };
+

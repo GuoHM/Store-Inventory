@@ -10,6 +10,7 @@ namespace InventoryWeb.Controllers
     public class DepManagerController : Controller
     {
         UserBusinessLogic BL = new UserBusinessLogic();
+        ManageRequestBusinessLogic req = new ManageRequestBusinessLogic();
         // GET: DepManager
         public ActionResult Index()
         {
@@ -43,6 +44,13 @@ namespace InventoryWeb.Controllers
 
         public ActionResult ApproveOrReject()
         {
+            ViewBag.reqList = req.GetRequestById(1024);
+            return View();
+        }
+
+        public ActionResult SaveRequestStatus(int reqID, string reqStatus)
+        {
+            req.ApproveOrRejectRequest(reqID, reqStatus);
             return View();
         }
 

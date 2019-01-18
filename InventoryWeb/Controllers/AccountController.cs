@@ -51,7 +51,29 @@ namespace InventoryWeb.Controllers
                 _userManager = value;
             }
         }
-
+        //POST: /Account/MobileLogin
+        [AllowAnonymous]
+        public async Task<String> MobileLogin()
+        {
+            string email = "";
+            string password = "";
+            email = Request.Form.Get("username");
+            password = Request.Form.Get("password");
+            var result = await SignInManager.PasswordSignInAsync(email, password, true, shouldLockout: false);
+            switch (result)
+            {
+                case SignInStatus.Success:
+                    return "Success";
+                case SignInStatus.LockedOut:
+                    return "LockedOut";
+                case SignInStatus.RequiresVerification:
+                    return "RequiresVerification";
+                case SignInStatus.Failure:
+                default:
+                    ModelState.AddModelError("", "Invalid login attempt.");
+                    return "Invalid login attempt";
+            }
+        }
         //
         // GET: /Account/Login
         [AllowAnonymous]

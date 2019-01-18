@@ -9,13 +9,14 @@ using InventoryBusinessLogic.Entity;
 namespace InventoryWeb.Controllers
 {
     public class DepartmentController : Controller
-    { DepartmentBusinessLogic obj = new DepartmentBusinessLogic();
+    {
+        DepartmentBusinessLogic obj = new DepartmentBusinessLogic();
         // GET: Department
         public ActionResult show()
         {
-            ViewBag.DeptList = obj.GetDepartments();
-            return View();
             
+            return View();
+
         }
     }
 }

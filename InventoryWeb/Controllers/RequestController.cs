@@ -74,15 +74,14 @@ namespace InventoryWeb.Controllers
             }
             return new JsonResult();
         }
-   
+        class SelectedList
+        {
+            public string description { get; set; }
 
-           
+            public string quantity { get; set; }
+        }
+
     }
 
-    class SelectedList
-    {
-        public string description { get; set; }
-
-        public string quantity { get; set; }
-    }
+    
 }

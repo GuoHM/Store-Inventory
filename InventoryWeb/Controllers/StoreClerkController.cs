@@ -17,7 +17,7 @@ namespace InventoryWeb.Controllers
         CatalogueBusinessLogic catalogueBusinessLogic = new CatalogueBusinessLogic();
         SupplierBusinessLogic supplierBusinessLogic = new SupplierBusinessLogic();
         PurchaseOrderBusinessLogic purchaseOrderBusinessLogic = new PurchaseOrderBusinessLogic();
-
+        
         public ActionResult RaiseRequest()
         {
             return View();
@@ -42,11 +42,24 @@ namespace InventoryWeb.Controllers
             return View();
         }
 
+        public JsonResult ConfirmOrder()
+        {
+            var sr = new StreamReader(Request.InputStream);
+            var stream = sr.ReadToEnd();
+            JavaScriptSerializer js = new JavaScriptSerializer();
+            var list = js.Deserialize<List<SelectedList>>(stream);
+            JsonResult json = new JsonResult();
+            confirmClass confirmClass = new confirmClass();
+            confirmClass.tablelist = list;
+            confirmClass.delieverAddress = supplierBusinessLogic.FindSupplierById(list[0].supplier).Address;
+            json.Data = confirmClass;
+            return json;
+        }
+
         public ActionResult SavePurchaseOrder()
         {
             var sr = new StreamReader(Request.InputStream);
             var stream = sr.ReadToEnd();
-            string username = User.Identity.GetUserId();
             JavaScriptSerializer js = new JavaScriptSerializer();
             var list = js.Deserialize<List<SelectedList>>(stream);
             double totalPrice = 0;
@@ -81,9 +94,21 @@ namespace InventoryWeb.Controllers
         {
             public string itemID { get; set; }
 
+            public string description { get; set; }
+
             public string quantity { get; set; }
 
             public string totalPrice { get; set; }
+
+            public string supplier { get; set; }
+        }
+
+        class confirmClass
+        {
+            public List<SelectedList> tablelist { get; set; }
+
+            public string delieverAddress { get; set; }
+
         }
     }
 

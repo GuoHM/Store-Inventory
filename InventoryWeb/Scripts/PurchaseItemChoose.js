@@ -1,5 +1,4 @@
-﻿var index = 1;
-function selectItem(obj) {
+﻿function selectItem(obj) {
     
     var ItemAddedTable = document.getElementById("ItemAddedTable");
     var SearchItemTable = document.getElementById("SearchItemTable");
@@ -38,33 +37,66 @@ function remove(obj) {
     $("#SearchItemTable").append("<tr><td>" + itemCode + "</td><td>" + Description + "</td><td>" + Quantity + "</td><td>" + ReorderQuantity + "</td><td><input type='number' class='form-control' placeholder='Quantity'></td><td>" + price + "</td><td>" + supplier + "</td><td><input type='button'  value='Select' class='btn btn-primary' onclick='selectItem(this)'/></td></tr>");
      $(obj).parents("tr").remove();
 }
-function postData() {
+function confirm() {
     var tab = document.getElementById("ItemAddedTable");
     var rows = tab.rows;
-    debugger;
     var objCheckBox = tab.getElementsByClassName('checkbox');
     var jsonlist = new Array();
-    for (var i = 0; i < objCheckBox.length;i++) {
+    var supplierlist = new Array();
+    for (var i = 0; i < objCheckBox.length; i++) {
         if (objCheckBox[i].checked) {
-            var jsonObj = { "itemID": rows[i + 1].cells[1].innerHTML, "quantity": rows[i + 1].cells[5].innerHTML, "totalPrice": rows[i + 1].cells[6].innerHTML };  
+            var jsonObj = { "itemID": rows[i + 1].cells[1].innerHTML, "quantity": rows[i + 1].cells[5].innerHTML, "totalPrice": rows[i + 1].cells[6].innerHTML, "supplier": rows[i + 1].cells[7].innerHTML, "description": rows[i + 1].cells[2].innerHTML };  
             jsonlist.push(jsonObj);
+            supplierlist.push(rows[i + 1].cells[7].innerHTML);
         }
     }
-    alert(JSON.stringify(jsonlist));
-    //$.ajax({
-    //    url: "/StoreClerk/SavePurchaseOrder",
-    //    type: "post",
-    //    dataType: "text",
-    //    async: true,
-    //    data: JSON.stringify(jsonlist),
-    //    success: function (data) {
-    //        $('#successModal').modal('show');
-    //    },
-    //    error: function (XMLHttpRequest, textStatus, errorThrown) {
-    //        alert(XMLHttpRequest.status);
-    //        alert(XMLHttpRequest.readyState);
-    //        alert(textStatus);
-    //    },
-
-    //});
+    debugger;
+    if (jsonlist.length == 0) {
+        alert("Please select item to purchase");
+    } else {
+        if (isAllSame(supplierlist)) {
+            $.ajax({
+                url: "/StoreClerk/ConfirmOrder",
+                type: "post",
+                dataType: "text",
+                async: true,
+                data: JSON.stringify(jsonlist),
+                success: function (data) {
+                    $("#confirmTable").empty();
+                    $("#confirmTable").append("<tr>"
+                        + "<th>Item Code</th>"
+                        + "<th>Description</th>"
+                        + "<th>Quantity</th>"
+                        + "<th>Total Price</th>"
+                        +"</tr>");
+                    var obj = JSON.parse(data);
+                    $('#supplierAddress').val(obj.delieverAddress);
+                    for (var i = 0; i < obj.tablelist.length;i++ ) {
+                        $("#confirmTable").append("<tr><td>" + obj.tablelist[i].itemID
+                            + "</td><td>" + obj.tablelist[i].description
+                            + "</td><td>" + obj.tablelist[i].quantity
+                            + "</td><td>" + obj.tablelist[i].totalPrice + "</td></tr>");
+                    }
+                    $('#confirmModal').modal('show');
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert(XMLHttpRequest.status);
+                    alert(XMLHttpRequest.readyState);
+                    alert(textStatus);
+                }
+            });
+        } else {
+            alert("Cannot choose item from different supplier!");
+        }
+    }    
+    //alert(JSON.stringify(jsonlist));
 }
+
+function isAllSame(arr) {
+    for (var i = 0; i < arr.length-1; i++) {
+        if (arr[i] != arr[i + 1]) {
+            return false;
+        }
+    }
+    return true;
+}  

@@ -32,7 +32,7 @@ function postData() {
     }
     //alert(JSON.stringify(jsonlist));
     $.ajax({
-        url: SERVER_NAME + "/Request/SaveRequest",
+        url: "/Request/SaveRequest",
         type: "post",
         dataType: "text",
         async: false,

@@ -1,1 +1,0 @@
-﻿var SERVER_NAME = "";

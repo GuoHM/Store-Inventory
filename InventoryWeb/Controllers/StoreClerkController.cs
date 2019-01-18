@@ -29,5 +29,9 @@ namespace InventoryWeb.Controllers
         {
             return View();
         }
+        public ActionResult ListDept()
+        {
+            return View();
+        }
     }
 }

@@ -381,6 +381,7 @@
     <Content Include="Scripts\tables\AdjustmentVoucher.js" />
     <Content Include="Scripts\AdjustmentVoucherChoose.js" />
     <Content Include="Scripts\tables\ApproveOrReject.js" />
+    <Content Include="Scripts\tables\ListDept.js" />
     <Content Include="Scripts\tables\ManageInventory.js" />
     <Content Include="Scripts\tables\PurchaseOrder.js" />
     <Content Include="Scripts\tables\RaiseRequest.js" />
@@ -433,6 +434,7 @@
     <Content Include="Views\StoreClerk\ManageInventory.cshtml" />
     <Content Include="Views\ManageInventory\InventoryItems.cshtml" />
     <Content Include="Views\DepManager\ApproveOrReject.cshtml" />
+    <Content Include="Views\StoreClerk\ListDept.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

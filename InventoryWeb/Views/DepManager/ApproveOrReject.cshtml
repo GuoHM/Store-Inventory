@@ -22,7 +22,7 @@
             padding-top: 12px;
             padding-bottom: 12px;
             text-align: left;
-            background-color: #4CAF50;
+            background-color: #1E90FF;
             color: white;
         }
 </style>
@@ -49,48 +49,48 @@
 </div>
 
 
-    <!-- Edit Modal HTML -->
-    <div id="ApproveRequestModal" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form class="form-horizontal" role="form" action="SaveRequestStatus" method="post" id="approval-form">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Approve Or Reject Request</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-          
-                            <table id="requests">
-                                <tr>
-                                    <th>Request ID</th>
-                                    <th>User Name</th>
-                                    <th>Item Name</th>
-                                </tr>
-                                @*@for(int i=0;i<ViewBag.reqList.Count; i++)*@
-                               @* {*@
-                                <tr>
-                                    <td>@ViewBag.reqList.RequestID</td>
-                                    <td>@ViewBag.reqList.AspNetUsers.UserName</td>
-                                    <td>@ViewBag.reqList.ItemID</td>
-                                </tr>
-                                @*  }*@
-                                </table>
+<!-- Edit Modal HTML -->
+<div id="ApproveRequestModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form class="form-horizontal" role="form" action="SaveRequestStatus" method="post" id="approval-form">
+                <div class="modal-header">
+                    <h4 class="modal-title">Approve Or Reject Request</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
 
-</div>
-                    
-
-
+                        <table id="requests">
+                            <tr>
+                                <th>Request ID</th>
+                                <th>User Name</th>
+                                <th>Item Name</th>
+                            </tr>
+                            @*@for(int i=0;i<ViewBag.reqList.Count; i++)*@
+                            @* {*@
+                            <tr>
+                                <td>@ViewBag.reqList.RequestID</td>
+                                <td>@ViewBag.reqList.AspNetUsers.UserName</td>
+                                <td>@ViewBag.reqList.ItemID</td>
+                            </tr>
+                            @*  }*@
+                        </table>
 
                     </div>
-                    <div class="modal-footer">
-                        <input type="button" class="btn-success"  value="Approve">
-                        <input type="submit" class="btn-danger" value="Reject">
-                    </div>
-                </form>
-            </div>
+
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn-success" value="Approve">
+                    <input type="submit" class="btn-danger" value="Reject">
+                </div>
+            </form>
         </div>
     </div>
+</div>
 
 
 

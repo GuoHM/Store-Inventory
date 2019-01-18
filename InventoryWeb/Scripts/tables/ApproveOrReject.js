@@ -15,28 +15,28 @@ var TableInit = function () {
             method: 'get',
             url: 'http://inventorywebapi2019.azurewebsites.net/api/Request',
             //toolbar: '#toolbar',                
-            striped: true, 
-            cache: false, 
-            pagination: true, 
-            sortable: true, 
-            sortOrder: "asc", 
+            striped: true,
+            cache: false,
+            pagination: true,
+            sortable: true,
+            sortOrder: "asc",
             queryParams: oTableInit.queryParams,
             sidePagination: "client",
-            pageNumber: 1, 
-            pageSize: 5, 
-            pageList: [10, 25, 50, 100], 
-            search: true, 
+            pageNumber: 1,
+            pageSize: 5,
+            pageList: [10, 25, 50, 100],
+            search: true,
             strictSearch: false,
             queryParamsType: "",
-            showRefresh: true, 
-            minimumCountColumns: 2, 
-            clickToSelect: false, 
-            height: 500, 
+            showRefresh: true,
+            minimumCountColumns: 2,
+            clickToSelect: false,
+            height: 500,
             // uniqueId: "ID", 
-            showToggle: true, 
-            cardView: false, 
-            detailView: false, 
-            showExport: false,                     
+            showToggle: true,
+            cardView: false,
+            detailView: false,
+            showExport: false,
             exportDataType: "basic",              //basic', 'all', 'selected'.
             showColumns: true,
             columns: [{
@@ -52,39 +52,39 @@ var TableInit = function () {
                 sortable: true,
                 field: 'OrderID',
                 //events: operateEvents,
-               // formatter: InputTextBox
-                }, {
-                    align: "center",
-                    title: 'ItemID',
-                    sortable: true,
-                    sortable: true,
-                    field: 'ItemID',
-                    //events: operateEvents,
-                    // formatter: InputTextBox
-                },
-                {
-                    align: "center",
-                    title: 'Needed',
-                    sortable: true,
-                    sortable: true,
-                    field: 'Needed',
-                    //events: operateEvents,
-                    // formatter: InputTextBox
-                },{
+                // formatter: InputTextBox
+            }, {
+                align: "center",
+                title: 'ItemID',
+                sortable: true,
+                sortable: true,
+                field: 'ItemID',
+                //events: operateEvents,
+                // formatter: InputTextBox
+            },
+            {
+                align: "center",
+                title: 'Needed',
+                sortable: true,
+                sortable: true,
+                field: 'Needed',
+                //events: operateEvents,
+                // formatter: InputTextBox
+            }, {
                 align: "center",
                 title: 'Select',
                 sortable: true,
                 sortable: true,
                 //field : 'ID',
                 events: operateEvents,
-                    formatter: selectItem
+                formatter: selectItem
             }
             ],
             formatLoadingMessage: function () {
                 return "loading...";
             }
         });
-       
+
     };
 
 
@@ -96,7 +96,7 @@ var TableInit = function () {
         };
         return temp;
     };
-   
+
     function selectItem() {
         return [
             '<input type="button" id="view" value="View Details"  class="btn btn-primary" />',
@@ -111,8 +111,8 @@ var TableInit = function () {
             $("#ApproveRequestModal").modal('show');
         }
     };
-    
-   
+
+
     return oTableInit;
 };
 

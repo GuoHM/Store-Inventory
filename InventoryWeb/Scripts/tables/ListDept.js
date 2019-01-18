@@ -25,7 +25,7 @@ var TableInit = function () {
             pageNumber: 1,
             pageSize: 5,
             pageList: [10, 25, 50, 100],
-            search: true,
+            search: false,
             strictSearch: false,
             queryParamsType: "",
             showRefresh: true,
@@ -46,6 +46,14 @@ var TableInit = function () {
                 sortable: true,
                 field: 'DepartmentID'
             }, {
+                    align: "center",
+                    title: 'Department Name',
+                    sortable: true,
+                    sortable: true,
+                    field: 'DepartmentName',
+                    //events: operateEvents,
+                    // formatter: InputTextBox
+                }, {
                 align: "center",
                 title: 'Department Rep',
                 sortable: true,
@@ -55,29 +63,21 @@ var TableInit = function () {
                 // formatter: InputTextBox
             }, {
                 align: "center",
-                title: 'Department Head',
+                title: 'Collection Point',
                 sortable: true,
                 sortable: true,
-                    field: 'DepartmentHead',
+                    field: 'CollectionPoint',
                 //events: operateEvents,
                 // formatter: InputTextBox
             },
             {
                 align: "center",
-                title: 'Department Name',
+                title: 'Department Head',
                 sortable: true,
                 sortable: true,
-                field: 'DepartmentName',
+                field: 'DepartmentHead',
                 //events: operateEvents,
                 // formatter: InputTextBox
-            }, {
-                align: "center",
-                title: 'Select',
-                sortable: true,
-                sortable: true,
-                //field : 'ID',
-                events: operateEvents,
-                formatter: selectItem
             }
             ],
             formatLoadingMessage: function () {

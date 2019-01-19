@@ -8,6 +8,7 @@ using System.Web.Script.Serialization;
 using Microsoft.AspNet.Identity;
 using InventoryBusinessLogic;
 using InventoryBusinessLogic.Entity;
+using Newtonsoft.Json;
 
 namespace InventoryWeb.Controllers
 {
@@ -17,6 +18,7 @@ namespace InventoryWeb.Controllers
         CatalogueBusinessLogic catalogueBusinessLogic = new CatalogueBusinessLogic();
         SupplierBusinessLogic supplierBusinessLogic = new SupplierBusinessLogic();
         PurchaseOrderBusinessLogic purchaseOrderBusinessLogic = new PurchaseOrderBusinessLogic();
+        PurchaseItemBusinessLogic purchaseItemBusinessLogic = new PurchaseItemBusinessLogic();
         
         public ActionResult RaiseRequest()
         {
@@ -51,7 +53,7 @@ namespace InventoryWeb.Controllers
             JsonResult json = new JsonResult();
             confirmClass confirmClass = new confirmClass();
             confirmClass.tablelist = list;
-            confirmClass.delieverAddress = supplierBusinessLogic.FindSupplierById(list[0].supplier).Address;
+            confirmClass.supplierAddress = supplierBusinessLogic.FindSupplierById(list[0].supplier).Address;
             json.Data = confirmClass;
             return json;
         }
@@ -60,20 +62,23 @@ namespace InventoryWeb.Controllers
         {
             var sr = new StreamReader(Request.InputStream);
             var stream = sr.ReadToEnd();
-            JavaScriptSerializer js = new JavaScriptSerializer();
-            var list = js.Deserialize<List<SelectedList>>(stream);
+            var confirm = JsonConvert.DeserializeObject<confirmClass>(stream);
             double totalPrice = 0;
             string supplierID = "";
-            if (list.Any())
+            if (confirm!=null)
             {
+                var list = confirm.tablelist;
                 PurchaseOrder purchaseOrder = new PurchaseOrder();
-                Supplier supplier = supplierBusinessLogic.FindSupplierById(supplierID);
-                purchaseOrder.SupplierID = supplierID;
+                purchaseOrder.SupplierID = confirm.tablelist.First().supplier;
                 purchaseOrder.TotalPrice = 0;
                 purchaseOrder.PurchaseDate = DateTime.Now;
                 purchaseOrder.OrderBy = User.Identity.GetUserId();
                 purchaseOrder.PurchaseOrderStatus = "Unfullfill";
+                purchaseOrder.ExpectedDate = Convert.ToDateTime(confirm.dateToDeliver);
+                purchaseOrder.DeliverAddress = confirm.delieverTo;
+                purchaseOrder.PurchaseOrderID = purchaseOrderBusinessLogic.generatePurchaseOrderID();
                 purchaseOrderBusinessLogic.addPurchaseOrder(purchaseOrder);
+                //var list= confirms.First().tablelist;
                 foreach (var item in list)
                 {
                     Catalogue catalogue = catalogueBusinessLogic.getCatalogueById(item.itemID);
@@ -81,10 +86,12 @@ namespace InventoryWeb.Controllers
                     purchaseItem.ItemID = catalogue.ItemID;
                     purchaseItem.Quantity = Convert.ToInt32(item.quantity);
                     totalPrice += Convert.ToInt32(item.totalPrice);
-                    purchaseItem.PurchaseOrderID = purchaseOrderBusinessLogic.generatePurchaseOrderID();
+                    purchaseItem.PurchaseOrderID = purchaseOrder.PurchaseOrderID;
                     supplierID = catalogue.Supplier1;
+                    purchaseItemBusinessLogic.addPurchaseItem(purchaseItem);
                 }
                 purchaseOrder.TotalPrice = totalPrice;
+                purchaseOrderBusinessLogic.updatePurchaseOrder(purchaseOrder);
 
             }          
             return new JsonResult();
@@ -107,7 +114,13 @@ namespace InventoryWeb.Controllers
         {
             public List<SelectedList> tablelist { get; set; }
 
-            public string delieverAddress { get; set; }
+            public string supplierAddress { get; set; }
+
+            public string delieverTo { get; set; }
+
+            public string attentionTo { get; set; }
+
+            public string dateToDeliver { get; set; }
 
         }
     }

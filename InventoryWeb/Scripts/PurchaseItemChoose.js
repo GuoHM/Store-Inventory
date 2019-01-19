@@ -1,5 +1,4 @@
 ﻿function selectItem(obj) {
-    
     var ItemAddedTable = document.getElementById("ItemAddedTable");
     var SearchItemTable = document.getElementById("SearchItemTable");
     var node = ItemAddedTable.rows[1];
@@ -19,7 +18,7 @@
         var price = SearchItemTable.rows[rows].cells[5].innerHTML;
         var supplier = SearchItemTable.rows[rows].cells[6].innerHTML;
         var totalprice = price * orderQuantity;
-        $("#ItemAddedTable").append("<tr><td><input class='checkbox'  name='btSelectItem' type='checkbox'></td><td>" + itemCode + "</td><td>" + Description + "</td><td>" + Quantity + "</td><td>" + ReorderQuantity + "</td><td>" + orderQuantity + "</td><td>" + totalprice + "</td><td>" + supplier + "</td><td><input type='button'  value='remove' class='btn btn-danger' onclick='remove(this)'/></td></tr>");
+        $("#ItemAddedTable").append("<tr><td><input class='checkbox' checked='checked' type='checkbox'></td><td>" + itemCode + "</td><td>" + Description + "</td><td>" + Quantity + "</td><td>" + ReorderQuantity + "</td><td>" + orderQuantity + "</td><td>" + totalprice + "</td><td>" + supplier + "</td><td><input type='button'  value='remove' class='btn btn-danger' onclick='remove(this)'/></td></tr>");
         $(obj).parents("tr").remove();
     }
 }
@@ -34,9 +33,10 @@ function remove(obj) {
     var totalprice = ItemAddedTable.rows[rows].cells[6].innerHTML;
     var supplier = ItemAddedTable.rows[rows].cells[7].innerHTML;
     var price = totalprice / orderQuantity;
-    $("#SearchItemTable").append("<tr><td>" + itemCode + "</td><td>" + Description + "</td><td>" + Quantity + "</td><td>" + ReorderQuantity + "</td><td><input type='number' class='form-control' placeholder='Quantity'></td><td>" + price + "</td><td>" + supplier + "</td><td><input type='button'  value='Select' class='btn btn-primary' onclick='selectItem(this)'/></td></tr>");
+    $("#SearchItemTable").append("<tr align='center'><td>" + itemCode + "</td><td>" + Description + "</td><td>" + Quantity + "</td><td>" + ReorderQuantity + "</td><td><input type='number' class='form-control' placeholder='Quantity'></td><td>" + price + "</td><td>" + supplier + "</td><td><input type='button'  value='Select' class='btn btn-primary' onclick='selectItem(this)'/></td></tr>");
      $(obj).parents("tr").remove();
 }
+var json;
 function confirm() {
     var tab = document.getElementById("ItemAddedTable");
     var rows = tab.rows;
@@ -50,7 +50,6 @@ function confirm() {
             supplierlist.push(rows[i + 1].cells[7].innerHTML);
         }
     }
-    debugger;
     if (jsonlist.length == 0) {
         alert("Please select item to purchase");
     } else {
@@ -63,20 +62,22 @@ function confirm() {
                 data: JSON.stringify(jsonlist),
                 success: function (data) {
                     $("#confirmTable").empty();
-                    $("#confirmTable").append("<tr>"
+                    $("#confirmTable").append("<thead><tr>"
                         + "<th>Item Code</th>"
                         + "<th>Description</th>"
                         + "<th>Quantity</th>"
                         + "<th>Total Price</th>"
-                        +"</tr>");
-                    var obj = JSON.parse(data);
-                    $('#supplierAddress').val(obj.delieverAddress);
-                    for (var i = 0; i < obj.tablelist.length;i++ ) {
-                        $("#confirmTable").append("<tr><td>" + obj.tablelist[i].itemID
-                            + "</td><td>" + obj.tablelist[i].description
-                            + "</td><td>" + obj.tablelist[i].quantity
-                            + "</td><td>" + obj.tablelist[i].totalPrice + "</td></tr>");
+                        +"</tr></thead><tbody>");
+                    json = JSON.parse(data);
+                    $('#supplierAddress').val(json.supplierAddress);
+                    $('#delieverTo').val("Logic University");
+                    for (var i = 0; i < json.tablelist.length;i++ ) {
+                        $("#confirmTable").append("<tr><td>" + json.tablelist[i].itemID
+                            + "</td><td>" + json.tablelist[i].description
+                            + "</td><td>" + json.tablelist[i].quantity
+                            + "</td><td>" + json.tablelist[i].totalPrice + "</td></tr>");
                     }
+                    $("#confirmTable").append("</tbody>");
                     $('#confirmModal').modal('show');
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -90,6 +91,28 @@ function confirm() {
         }
     }    
     //alert(JSON.stringify(jsonlist));
+}
+
+function savePurchaseOrder() {
+    json['delieverTo'] = $('#delieverTo').val();
+    json['attentionTo'] = $('#attentionTo').val();
+    json['dateToDeliver'] = $('#dateToDeliver').val();
+    $.ajax({
+        url: "/StoreClerk/SavePurchaseOrder",
+        type: "post",
+        dataType: "text",
+        async: true,
+        data: JSON.stringify(json),
+        success: function (data) {
+            $('#confirmModal').modal('hide');
+            $('#successModal').modal('show');
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            alert(XMLHttpRequest.status);
+            alert(XMLHttpRequest.readyState);
+            alert(textStatus);
+        }
+    });
 }
 
 function isAllSame(arr) {

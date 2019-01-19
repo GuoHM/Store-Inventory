@@ -18,7 +18,27 @@ namespace InventoryBusinessLogic
 
         public int generatePurchaseOrderID()
         {
-            return inventory.PurchaseOrder.Max(x => x.PurchaseOrderID);
+            try
+            {
+                return inventory.PurchaseOrder.Max(x => x.PurchaseOrderID) +1;
+            }
+            catch (Exception)
+            {
+                return 1000;
+            }
+        }
+
+        public void updatePurchaseOrder(PurchaseOrder purchaseOrder)
+        {
+            PurchaseOrder update = inventory.PurchaseOrder.Where(x => x.PurchaseOrderID == purchaseOrder.PurchaseOrderID).First();
+            update.SupplierID = purchaseOrder.SupplierID;
+            update.TotalPrice = purchaseOrder.TotalPrice;
+            update.PurchaseDate = purchaseOrder.PurchaseDate;
+            update.OrderBy = purchaseOrder.OrderBy;
+            update.PurchaseOrderStatus = purchaseOrder.PurchaseOrderStatus;
+            update.ExpectedDate = purchaseOrder.ExpectedDate;
+            update.DeliverAddress = purchaseOrder.DeliverAddress;
+            inventory.SaveChanges();
         }
     }
 }

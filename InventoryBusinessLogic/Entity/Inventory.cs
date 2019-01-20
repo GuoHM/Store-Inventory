@@ -4,12 +4,14 @@ namespace InventoryBusinessLogic.Entity
     using System.Data.Entity;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
+    using Newtonsoft.Json;
 
     public partial class Inventory : DbContext
     {
         public Inventory()
             : base("name=Inventory")
         {
+           
         }
 
         public virtual DbSet<Adjustment> Adjustment { get; set; }

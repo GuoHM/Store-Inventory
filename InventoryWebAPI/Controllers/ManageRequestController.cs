@@ -24,11 +24,18 @@ namespace InventoryWebAPI.Controllers
                 return request.GetAllRequests();
             }
             //GET: api/Catalogue/5
-            [HttpGet]
-            [Route("api/Request/{id}")]
-            public Request GetRequestById(int id)
-            {
-                return request.GetRequestById(id);
-            }
+            //[HttpGet]
+            //[Route("api/Request/{id}")]
+            //public Request GetRequestById(int id)
+            //{
+            //    return request.GetRequestById(id);
+            //}
+
+        [HttpGet]
+        [Route("api/Request/{OrderId}")]
+        public IEnumerable<Request> GetRequestByOrderId(string OrderId)
+        {
+            return request.GetRequestByOrderId(OrderId);
         }
+    }
 }

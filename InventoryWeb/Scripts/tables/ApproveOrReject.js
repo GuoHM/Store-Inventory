@@ -6,14 +6,16 @@
     oButtonInit.Init();
 
 });
-
+var orderid = "";
+var requestedDate = "";
+var reqesterName = "";
 var TableInit = function () {
     var oTableInit = new Object();
 
     oTableInit.Init = function () {
         $('#SearchItemTable').bootstrapTable({
             method: 'get',
-            url: 'http://inventorywebapi2019.azurewebsites.net/api/Request',
+            url: 'http://localhost/InventoryWebAPI/api/Request',
             //toolbar: '#toolbar',                
             striped: true,
             cache: false,
@@ -41,40 +43,30 @@ var TableInit = function () {
             showColumns: true,
             columns: [{
                 align: "center",
-                title: 'Request ID',
+                title: 'Employee Name',
                 sortable: true,
-                sortable: true,
-                field: 'RequestID'
+                
+                field: 'AspNetUsers.UserName'
             }, {
                 align: "center",
-                title: 'OrderID',
-                sortable: true,
-                sortable: true,
-                field: 'OrderID',
+                title: 'Requested Date',
+                sortable: true,                
+                field: 'RequestDate'
                 //events: operateEvents,
                 // formatter: InputTextBox
             }, {
                 align: "center",
-                title: 'ItemID',
-                sortable: true,
-                sortable: true,
-                field: 'ItemID',
+                title: 'Status',
+                sortable: true,               
+               field: 'RequestStatus'
                 //events: operateEvents,
                 // formatter: InputTextBox
             },
             {
                 align: "center",
-                title: 'Needed',
+                title: 'Action',
                 sortable: true,
-                sortable: true,
-                field: 'Needed',
-                //events: operateEvents,
-                // formatter: InputTextBox
-            }, {
-                align: "center",
-                title: 'Select',
-                sortable: true,
-                sortable: true,
+                
                 //field : 'ID',
                 events: operateEvents,
                 formatter: selectItem
@@ -108,7 +100,22 @@ var TableInit = function () {
     }
     operateEvents = {
         'click #view': function (e, value, row, index) {
+         
             $("#ApproveRequestModal").modal('show');
+            orderid = row.OrderID;
+            requestedDate = row.RequestDate;
+            reqesterName = row.AspNetUsers.UserName;
+            document.getElementById('requestDate').innerHTML = requestedDate;
+            document.getElementById('requestedBy').innerHTML = reqesterName;
+           
+            
+            var oTableInit = new TableInit1();
+            oTableInit.Init();
+
+            $('#requests').bootstrapTable('refreshOptions', { url: 'http://localhost/InventoryWebAPI/api/Request/' + orderid });
+            $('#requests').bootstrapTable('refresh', { url: 'http://localhost/InventoryWebAPI/api/Request/' + orderid });
+
+            
         }
     };
 
@@ -128,3 +135,127 @@ var ButtonInit = function () {
 
     return oInit;
 };
+
+
+var TableInit1 = function () {
+    var oTableInit = new Object();
+   
+    oTableInit.Init = function () {
+        $('#requests').bootstrapTable({            
+            method: 'get',
+            url: 'http://localhost/InventoryWebAPI/api/Request/' + orderid,
+            //toolbar: '#toolbar',                
+            striped: true,
+            cache: false,
+            pagination: true,
+            sortable: true,
+            sortOrder: "asc",
+            queryParams: oTableInit.queryParams,           
+            sidePagination: "client",
+            pageNumber: 1,
+            pageSize: 5,
+            pageList: [10, 25, 50, 100],
+            search: true,
+            strictSearch: false,
+            queryParamsType: "",
+            showRefresh: true,
+            minimumCountColumns: 2,
+            clickToSelect: false,
+            height: 500,
+            // uniqueId: "ID", 
+            showToggle: true,
+            cardView: false,
+            detailView: false,
+            showExport: false,
+            exportDataType: "basic",              //basic', 'all', 'selected'.
+            showColumns: true,
+            columns: [{
+                align: "center",
+                title: 'Item Name',
+                sortable: true,            
+               
+                field: 'Catalogue.Description'
+            },
+                {
+                    align: "center",
+                    title: 'Quantity',
+                    sortable: true,
+                    field: 'Needed'
+                },
+                {
+                    align: "center",
+                    title: 'Price',
+                    sortable: true,
+                    field: 'Catalogue.Price'
+                },
+                
+                {
+                    align: "center",
+                    title: 'Total',
+                    sortable: true,
+                  // field: 'Catalogue.Price * Needed'
+                    field: selectItem
+               
+                }
+            ],
+            formatLoadingMessage: function () {
+                return "loading...";
+            }
+        });
+
+    };
+
+    oTableInit.queryParams = function (params) {
+
+        var id = {
+            id: $("#RequestID").val()
+        };
+        return id;
+    };
+
+    selectItem = function (e, value, row, index) {
+
+        return row.Price;
+      
+    }
+
+
+    operateEvents = {
+        'click #view': function (e, value, row, index) {
+            $("#ApproveRequestModal").modal('show');
+        }
+    };
+
+   
+    return oTableInit;
+};
+
+function postData(approvalStatus) {
+    var tab = document.getElementById("requests");
+    var rows = tab.rows;
+    var remarks = document.getElementById('remarks').value;
+    var jsonlist = new Array(rows.length - 1);
+    for (var i = 1; i < rows.length; i++) {
+        var jsonObj = { "orderId": orderid, "requestStatus": approvalStatus, "remarks": remarks };
+        jsonlist[i - 1] = jsonObj;
+    }
+    //alert(JSON.stringify(jsonlist));
+    $.ajax({
+        url: "/DepManager/SaveRequestStatus",
+        type: "post",
+        dataType: "text",
+        async: true,
+        data: JSON.stringify(jsonlist),
+        success: function (data) {
+            //  $('#successModal').modal('show');
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            alert(XMLHttpRequest.status);
+            alert(XMLHttpRequest.readyState);
+            alert(textStatus);
+        },
+
+    });
+};
+
+

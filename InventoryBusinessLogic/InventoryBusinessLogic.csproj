@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CatalogueBusinessLogic.cs" />
+    <Compile Include="ChangeCollectionPointBusinessLogic.cs" />
     <Compile Include="DepartmentBusinessLogic.cs" />
     <Compile Include="EmailBusinessLogic.cs" />
     <Compile Include="Entity\Adjustment.cs" />

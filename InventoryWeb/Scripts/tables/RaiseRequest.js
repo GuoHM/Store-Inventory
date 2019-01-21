@@ -9,7 +9,6 @@ $(document).ready(function() {
 
 var TableInit = function() {
 	var oTableInit = new Object();
-
 	oTableInit.Init = function() {
         $('#SearchItemTable').bootstrapTable({
             method: 'get',

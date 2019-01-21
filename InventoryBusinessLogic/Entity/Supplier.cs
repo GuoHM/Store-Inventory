@@ -39,6 +39,9 @@ namespace InventoryBusinessLogic.Entity
         [StringLength(50)]
         public string GSTNumber { get; set; }
 
+        [StringLength(50)]
+        public string SupplierEmail { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Catalogue> Catalogue { get; set; }
 

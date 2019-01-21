@@ -52,8 +52,10 @@ namespace InventoryWeb.Controllers
             var list = js.Deserialize<List<SelectedList>>(stream);
             JsonResult json = new JsonResult();
             confirmClass confirmClass = new confirmClass();
-            confirmClass.tablelist = list;
-            confirmClass.supplierAddress = supplierBusinessLogic.FindSupplierById(list[0].supplier).Address;
+            confirmClass.tablelist = list;        
+            Supplier supplier= supplierBusinessLogic.FindSupplierById(list[0].supplier);
+            confirmClass.supplierAddress = supplier.Address;
+            confirmClass.attentionTo = supplier.SupplierName;
             json.Data = confirmClass;
             return json;
         }

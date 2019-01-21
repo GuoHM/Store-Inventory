@@ -4,14 +4,12 @@ namespace InventoryBusinessLogic.Entity
     using System.Data.Entity;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
-    using Newtonsoft.Json;
 
     public partial class Inventory : DbContext
     {
         public Inventory()
             : base("name=Inventory")
         {
-           
         }
 
         public virtual DbSet<Adjustment> Adjustment { get; set; }
@@ -160,6 +158,10 @@ namespace InventoryBusinessLogic.Entity
 
             modelBuilder.Entity<Supplier>()
                 .Property(e => e.GSTNumber)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Supplier>()
+                .Property(e => e.SupplierEmail)
                 .IsUnicode(false);
 
             modelBuilder.Entity<Supplier>()

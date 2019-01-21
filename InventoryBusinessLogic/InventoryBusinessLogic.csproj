@@ -82,6 +82,9 @@
     <Compile Include="OrderBusinessLogic.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PurchaseItemBusinessLogic.cs" />
+    <Compile Include="PurchaseOrderBusinessLogic.cs" />
+    <Compile Include="SupplierBusinessLogic.cs" />
     <Compile Include="UserBusinessLogic.cs" />
   </ItemGroup>
   <ItemGroup>

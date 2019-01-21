@@ -9,7 +9,6 @@ $(document).ready(function() {
 
 var TableInit = function() {
 	var oTableInit = new Object();
-
 	oTableInit.Init = function() {
         $('#SearchItemTable').bootstrapTable({
             method: 'get',
@@ -117,12 +116,12 @@ var TableInit = function() {
 
 	function InputTextBox(value, row, index) {
 		return [       
-		        '<input type="number" max="9999" min="0" class="form-control" placeholder="Quantity" id="quantity">'
+		        '<input type="number" class="form-control" placeholder="Quantity" id="quantity">'
 		        ].join('');
     }
     function selectItem(value, row, index) {
         return [
-            '<input type="button" value="Select" onclick="selectItem(this)" class="btn btn-primary" />',
+            '<input type="button" value="Add" onclick="selectItem(this)" class="btn btn-primary" />',
         ].join('');
     }
 	return oTableInit;

@@ -8,6 +8,7 @@ using System.Web.Script.Serialization;
 using Microsoft.AspNet.Identity;
 using InventoryBusinessLogic;
 using InventoryBusinessLogic.Entity;
+using Newtonsoft.Json;
 
 namespace InventoryWeb.Controllers
 {
@@ -15,6 +16,10 @@ namespace InventoryWeb.Controllers
     public class StoreClerkController : Controller
     {
         CatalogueBusinessLogic catalogueBusinessLogic = new CatalogueBusinessLogic();
+        SupplierBusinessLogic supplierBusinessLogic = new SupplierBusinessLogic();
+        PurchaseOrderBusinessLogic purchaseOrderBusinessLogic = new PurchaseOrderBusinessLogic();
+        PurchaseItemBusinessLogic purchaseItemBusinessLogic = new PurchaseItemBusinessLogic();
+        EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
 
         public ActionResult RaiseRequest()
         {
@@ -40,25 +45,58 @@ namespace InventoryWeb.Controllers
             return View();
         }
 
+        public JsonResult ConfirmOrder()
+        {
+            var sr = new StreamReader(Request.InputStream);
+            var stream = sr.ReadToEnd();
+            JavaScriptSerializer js = new JavaScriptSerializer();
+            var list = js.Deserialize<List<SelectedList>>(stream);
+            JsonResult json = new JsonResult();
+            confirmClass confirmClass = new confirmClass();
+            confirmClass.tablelist = list;        
+            Supplier supplier= supplierBusinessLogic.FindSupplierById(list[0].supplier);
+            confirmClass.supplierAddress = supplier.Address;
+            confirmClass.attentionTo = supplier.SupplierName;
+            json.Data = confirmClass;
+            return json;
+        }
+
         public ActionResult SavePurchaseOrder()
         {
             var sr = new StreamReader(Request.InputStream);
             var stream = sr.ReadToEnd();
-            string username = User.Identity.GetUserId();
-            JavaScriptSerializer js = new JavaScriptSerializer();
-            var list = js.Deserialize<List<SelectedList>>(stream);
-            if (list.Any())
+            var confirm = JsonConvert.DeserializeObject<confirmClass>(stream);
+            double totalPrice = 0;
+            string supplierID = "";
+            if (confirm!=null)
             {
+                var list = confirm.tablelist;
+                PurchaseOrder purchaseOrder = new PurchaseOrder();
+                purchaseOrder.SupplierID = confirm.tablelist.First().supplier;
+                purchaseOrder.TotalPrice = 0;
+                purchaseOrder.PurchaseDate = DateTime.Now;
+                purchaseOrder.OrderBy = User.Identity.GetUserId();
+                purchaseOrder.PurchaseOrderStatus = "Unfullfill";
+                purchaseOrder.ExpectedDate = Convert.ToDateTime(confirm.dateToDeliver);
+                purchaseOrder.DeliverAddress = confirm.delieverTo;
+                purchaseOrder.PurchaseOrderID = purchaseOrderBusinessLogic.generatePurchaseOrderID();
+                purchaseOrderBusinessLogic.addPurchaseOrder(purchaseOrder);
+                //var list= confirms.First().tablelist;
                 foreach (var item in list)
                 {
                     Catalogue catalogue = catalogueBusinessLogic.getCatalogueById(item.itemID);
-                    PurchaseOrder purchaseOrder = new PurchaseOrder();
-                    //purchaseOrder.
                     PurchaseItem purchaseItem = new PurchaseItem();
                     purchaseItem.ItemID = catalogue.ItemID;
-                    //purchaseItem.
+                    purchaseItem.Quantity = Convert.ToInt32(item.quantity);
+                    totalPrice += Convert.ToInt32(item.totalPrice);
+                    purchaseItem.PurchaseOrderID = purchaseOrder.PurchaseOrderID;
+                    supplierID = catalogue.Supplier1;
+                    purchaseItemBusinessLogic.addPurchaseItem(purchaseItem);
                 }
-            }
+                purchaseOrder.TotalPrice = totalPrice;
+                purchaseOrderBusinessLogic.updatePurchaseOrder(purchaseOrder);
+
+            }          
             return new JsonResult();
         }
 
@@ -66,7 +104,27 @@ namespace InventoryWeb.Controllers
         {
             public string itemID { get; set; }
 
+            public string description { get; set; }
+
             public string quantity { get; set; }
+
+            public string totalPrice { get; set; }
+
+            public string supplier { get; set; }
+        }
+
+        class confirmClass
+        {
+            public List<SelectedList> tablelist { get; set; }
+
+            public string supplierAddress { get; set; }
+
+            public string delieverTo { get; set; }
+
+            public string attentionTo { get; set; }
+
+            public string dateToDeliver { get; set; }
+
         }
     }
 

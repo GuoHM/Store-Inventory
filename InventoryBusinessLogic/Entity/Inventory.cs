@@ -161,6 +161,10 @@ namespace InventoryBusinessLogic.Entity
                 .IsUnicode(false);
 
             modelBuilder.Entity<Supplier>()
+                .Property(e => e.SupplierEmail)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Supplier>()
                 .HasMany(e => e.Catalogue)
                 .WithOptional(e => e.Supplier)
                 .HasForeignKey(e => e.Supplier1);

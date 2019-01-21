@@ -70,13 +70,23 @@ function confirm() {
                         +"</tr></thead><tbody>");
                     json = JSON.parse(data);
                     $('#supplierAddress').val(json.supplierAddress);
+                    $('#attentionTo').val(json.attentionTo);
                     $('#delieverTo').val("Logic University");
+                    var now = new Date();
+                    now.setDate(now.getDate() + 3);
+                    var day = ("0" + now.getDate()).slice(-2);
+                    var month = ("0" + (now.getMonth() + 1)).slice(-2);
+                    var date = now.getFullYear() + "-" + (month) + "-" + (day);
+                    $('#dateToDeliver').val(date);
+                    var totalPrice=0;
                     for (var i = 0; i < json.tablelist.length;i++ ) {
                         $("#confirmTable").append("<tr><td>" + json.tablelist[i].itemID
                             + "</td><td>" + json.tablelist[i].description
                             + "</td><td>" + json.tablelist[i].quantity
                             + "</td><td>" + json.tablelist[i].totalPrice + "</td></tr>");
+                        totalPrice += parseInt(json.tablelist[i].totalPrice);
                     }
+                    document.getElementById("totalPrice").innerHTML = 'Total Price:'+totalPrice;
                     $("#confirmTable").append("</tbody>");
                     $('#confirmModal').modal('show');
                 },

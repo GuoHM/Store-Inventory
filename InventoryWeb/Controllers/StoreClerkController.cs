@@ -19,7 +19,8 @@ namespace InventoryWeb.Controllers
         SupplierBusinessLogic supplierBusinessLogic = new SupplierBusinessLogic();
         PurchaseOrderBusinessLogic purchaseOrderBusinessLogic = new PurchaseOrderBusinessLogic();
         PurchaseItemBusinessLogic purchaseItemBusinessLogic = new PurchaseItemBusinessLogic();
-        
+        EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
+
         public ActionResult RaiseRequest()
         {
             return View();

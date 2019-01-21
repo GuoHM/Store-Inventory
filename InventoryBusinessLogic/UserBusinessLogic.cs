@@ -17,7 +17,6 @@ namespace InventoryBusinessLogic
             return inventory.AspNetUsers.Where(x => x.DepartmentID == DepId).ToList<AspNetUsers>();
         }
 
-
         public List<AspNetUsers> getAllUser()
         {
             return inventory.AspNetUsers.ToList();

@@ -100,6 +100,19 @@ namespace InventoryWeb.Controllers
             return new JsonResult();
         }
 
+        public ActionResult SaveAdjustmentVoucher()
+        {
+            var sr = new StreamReader(Request.InputStream);
+            var stream = sr.ReadToEnd();
+            JavaScriptSerializer js = new JavaScriptSerializer();
+            var list = JsonConvert.DeserializeObject<List<SelectedList>>(stream);
+            if (list.Any())
+            {
+
+            }
+            return new JsonResult();
+        }
+
         class SelectedList
         {
             public string itemID { get; set; }
@@ -111,6 +124,10 @@ namespace InventoryWeb.Controllers
             public string totalPrice { get; set; }
 
             public string supplier { get; set; }
+
+            public string price { get; set; }
+
+            public string reason { get; set; }
         }
 
         class confirmClass

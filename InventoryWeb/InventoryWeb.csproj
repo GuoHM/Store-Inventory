@@ -330,6 +330,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CollectionPointController.cs" />
     <Compile Include="Controllers\DepManagerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -382,9 +383,11 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\PurchaseItemChoose.js" />
     <Content Include="Scripts\RaiseRequestChoose.js" />
+    <Content Include="Scripts\ShowPurchaseDetails.js" />
     <Content Include="Scripts\tables\AdjustmentVoucher.js" />
     <Content Include="Scripts\AdjustmentVoucherChoose.js" />
     <Content Include="Scripts\tables\ApproveOrReject.js" />
+    <Content Include="Scripts\tables\Additems.js" />
     <Content Include="Scripts\tables\ListDept.js" />
     <Content Include="Scripts\tables\ManageInventory.js" />
     <Content Include="Scripts\tables\PurchaseOrder.js" />
@@ -439,6 +442,8 @@
     <Content Include="Views\ManageInventory\InventoryItems.cshtml" />
     <Content Include="Views\DepManager\ApproveOrReject.cshtml" />
     <Content Include="Views\StoreClerk\ListDept.cshtml" />
+    <Content Include="Views\StoreClerk\Additems.cshtml" />
+    <Content Include="Views\CollectionPoint\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -47,5 +47,6 @@ namespace InventoryBusinessLogic.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order> Order { get; set; }
+      //  public string UserID { get; internal set; }
     }
 }

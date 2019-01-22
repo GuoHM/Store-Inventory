@@ -34,6 +34,10 @@ namespace InventoryBusinessLogic.Entity
                 .IsFixedLength();
 
             modelBuilder.Entity<Adjustment>()
+                .Property(e => e.Remarks)
+                .IsFixedLength();
+
+            modelBuilder.Entity<Adjustment>()
                 .HasMany(e => e.AdjustmentItem)
                 .WithRequired(e => e.Adjustment)
                 .WillCascadeOnDelete(false);
@@ -59,6 +63,11 @@ namespace InventoryBusinessLogic.Entity
                 .HasMany(e => e.Adjustment)
                 .WithOptional(e => e.AspNetUsers)
                 .HasForeignKey(e => e.Supervisor);
+
+            modelBuilder.Entity<AspNetUsers>()
+                .HasMany(e => e.Adjustment1)
+                .WithOptional(e => e.AspNetUsers1)
+                .HasForeignKey(e => e.UserID);
 
             modelBuilder.Entity<AspNetUsers>()
                 .HasMany(e => e.Department)
@@ -158,6 +167,10 @@ namespace InventoryBusinessLogic.Entity
 
             modelBuilder.Entity<Supplier>()
                 .Property(e => e.GSTNumber)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Supplier>()
+                .Property(e => e.SupplierEmail)
                 .IsUnicode(false);
 
             modelBuilder.Entity<Supplier>()

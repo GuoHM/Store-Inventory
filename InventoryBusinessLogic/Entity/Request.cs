@@ -1,11 +1,11 @@
 namespace InventoryBusinessLogic.Entity
 {
-    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using Newtonsoft.Json;
 
     [Table("Request")]
     public partial class Request
@@ -32,9 +32,9 @@ namespace InventoryBusinessLogic.Entity
 
         [StringLength(500)]
         public string Remarks { get; set; }
-        [JsonIgnore]
+     
         public virtual AspNetUsers AspNetUsers { get; set; }
-        [JsonIgnore]
+       
         public virtual Catalogue Catalogue { get; set; }
         [JsonIgnore]
         public virtual Order Order { get; set; }

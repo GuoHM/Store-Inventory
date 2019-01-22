@@ -16,7 +16,7 @@
 
         #requests tr:hover {
             background-color: #ddd;
-        }
+        }b
 
         #requests th {
             padding-top: 12px;
@@ -27,7 +27,7 @@
         }
 </style>
 @{
-    ViewBag.Title = "ApproveOrReject";
+    ViewBag.Title = "AddItems";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
@@ -40,9 +40,12 @@
 
     <div class="panel-body" style="padding-bottom: 0px;">
         <div class="panel panel-default">
-            <div class="panel-heading">Approve Or Reject</div>
+            <div class="panel-heading">List of PO</div>
             <div class="panel-body">
-                <table id="SearchItemTable"></table>
+                <table id="AddItems"></table>
+                <div style="margin-top:8px">
+                    <input type="button" value="Update" onclick="UpdateQuantity()" class="btn btn-primary" style="float:right" />
+                </div>
             </div>
         </div>
     </div>
@@ -55,46 +58,22 @@
         <div class="modal-content">
             <form class="form-horizontal" role="form" id="approval-form">
                 <div class="modal-header">
-                    <h4 class="modal-title">Approve Or Reject Request</h4>
+                    <h4 class="modal-title">Purchase Order Details</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
-                <div class="modal-body">    
+                <div class="modal-body">
                     <div class="form-group">
                         <table>
-                            <tr> <td> <label>Date Requested:&nbsp;&nbsp;     </label></td>
-                            <td><label id="requestDate"></label></td></tr>
-                            <tr><td><label>Requested By    :  &nbsp;&nbsp;       </label></td>
-                            <td><label id="requestedBy"></label></td></tr>
-                        </table>
-
-                        <table id="requests">
                             
                         </table>
 
+                        <table id="ShowPurchaseDetails"></table>
 
 
                     </div>
-                    <table>
-                        <tr>
-                            <td>
-                                <label>Remarks</label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <textarea name="remarks" id="remarks" cols="40" rows="5"></textarea>
-                            </td>
-                        </tr>
-                    </table>
-                    
-                   
+                </div>
 
 
-                </div>
-                <div class="modal-footer">
-                    <input type="button" class="btn-danger" onclick="postData('Rejected')" value="Reject">
-                    <input type="button" class="btn-success" onclick="postData('Approved')" value="Approve">
-                </div>
             </form>
         </div>
     </div>
@@ -103,7 +82,8 @@
 
 
 <script src="~/Scripts/bootstrap-table.js"></script>
-<script src="~/Scripts/tables/ApproveOrReject.js"></script>
+<script src="~/Scripts/tables/Additems.js"></script>
+<script src="~/Scripts/ShowPurchaseDetails.js"></script>
 
 <script src="~/Scripts/bootstrap-table-export.js"></script>
 <script src="//rawgit.com/hhurz/tableExport.jquery.plugin/master/tableExport.js"></script>

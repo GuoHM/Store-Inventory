@@ -21,7 +21,7 @@ var TableInit = function () {
             queryParams: oTableInit.queryParams,// 传递参数（*）
             sidePagination: "client", // 分页方式：client客户端分页，server服务端分页（*）
             pageNumber: 1, // 初始化加载第一页，默认第一页
-            pageSize: 6, // 每页的记录行数（*）
+            pageSize: 7, // 每页的记录行数（*）
             pageList: [10, 25, 50, 100], // 可供选择的每页的行数（*）
             search: true, //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
             strictSearch: false,
@@ -37,7 +37,8 @@ var TableInit = function () {
             showExport: false,                     //是否显示导出
             exportDataType: "basic",              //basic', 'all', 'selected'.
             showColumns: true,
-            columns: [{
+            columns: [
+            {
                 align: "center",
                 title: 'ItemCode',
                 sortable: true,
@@ -67,7 +68,8 @@ var TableInit = function () {
                     align: "center",
                     title: 'Price',
                     sortable: true,
-                    field: 'Price'
+                    field: 'Price',
+                    formatter: price
                 }, {
                     align: "center",
                     title: 'Supplier',
@@ -91,7 +93,7 @@ var TableInit = function () {
             striped: true, // 是否显示行间隔色
             cache: false, // 是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
             pagination: true, // 是否显示分页（*）
-            sortable: true, // 是否启用排序
+            sortable: false, // 是否启用排序
             sortOrder: "asc", // 排序方式
             queryParams: oTableInit.queryParams,// 传递参数（*）
             sidePagination: "client", // 分页方式：client客户端分页，server服务端分页（*）
@@ -114,36 +116,41 @@ var TableInit = function () {
             showColumns: true,
             columns: [{
                 align: "center",
-                title: 'ItemCode',
-                sortable: true
+                title: '&nbsp&nbsp'
+                //sortable: true,
+                //formatter: selectItem
             }, {
                 align: "center",
-                title: 'Description',
-                sortable: true
+                title: 'ItemCode',
+                sortable: false
+            }, {
+                align: "center",
+                    title: '&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspDescription&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp',
+                    sortable: false
             }, {
                 align: "center",
                 title: 'Quantity',
-                sortable: true
+                    sortable: false
             }, {
                 align: "center",
                 title: 'Reorder Quantity',
-                sortable: true
+                    sortable: false
             }, {
                 align: "center",
                 title: 'Order Quantity',
-                sortable: true
+                    sortable: false
             }, {
                 align: "center",
                 title: 'Total Price',
-                sortable: true
+                    sortable: false
             }, {
                 align: "center",
                 title: 'Supplier',
-                sortable: true
+                    sortable: false
             }, {
                 align: "center",
                 title: 'Remove',
-                sortable: true
+                    sortable: false
             }
             ],
             formatLoadingMessage: function () {
@@ -151,7 +158,9 @@ var TableInit = function () {
             }
         });
     };
-
+    function price(value, row, index) {
+        return '$' + (value).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+    }
     function InputTextBox(value, row, index) {
         return [
             '<input type="text" maxlength="5" class="form-control" placeholder="Quantity" id="quantity">'
@@ -172,9 +181,7 @@ var ButtonInit = function () {
 
     oInit.Init = function () {
         // button
-        $('#btn_add').click(function () {
-            $("#addEnrollmentModal").modal('show')
-        })
+  
 
     };
 

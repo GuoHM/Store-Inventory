@@ -55,7 +55,10 @@ namespace InventoryBusinessLogic
             inventory.SaveChanges();
         }
 
-        
+        public List<Catalogue> GetLowStock()
+        {
+            return inventory.Catalogue.Where(x => x.Quantity <= x.ReorderLevel).ToList();
+        }
 
        }
   

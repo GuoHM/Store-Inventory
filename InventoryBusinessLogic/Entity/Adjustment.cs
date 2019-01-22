@@ -31,6 +31,9 @@ namespace InventoryBusinessLogic.Entity
         [StringLength(128)]
         public string UserID { get; set; }
 
+        [StringLength(255)]
+        public string Remarks { get; set; }
+
         public virtual AspNetUsers AspNetUsers { get; set; }
 
         public virtual AspNetUsers AspNetUsers1 { get; set; }

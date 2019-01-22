@@ -34,6 +34,10 @@ namespace InventoryBusinessLogic.Entity
                 .IsFixedLength();
 
             modelBuilder.Entity<Adjustment>()
+                .Property(e => e.Remarks)
+                .IsFixedLength();
+
+            modelBuilder.Entity<Adjustment>()
                 .HasMany(e => e.AdjustmentItem)
                 .WithRequired(e => e.Adjustment)
                 .WillCascadeOnDelete(false);

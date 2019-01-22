@@ -103,6 +103,14 @@ namespace InventoryWeb.Controllers
             return new JsonResult();
         }
 
+        public JsonResult LowStock()
+        {
+            JsonResult json = new JsonResult();
+            json.Data = catalogueBusinessLogic.GetLowStock();
+            json.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return json;
+        }
+
         public ActionResult SaveAdjustmentVoucher()
         {
             var sr = new StreamReader(Request.InputStream);

@@ -124,6 +124,26 @@ function savePurchaseOrder() {
     });
 }
 
+function lowStock() {
+    $.ajax({
+        url: "/StoreClerk/LowStock",
+        type: "get",
+        dataType: "text",
+        async: true,
+        success: function (data) {
+            var json = JSON.parse(data);
+            for (var i = 0; i < json.length; i++) {
+                $("#ItemAddedTable").append("<tr><td><input class='checkbox' checked='checked' type='checkbox'></td><td>" + json[i].itemID + "</td><td>" + json[i].Description + "</td><td>" + json[i].Quantity + "</td><td>" + json[i].ReorderQuantity + "</td><td>" + json[i].ReorderLevel + "</td><td>" + parseFloat(josn[i].ReorderQuantity) * parseFloat(josn[i].price) + "</td><td>" + json[i].Supplier1 + "</td><td><input type='button'  value='remove' class='btn btn-danger' onclick='remove(this)'/></td></tr>");
+            }
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            alert(XMLHttpRequest.status);
+            alert(XMLHttpRequest.readyState);
+            alert(textStatus);
+        }
+    });
+}
+
 function isAllSame(arr) {
     for (var i = 0; i < arr.length-1; i++) {
         if (arr[i] != arr[i + 1]) {

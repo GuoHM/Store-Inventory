@@ -1,5 +1,6 @@
 namespace InventoryBusinessLogic.Entity
 {
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -36,9 +37,9 @@ namespace InventoryBusinessLogic.Entity
 
         [Column(TypeName = "date")]
         public DateTime? DepartmentHeadEndDate { get; set; }
-
+        [JsonIgnore]
         public virtual AspNetUsers AspNetUsers { get; set; }
-
+        [JsonIgnore]
         public virtual AspNetUsers AspNetUsers1 { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

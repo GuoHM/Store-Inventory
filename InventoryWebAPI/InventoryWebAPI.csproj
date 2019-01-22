@@ -245,6 +245,7 @@
     <Compile Include="Controllers\CatalogueController.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\ManageRequestController.cs" />
+    <Compile Include="Controllers\MobileRequestController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

@@ -54,6 +54,11 @@ namespace InventoryWeb.Controllers
             return View();
         }
 
+        public void MobileSaveRequestStatus(int reqID, string reqStatus)
+        {
+            req.ApproveOrRejectRequest(reqID, reqStatus);
+        }
+
 
 
     }

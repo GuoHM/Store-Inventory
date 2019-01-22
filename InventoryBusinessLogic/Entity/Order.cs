@@ -5,6 +5,10 @@ namespace InventoryBusinessLogic.Entity
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using Newtonsoft.Json;
+    
+    
+
 
     [Table("Order")]
     public partial class Order
@@ -32,7 +36,7 @@ namespace InventoryBusinessLogic.Entity
         public byte[] Signature { get; set; }
 
         public virtual Department Department { get; set; }
-
+        [JsonIgnore]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Request> Request { get; set; }
     }

@@ -10,7 +10,7 @@ using System.Web.Http.Cors;
 
 namespace InventoryWebAPI.Controllers
 {
-    [EnableCors(origins: "*", headers: "*", methods: "*")]
+    
     public class ManageRequestController : ApiController
     {
         
@@ -18,7 +18,7 @@ namespace InventoryWebAPI.Controllers
             ManageRequestBusinessLogic request = new ManageRequestBusinessLogic();
             [HttpGet]
             [Route("api/Request")]
-
+            [AllowAnonymous]
             public IEnumerable<Request> GetAllRequests()
             {
                 return request.GetAllRequests();
@@ -30,5 +30,7 @@ namespace InventoryWebAPI.Controllers
             {
                 return request.GetRequestById(id);
             }
-        }
+
+
+    }
 }

@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using InventoryWeb.Models;
+using InventoryBusinessLogic;
 
 namespace InventoryWeb.Controllers
 {
@@ -55,15 +56,17 @@ namespace InventoryWeb.Controllers
         [AllowAnonymous]
         public async Task<String> MobileLogin()
         {
+            UserBusinessLogic userlogic = new UserBusinessLogic();
             string email = "";
             string password = "";
             email = Request.Form.Get("username");
             password = Request.Form.Get("password");
             var result = await SignInManager.PasswordSignInAsync(email, password, true, shouldLockout: false);
+            string userid = userlogic.getUserByEmail(email).Id;
             switch (result)
             {
                 case SignInStatus.Success:
-                    return "Success";
+                    return  "userid:"+userid;
                 case SignInStatus.LockedOut:
                     return "LockedOut";
                 case SignInStatus.RequiresVerification:

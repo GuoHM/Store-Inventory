@@ -21,12 +21,39 @@ namespace InventoryBusinessLogic
         {
             return inventory.Request.ToList();
         }
+
         public Request GetRequestById(int requestId)
         {
             try
             {
                 return inventory.Request.Where(x => x.RequestID == requestId).First();
             } catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public List<Request> GetRequestsByUserID(string userid)
+        {
+            try
+            {   
+                return inventory.Request.Where(x => x.UserID == userid).ToList();
+            }
+            catch
+            {
+                return null;
+            }
+            
+        }
+
+        public List<Request> GetRequestsByDeptID(string deptid)
+        {
+            try
+            {
+                Department department = inventory.Department.Where(x => x.DepartmentID == deptid).First();
+                return inventory.Request.Where(x => x.AspNetUsers.Department== department).ToList();
+            }
+            catch
             {
                 return null;
             }

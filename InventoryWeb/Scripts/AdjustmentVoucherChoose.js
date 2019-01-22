@@ -47,7 +47,7 @@ function confirm() {
     }
     $.ajax({
         url: "/StoreClerk/SaveAdjustmentVoucher",
-        type: "get",
+        type: "post",
         dataType: "text",
         async: true,
         data: JSON.stringify(jsonlist),

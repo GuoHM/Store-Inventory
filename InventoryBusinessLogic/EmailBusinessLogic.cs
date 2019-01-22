@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
+using InventoryBusinessLogic.Entity;
 
 namespace InventoryBusinessLogic
 {
@@ -49,10 +50,12 @@ namespace InventoryBusinessLogic
             this.client.Send(this.mail);
         }
 
-        public string SendPurchaseOrderNotification(confirmClass confirm)
+        public string SendPurchaseOrderNotification(int purchaseOrderId)
         {
-            string MailBody = "<p style=\"font-size: 10pt\">以下内容为系统自动发送，请勿直接回复，谢谢。</p><table cellspacing=\"1\" cellpadding=\"3\" border=\"0\" bgcolor=\"000000\" style=\"font-size: 10pt;line-height: 15px;\">";
-            MailBody += "<div align=\"center\">";
+            PurchaseOrderBusinessLogic purchaseOrderBusinessLogic = new PurchaseOrderBusinessLogic();
+            PurchaseOrder purchaseOrder = purchaseOrderBusinessLogic.findById(purchaseOrderId);
+            string MailBody = "<p>Dear "+ purchaseOrder.Supplier.SupplierName + "</p>";
+            MailBody += "</br>";
             MailBody += "<tr>";
             for (int hcol = 0; hcol < 5; hcol++)
             {
@@ -62,48 +65,22 @@ namespace InventoryBusinessLogic
             }
             MailBody += "</tr>";
 
-            for (int row = 0; row < confirm.tablelist.Count; row++)
-            {
-                MailBody += "<tr>";
-                //for (int col = 0; col < list.Columns.Count; col++)
-                //{
-                //    MailBody += "<td bgcolor=\"dddddd\">&nbsp;&nbsp;&nbsp;";
-                //    MailBody += data.Rows[row][col].ToString();
-                //    MailBody += "&nbsp;&nbsp;&nbsp;</td>";
-                //}
-                MailBody += "</tr>";
-            }
+            //for (int row = 0; row < confirm.tablelist.Count; row++)
+            //{
+            //    MailBody += "<tr>";
+            //    //for (int col = 0; col < list.Columns.Count; col++)
+            //    //{
+            //    //    MailBody += "<td bgcolor=\"dddddd\">&nbsp;&nbsp;&nbsp;";
+            //    //    MailBody += data.Rows[row][col].ToString();
+            //    //    MailBody += "&nbsp;&nbsp;&nbsp;</td>";
+            //    //}
+            //    MailBody += "</tr>";
+            //}
             MailBody += "</table>";
             MailBody += "</div>";
             return MailBody;
         }
 
-        public class SelectedList
-        {
-            public string itemID { get; set; }
-
-            public string description { get; set; }
-
-            public string quantity { get; set; }
-
-            public string totalPrice { get; set; }
-
-            public string supplier { get; set; }
-        }
-
-        public class confirmClass
-        {
-            public List<SelectedList> tablelist { get; set; }
-
-            public string supplierAddress { get; set; }
-
-            public string delieverTo { get; set; }
-
-            public string attentionTo { get; set; }
-
-            public string dateToDeliver { get; set; }
-
-        }
-
+      
     }
 }

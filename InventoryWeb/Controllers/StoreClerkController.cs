@@ -120,7 +120,6 @@ namespace InventoryWeb.Controllers
             JsonResult json = new JsonResult();
             if (list.Any())
             {
-
                 Adjustment adjustment = new Adjustment();
                 adjustment.UserID = User.Identity.GetUserId();
                 adjustment.TotalPrice = 0;
@@ -160,7 +159,7 @@ namespace InventoryWeb.Controllers
             return json;
         }
 
-        class SelectedList
+        public class SelectedList
         {
             public string itemID { get; set; }
 

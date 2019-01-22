@@ -40,7 +40,6 @@ function confirm() {
     var tab = document.getElementById("ItemAddedTable");
     var rows = tab.rows;
     var jsonlist = new Array();
-    debugger;
     for (var i = 0; i < rows.length-1; i++) {
         var jsonObj = { "itemID": rows[i + 1].cells[0].innerHTML, "quantity": rows[i + 1].cells[3].innerHTML, "price": rows[i + 1].cells[2].innerHTML, "reason": rows[i + 1].cells[4].innerHTML };
         jsonlist.push(jsonObj);
@@ -51,8 +50,14 @@ function confirm() {
         dataType: "text",
         async: true,
         data: JSON.stringify(jsonlist),
-        success: function (data) {                  
-            $('#successModal').modal('show');
+        success: function (data) {
+            var result = JSON.parse(data);
+            debugger;
+            if (result == 'success') {
+                $('#successModal').modal('show');
+            } else {
+                $('#failModal').modal('show');
+            }
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             alert(XMLHttpRequest.status);

@@ -12,7 +12,7 @@ using Newtonsoft.Json;
 
 namespace InventoryWeb.Controllers
 {
-    [Authorize(Roles ="StoreClerk")]
+    [Authorize(Roles = "StoreClerk")]
     public class StoreClerkController : Controller
     {
         CatalogueBusinessLogic catalogueBusinessLogic = new CatalogueBusinessLogic();
@@ -56,8 +56,8 @@ namespace InventoryWeb.Controllers
             var list = js.Deserialize<List<SelectedList>>(stream);
             JsonResult json = new JsonResult();
             confirmClass confirmClass = new confirmClass();
-            confirmClass.tablelist = list;        
-            Supplier supplier= supplierBusinessLogic.FindSupplierById(list[0].supplier);
+            confirmClass.tablelist = list;
+            Supplier supplier = supplierBusinessLogic.FindSupplierById(list[0].supplier);
             confirmClass.supplierAddress = supplier.Address;
             confirmClass.attentionTo = supplier.SupplierName;
             json.Data = confirmClass;
@@ -71,7 +71,7 @@ namespace InventoryWeb.Controllers
             var confirm = JsonConvert.DeserializeObject<confirmClass>(stream);
             double totalPrice = 0;
             string supplierID = "";
-            if (confirm!=null)
+            if (confirm != null)
             {
                 var list = confirm.tablelist;
                 PurchaseOrder purchaseOrder = new PurchaseOrder();
@@ -98,7 +98,7 @@ namespace InventoryWeb.Controllers
                 }
                 purchaseOrder.TotalPrice = totalPrice;
                 purchaseOrderBusinessLogic.updatePurchaseOrder(purchaseOrder);
-            }          
+            }
             return new JsonResult();
         }
 
@@ -108,8 +108,10 @@ namespace InventoryWeb.Controllers
             var stream = sr.ReadToEnd();
             JavaScriptSerializer js = new JavaScriptSerializer();
             var list = JsonConvert.DeserializeObject<List<SelectedList>>(stream);
+            JsonResult json = new JsonResult();
             if (list.Any())
             {
+
                 Adjustment adjustment = new Adjustment();
                 adjustment.UserID = User.Identity.GetUserId();
                 adjustment.TotalPrice = 0;
@@ -120,6 +122,12 @@ namespace InventoryWeb.Controllers
                 foreach (var item in list)
                 {
                     Catalogue catalogue = catalogueBusinessLogic.getCatalogueById(item.itemID);
+                    double quantity = Convert.ToDouble(item.quantity);
+                    if (quantity < 0 && quantity < -catalogue.Quantity)
+                    {
+                        json.Data = "fail";
+                        return json;
+                    }
                     AdjustmentItem adjustmentItem = new AdjustmentItem();
                     adjustmentItem.ItemID = catalogue.ItemID;
                     adjustmentItem.Quantity = item.quantity;
@@ -131,13 +139,16 @@ namespace InventoryWeb.Controllers
                 if (adjustment.TotalPrice >= 250)
                 {
                     adjustment.Supervisor = userBusinessLogic.getStoreManager().Id;
-                } else
+                }
+                else
                 {
                     adjustment.Supervisor = userBusinessLogic.getStoreStoreSupervisor().Id;
                 }
                 adjustmentBusinessLogic.updateAdjustment(adjustment);
+
             }
-            return new JsonResult();
+            json.Data = "success";
+            return json;
         }
 
         class SelectedList
@@ -172,5 +183,5 @@ namespace InventoryWeb.Controllers
         }
     }
 
-    
+
 }

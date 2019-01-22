@@ -149,7 +149,7 @@ var TableInit = function () {
     }
     function reasonTextBox(value, row, index) {
         return [
-            '<input type="text" maxlength="5" class="form-control reason" placeholder="Reason">'
+            '<input type="text" maxlength="100" class="form-control reason" placeholder="Reason">'
         ].join('');
     }
 

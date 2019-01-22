@@ -113,6 +113,7 @@ function savePurchaseOrder() {
         async: true,
         data: JSON.stringify(json),
         success: function (data) {
+            var result = JSON.parse(data);
             $('#successModal').modal('show');
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {

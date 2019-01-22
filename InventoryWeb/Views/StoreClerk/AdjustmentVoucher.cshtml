@@ -84,7 +84,7 @@
                     </form>
                     <table class="table table-condensed" id="confirmTable"></table>
                     <div class="row">
-                        
+
                         <div class="col-sm-6">
                             <h4 id="totalPrice" class="pull-right"></h4>
                         </div>
@@ -120,6 +120,29 @@
                     </div>
                     <div class="modal-footer">
                         <input type="button" class="btn btn-success center-block" data-dismiss="modal"
+                               value="OK" onclick="window.location.href='/StoreClerk/AdjustmentVoucher'">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="failModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="deleteForm">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Fail</h4>
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">
+                            &times;
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>You adjustment exceed the current store quantity!</p>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="button" class="btn btn-danger center-block" data-dismiss="modal"
                                value="OK" onclick="window.location.href='/StoreClerk/AdjustmentVoucher'">
                     </div>
                 </form>

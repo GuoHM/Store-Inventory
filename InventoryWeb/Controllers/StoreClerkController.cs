@@ -20,6 +20,9 @@ namespace InventoryWeb.Controllers
         PurchaseOrderBusinessLogic purchaseOrderBusinessLogic = new PurchaseOrderBusinessLogic();
         PurchaseItemBusinessLogic purchaseItemBusinessLogic = new PurchaseItemBusinessLogic();
         EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
+        AdjustmentBusinessLogic adjustmentBusinessLogic = new AdjustmentBusinessLogic();
+        AdjustmentItemBusinessLogic adjustmentItemBusinessLogic = new AdjustmentItemBusinessLogic();
+        UserBusinessLogic userBusinessLogic = new UserBusinessLogic();
 
         public ActionResult RaiseRequest()
         {
@@ -95,7 +98,6 @@ namespace InventoryWeb.Controllers
                 }
                 purchaseOrder.TotalPrice = totalPrice;
                 purchaseOrderBusinessLogic.updatePurchaseOrder(purchaseOrder);
-
             }          
             return new JsonResult();
         }
@@ -108,7 +110,32 @@ namespace InventoryWeb.Controllers
             var list = JsonConvert.DeserializeObject<List<SelectedList>>(stream);
             if (list.Any())
             {
-
+                Adjustment adjustment = new Adjustment();
+                adjustment.UserID = User.Identity.GetUserId();
+                adjustment.TotalPrice = 0;
+                adjustment.Date = DateTime.Now;
+                adjustment.AdjustmentID = adjustmentBusinessLogic.generateAdjustmentID();
+                adjustment.AdjustmentStatus = "Unapprove";
+                adjustmentBusinessLogic.addAdjustment(adjustment);
+                foreach (var item in list)
+                {
+                    Catalogue catalogue = catalogueBusinessLogic.getCatalogueById(item.itemID);
+                    AdjustmentItem adjustmentItem = new AdjustmentItem();
+                    adjustmentItem.ItemID = catalogue.ItemID;
+                    adjustmentItem.Quantity = item.quantity;
+                    adjustmentItem.Reason = item.reason;
+                    adjustmentItem.AdjustmentID = adjustment.AdjustmentID;
+                    adjustment.TotalPrice += Math.Abs(Convert.ToInt32(catalogue.Price * Convert.ToDouble(item.quantity)));
+                    adjustmentItemBusinessLogic.addAdjustmentItem(adjustmentItem);
+                }
+                if (adjustment.TotalPrice >= 250)
+                {
+                    adjustment.Supervisor = userBusinessLogic.getStoreManager().Id;
+                } else
+                {
+                    adjustment.Supervisor = userBusinessLogic.getStoreStoreSupervisor().Id;
+                }
+                adjustmentBusinessLogic.updateAdjustment(adjustment);
             }
             return new JsonResult();
         }

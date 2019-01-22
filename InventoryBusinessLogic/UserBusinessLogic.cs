@@ -56,5 +56,15 @@ namespace InventoryBusinessLogic
 
         }
 
+        public AspNetUsers getStoreStoreSupervisor()
+        {
+            return inventory.AspNetUsers.Where(x => x.UserType == "StoreSupervisor").First();
+        }
+
+        public AspNetUsers getStoreManager()
+        {
+            return inventory.AspNetUsers.Where(x => x.UserType == "Store Manager").First();
+        }
+
     }
 }

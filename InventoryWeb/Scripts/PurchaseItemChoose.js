@@ -100,7 +100,6 @@ function confirm() {
             alert("Cannot choose item from different supplier!");
         }
     }    
-    //alert(JSON.stringify(jsonlist));
 }
 
 function savePurchaseOrder() {
@@ -114,7 +113,6 @@ function savePurchaseOrder() {
         async: true,
         data: JSON.stringify(json),
         success: function (data) {
-            $('#confirmModal').modal('hide');
             $('#successModal').modal('show');
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {

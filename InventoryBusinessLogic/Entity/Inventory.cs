@@ -61,6 +61,11 @@ namespace InventoryBusinessLogic.Entity
                 .HasForeignKey(e => e.Supervisor);
 
             modelBuilder.Entity<AspNetUsers>()
+                .HasMany(e => e.Adjustment1)
+                .WithOptional(e => e.AspNetUsers1)
+                .HasForeignKey(e => e.UserID);
+
+            modelBuilder.Entity<AspNetUsers>()
                 .HasMany(e => e.Department)
                 .WithOptional(e => e.AspNetUsers)
                 .HasForeignKey(e => e.DepartmentRep);

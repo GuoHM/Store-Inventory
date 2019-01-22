@@ -40,6 +40,7 @@ var json;
 function confirm() {
     var tab = document.getElementById("ItemAddedTable");
     var rows = tab.rows;
+    
     var objCheckBox = tab.getElementsByClassName('checkbox');
     var jsonlist = new Array();
     var supplierlist = new Array();

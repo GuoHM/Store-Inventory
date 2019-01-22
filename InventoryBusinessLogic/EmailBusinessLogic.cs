@@ -31,7 +31,7 @@ namespace InventoryBusinessLogic
             this.client.Host = HOST;
             this.client.EnableSsl = ENABLESSL;
         }
-       
+
         /// <summary>
         /// Send email to a list of user
         /// </summary>
@@ -40,13 +40,69 @@ namespace InventoryBusinessLogic
         /// <param name="toAddress">To Email address list</param>
         public void SendEmail(string title, string content, List<string> toAddress)
         {
-            foreach(string email in toAddress)
+            foreach (string email in toAddress)
             {
                 this.mail.To.Add(email);
             }
             this.mail.Subject = title;
             this.mail.Body = content;
             this.client.Send(this.mail);
+        }
+
+        public string SendPurchaseOrderNotification(confirmClass confirm)
+        {
+            string MailBody = "<p> Dear: "+confirm.attentionTo+"</p>";
+            MailBody += "<p>Logic University has sent a purchase order <PO#>. With <expected delivery ";
+            MailBody += "<tr>";
+            for (int hcol = 0; hcol < 5; hcol++)
+            {
+                //MailBody += "<td bgcolor=\"999999\">&nbsp;&nbsp;&nbsp;";
+                //MailBody += list.Columns[hcol].ColumnName;
+                //MailBody += "&nbsp;&nbsp;&nbsp;</td>";
+            }
+            MailBody += "</tr>";
+
+            for (int row = 0; row < confirm.tablelist.Count; row++)
+            {
+                MailBody += "<tr>";
+                //for (int col = 0; col < list.Columns.Count; col++)
+                //{
+                //    MailBody += "<td bgcolor=\"dddddd\">&nbsp;&nbsp;&nbsp;";
+                //    MailBody += data.Rows[row][col].ToString();
+                //    MailBody += "&nbsp;&nbsp;&nbsp;</td>";
+                //}
+                MailBody += "</tr>";
+            }
+            MailBody += "</table>";
+            MailBody += "</div>";
+            return MailBody;
+        }
+
+        public class SelectedList
+        {
+            public string itemID { get; set; }
+
+            public string description { get; set; }
+
+            public string quantity { get; set; }
+
+            public string totalPrice { get; set; }
+
+            public string supplier { get; set; }
+        }
+
+        public class confirmClass
+        {
+            public List<SelectedList> tablelist { get; set; }
+
+            public string supplierAddress { get; set; }
+
+            public string delieverTo { get; set; }
+
+            public string attentionTo { get; set; }
+
+            public string dateToDeliver { get; set; }
+
         }
 
     }

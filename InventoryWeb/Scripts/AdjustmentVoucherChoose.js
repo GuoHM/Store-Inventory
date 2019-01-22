@@ -19,8 +19,9 @@ function selectItem(obj) {
         var price = SearchItemTable.rows[rows].cells[2].innerHTML;
         $("#ItemAddedTable").append("<tr align='center'><td>" + itemCode + "</td><td>" + Description + "</td><td>" + price + "</td><td>" + quantity + "</td><td>" + reason + "</td><td><input type='button'  value='remove' class='btn btn-danger' onclick='remove(this)'/></td></tr>");
         $(obj).parents("tr").remove();
-        totalPrice += parseInt(Math.abs(quantity) * price);
-        document.getElementById("totalPrice").innerHTML = 'Total Price:' + totalPrice;
+        debugger;
+        totalPrice += Math.abs(quantity) * parseFloat(price.substr(1, price.length));
+        document.getElementById("totalPrice").innerHTML = 'Total Price:$' + totalPrice+".00";
     }
 }
 function remove(obj) {
@@ -32,8 +33,8 @@ function remove(obj) {
     var quantity = ItemAddedTable.rows[rows].cells[3].innerHTML;
     $("#SearchItemTable").append("<tr align='center'><td>" + itemCode + "</td><td>" + Description + "</td><td>" + Price + "</td><td><input type='number' class='form-control quantity' placeholder='Quantity'></td><td><input type='text' class='form-control reason' placeholder='Reason'></td><td><input type='button'  value='Select' class='btn btn-primary' onclick='selectItem(this)'/></td></tr>");
     $(obj).parents("tr").remove();
-    totalPrice -= parseInt(Math.abs(quantity) * Price);
-    document.getElementById("totalPrice").innerHTML = 'Total Price:' + totalPrice;
+    totalPrice -= Math.abs(quantity) * parseFloat(Price.substr(1, Price.length));
+    document.getElementById("totalPrice").innerHTML = 'Total Price:$' + totalPrice+".00";
 }
 var json;
 function confirm() {

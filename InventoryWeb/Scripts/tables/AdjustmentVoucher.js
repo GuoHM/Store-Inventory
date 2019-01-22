@@ -52,7 +52,8 @@ var TableInit = function () {
                     align: "center",
                     title: 'Price',
                     sortable: true,
-                    field: 'Price'
+                    field: 'Price',
+                    formatter: price
                 }, {
                 align: "center",
                 title: 'Quantity',
@@ -137,6 +138,9 @@ var TableInit = function () {
 
       
     };
+    function price(value, row, index) {
+        return '$'+(value).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'); 
+    }
     function quantityTextBox(value, row, index) {
         return [
             '<input type="number" maxlength="5" class="form-control quantity" placeholder="Quantity">'

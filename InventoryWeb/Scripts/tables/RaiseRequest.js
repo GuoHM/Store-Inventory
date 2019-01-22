@@ -109,7 +109,6 @@ var TableInit = function() {
             }
         });
     };
-
 	function InputTextBox(value, row, index) {
 		return [       
 		        '<input type="number" class="form-control" placeholder="Quantity" id="quantity">'

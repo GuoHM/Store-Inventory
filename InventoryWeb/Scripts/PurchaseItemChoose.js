@@ -17,7 +17,7 @@
         var ReorderQuantity = SearchItemTable.rows[rows].cells[3].innerHTML;
         var price = SearchItemTable.rows[rows].cells[5].innerHTML;
         var supplier = SearchItemTable.rows[rows].cells[6].innerHTML;
-        var totalprice = price * orderQuantity;
+        var totalprice = '$'+parseFloat(price.substr(1, price.length)) * orderQuantity+'.00';
         $("#ItemAddedTable").append("<tr><td><input class='checkbox' checked='checked' type='checkbox'></td><td>" + itemCode + "</td><td>" + Description + "</td><td>" + Quantity + "</td><td>" + ReorderQuantity + "</td><td>" + orderQuantity + "</td><td>" + totalprice + "</td><td>" + supplier + "</td><td><input type='button'  value='remove' class='btn btn-danger' onclick='remove(this)'/></td></tr>");
         $(obj).parents("tr").remove();
     }
@@ -84,9 +84,9 @@ function confirm() {
                             + "</td><td>" + json.tablelist[i].description
                             + "</td><td>" + json.tablelist[i].quantity
                             + "</td><td>" + json.tablelist[i].totalPrice + "</td></tr>");
-                        totalPrice += parseInt(json.tablelist[i].totalPrice);
+                        totalPrice += parseFloat(json.tablelist[i].totalPrice.substr(1, json.tablelist[i].totalPrice.length));
                     }
-                    document.getElementById("totalPrice").innerHTML = 'Total Price:'+totalPrice;
+                    document.getElementById("totalPrice").innerHTML = 'Total Price:$'+totalPrice+".00";
                     $("#confirmTable").append("</tbody>");
                     $('#confirmModal').modal('show');
                 },
@@ -113,7 +113,7 @@ function savePurchaseOrder() {
         async: true,
         data: JSON.stringify(json),
         success: function (data) {
-            var result = JSON.parse(data);
+            $('#confirmModal').modal('hide');
             $('#successModal').modal('show');
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {

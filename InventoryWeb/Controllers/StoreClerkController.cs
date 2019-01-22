@@ -91,7 +91,8 @@ namespace InventoryWeb.Controllers
                     PurchaseItem purchaseItem = new PurchaseItem();
                     purchaseItem.ItemID = catalogue.ItemID;
                     purchaseItem.Quantity = Convert.ToInt32(item.quantity);
-                    totalPrice += Convert.ToInt32(item.totalPrice);
+                    double price = Convert.ToDouble(item.totalPrice.Substring(1, item.totalPrice.Length - 1));
+                    totalPrice += price;
                     purchaseItem.PurchaseOrderID = purchaseOrder.PurchaseOrderID;
                     supplierID = catalogue.Supplier1;
                     purchaseItemBusinessLogic.addPurchaseItem(purchaseItem);

@@ -17,7 +17,6 @@ namespace InventoryBusinessLogic
             return inventory.AspNetUsers.Where(x => x.DepartmentID == DepId).ToList<AspNetUsers>();
         }
 
-
         public List<AspNetUsers> getAllUser()
         {
             return inventory.AspNetUsers.ToList();
@@ -55,6 +54,16 @@ namespace InventoryBusinessLogic
             dep1.DepartmentHeadEndDate = enddate;
             inventory.SaveChanges();
 
+        }
+
+        public AspNetUsers getStoreStoreSupervisor()
+        {
+            return inventory.AspNetUsers.Where(x => x.UserType == "StoreSupervisor").First();
+        }
+
+        public AspNetUsers getStoreManager()
+        {
+            return inventory.AspNetUsers.Where(x => x.UserType == "Store Manager").First();
         }
 
     }

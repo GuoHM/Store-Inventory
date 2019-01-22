@@ -59,7 +59,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdjustmentBusinessLogic.cs" />
+    <Compile Include="AdjustmentItemBusinessLogic.cs" />
     <Compile Include="CatalogueBusinessLogic.cs" />
+    <Compile Include="ChangeCollectionPointBusinessLogic.cs" />
     <Compile Include="DepartmentBusinessLogic.cs" />
     <Compile Include="EmailBusinessLogic.cs" />
     <Compile Include="Entity\Adjustment.cs" />

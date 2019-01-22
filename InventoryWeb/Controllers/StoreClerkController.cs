@@ -12,14 +12,18 @@ using Newtonsoft.Json;
 
 namespace InventoryWeb.Controllers
 {
-    [Authorize(Roles ="StoreClerk")]
+    [Authorize(Roles = "StoreClerk")]
     public class StoreClerkController : Controller
     {
         CatalogueBusinessLogic catalogueBusinessLogic = new CatalogueBusinessLogic();
         SupplierBusinessLogic supplierBusinessLogic = new SupplierBusinessLogic();
         PurchaseOrderBusinessLogic purchaseOrderBusinessLogic = new PurchaseOrderBusinessLogic();
         PurchaseItemBusinessLogic purchaseItemBusinessLogic = new PurchaseItemBusinessLogic();
-        
+        EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
+        AdjustmentBusinessLogic adjustmentBusinessLogic = new AdjustmentBusinessLogic();
+        AdjustmentItemBusinessLogic adjustmentItemBusinessLogic = new AdjustmentItemBusinessLogic();
+        UserBusinessLogic userBusinessLogic = new UserBusinessLogic();
+
         public ActionResult RaiseRequest()
         {
             return View();
@@ -53,7 +57,9 @@ namespace InventoryWeb.Controllers
             JsonResult json = new JsonResult();
             confirmClass confirmClass = new confirmClass();
             confirmClass.tablelist = list;
-            confirmClass.supplierAddress = supplierBusinessLogic.FindSupplierById(list[0].supplier).Address;
+            Supplier supplier = supplierBusinessLogic.FindSupplierById(list[0].supplier);
+            confirmClass.supplierAddress = supplier.Address;
+            confirmClass.attentionTo = supplier.SupplierName;
             json.Data = confirmClass;
             return json;
         }
@@ -65,7 +71,7 @@ namespace InventoryWeb.Controllers
             var confirm = JsonConvert.DeserializeObject<confirmClass>(stream);
             double totalPrice = 0;
             string supplierID = "";
-            if (confirm!=null)
+            if (confirm != null)
             {
                 var list = confirm.tablelist;
                 PurchaseOrder purchaseOrder = new PurchaseOrder();
@@ -85,15 +91,15 @@ namespace InventoryWeb.Controllers
                     PurchaseItem purchaseItem = new PurchaseItem();
                     purchaseItem.ItemID = catalogue.ItemID;
                     purchaseItem.Quantity = Convert.ToInt32(item.quantity);
-                    totalPrice += Convert.ToInt32(item.totalPrice);
+                    double price = Convert.ToDouble(item.totalPrice.Substring(1, item.totalPrice.Length - 1));
+                    totalPrice += price;
                     purchaseItem.PurchaseOrderID = purchaseOrder.PurchaseOrderID;
                     supplierID = catalogue.Supplier1;
                     purchaseItemBusinessLogic.addPurchaseItem(purchaseItem);
                 }
                 purchaseOrder.TotalPrice = totalPrice;
                 purchaseOrderBusinessLogic.updatePurchaseOrder(purchaseOrder);
-
-            }          
+            }
             return new JsonResult();
         }
         public ActionResult AddItems()
@@ -143,7 +149,63 @@ namespace InventoryWeb.Controllers
             public string amount { get; set; }
         }
 
-        class SelectedList
+        public JsonResult LowStock()
+        {
+            JsonResult json = new JsonResult();
+            json.Data = catalogueBusinessLogic.GetLowStock();
+            json.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return json;
+        }
+
+        public ActionResult SaveAdjustmentVoucher()
+        {
+            var sr = new StreamReader(Request.InputStream);
+            var stream = sr.ReadToEnd();
+            JavaScriptSerializer js = new JavaScriptSerializer();
+            var list = JsonConvert.DeserializeObject<List<SelectedList>>(stream);
+            JsonResult json = new JsonResult();
+            if (list.Any())
+            {
+                Adjustment adjustment = new Adjustment();
+                adjustment.UserID = User.Identity.GetUserId();
+                adjustment.TotalPrice = 0;
+                adjustment.Date = DateTime.Now;
+                adjustment.AdjustmentID = adjustmentBusinessLogic.generateAdjustmentID();
+                adjustment.AdjustmentStatus = "Unapprove";
+                adjustmentBusinessLogic.addAdjustment(adjustment);
+                foreach (var item in list)
+                {
+                    Catalogue catalogue = catalogueBusinessLogic.getCatalogueById(item.itemID);
+                    double quantity = Convert.ToDouble(item.quantity);
+                    if (quantity < 0 && quantity < -catalogue.Quantity)
+                    {
+                        json.Data = "fail";
+                        return json;
+                    }
+                    AdjustmentItem adjustmentItem = new AdjustmentItem();
+                    adjustmentItem.ItemID = catalogue.ItemID;
+                    adjustmentItem.Quantity = item.quantity;
+                    adjustmentItem.Reason = item.reason;
+                    adjustmentItem.AdjustmentID = adjustment.AdjustmentID;
+                    adjustment.TotalPrice += Math.Abs(Convert.ToInt32(catalogue.Price * Convert.ToDouble(item.quantity)));
+                    adjustmentItemBusinessLogic.addAdjustmentItem(adjustmentItem);
+                }
+                if (adjustment.TotalPrice >= 250)
+                {
+                    adjustment.Supervisor = userBusinessLogic.getStoreManager().Id;
+                }
+                else
+                {
+                    adjustment.Supervisor = userBusinessLogic.getStoreStoreSupervisor().Id;
+                }
+                adjustmentBusinessLogic.updateAdjustment(adjustment);
+
+            }
+            json.Data = "success";
+            return json;
+        }
+
+        public class SelectedList
         {
             public string itemID { get; set; }
 
@@ -154,6 +216,10 @@ namespace InventoryWeb.Controllers
             public string totalPrice { get; set; }
 
             public string supplier { get; set; }
+
+            public string price { get; set; }
+
+            public string reason { get; set; }
         }
       public  class orderIDList
         {
@@ -175,5 +241,5 @@ namespace InventoryWeb.Controllers
         }
     }
 
-    
+
 }

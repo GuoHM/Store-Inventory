@@ -69,7 +69,7 @@ namespace InventoryWeb.Controllers
             {
                 foreach (var item in list)
                 {
-                    req.ApproveOrRejectRequest(item.orderId, item.requestStatus,item.remarks);
+                    req.ApproveOrRejectRequest(item.orderId, item.requestStatus,item.reason);
                 }
             }
             return new JsonResult();
@@ -177,4 +177,4 @@ namespace InventoryWeb.Controllers
             public string remarks { get; set; }
         }
     }
-}
+

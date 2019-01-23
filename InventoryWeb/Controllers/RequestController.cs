@@ -79,6 +79,9 @@ namespace InventoryWeb.Controllers
             public string description { get; set; }
 
             public string quantity { get; set; }
+            public string requestStatus { get; set; }
+            public string orderId { get; set; }
+            public string reason { get; set; }
         }
 
     }

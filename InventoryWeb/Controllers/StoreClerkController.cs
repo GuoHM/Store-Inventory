@@ -1011,8 +1011,6 @@ namespace InventoryWeb.Controllers
             ViewBag.datapoints7 = JsonConvert.SerializeObject(ZOOL);
             return View("ChargeBackReport");
         }
-    }
-}
         public ActionResult ListDept()
         {
             return View();
@@ -1075,50 +1073,17 @@ namespace InventoryWeb.Controllers
         public ActionResult AddItems()
         {
             return View();
- 
+
         }
         public void UpdateQuantity(List<orderIDList> purchaseIDList)
         {
-            foreach( orderIDList oId in purchaseIDList)
+            foreach (orderIDList oId in purchaseIDList)
             {
 
                 int orderID = Convert.ToInt32(oId.orderid);
                 catalogueBusinessLogic.UpdateCataloguesByPurchaseID(orderID);
             }
         }
-        
-        public JsonResult ShowPurchasedetails()
-        {
-           string orderIDString= Request["purchaseID"];
-            int orderID = Convert.ToInt32(orderIDString);
-            JsonResult json = new JsonResult();
-            List<PurchaseItem> purchaseItemList= purchaseItemBusinessLogic.getItemsByPurchaseOrderID(orderID);
-            List<PurchaseItemList> list = new List<PurchaseItemList>();
-            foreach (PurchaseItem purchaseItem in purchaseItemList)
-            {
-                PurchaseItemList purchaseItemListm = new PurchaseItemList();
-                purchaseItemListm.itemID = purchaseItem.ItemID;
-                Catalogue catalogue = catalogueBusinessLogic.getCatalogueById(purchaseItem.ItemID);
-                purchaseItemListm.description = catalogue.Description;
-                purchaseItemListm.quantity = "" + purchaseItem.Quantity;
-                purchaseItemListm.price =""+ catalogue.Price;
-                purchaseItemListm.amount = "" + purchaseItem.Quantity * catalogue.Price;
-                list.Add(purchaseItemListm);
-            }
-            json.Data = list;
-            return json;
-
-        }
-    
-        class PurchaseItemList
-        {
-            public string itemID { get; set; }
-            public string description { get; set; }
-            public string quantity { get; set; }
-            public string price { get; set; }
-            public string amount { get; set; }
-        }
-
         public JsonResult LowStock()
         {
             JsonResult json = new JsonResult();
@@ -1175,41 +1140,82 @@ namespace InventoryWeb.Controllers
             return json;
         }
 
-        public class SelectedList
+        public JsonResult ShowPurchasedetails()
         {
-            public string itemID { get; set; }
-
-            public string description { get; set; }
-
-            public string quantity { get; set; }
-
-            public string totalPrice { get; set; }
-
-            public string supplier { get; set; }
-
-            public string price { get; set; }
-
-            public string reason { get; set; }
-        }
-      public  class orderIDList
-        {
-            public string orderid { get; set; }
-        }
-
-        class confirmClass
-        {
-            public List<SelectedList> tablelist { get; set; }
-
-            public string supplierAddress { get; set; }
-
-            public string delieverTo { get; set; }
-
-            public string attentionTo { get; set; }
-
-            public string dateToDeliver { get; set; }
+            string orderIDString = Request["purchaseID"];
+            int orderID = Convert.ToInt32(orderIDString);
+            JsonResult json = new JsonResult();
+            List<PurchaseItem> purchaseItemList = purchaseItemBusinessLogic.getItemsByPurchaseOrderID(orderID);
+            List<PurchaseItemList> list = new List<PurchaseItemList>();
+            foreach (PurchaseItem purchaseItem in purchaseItemList)
+            {
+                PurchaseItemList purchaseItemListm = new PurchaseItemList();
+                purchaseItemListm.itemID = purchaseItem.ItemID;
+                Catalogue catalogue = catalogueBusinessLogic.getCatalogueById(purchaseItem.ItemID);
+                purchaseItemListm.description = catalogue.Description;
+                purchaseItemListm.quantity = "" + purchaseItem.Quantity;
+                purchaseItemListm.price = "" + catalogue.Price;
+                purchaseItemListm.amount = "" + purchaseItem.Quantity * catalogue.Price;
+                list.Add(purchaseItemListm);
+            }
+            json.Data = list;
+            return json;
 
         }
+
+
+    }
+
+    class PurchaseItemList
+    {
+        public string itemID { get; set; }
+        public string description { get; set; }
+        public string quantity { get; set; }
+        public string price { get; set; }
+        public string amount { get; set; }
+    }
+
+   
+
+    public class SelectedList
+    {
+        public string itemID { get; set; }
+
+        public string description { get; set; }
+
+        public string quantity { get; set; }
+
+        public string totalPrice { get; set; }
+
+        public string supplier { get; set; }
+
+        public string price { get; set; }
+
+        public string reason { get; set; }
+        public string requestStatus { get; set; }
+        public string orderId { get; set; }
+    }
+    public class orderIDList
+    {
+        public string orderid { get; set; }
+    }
+
+    class confirmClass
+    {
+        public List<SelectedList> tablelist { get; set; }
+
+        public string supplierAddress { get; set; }
+
+        public string delieverTo { get; set; }
+
+        public string attentionTo { get; set; }
+
+        public string dateToDeliver { get; set; }
+
     }
 
 
 }
+
+
+

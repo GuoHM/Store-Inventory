@@ -108,6 +108,7 @@ function savePurchaseOrder() {
     json['attentionTo'] = $('#attentionTo').val();
     json['dateToDeliver'] = $('#dateToDeliver').val();
     $("#btnSave").attr("disabled", true);
+    $("#btnConfirm").attr("disabled", true);
     $.ajax({
         url: "/StoreClerk/SavePurchaseOrder",
         type: "post",
@@ -118,6 +119,7 @@ function savePurchaseOrder() {
             $('#confirmModal').modal('hide');
             $('#successModal').modal('show');
             $("#btnSave").attr("disabled", false);
+            $("#btnConfirm").attr("disabled", false);
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             alert(XMLHttpRequest.status);

@@ -57,6 +57,7 @@ namespace InventoryBusinessLogic
 
         public List<Catalogue> GetLowStock()
         {
+            inventory.Configuration.ProxyCreationEnabled = false;
             return inventory.Catalogue.Where(x => x.Quantity <= x.ReorderLevel).ToList();
         }
 

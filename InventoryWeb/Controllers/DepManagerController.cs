@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 using InventoryBusinessLogic;
 using InventoryBusinessLogic.Entity;
 using Newtonsoft.Json;
@@ -50,10 +51,28 @@ namespace InventoryWeb.Controllers
             return View();
         }
 
-        public ActionResult SaveRequestStatus(int reqID, string reqStatus)
+        //public ActionResult SaveRequestStatus(int reqID, string reqStatus)
+        //{
+        //    req.ApproveOrRejectRequest(reqID, reqStatus);
+        //    return View();
+        //}
+
+        [HttpPost]
+        public ActionResult SaveRequestStatus()
         {
-            req.ApproveOrRejectRequest(reqID, reqStatus);
-            return View();
+            var sr = new System.IO.StreamReader(Request.InputStream);
+            var stream = sr.ReadToEnd();
+            JavaScriptSerializer js = new JavaScriptSerializer();
+            var list = js.Deserialize<List<SelectedList>>(stream);
+
+            if (list.Any())
+            {
+                foreach (var item in list)
+                {
+                    req.ApproveOrRejectRequest(item.orderId, item.requestStatus,item.remarks);
+                }
+            }
+            return new JsonResult();
         }
 
         public ActionResult DepSpendingHistory()
@@ -154,5 +173,8 @@ namespace InventoryWeb.Controllers
 
 
 
+            public string requestStatus { get; set; }
+            public string remarks { get; set; }
+        }
     }
 }

@@ -18,8 +18,6 @@ namespace InventoryWeb.Controllers
         UserBusinessLogic userBusinessLogic = new UserBusinessLogic();
         ManageRequestBusinessLogic manageRequestBusinessLogic = new ManageRequestBusinessLogic();
 
-      
-
         // GET: Request
         [HttpPost]
         public ActionResult SaveRequest()
@@ -34,44 +32,56 @@ namespace InventoryWeb.Controllers
                 foreach (var item in list)
                 {
                     Catalogue catalogue = catalogueBusinessLogic.getCatalogueByDescription(item.description);
-                    Request request = new Request();
-                    request.Needed = Convert.ToInt32(item.quantity);
-                    request.ItemID = catalogue.ItemID;
-                    request.RequestDate = DateTime.Now;
-                    request.UserID = User.Identity.GetUserId();
-                    request.OrderID = orderBusinessLogic.generateOrderIDById(User.Identity.GetUserId());
-                    Order order = orderBusinessLogic.GetOrderByOrderId(request.OrderID);
+                    string orderid = orderBusinessLogic.generateOrderIDById(User.Identity.GetUserId());
+                    Order order = orderBusinessLogic.GetOrderByOrderId(orderid);
                     if (order == null)
                     {
                         //order do not exist,insert
                         order = new Order();
-                        order.OrderID = request.OrderID;
+                        order.OrderID = orderid;
                         order.DepartmentID = userBusinessLogic.getUserByID(User.Identity.GetUserId()).DepartmentID;
                         order.OrderDate = DateTime.Now;
                         order.TotalPrice = 0;
-                        order.TotalPrice += request.Needed * catalogue.Price;
+                        order.TotalPrice += Convert.ToInt32(item.quantity) * catalogue.Price;
+                        order.OrderStatus = "Unfullfill";
                         orderBusinessLogic.addOrder(order);                        
                     } else
                     {
-                        order.TotalPrice += request.Needed * catalogue.Price;
+                        //order exist,update
+                        order.TotalPrice += Convert.ToInt32(item.quantity) * catalogue.Price;
                         orderBusinessLogic.updateOrder(order);
                     }
-                    manageRequestBusinessLogic.addRequest(request);
-
-
+                    Request request = manageRequestBusinessLogic.GetRequestsByOrderAndItem(orderid, catalogue.ItemID);
+                    if (request == null)
+                    {
+                        //no exist item in request, insert one
+                        request = new Request();
+                        request.Needed = Convert.ToInt32(item.quantity);
+                        request.ItemID = catalogue.ItemID;
+                        request.RequestDate = DateTime.Now;
+                        request.UserID = User.Identity.GetUserId();
+                        request.OrderID = orderid;
+                        request.RequestStatus = "Unapproved";
+                        request.Actual = 0;
+                        manageRequestBusinessLogic.addRequest(request);
+                    } else {
+                        //request exist, update
+                        request.Needed += Convert.ToInt32(item.quantity);
+                        request.RequestDate = DateTime.Now;
+                        manageRequestBusinessLogic.UpdateRequest(request);
+                    }
                 }
             }
             return new JsonResult();
         }
-   
+        class SelectedList
+        {
+            public string description { get; set; }
 
-           
+            public string quantity { get; set; }
+        }
+
     }
 
-    class SelectedList
-    {
-        public string description { get; set; }
-
-        public string quantity { get; set; }
-    }
+    
 }

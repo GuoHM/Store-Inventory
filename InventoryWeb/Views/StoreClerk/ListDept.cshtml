@@ -1,0 +1,25 @@
+﻿@{
+    ViewBag.Title = "ListDept";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-xs-2 column">
+    @Html.Partial("~/Views/StoreClerk/SideBar.cshtml")
+</div>
+<div class="col-xs-10 column">
+
+
+    <div class="panel-body" style="padding-bottom: 0px;">
+        <div class="panel panel-default">
+            <div class="panel-heading">List of Department</div>
+            <div class="panel-body">
+                <table id="SearchItemTable"></table>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/bootstrap-table.js"></script>
+<script src="~/Scripts/tables/ListDept.js"></script>
+<script src="~/Scripts/bootstrap-table-export.js"></script>
+<script src="//rawgit.com/hhurz/tableExport.jquery.plugin/master/tableExport.js"></script>
+<script src="~/Scripts/PurchaseItemChoose.js"></script>

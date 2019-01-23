@@ -9,11 +9,10 @@ $(document).ready(function() {
 
 var TableInit = function() {
 	var oTableInit = new Object();
-
 	oTableInit.Init = function() {
         $('#SearchItemTable').bootstrapTable({
             method: 'get',
-            url: 'http://inventorywebapi2019.azurewebsites.net/api/Catalogue',
+            url: 'https://inventorywebapi2019.azurewebsites.net/api/Catalogue',
             //toolbar: '#toolbar',                //工具按钮用哪个容器
             striped: true, // 是否显示行间隔色
             cache: false, // 是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
@@ -50,16 +49,12 @@ var TableInit = function() {
                 title: 'Quantity',
                 sortable: true,
                 sortable: true,
-                //field : 'ID',
-                //events: operateEvents,
                 formatter: InputTextBox
             }, {
                 align: "center",
                 title: 'Select',
                 sortable: true,
                 sortable: true,
-                //field : 'ID',
-                //events: operateEvents,
                 formatter: selectItem
             }
             ],
@@ -74,7 +69,7 @@ var TableInit = function() {
             striped: true, // 是否显示行间隔色
             cache: false, // 是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
             pagination: true, // 是否显示分页（*）
-            sortable: true, // 是否启用排序
+            sortable: false, // 是否启用排序
             sortOrder: "asc", // 排序方式
             queryParams: oTableInit.queryParams,// 传递参数（*）
             sidePagination: "client", // 分页方式：client客户端分页，server服务端分页（*）
@@ -98,19 +93,15 @@ var TableInit = function() {
             columns: [{
                 align: "center",
                 title: 'ItemName',
-                sortable: true,
-                sortable: true,
-                field: 'id.courseid'
+                sortable: false
             }, {
                 align: "center",
                 title: 'Quantity',
-                sortable: true,
-                sortable: true
+                sortable: false
             }, {
                 align: "center",
                 title: 'Remove',
-                sortable: true,
-                sortable: true
+                sortable: false
             }
             ],
             formatLoadingMessage: function () {
@@ -118,24 +109,14 @@ var TableInit = function() {
             }
         });
     };
-	
-
-	// params
-	oTableInit.queryParams = function(params) {
-
-		var temp = {
-            courseid : $("#courseid").val()
-		};
-		return temp;
-	};
 	function InputTextBox(value, row, index) {
 		return [       
-		        '<input type="text" maxlength="5" class="form-control" placeholder="quantity" id="quantity">'
+		        '<input type="number" class="form-control" placeholder="Quantity" id="quantity">'
 		        ].join('');
     }
     function selectItem(value, row, index) {
         return [
-            '<input type="button" value="Select" onclick="selectItem(this)" class="btn btn-primary" />',
+            '<input type="button" value="Add" onclick="selectItem(this)" class="btn btn-primary" />',
         ].join('');
     }
 	return oTableInit;
@@ -153,3 +134,4 @@ var ButtonInit = function() {
 
 	return oInit;
 };
+

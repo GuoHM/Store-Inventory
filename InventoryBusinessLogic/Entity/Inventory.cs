@@ -30,6 +30,14 @@ namespace InventoryBusinessLogic.Entity
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Adjustment>()
+                .Property(e => e.AdjustmentStatus)
+                .IsFixedLength();
+
+            modelBuilder.Entity<Adjustment>()
+                .Property(e => e.Remarks)
+                .IsFixedLength();
+
+            modelBuilder.Entity<Adjustment>()
                 .HasMany(e => e.AdjustmentItem)
                 .WithRequired(e => e.Adjustment)
                 .WillCascadeOnDelete(false);
@@ -55,6 +63,11 @@ namespace InventoryBusinessLogic.Entity
                 .HasMany(e => e.Adjustment)
                 .WithOptional(e => e.AspNetUsers)
                 .HasForeignKey(e => e.Supervisor);
+
+            modelBuilder.Entity<AspNetUsers>()
+                .HasMany(e => e.Adjustment1)
+                .WithOptional(e => e.AspNetUsers1)
+                .HasForeignKey(e => e.UserID);
 
             modelBuilder.Entity<AspNetUsers>()
                 .HasMany(e => e.Department)
@@ -120,6 +133,10 @@ namespace InventoryBusinessLogic.Entity
                 .IsUnicode(false);
 
             modelBuilder.Entity<PurchaseOrder>()
+                .Property(e => e.PurchaseOrderStatus)
+                .IsFixedLength();
+
+            modelBuilder.Entity<PurchaseOrder>()
                 .HasMany(e => e.PurchaseItem)
                 .WithRequired(e => e.PurchaseOrder)
                 .WillCascadeOnDelete(false);
@@ -150,6 +167,10 @@ namespace InventoryBusinessLogic.Entity
 
             modelBuilder.Entity<Supplier>()
                 .Property(e => e.GSTNumber)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<Supplier>()
+                .Property(e => e.SupplierEmail)
                 .IsUnicode(false);
 
             modelBuilder.Entity<Supplier>()

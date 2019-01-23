@@ -1,4 +1,4 @@
-﻿    function selectItem(obj) {
+﻿function selectItem(obj) {
     var ItemAddedTable = document.getElementById("ItemAddedTable");
     var SearchItemTable = document.getElementById("SearchItemTable");
     var node = ItemAddedTable.rows[1];
@@ -8,9 +8,10 @@
     var rows = obj.parentNode.parentNode.rowIndex;
     var objInput = SearchItemTable.getElementsByClassName("form-control");
     var quantity = objInput[rows - 1].value;
-    if (quantity == "") {
-        alert("Please input quantity!");
-    } else {
+    if (quantity > 9999 || quantity <= 0 || quantity == "") {
+        alert("Invalid quantity!");
+    }
+    else {
         var itemName = SearchItemTable.rows[rows].cells[0].innerHTML;
         $("#ItemAddedTable").append("<tr><td>" + itemName + "</td><td>" + quantity + "</td><td><input type='button'  value='remove' class='btn btn-danger' onclick='remove(this)'/></td></tr>");
         $(obj).parents("tr").remove();
@@ -19,7 +20,7 @@
 function remove(obj) {
     var rows = obj.parentNode.parentNode.rowIndex;
     var itemName = document.getElementById("ItemAddedTable").rows[rows].cells[0].innerHTML;
-    $("#SearchItemTable").append("<tr><td>" + itemName + "</td><td><input type='number' class='form-control' placeholder='quantity'></td><td><input type='button'  value='Select' class='btn btn-primary' onclick='selectItem(this)'/></td></tr>");
+    $("#SearchItemTable").append("<tr align='center'><td>" + itemName + "</td><td><input type='number' max='9999' min='0' class='form-control' placeholder='quantity'></td><td><input type='button'  value='Add' class='btn btn-primary' onclick='selectItem(this)'/></td></tr>");
     $(obj).parents("tr").remove();
 }
 function postData() {
@@ -32,10 +33,10 @@ function postData() {
     }
     //alert(JSON.stringify(jsonlist));
     $.ajax({
-        url: SERVER_NAME + "/Request/SaveRequest",
+        url: "/Request/SaveRequest",
         type: "post",
         dataType: "text",
-        async: false,
+        async: true,
         data: JSON.stringify(jsonlist),
         success: function (data) {
             $('#successModal').modal('show');

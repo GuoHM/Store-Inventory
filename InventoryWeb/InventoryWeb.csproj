@@ -332,6 +332,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CollectionPointController.cs" />
     <Compile Include="Controllers\DepManagerController.cs" />
+    <Compile Include="Controllers\DepRepresentativeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RequestController.cs" />
@@ -452,6 +453,11 @@
     <Content Include="Views\StoreClerk\ListDept.cshtml" />
     <Content Include="Views\StoreClerk\Additems.cshtml" />
     <Content Include="Views\CollectionPoint\Edit.cshtml" />
+    <Content Include="Views\CollectionPoint\SideBar.cshtml" />
+    <Content Include="Views\DepRepresentative\ChangeCollectionPoint.cshtml" />
+    <Content Include="Views\DepRepresentative\SideBar.cshtml" />
+    <Content Include="Views\DepRepresentative\Index.cshtml" />
+    <Content Include="Views\DepRepresentative\StationaryRequest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

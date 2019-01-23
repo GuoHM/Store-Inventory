@@ -15,6 +15,44 @@
     </div>
 </div>
 
+<div id="editInventory" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form class="form-horizontal" role="form" action="SaveRequestStatus" method="post" id="approval-form">
+                <div class="modal-header">
+                    <h4 class="modal-title">Edit Quantity</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body" >
+
+
+                    <div class="form-group-sm">
+                        <label for="Text">ItemID :</label>
+                        <label id="courseidedit"></label>
+
+                    </div>
+                    
+
+                    <div class="form-group-sm">
+                        <label for="Text">Item Name : </label>
+                        <label id="itemName"></label>
+                    </div>
+
+                  
+                    <div class="form-group-sm">
+                        <label>Bin Number</label>
+                        <input type="text" class="form-control" required th:field="*{phoneNumber}" id="editBinId">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-success" value="Change">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
 <script src="~/Scripts/bootstrap-table.js"></script>
 <script src="~/Scripts/tables/ManageInventory.js"></script>
 

@@ -7,6 +7,61 @@
     @Html.Partial("~/Views/StoreClerk/SideBar.cshtml")
 </div>
 <div class="col-xs-10 column">
-    @Html.Partial("~/Views/ManageInventory/InventoryItems.cshtml")
+    <div class="row">
+        <div class="col-lg-15">
+            <div class="panel-body" style="padding-bottom: 0px;">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Iventory Items</div>
+                    <div class="panel-body">
+
+                        <table id="InventoryItemTable">
+
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="editInventory" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form class="form-horizontal" role="form" action="UpdateInventory"  id="approval-form">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Edit Quantity</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body">
+
+
+                        <div class="form-group-sm">
+                           
+                            <input type="text" class="form-control" required th:field="*{phoneNumber}" id="courseidedit" readonly="readonly" name="label1">
+
+                        </div>
+
+                        <br />
+                        <div class="form-group-sm">
+                            <label for="Text">Item Name : </label>
+                            <label id="itemName"></label>
+                        </div>
+                        <br />
+
+                        <div class="form-group-sm">
+                            <label>Bin Number</label>
+                            <input type="text" class="form-control" required th:field="*{phoneNumber}" id="editBinId" name="binNumber">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                         <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 
+<script src="~/Scripts/bootstrap-table.js"></script>
+<script src="~/Scripts/tables/ManageInventory.js"></script>

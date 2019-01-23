@@ -335,6 +335,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RequestController.cs" />
     <Compile Include="Controllers\StoreClerkController.cs" />
+    <Compile Include="Controllers\StoreSupervisorController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -367,6 +368,9 @@
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\bootstrapValidator.min.js" />
     <Content Include="Scripts\Constant.js" />
+    <Content Include="Scripts\HighCharts\annotations.js" />
+    <Content Include="Scripts\HighCharts\exporting.js" />
+    <Content Include="Scripts\HighCharts\highcharts.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
@@ -385,6 +389,7 @@
     <Content Include="Scripts\tables\ManageInventory.js" />
     <Content Include="Scripts\tables\PurchaseOrder.js" />
     <Content Include="Scripts\tables\RaiseRequest.js" />
+    <Content Include="Scripts\tables\ViewInventory.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -434,6 +439,12 @@
     <Content Include="Views\StoreClerk\ManageInventory.cshtml" />
     <Content Include="Views\ManageInventory\InventoryItems.cshtml" />
     <Content Include="Views\DepManager\ApproveOrReject.cshtml" />
+    <Content Include="Views\StoreSupervisor\ViewInventory.cshtml" />
+    <Content Include="Views\DepManager\DepSpendingHistory.cshtml" />
+    <Content Include="Views\StoreClerk\generateChargeBack.cshtml" />
+    <Content Include="Views\StoreSupervisor\SideBar.cshtml" />
+    <Content Include="Views\StoreClerk\ChargeBackReport.cshtml" />
+    <Content Include="Views\StoreClerk\trenAnalysisByItems.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

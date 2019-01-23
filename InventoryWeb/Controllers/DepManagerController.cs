@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using InventoryBusinessLogic;
+using InventoryBusinessLogic.Entity;
+using Newtonsoft.Json;
 
 namespace InventoryWeb.Controllers
 {
@@ -52,6 +54,102 @@ namespace InventoryWeb.Controllers
         {
             req.ApproveOrRejectRequest(reqID, reqStatus);
             return View();
+        }
+
+        public ActionResult DepSpendingHistory()
+        {
+            return View();
+        }
+
+        public ActionResult spendingHistory(DateTime date1,DateTime date2)
+        {
+            List<Order> spendings = BL.getDepSpendingHistory(date1,date2);
+            decimal[] money = new decimal[12];
+           
+            List<decimal> datapoints2 = new List<decimal>();
+
+            for (int i = 0; i < spendings.Count; i++)
+            {
+                DateTime myval = (DateTime)spendings[i].OrderDate;
+                string month = myval.Month.ToString();
+
+                if (month == "1")
+                {
+
+                    money[0] += (decimal)spendings[i].TotalPrice;
+                }
+                else if (month == "2")
+                {
+
+                    money[1] += (decimal)spendings[i].TotalPrice;
+                }
+                else if (month == "3")
+                {
+
+                    money[2] += (decimal)spendings[i].TotalPrice;
+                }
+
+                else if (month == "4")
+                {
+
+                    money[3] += (decimal)spendings[i].TotalPrice;
+                }
+
+                else if (month == "5")
+                {
+
+                    money[4] += (decimal)spendings[i].TotalPrice;
+                }
+
+                else if (month == "6")
+                {
+
+                    money[5] += (decimal)spendings[i].TotalPrice;
+                }
+
+                else if (month == "7")
+                {
+
+                    money[6] += (decimal)spendings[i].TotalPrice;
+                }
+
+                else if (month == "8")
+                {
+
+                    money[7] += (decimal)spendings[i].TotalPrice;
+                }
+                else if (month == "9")
+                {
+
+                    money[8] += (decimal)spendings[i].TotalPrice;
+                }
+                else if (month == "10")
+                {
+
+                    money[9] += (decimal)spendings[i].TotalPrice;
+                }
+                else if (month == "11")
+                {
+
+                    money[10] += (decimal)spendings[i].TotalPrice;
+                }
+
+                else
+                {
+                     
+                    money[11] += (decimal)spendings[i].TotalPrice;
+                }
+            }
+
+            for (int i = 0; i < money.Length; i++)
+            {
+                if (money[i] > 0)
+                {
+                    datapoints2.Add(money[i]);
+                }
+            }
+            ViewBag.datapoints2 = JsonConvert.SerializeObject(datapoints2);
+            return View("DepSpendingHistory");
         }
 
 

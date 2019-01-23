@@ -11,9 +11,9 @@ var TableInit = function () {
     var oTableInit = new Object();
 
     oTableInit.Init = function () {
-        $('#SearchItemTable').bootstrapTable({
+        $('#Viewallcatalogueitems').bootstrapTable({
             method: 'get',
-            url: 'http://inventorywebapi2019.azurewebsites.net/api/Request',
+            url: 'http://inventorywebapi2019.azurewebsites.net/api/Catalogue',
             //toolbar: '#toolbar',                
             striped: true,
             cache: false,
@@ -23,7 +23,7 @@ var TableInit = function () {
             queryParams: oTableInit.queryParams,
             sidePagination: "client",
             pageNumber: 1,
-            pageSize: 5,
+            pageSize: 10,
             pageList: [10, 25, 50, 100],
             search: true,
             strictSearch: false,
@@ -41,38 +41,54 @@ var TableInit = function () {
             showColumns: true,
             columns: [{
                 align: "center",
-                title: 'Request ID',
+                title: 'ItemID',
                 sortable: true,
                 sortable: true,
-                field: 'RequestID'
+                field: 'ItemID'
             }, {
                 align: "center",
-                title: 'OrderID',
+                title: 'Description',
                 sortable: true,
                 sortable: true,
-                field: 'OrderID',
+                field: 'Description',
                 //events: operateEvents,
                 // formatter: InputTextBox
             }, {
                 align: "center",
-                title: 'ItemID',
+                title: 'Reorder Level',
                 sortable: true,
                 sortable: true,
-                field: 'ItemID',
+                field: 'ReorderLevel',
                 //events: operateEvents,
                 // formatter: InputTextBox
             },
             {
                 align: "center",
-                title: 'Needed',
+                title: 'Reorder Quantity',
                 sortable: true,
                 sortable: true,
-                field: 'Needed',
+                field: 'ReorderQuantity',
                 //events: operateEvents,
                 // formatter: InputTextBox
             }, {
                 align: "center",
-                title: 'Select',
+                title: 'Unit of Measure',
+                sortable: true,
+                sortable: true,
+                field: 'MeasureUnit',
+                //events: operateEvents,
+                // formatter: InputTextBox
+            }, {
+                align: "center",
+                title: 'Price',
+                sortable: true,
+                sortable: true,
+                field: 'Price',
+                //events: operateEvents,
+                // formatter: InputTextBox
+            }, {
+                align: "center",
+                title: 'Edit',
                 sortable: true,
                 sortable: true,
                 //field : 'ID',
@@ -89,33 +105,64 @@ var TableInit = function () {
 
 
     // params
-    oTableInit.queryParams = function (params) {
 
-        var temp = {
-            courseid: $("#courseid").val()
-        };
-        return temp;
-    };
 
     function selectItem() {
         return [
-            '<input type="button" id="view" value="View Details"  class="btn btn-primary" />',
+            '<input type="button" id="view" value="Edit"  class="btn btn-primary" />',
         ].join('');
     }
 
-    function openPopup() {
-        $("#ApproveRequestModal").modal('show');
-    }
+
 
     operateEvents = {
         'click #view': function (e, value, row, index) {
-            $("#ApproveRequestModal").modal('show');
+            $("#EditInventoryModal").modal('show');
+
+            $("#idedit").val(row.ItemID);
+
+            $("#descriptionedit").empty();
+            $("#descriptionedit").append(row.Description);
+
+            $("#editreorderlevel").val(row.ReorderLevel);
+
+            $("#editreorderquantity").val(row.ReorderQuantity);
+
+
+            $("#measureunit").empty();
+            $("#measureunit").append(row.MeasureUnit);
+
+            $("#editprice").val(row.Price);
+
+            //var citem = {
+            //    itemID: row.ItemID,
+            //    description: row.Description,
+            //    reorderlevel: val(row.ReorderLevel),
+            //    reorderquantity: val(row.ReorderQuantity),
+            //    measureunit: row.MeasureUnit,
+            //    price: val(row.Price)
+            //};
+
+            //$.ajax({
+            //    url: SERVER_NAME + "/StoreSupervisor/Save",
+            //    type: "post",
+            //    dataType: "text",
+            //    async: false,
+            //    data: JSON.stringify(citem),
+            //    success: function (data) {
+            //        data ? alert("It worked!") : alert("It didn't work.");
+            //        //$('#successModal').modal('show');
+            //    }
+            //});
         }
     };
 
 
     return oTableInit;
 };
+
+
+
 
 var ButtonInit = function () {
     var oInit = new Object();

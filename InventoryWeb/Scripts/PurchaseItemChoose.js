@@ -53,6 +53,7 @@ function confirm() {
     }
     if (jsonlist.length == 0) {
         alert("Please select item to purchase");
+        $("#btnConfirm").attr("disabled", false);
     } else {
         if (isAllSame(supplierlist)) {
             $.ajax({

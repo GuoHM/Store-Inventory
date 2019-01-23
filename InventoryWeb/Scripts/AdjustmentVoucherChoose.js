@@ -42,8 +42,9 @@ function confirm() {
     var tab = document.getElementById("ItemAddedTable");
     var rows = tab.rows;
     debugger;
-    if (rows.length - 1 == 1) {
-        alert('please select item!');
+    var node = tab.rows[1];
+    if (node && node.cells[0].innerHTML == "No matching records found") {
+        alert("Please select item!");
         $("#saveAdjustment").attr("disabled", false);
     } else {
         var jsonlist = new Array();

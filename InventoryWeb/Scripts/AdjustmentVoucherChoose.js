@@ -41,32 +41,39 @@ function confirm() {
     $("#saveAdjustment").attr("disabled", true);
     var tab = document.getElementById("ItemAddedTable");
     var rows = tab.rows;
-    var jsonlist = new Array();
-    for (var i = 0; i < rows.length-1; i++) {
-        var jsonObj = { "itemID": rows[i + 1].cells[0].innerHTML, "quantity": rows[i + 1].cells[3].innerHTML, "price": rows[i + 1].cells[2].innerHTML, "reason": rows[i + 1].cells[4].innerHTML };
-        jsonlist.push(jsonObj);
-    }
-    $.ajax({
-        url: "/StoreClerk/SaveAdjustmentVoucher",
-        type: "post",
-        dataType: "text",
-        async: true,
-        data: JSON.stringify(jsonlist),
-        success: function (data) {
-            var result = JSON.parse(data);
-            if (result == 'success') {
-                $('#successModal').modal('show');
-            } else {
-                $('#failModal').modal('show');
-            }
-            $("#saveAdjustment").attr("disabled", false);
-        },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
-            alert(XMLHttpRequest.status);
-            alert(XMLHttpRequest.readyState);
-            alert(textStatus);
+    debugger;
+    if (rows.length - 1 == 1) {
+        alert('please select item!');
+        $("#saveAdjustment").attr("disabled", false);
+    } else {
+        var jsonlist = new Array();
+        for (var i = 0; i < rows.length - 1; i++) {
+            var jsonObj = { "itemID": rows[i + 1].cells[0].innerHTML, "quantity": rows[i + 1].cells[3].innerHTML, "price": rows[i + 1].cells[2].innerHTML, "reason": rows[i + 1].cells[4].innerHTML };
+            jsonlist.push(jsonObj);
         }
-    });
+        $.ajax({
+            url: "/StoreClerk/SaveAdjustmentVoucher",
+            type: "post",
+            dataType: "text",
+            async: true,
+            data: JSON.stringify(jsonlist),
+            success: function (data) {
+                var result = JSON.parse(data);
+                if (result == 'success') {
+                    $('#successModal').modal('show');
+                } else {
+                    $('#failModal').modal('show');
+                }
+                $("#saveAdjustment").attr("disabled", false);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert(XMLHttpRequest.status);
+                alert(XMLHttpRequest.readyState);
+                alert(textStatus);
+            }
+        });
+    }
+   
 } 
 
 

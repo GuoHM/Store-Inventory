@@ -48,7 +48,13 @@ var TableInit = function () {
                 title: 'Description',
                 sortable: true,
                 field: 'Description'
-            }, {
+                }, {
+                    align: "center",
+                    title: 'Price',
+                    sortable: true,
+                    field: 'Price',
+                    formatter: price
+                }, {
                 align: "center",
                 title: 'Quantity',
                 sortable: true,
@@ -74,7 +80,7 @@ var TableInit = function () {
             striped: true, // 是否显示行间隔色
             cache: false, // 是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
             pagination: true, // 是否显示分页（*）
-            sortable: true, // 是否启用排序
+            sortable: false, // 是否启用排序
             sortOrder: "asc", // 排序方式
             queryParams: oTableInit.queryParams,// 传递参数（*）
             sidePagination: "client", // 分页方式：client客户端分页，server服务端分页（*）
@@ -98,23 +104,27 @@ var TableInit = function () {
             columns: [{
                 align: "center",
                 title: 'ItemCode',
-                sortable: true
+                sortable: false
             }, {
                 align: "center",
                 title: 'Description',
-                sortable: true
-            }, {
+                sortable: false
+                }, {
+                    align: "center",
+                    title: 'Price',
+                    sortable: false
+                }, {
                 align: "center",
                 title: 'Quantity',
-                sortable: true
+                sortable: false
             }, {
                 align: "center",
                 title: 'Reason',
-                sortable: true
+                sortable: false
             }, {
                 align: "center",
                 title: 'Remove',
-                sortable: true
+                sortable: false
             }
             ],
             formatLoadingMessage: function () {
@@ -128,6 +138,9 @@ var TableInit = function () {
 
       
     };
+    function price(value, row, index) {
+        return '$'+(value).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'); 
+    }
     function quantityTextBox(value, row, index) {
         return [
             '<input type="number" maxlength="5" class="form-control quantity" placeholder="Quantity">'
@@ -140,7 +153,7 @@ var TableInit = function () {
     }
     function reasonTextBox(value, row, index) {
         return [
-            '<input type="text" maxlength="5" class="form-control reason" placeholder="Reason">'
+            '<input type="text" maxlength="100" class="form-control reason" placeholder="Reason">'
         ].join('');
     }
 

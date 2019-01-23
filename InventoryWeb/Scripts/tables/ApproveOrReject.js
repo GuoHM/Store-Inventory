@@ -98,6 +98,7 @@ var TableInit = function () {
     function openPopup() {
         $("#ApproveRequestModal").modal('show');
     }
+
     operateEvents = {
         'click #view': function (e, value, row, index) {
          

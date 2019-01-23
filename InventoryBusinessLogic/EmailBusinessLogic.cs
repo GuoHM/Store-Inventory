@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
+using InventoryBusinessLogic.Entity;
 
 namespace InventoryBusinessLogic
 {
@@ -31,7 +32,7 @@ namespace InventoryBusinessLogic
             this.client.Host = HOST;
             this.client.EnableSsl = ENABLESSL;
         }
-       
+
         /// <summary>
         /// Send email to a list of user
         /// </summary>
@@ -40,7 +41,7 @@ namespace InventoryBusinessLogic
         /// <param name="toAddress">To Email address list</param>
         public void SendEmail(string title, string content, List<string> toAddress)
         {
-            foreach(string email in toAddress)
+            foreach (string email in toAddress)
             {
                 this.mail.To.Add(email);
             }
@@ -51,8 +52,8 @@ namespace InventoryBusinessLogic
 
         public string SendPurchaseOrderNotification(confirmClass confirm)
         {
-            string MailBody = "<p style=\"font-size: 10pt\">以下内容为系统自动发送，请勿直接回复，谢谢。</p><table cellspacing=\"1\" cellpadding=\"3\" border=\"0\" bgcolor=\"000000\" style=\"font-size: 10pt;line-height: 15px;\">";
-            MailBody += "<div align=\"center\">";
+            string MailBody = "<p> Dear: "+confirm.attentionTo+"</p>";
+            MailBody += "<p>Logic University has sent a purchase order <PO#>. With <expected delivery ";
             MailBody += "<tr>";
             for (int hcol = 0; hcol < 5; hcol++)
             {

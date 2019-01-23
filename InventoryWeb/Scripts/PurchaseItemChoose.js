@@ -17,8 +17,8 @@
         var ReorderQuantity = SearchItemTable.rows[rows].cells[3].innerHTML;
         var price = SearchItemTable.rows[rows].cells[5].innerHTML;
         var supplier = SearchItemTable.rows[rows].cells[6].innerHTML;
-        var totalprice = price * orderQuantity;
-        $("#ItemAddedTable").append("<tr><td><input class='checkbox' checked='checked' type='checkbox'></td><td>" + itemCode + "</td><td>" + Description + "</td><td>" + Quantity + "</td><td>" + ReorderQuantity + "</td><td>" + orderQuantity + "</td><td>" + totalprice + "</td><td>" + supplier + "</td><td><input type='button'  value='remove' class='btn btn-danger' onclick='remove(this)'/></td></tr>");
+        var totalprice = '$'+parseFloat(price.substr(1, price.length)) * orderQuantity+'.00';
+        $("#ItemAddedTable").append("<tr align='center'><td><input class='checkbox' checked='checked' type='checkbox'></td><td>" + itemCode + "</td><td>" + Description + "</td><td>" + Quantity + "</td><td>" + ReorderQuantity + "</td><td>" + orderQuantity + "</td><td>" + totalprice + "</td><td>" + supplier + "</td><td><input type='button'  value='remove' class='btn btn-danger' onclick='remove(this)'/></td></tr>");
         $(obj).parents("tr").remove();
     }
 }
@@ -40,6 +40,7 @@ var json;
 function confirm() {
     var tab = document.getElementById("ItemAddedTable");
     var rows = tab.rows;
+    
     var objCheckBox = tab.getElementsByClassName('checkbox');
     var jsonlist = new Array();
     var supplierlist = new Array();
@@ -84,9 +85,9 @@ function confirm() {
                             + "</td><td>" + json.tablelist[i].description
                             + "</td><td>" + json.tablelist[i].quantity
                             + "</td><td>" + json.tablelist[i].totalPrice + "</td></tr>");
-                        totalPrice += parseInt(json.tablelist[i].totalPrice);
+                        totalPrice += parseFloat(json.tablelist[i].totalPrice.substr(1, json.tablelist[i].totalPrice.length));
                     }
-                    document.getElementById("totalPrice").innerHTML = 'Total Price:'+totalPrice;
+                    document.getElementById("totalPrice").innerHTML = 'Total Price:$'+totalPrice+".00";
                     $("#confirmTable").append("</tbody>");
                     $('#confirmModal').modal('show');
                 },
@@ -100,7 +101,6 @@ function confirm() {
             alert("Cannot choose item from different supplier!");
         }
     }    
-    //alert(JSON.stringify(jsonlist));
 }
 
 function savePurchaseOrder() {
@@ -116,6 +116,31 @@ function savePurchaseOrder() {
         success: function (data) {
             $('#confirmModal').modal('hide');
             $('#successModal').modal('show');
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            alert(XMLHttpRequest.status);
+            alert(XMLHttpRequest.readyState);
+            alert(textStatus);
+        }
+    });
+}
+
+function lowStock() {
+    $.ajax({
+        url: "/StoreClerk/LowStock",
+        type: "get",
+        dataType: "text",
+        async: true,
+        success: function (data) {
+            var json = JSON.parse(data);
+            var ItemAddedTable = document.getElementById("ItemAddedTable");
+            var node = ItemAddedTable.rows[1];
+            if (node && node.cells[0].innerHTML == "No matching records found") {
+                node.parentNode.removeChild(node);
+            }
+            for (var i = 0; i < json.length; i++) {
+                $("#ItemAddedTable").append("<tr align='center'><td><input class='checkbox' checked='checked' type='checkbox'></td><td>" + json[i].ItemID + "</td><td>" + json[i].Description + "</td><td>" + json[i].Quantity + "</td><td>" + json[i].ReorderQuantity + "</td><td>" + json[i].ReorderLevel + "</td><td>$" + parseFloat(json[i].ReorderQuantity) * parseFloat(json[i].Price) + ".00</td><td>" + json[i].Supplier1 + "</td><td><input type='button'  value='remove' class='btn btn-danger' onclick='remove(this)'/></td></tr>");
+            }
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             alert(XMLHttpRequest.status);

@@ -28,7 +28,15 @@ namespace InventoryBusinessLogic.Entity
         [StringLength(20)]
         public string AdjustmentStatus { get; set; }
 
+        [StringLength(128)]
+        public string UserID { get; set; }
+
+        [StringLength(255)]
+        public string Remarks { get; set; }
+
         public virtual AspNetUsers AspNetUsers { get; set; }
+
+        public virtual AspNetUsers AspNetUsers1 { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AdjustmentItem> AdjustmentItem { get; set; }

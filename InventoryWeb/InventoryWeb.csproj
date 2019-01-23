@@ -369,7 +369,6 @@
     <None Include="Properties\PublishProfiles\Inventory123 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\bootstrapValidator.min.js" />
-    <Content Include="Scripts\Constant.js" />
     <Content Include="Scripts\HighCharts\annotations.js" />
     <Content Include="Scripts\HighCharts\exporting.js" />
     <Content Include="Scripts\HighCharts\highcharts.js" />

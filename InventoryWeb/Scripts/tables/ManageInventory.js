@@ -88,16 +88,15 @@ var TableInit = function () {
                     title: 'Bin Number',
                     sortable: true,
                     sortable: true,
-                    field: 'BinNumber',
-                    //events: operateEvents,
-                    //formatter: selectItem
+                    field: 'BinNumber'
+                    
                 }, {
                     align: "center",
                     title: 'Actions',
                     sortable: true,
-                    sortable: true,
+                    
                     //field: 'Category',
-                    //events: operateEvents,
+                    events: operateEvents,
                     formatter: selectItem
                 }
             ],
@@ -126,9 +125,22 @@ var TableInit = function () {
 
     function selectItem(value, row, index) {
         return [
-            '<input type="button" value="Edit" onclick="selectItem(this)" class="btn btn-primary" />',
+            '<input type="button" id="view" value="Edit"  class="btn btn-primary" />',
         ].join('');
     }
+
+  
+
+    operateEvents = {
+        'click #view': function (e, value, row, index) {
+            $("#editInventory").modal('show');
+            $("#courseidedit").val(row.ItemID);
+            $("#itemName").empty();
+            $("#itemName").append(row.Description);
+            $("#editBinId").val(row.BinNumber)
+            
+        }
+    };
 
     return oTableInit;
 };

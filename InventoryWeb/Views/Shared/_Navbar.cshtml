@@ -17,6 +17,11 @@
                 @Html.ActionLink("Home", "", "DepRepresentative", new { area = "" }, new { @class = "navbar-brand" })
 
             }
+            else if (Request.IsAuthenticated && User.IsInRole("DeptStaff"))
+            {
+                @Html.ActionLink("Home", "RaiseRequest", "Staff", new { area = "" }, new { @class = "navbar-brand" })
+
+            }
         </div>
         <div class="navbar-collapse collapse">
             @Html.Partial("_LoginPartial")

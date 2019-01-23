@@ -336,6 +336,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RequestController.cs" />
+    <Compile Include="Controllers\StaffController.cs" />
     <Compile Include="Controllers\StoreClerkController.cs" />
     <Compile Include="Controllers\StoreSupervisorController.cs" />
     <Compile Include="Global.asax.cs">
@@ -410,10 +411,7 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
-    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
     <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
@@ -457,6 +455,7 @@
     <Content Include="Views\DepRepresentative\SideBar.cshtml" />
     <Content Include="Views\DepRepresentative\Index.cshtml" />
     <Content Include="Views\DepRepresentative\StationaryRequest.cshtml" />
+    <Content Include="Views\Staff\RaiseRequest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

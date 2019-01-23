@@ -38,6 +38,7 @@ function remove(obj) {
 }
 var json;
 function confirm() {
+    $("#saveAdjustment").attr("disabled", true);
     var tab = document.getElementById("ItemAddedTable");
     var rows = tab.rows;
     var jsonlist = new Array();
@@ -53,12 +54,12 @@ function confirm() {
         data: JSON.stringify(jsonlist),
         success: function (data) {
             var result = JSON.parse(data);
-            debugger;
             if (result == 'success') {
                 $('#successModal').modal('show');
             } else {
                 $('#failModal').modal('show');
             }
+            $("#saveAdjustment").attr("disabled", false);
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             alert(XMLHttpRequest.status);

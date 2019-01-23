@@ -40,7 +40,7 @@ var json;
 function confirm() {
     var tab = document.getElementById("ItemAddedTable");
     var rows = tab.rows;
-    
+    $("#btnConfirm").attr("disabled", true);
     var objCheckBox = tab.getElementsByClassName('checkbox');
     var jsonlist = new Array();
     var supplierlist = new Array();
@@ -62,6 +62,7 @@ function confirm() {
                 async: true,
                 data: JSON.stringify(jsonlist),
                 success: function (data) {
+                    $("#btnConfirm").attr("disabled", false);
                     $("#confirmTable").empty();
                     $("#confirmTable").append("<thead><tr>"
                         + "<th>Item Code</th>"
@@ -108,7 +109,6 @@ function savePurchaseOrder() {
     json['attentionTo'] = $('#attentionTo').val();
     json['dateToDeliver'] = $('#dateToDeliver').val();
     $("#btnSave").attr("disabled", true);
-    $("#btnConfirm").attr("disabled", true);
     $.ajax({
         url: "/StoreClerk/SavePurchaseOrder",
         type: "post",
@@ -119,7 +119,6 @@ function savePurchaseOrder() {
             $('#confirmModal').modal('hide');
             $('#successModal').modal('show');
             $("#btnSave").attr("disabled", false);
-            $("#btnConfirm").attr("disabled", false);
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             alert(XMLHttpRequest.status);

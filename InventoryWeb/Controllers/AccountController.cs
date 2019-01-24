@@ -116,10 +116,10 @@ namespace InventoryWeb.Controllers
                     {
                         return RedirectToAction("ApproveOrReject", "DepManager");
                     }
-                    //else if (roles.Contains("StoreSupervisor"))
-                    //{
-                    //    return RedirectToAction("ViewInventory", "DepManager");
-                    //}
+                    else if (roles.Contains("StoreSupervisor"))
+                    {
+                        return RedirectToAction("Sidebar", "StoreSupervisor");
+                    }
                     //else if (roles.Contains("DeptStaff"))
                     //{
                     //    return RedirectToAction("ViewInventory", "DepStaff");

@@ -58,6 +58,11 @@ namespace InventoryWeb.Controllers
             return View();
         }
 
+        public ActionResult Reports()
+        {
+            return View();
+        }
+
         public ActionResult ChargeBackReport(DateTime date1, DateTime date2)
         {
             List<Order> orderList = catalogueBusinessLogic.depSpendings(date1, date2);

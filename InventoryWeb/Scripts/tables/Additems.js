@@ -13,7 +13,7 @@ var TableInit = function () {
     oTableInit.Init = function () {
         $('#AddItems').bootstrapTable({
             method: 'get',
-            url: 'http://inventorywebapi2019.azurewebsites.net/api/PurchaseOrder',
+            url: 'https://inventorywebapi2019.azurewebsites.net/api/PurchaseOrder',
             //toolbar: '#toolbar',                
             striped: true,
             cache: false,
@@ -23,7 +23,7 @@ var TableInit = function () {
             queryParams: oTableInit.queryParams,
             sidePagination: "client",
             pageNumber: 1,
-            pageSize: 5,
+            pageSize: 7,
             pageList: [10, 25, 50, 100],
             search: true,
             strictSearch: false,
@@ -137,20 +137,6 @@ var TableInit = function () {
 
             $("#ApproveRequestModal").modal('show');
             orderid = row.PurchaseOrderID;
-       
-            //requestedDate = row.RequestDate;
-           // reqesterName = row.AspNetUsers.UserName;
-            //document.getElementById('requestDate').innerHTML = requestedDate;
-            //document.getElementById('requestedBy').innerHTML = reqesterName;
-
-
-            var oTableInit = new TableInit1();
-            oTableInit.Init();
-
-            $('#requests').bootstrapTable('refreshOptions', { url: 'http://inventorywebapi2019.azurewebsites.net/api/PurchaseOrder/' + orderid });
-            $('#requests').bootstrapTable('refresh', { url: 'http://inventorywebapi2019.azurewebsites.net/api/PurchaseOrder/' + orderid });
-
-
         }
     };
 
@@ -169,92 +155,6 @@ var ButtonInit = function () {
     };
 
     return oInit;
-};
-
-
-var TableInit1 = function () {
-    var oTableInit = new Object();
-
-    oTableInit.Init = function () {
-        $('#ShowPurchaseDetails').bootstrapTable({
-            method: 'get',
-            //toolbar: '#toolbar',                
-            striped: true,
-            cache: false,
-            pagination: true,
-            sortable: true,
-            sortOrder: "asc",
-            queryParams: oTableInit.queryParams,
-            sidePagination: "client",
-            pageNumber: 1,
-            pageSize: 5,
-            pageList: [10, 25, 50, 100],
-            search: false,
-            strictSearch: false,
-            queryParamsType: "",
-            showRefresh: true,
-            minimumCountColumns: 2,
-            clickToSelect: false,
-            height: 500,
-            // uniqueId: "ID", 
-            showToggle: true,
-            cardView: false,
-            detailView: false,
-            showExport: false,
-            exportDataType: "basic",              //basic', 'all', 'selected'.
-            showColumns: true,
-            columns: [{
-                align: "center",
-                title: 'Item Code',
-                sortable: true,
-
-                field: 'Catalogue.ItemID'
-            },
-            {
-                align: "center",
-                title: 'Description',
-                sortable: true,
-                field: 'Catalogue.Description'
-            }, {
-                align: "center",
-                title: 'Quantity',
-                sortable: true,
-                field: 'Quantity'
-            },
-            {
-                align: "center",
-                title: 'Price',
-                sortable: true,
-                field: 'Catalogue.Price'
-            },
-
-            {
-                align: "center",
-                title: 'Amount',
-                sortable: true
-
-
-            }
-            ],
-            formatLoadingMessage: function () {
-                return "loading...";
-            }
-        });
-
-    };
-
-   
-  
-
-
-    operateEvents = {
-        'click #view': function (e, value, row, index) {
-            $("#ApproveRequestModal").modal('show');
-        }
-    };
-
-
-    return oTableInit;
 };
 
 

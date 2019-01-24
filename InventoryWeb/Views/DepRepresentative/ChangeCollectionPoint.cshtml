@@ -1,0 +1,44 @@
+﻿@{ var dept = ViewBag.Department; }
+@{
+    ViewBag.Title = "ChangeCollectionPoint";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-xs-2 column">
+    @Html.Partial("~/Views/DepRepresentative/SideBar.cshtml")
+</div>
+
+<div class="col-xs-9 column">
+    @*<h2>Collection Point</h2>
+        <ul>
+            <li>
+                <a href="Show/@ViewBag.DeptList.DepartmentID">
+                    @ViewBag.DeptList.CollectionPoint
+                </a>
+            </li>
+
+        </ul>*@
+    <div class="col-xs-9 column">
+        <form action="saveNewCollectionPoint" class="rep-form">
+
+            <label>Current Collection Point: </label>
+            <a href="Show/@ViewBag.DeptList.DepartmentID">
+                @ViewBag.DeptList.CollectionPoint
+            </a>
+
+    </div>
+    <br />
+    <br />
+    <label>New Collection Point: </label>
+    <form action="saveNewCollectionPoint">
+        <br />
+        @Html.RadioButton("CollectionPoint", "Stationary Store - Administration Building")<span>Stationary Store - Administration Building</span> <br />
+        @Html.RadioButton("CollectionPoint", "Management School")<span>Management School</span><br />
+        @Html.RadioButton("CollectionPoint", "Medical School")<span>Medical School</span><br />
+        @Html.RadioButton("CollectionPoint", "Engineering School")<span>Engineering School</span><br />
+        @Html.RadioButton("CollectionPoint", "Science School")<span>Science School</span><br />
+        @Html.RadioButton("CollectionPoint", "University Hospital")<span>University Hospital</span><br />
+        <br />
+        <button type="submit" class="btn btn-primary" button id="myBtn">Submit</button>
+    </form>
+</div>

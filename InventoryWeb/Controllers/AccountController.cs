@@ -109,15 +109,14 @@ namespace InventoryWeb.Controllers
                 case SignInStatus.Success:
                     var user = await UserManager.FindAsync(model.UserName, model.Password);
                     var roles = await UserManager.GetRolesAsync(user.Id);
-
                     if (roles.Contains("StoreClerk"))
                     {
                         return RedirectToAction("RaiseRequest", "StoreClerk");
                     }
-                    //else if (roles.Contains("Requestor"))
-                    //{
-                    //    return RedirectToAction("Caterer", "Home");
-                    //}
+                    else if (roles.Contains("DeptStaff"))
+                    {
+                        return RedirectToAction("RaiseRequest", "Staff");
+                    }
                     //else if (roles.Contains("Admin"))
                     //{
                     //    return RedirectToAction("Admin", "Home");

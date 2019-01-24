@@ -8,8 +8,8 @@
     var rows = obj.parentNode.parentNode.rowIndex;
     var objInput = SearchItemTable.getElementsByClassName("form-control");
     var orderQuantity = objInput[rows - 1].value;
-    if (orderQuantity == "") {
-        alert("Please input quantity!");
+    if (orderQuantity == "" || orderQuantity <=0) {
+        alert("Please input valid quantity!");
     } else {
         var itemCode = SearchItemTable.rows[rows].cells[0].innerHTML;
         var Description = SearchItemTable.rows[rows].cells[1].innerHTML;

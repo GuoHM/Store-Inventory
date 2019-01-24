@@ -6,32 +6,19 @@ using System.Web.Mvc;
 using InventoryBusinessLogic.Entity;
 using InventoryBusinessLogic;
 using Microsoft.AspNet.Identity;
-
 using System.Web.Script.Serialization;
-
-
-
-
 
 namespace InventoryWeb.Controllers
 {
-    public class StoreSupervisorController : Controller
+    public class StoreManagerController : Controller
     {
-
-        AdjustmentBusinessLogic req = new AdjustmentBusinessLogic();
-
-        // GET: StoreSupervisor
+        // GET: StoreManager
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult ViewInventory()
-        {
-            return View();
-        }
-
-        public ActionResult ViewAdjustmentVoucher()
+        public ActionResult ViewAdjustmentVoucherManager()
         {
             string userId = User.Identity.GetUserId();
             ViewBag.userID = userId;
@@ -39,17 +26,12 @@ namespace InventoryWeb.Controllers
             return View();
         }
 
-
         public ActionResult ViewAdjustmentVoucherbyID()
         {
             string userId = User.Identity.GetUserId();
+            ViewBag.userID = userId;
             new AdjustmentBusinessLogic().getAllAdjustment(userId);
             return View();
-        }
-        public ActionResult Save(string itemid, int reorderlevel, int reorderquantity, int price)
-        {
-            new CatalogueBusinessLogic().Save(itemid, reorderlevel, reorderquantity, price);
-            return View("ViewInventory");
         }
 
         public ActionResult ViewAdjustmentVoucherItems(int adjustmentID)
@@ -60,9 +42,8 @@ namespace InventoryWeb.Controllers
 
         }
 
-      
         [HttpPost]
-        public ActionResult SaveRequestStatus()
+        public ActionResult SaveRequestStatusManager()
         {
             var sr = new System.IO.StreamReader(Request.InputStream);
             var stream = sr.ReadToEnd();
@@ -70,9 +51,9 @@ namespace InventoryWeb.Controllers
             var list = js.Deserialize<List<SelectedList>>(stream);
 
             if (list.Any())
-            { 
-                    new AdjustmentBusinessLogic().ApproveOrRejectRequest(list[0].AdjustmentID, list[0].requestStatus, list[0].remarks);
-                    
+            {
+                new AdjustmentBusinessLogic().ApproveOrRejectRequest(list[0].AdjustmentID, list[0].requestStatus, list[0].remarks);
+
             }
             return new JsonResult();
         }
@@ -80,13 +61,9 @@ namespace InventoryWeb.Controllers
         class SelectedList
         {
             public int AdjustmentID { get; set; }
-
             public string requestStatus { get; set; }
             public string remarks { get; set; }
 
         }
-
     }
-
-
 }

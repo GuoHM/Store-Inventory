@@ -101,6 +101,7 @@ function confirm() {
             });
         } else {
             alert("Cannot choose item from different supplier!");
+            $("#btnConfirm").attr("disabled", false);
         }
     }    
 }
@@ -138,11 +139,6 @@ function lowStock() {
         success: function (data) {
             var json = JSON.parse(data);
             var ItemAddedTable = document.getElementById("ItemAddedTable");
-            var node = ItemAddedTable.rows[1];
-            //if (node && node.cells[0].innerHTML == "No matching records found") {
-            //    node.parentNode.removeChild(node);
-            //}
-            debugger;
             for (var i = 1; i < ItemAddedTable.rows.length; i++) {
                 ItemAddedTable.rows[i].parentNode.removeChild(ItemAddedTable.rows[i]);
                 i--;

@@ -108,14 +108,27 @@ namespace InventoryWeb.Controllers
                     {
                         return RedirectToAction("RaiseRequest", "StoreClerk");
                     }
-                    //else if (roles.Contains("Requestor"))
+                    else if (roles.Contains("DeptRep"))
+                    {
+                        return RedirectToAction("Index", "DepRepresentative");
+                    }
+                    else if (roles.Contains("DeptHead"))
+                    {
+                        return RedirectToAction("ApproveOrReject", "DepManager");
+                    }
+                    //else if (roles.Contains("StoreSupervisor"))
                     //{
-                    //    return RedirectToAction("Caterer", "Home");
+                    //    return RedirectToAction("ViewInventory", "DepManager");
                     //}
-                    //else if (roles.Contains("Admin"))
+                    //else if (roles.Contains("DeptStaff"))
                     //{
-                    //    return RedirectToAction("Admin", "Home");
+                    //    return RedirectToAction("ViewInventory", "DepStaff");
                     //}
+                    //else if (roles.Contains("StoreManager"))
+                    //{
+                    //    return RedirectToAction("ViewInventory", "StoreManager");
+                    //}
+
                     else
                     {
                         return RedirectToLocal(returnUrl);

@@ -333,7 +333,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\CollectionPointController.cs" />
     <Compile Include="Controllers\DepManagerController.cs" />
     <Compile Include="Controllers\DepRepresentativeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -453,22 +452,20 @@
     <Content Include="Views\StoreSupervisor\ViewInventory.cshtml" />
     <Content Include="Views\DepManager\DepSpendingHistory.cshtml" />
     <Content Include="Views\StoreClerk\generateChargeBack.cshtml" />
-    <Content Include="Views\StoreSupervisor\SideBar.cshtml" />
     <Content Include="Views\StoreClerk\ChargeBackReport.cshtml" />
     <Content Include="Views\StoreClerk\trenAnalysisByItems.cshtml" />
     <Content Include="Views\StoreClerk\ListDept.cshtml" />
     <Content Include="Views\StoreClerk\Additems.cshtml" />
-    <Content Include="Views\CollectionPoint\Edit.cshtml" />
     <Content Include="Views\StoreSupervisor\ViewAdjustmentVoucher.cshtml" />
-    <Content Include="Views\StoreSupervisor\SideBar.cshtml" />
     <Content Include="Views\StoreManager\ViewAdjustmentVoucherManager.cshtml" />
     <Content Include="Views\StoreManager\SideBar.cshtml" />
-    <Content Include="Views\CollectionPoint\SideBar.cshtml" />
     <Content Include="Views\DepRepresentative\ChangeCollectionPoint.cshtml" />
     <Content Include="Views\DepRepresentative\SideBar.cshtml" />
     <Content Include="Views\DepRepresentative\Index.cshtml" />
     <Content Include="Views\DepRepresentative\StationaryRequest.cshtml" />
     <Content Include="Views\Staff\RaiseRequest.cshtml" />
+    <Content Include="Views\StoreSupervisor\SideBar.cshtml" />
+    <Content Include="Views\StoreClerk\Reports.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

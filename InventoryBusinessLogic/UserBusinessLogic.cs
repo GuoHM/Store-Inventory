@@ -70,7 +70,7 @@ namespace InventoryBusinessLogic
 
         {
             Catalogue item = inventory.Catalogue.Where(x => x.ItemID == dropdown1).First<Catalogue>();
-             return inventory.Request.Where(x => x.ItemID.Equals(item.ItemID) && x.RequestDate >= date1 && x.RequestDate <= date2).ToList<Request>();
+             return inventory.Request.Where(x => x.ItemID.Equals(item.ItemID) &&  x.RequestDate >= date1 && x.RequestDate <= date2 && x.RequestStatus == "Approved" ).ToList<Request>();
         }
 
      

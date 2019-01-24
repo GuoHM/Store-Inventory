@@ -339,7 +339,6 @@
     <Compile Include="Controllers\StaffController.cs" />
     <Compile Include="Controllers\StoreClerkController.cs" />
     <Compile Include="Controllers\StoreManagerController.cs" />
-    <Compile Include="Controllers\StoreSupervisorController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

@@ -139,8 +139,13 @@ function lowStock() {
             var json = JSON.parse(data);
             var ItemAddedTable = document.getElementById("ItemAddedTable");
             var node = ItemAddedTable.rows[1];
-            if (node && node.cells[0].innerHTML == "No matching records found") {
-                node.parentNode.removeChild(node);
+            //if (node && node.cells[0].innerHTML == "No matching records found") {
+            //    node.parentNode.removeChild(node);
+            //}
+            debugger;
+            for (var i = 1; i < ItemAddedTable.rows.length; i++) {
+                ItemAddedTable.rows[i].parentNode.removeChild(ItemAddedTable.rows[i]);
+                i--;
             }
             for (var i = 0; i < json.length; i++) {
                 $("#ItemAddedTable").append("<tr align='center'><td><input class='checkbox' checked='checked' type='checkbox'></td><td>" + json[i].ItemID + "</td><td>" + json[i].Description + "</td><td>" + json[i].Quantity + "</td><td>" + json[i].ReorderQuantity + "</td><td>" + json[i].ReorderLevel + "</td><td>$" + parseFloat(json[i].ReorderQuantity) * parseFloat(json[i].Price) + ".00</td><td>" + json[i].Supplier1 + "</td><td><input type='button'  value='remove' class='btn btn-danger' onclick='remove(this)'/></td></tr>");

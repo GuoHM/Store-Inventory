@@ -31,9 +31,7 @@ function ShowPurchaseDetails(obj) {
                     + json[i].description + "</td><td>" + json[i].quantity + "</td><td>" + json[i].price +
                     "</td><td>" + json[i].amount + "</td></tr>");
             }
-            $("#ShowPurchaseDetails").append("</tbody>");
-
-         
+            $("#ShowPurchaseDetails").append("</tbody>");        
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             alert(XMLHttpRequest.status);

@@ -24,6 +24,7 @@ function remove(obj) {
     $(obj).parents("tr").remove();
 }
 function postData() {
+    $("#btnConfirm").attr("disabled", true);
     var tab = document.getElementById("ItemAddedTable");
     var rows = tab.rows;
     var jsonlist = new Array(rows.length - 1);
@@ -31,21 +32,35 @@ function postData() {
         var jsonObj = { "description": rows[i].cells[0].innerHTML, "quantity": rows[i].cells[1].innerHTML};
         jsonlist[i-1] = jsonObj;
     }
-    //alert(JSON.stringify(jsonlist));
-    $.ajax({
-        url: "/Request/SaveRequest",
-        type: "post",
-        dataType: "text",
-        async: true,
-        data: JSON.stringify(jsonlist),
-        success: function (data) {
-            $('#successModal').modal('show');
-        },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
-            alert(XMLHttpRequest.status);
-            alert(XMLHttpRequest.readyState);
-            alert(textStatus);
-        },
-        
-    });
+    if (hasDuplicated(jsonlist)) {
+        alert('Cannot select duplicated item!');
+        $("#btnConfirm").attr("disabled", false);
+        return;
+    } else {
+        $.ajax({
+            url: "/Request/SaveRequest",
+            type: "post",
+            dataType: "text",
+            async: true,
+            data: JSON.stringify(jsonlist),
+            success: function (data) {
+                $('#successModal').modal('show');
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert(XMLHttpRequest.status);
+                alert(XMLHttpRequest.readyState);
+                alert(textStatus);
+            },
+
+        });
+    }
+}
+
+function hasDuplicated(arr) {
+    for (var i = 0; i + 1 < arr.length; i++) {
+        if (arr[i].description == arr[i + 1].description) {
+            return true;
+        }
+    }
+    return false;
 }

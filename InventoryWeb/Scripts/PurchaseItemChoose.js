@@ -55,7 +55,7 @@ function confirm() {
         alert("Please select item to purchase");
         $("#btnConfirm").attr("disabled", false);
     } else {
-        if (isAllSame(supplierlist)) {
+        if (isAllSame(supplierlist) && !hasDuplicated(jsonlist)) {
             $.ajax({
                 url: "/StoreClerk/ConfirmOrder",
                 type: "post",
@@ -100,7 +100,7 @@ function confirm() {
                 }
             });
         } else {
-            alert("Cannot choose item from different supplier!");
+            alert("Invalid selction,cannot choose duplicated items or cannot choose from different supplier!");
             $("#btnConfirm").attr("disabled", false);
         }
     }    
@@ -165,3 +165,12 @@ function isAllSame(arr) {
     }
     return true;
 }  
+
+function hasDuplicated(arr) {
+    for (var i = 0; i + 1 < arr.length; i++) {
+        if (arr[i].itemCode == arr[i + 1].itemCode) {
+            return true;
+        }
+    }
+    return false;
+}

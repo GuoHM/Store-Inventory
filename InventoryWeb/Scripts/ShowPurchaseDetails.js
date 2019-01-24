@@ -4,7 +4,11 @@ function ShowPurchaseDetails(obj) {
     var tab = document.getElementById("AddItems");
     var rows = obj.parentNode.parentNode.rowIndex;
     var PurchaseOrderID = tab.rows[rows].cells[2].innerHTML;
-  
+    document.getElementById("date").innerHTML = tab.rows[rows].cells[1].innerHTML;
+    document.getElementById("orderNo").innerHTML = PurchaseOrderID;
+    document.getElementById("supplier").innerHTML = tab.rows[rows].cells[3].innerHTML;
+    document.getElementById("expected").innerHTML = tab.rows[rows].cells[4].innerHTML;
+    document.getElementById("status").innerHTML = tab.rows[rows].cells[5].innerHTML;
     $.ajax({
         url: "/StoreClerk/ShowPurchasedetails",
         type: "post",
@@ -12,28 +16,22 @@ function ShowPurchaseDetails(obj) {
         async: true,
         data: { purchaseID: PurchaseOrderID },
 
-        success: function (data) {
-         
-            var ShowPurchaseDetailsTable = document.getElementById("ShowPurchaseDetails");
-            var rowNum = ShowPurchaseDetailsTable.rows.length;
-            for (var i = 1; i < rowNum; i++) {
-                ShowPurchaseDetailsTable.deleteRow(i);
-                rowNum = rowNum - 1;
-                i = i - 1;
-            }
-            var node = ShowPurchaseDetailsTable.rows[1];
-            if (node && node.cells[0].innerHTML == "No matching records found"){
-                node.parentNode.removeChild(node);
-    }
-
+        success: function (data) {    
+            $("#ShowPurchaseDetails").empty();
+            $("#ShowPurchaseDetails").append("<thead><tr>"
+                + "<th>Item Code</th>"
+                + "<th>Description</th>"
+                + "<th>Quantity</th>"
+                + "<th>Price</th>"
+                + "<th>Amount</th>"
+                + "</tr></thead><tbody>");
             var json = JSON.parse(data);
             for (var i = 0; i < json.length; i++) {
                 $("#ShowPurchaseDetails").append("<tr align='center'><td>" + json[i].itemID + "</td><td>"
                     + json[i].description + "</td><td>" + json[i].quantity + "</td><td>" + json[i].price +
                     "</td><td>" + json[i].amount + "</td></tr>");
             }
-            debugger;
-         
+            $("#ShowPurchaseDetails").append("</tbody>");        
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             alert(XMLHttpRequest.status);

@@ -57,9 +57,43 @@ namespace InventoryBusinessLogic
 
         public List<Catalogue> GetLowStock()
         {
+            inventory.Configuration.ProxyCreationEnabled = false;
             return inventory.Catalogue.Where(x => x.Quantity <= x.ReorderLevel).ToList();
         }
+        public void UpdateInventory(string id, string editBinId)
+        {
+            Catalogue item1 = inventory.Catalogue.Where(P => P.ItemID == id).First<Catalogue>();
+            item1.BinNumber = editBinId;
+            inventory.SaveChanges();
 
-       }
-  
+        }
+
+        public void Save(string id, int reorderlevel, int reorderquantity, int price)
+        {
+
+            Catalogue item1 = inventory.Catalogue.Where(P => P.ItemID == id).First<Catalogue>();
+            item1.ReorderLevel = reorderlevel;
+            item1.ReorderQuantity = reorderquantity;
+            item1.Price = price;
+
+            inventory.SaveChanges();
+
+
+        }
+
+        public List<Order> depSpendings(DateTime date1, DateTime date2)
+        {
+            return inventory.Order.Where(i => i.OrderDate >= date1 && i.OrderDate <= date2).ToList<Order>();
+        }
+
+
+
+
+
+    }
+
+
 }
+
+
+

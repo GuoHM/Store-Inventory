@@ -1,82 +1,41 @@
 ﻿
 @{
-    ViewBag.Title = "AssignDepHead";
+    ViewBag.Title = "trenAnalysisByItems";
 }
 
+
+
 <div class="col-xs-2 column">
-    @Html.Partial("~/Views/DepManager/SideBar.cshtml")
+    @Html.Partial("~/Views/StoreClerk/SideBar.cshtml")
 </div>
 
-<link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" />
+<div class="col-sm-offset-3">
+    <h2>Generate Trend Analysis By Items</h2> <br /><br />
+</div>
 
-<!--Font Awesome (added because you use icons in your prepend/append)-->
-<link rel="stylesheet" href="https://formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css" />
+<div class="col-sm-offset-3">
+    <form action="trenAnalysis" class="rep-form" name="myForm">
 
-<!-- Inline CSS based on choices in "Settings" tab -->
-<style>
-    .bootstrap-iso .formden_header h2, .bootstrap-iso .formden_header p, .bootstrap-iso form {
-        font-family: Arial, Helvetica, sans-serif;
-        color: black
-    }
-
-        .bootstrap-iso form button, .bootstrap-iso form button:hover {
-            color: white !important;
-        }
-
-    .asteriskField {
-        color: red;
-    }
-</style>
-
-
-<div class="col-xs-offset-3 column">
-
-    <form action="saveDepHead" class="rep-form" name="myForm">
-
-        <h2>Appoint Department Head</h2> <br /><br />
-        <div class="form-group">
-            &nbsp;&nbsp;
-            <label>
-                Current Department Head :
-            </label>
-            &nbsp;&nbsp;
-            @for (int i = 0; i < ViewBag.depHead.Count; i++)
-            {
-                if (ViewBag.depHead[i].UserType == "DeptHead")
-                {
-
-                    <label> @ViewBag.depHead[i].UserName</label>
-                }
-            }
-
-        </div>
-
-        <br />
 
         <div class="form-group ">
             <label class="control-label col-sm-2" for="select">
-                New Department Head
+                Select an Item
             </label>
-
-
-
 
             <select class="form-control" name="dropdown1">
 
-                @for (int i = 0; i < ViewBag.depHead.Count; i++)
+                @for (int i = 0; i < ViewBag.catalogue.Count; i++)
                 {
-                    if (ViewBag.depHead[i].UserType != "DeptHead" && ViewBag.depHead[i].UserType != "DeptRep")
+
 
                     {
-                        <option value="@ViewBag.depHead[i].Id"> @ViewBag.depHead[i].UserName </option>
+                        <option value="@ViewBag.catalogue[i].ItemID"> @ViewBag.catalogue[i].Description </option>
                     }
 
 
                 }
-
             </select>
-        </div>
-        <br />
+        </div> <br />
 
         <div class="form-group ">
             <label class="control-label col-sm-2 requiredField" for="date">
@@ -114,15 +73,17 @@
                 <input class="form-control" id="date2" name="date2" placeholder="YYYY/MM/DD" type="text" required />
             </div>
         </div>
-
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <br />
+        <div class="col-sm-4">
+            <button type="submit" class="btn btn-success">Generate Chargeback</button>
+        </div>
 
     </form>
+
+    <div id="container1" style="width: 910px; height: 400px; margin: 0 auto"></div>
+
 </div>
 
-<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-
-<!-- Include Date Range Picker -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" />
 
@@ -152,7 +113,19 @@
     })
 </script>
 
+<style>
+    .bootstrap-iso .formden_header h2, .bootstrap-iso .formden_header p, .bootstrap-iso form {
+        font-family: Arial, Helvetica, sans-serif;
+        color: black
+    }
 
+        .bootstrap-iso form button, .bootstrap-iso form button:hover {
+            color: white !important;
+        }
 
+    .asteriskField {
+        color: red;
+    }
+</style>
 
 

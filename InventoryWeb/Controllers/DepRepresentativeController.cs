@@ -8,13 +8,13 @@ using InventoryBusinessLogic.Entity;
 
 namespace InventoryWeb.Controllers
 {
-    public class CollectionPointController : Controller
+    public class DepRepresentativeController : Controller
     {
         [Authorize(Roles = "DeptRep")]
         //public object UserId { get; private set; }
-       
-        // GET: CollectionPoint/Edit
-        public ActionResult Edit()
+
+        // GET: DepRepresentative/ChangeCollectionPoint
+        public ActionResult ChangeCollectionPoint()
         {
             ChangeCollectionPointBusinessLogic ch = new ChangeCollectionPointBusinessLogic();
             Department dep = new Department();
@@ -31,12 +31,18 @@ namespace InventoryWeb.Controllers
 
         public ActionResult saveNewCollectionPoint(string CollectionPoint)
         {
-           
+
             CP.ChangeCollectionPoint(CollectionPoint, User.Identity.Name);
-            // return View("Edit");
-            return RedirectToAction("Edit");
+            return RedirectToAction("ChangeCollectionPoint");
         }
+        public ActionResult Index()
+        {
 
-
+            return View();
+        }
+        public ActionResult StationaryRequest()
+        {
+            return View();
+        }
     }
 }

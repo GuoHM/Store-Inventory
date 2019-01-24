@@ -8,8 +8,8 @@
     var rows = obj.parentNode.parentNode.rowIndex;
     var objInput = SearchItemTable.getElementsByClassName("form-control");
     var orderQuantity = objInput[rows - 1].value;
-    if (orderQuantity == "") {
-        alert("Please input quantity!");
+    if (orderQuantity == "" || orderQuantity <=0) {
+        alert("Please input valid quantity!");
     } else {
         var itemCode = SearchItemTable.rows[rows].cells[0].innerHTML;
         var Description = SearchItemTable.rows[rows].cells[1].innerHTML;
@@ -32,15 +32,15 @@ function remove(obj) {
     var orderQuantity = ItemAddedTable.rows[rows].cells[5].innerHTML;
     var totalprice = ItemAddedTable.rows[rows].cells[6].innerHTML;
     var supplier = ItemAddedTable.rows[rows].cells[7].innerHTML;
-    var price = totalprice / orderQuantity;
-    $("#SearchItemTable").append("<tr align='center'><td>" + itemCode + "</td><td>" + Description + "</td><td>" + Quantity + "</td><td>" + ReorderQuantity + "</td><td><input type='number' class='form-control' placeholder='Quantity'></td><td>" + price + "</td><td>" + supplier + "</td><td><input type='button'  value='Select' class='btn btn-primary' onclick='selectItem(this)'/></td></tr>");
+    var price = totalprice.substr(1, totalprice.length) / orderQuantity;
+    $("#SearchItemTable").append("<tr align='center'><td>" + itemCode + "</td><td>" + Description + "</td><td>" + Quantity + "</td><td>" + ReorderQuantity + "</td><td><input type='number' class='form-control' placeholder='Quantity'></td><td>$" + price + ".00</td><td>" + supplier + "</td><td><input type='button'  value='Select' class='btn btn-primary' onclick='selectItem(this)'/></td></tr>");
      $(obj).parents("tr").remove();
 }
 var json;
 function confirm() {
     var tab = document.getElementById("ItemAddedTable");
     var rows = tab.rows;
-    
+    $("#btnConfirm").attr("disabled", true);
     var objCheckBox = tab.getElementsByClassName('checkbox');
     var jsonlist = new Array();
     var supplierlist = new Array();
@@ -53,6 +53,7 @@ function confirm() {
     }
     if (jsonlist.length == 0) {
         alert("Please select item to purchase");
+        $("#btnConfirm").attr("disabled", false);
     } else {
         if (isAllSame(supplierlist)) {
             $.ajax({
@@ -62,6 +63,7 @@ function confirm() {
                 async: true,
                 data: JSON.stringify(jsonlist),
                 success: function (data) {
+                    $("#btnConfirm").attr("disabled", false);
                     $("#confirmTable").empty();
                     $("#confirmTable").append("<thead><tr>"
                         + "<th>Item Code</th>"
@@ -99,6 +101,7 @@ function confirm() {
             });
         } else {
             alert("Cannot choose item from different supplier!");
+            $("#btnConfirm").attr("disabled", false);
         }
     }    
 }
@@ -107,6 +110,7 @@ function savePurchaseOrder() {
     json['delieverTo'] = $('#delieverTo').val();
     json['attentionTo'] = $('#attentionTo').val();
     json['dateToDeliver'] = $('#dateToDeliver').val();
+    $("#btnSave").attr("disabled", true);
     $.ajax({
         url: "/StoreClerk/SavePurchaseOrder",
         type: "post",
@@ -116,6 +120,7 @@ function savePurchaseOrder() {
         success: function (data) {
             $('#confirmModal').modal('hide');
             $('#successModal').modal('show');
+            $("#btnSave").attr("disabled", false);
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             alert(XMLHttpRequest.status);
@@ -126,6 +131,7 @@ function savePurchaseOrder() {
 }
 
 function lowStock() {
+    $("#btnLowStock").attr("disabled", true);
     $.ajax({
         url: "/StoreClerk/LowStock",
         type: "get",
@@ -134,13 +140,14 @@ function lowStock() {
         success: function (data) {
             var json = JSON.parse(data);
             var ItemAddedTable = document.getElementById("ItemAddedTable");
-            var node = ItemAddedTable.rows[1];
-            if (node && node.cells[0].innerHTML == "No matching records found") {
-                node.parentNode.removeChild(node);
+            for (var i = 1; i < ItemAddedTable.rows.length; i++) {
+                ItemAddedTable.rows[i].parentNode.removeChild(ItemAddedTable.rows[i]);
+                i--;
             }
             for (var i = 0; i < json.length; i++) {
                 $("#ItemAddedTable").append("<tr align='center'><td><input class='checkbox' checked='checked' type='checkbox'></td><td>" + json[i].ItemID + "</td><td>" + json[i].Description + "</td><td>" + json[i].Quantity + "</td><td>" + json[i].ReorderQuantity + "</td><td>" + json[i].ReorderLevel + "</td><td>$" + parseFloat(json[i].ReorderQuantity) * parseFloat(json[i].Price) + ".00</td><td>" + json[i].Supplier1 + "</td><td><input type='button'  value='remove' class='btn btn-danger' onclick='remove(this)'/></td></tr>");
             }
+            $("#btnLowStock").attr("disabled", false);
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             alert(XMLHttpRequest.status);

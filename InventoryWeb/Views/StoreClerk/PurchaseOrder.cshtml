@@ -25,8 +25,8 @@
             <div class="panel-body">
                 <table id="ItemAddedTable"></table>
                 <div style="margin-top:8px">
-                    <input type="button" value="Generate low stock" onclick="lowStock()" class="btn btn-primary" />
-                    <input type="button" value="Confirm" onclick="confirm()" class="btn btn-primary" style="float:right" />
+                    <input type="button" value="Generate low stock" id="btnLowStock" onclick="lowStock()" class="btn btn-primary" />
+                    <input type="button" value="Confirm" id="btnConfirm" onclick="confirm()" class="btn btn-primary" style="float:right" />
                 </div>
             </div>
         </div>
@@ -96,7 +96,7 @@
                             data-dismiss="modal">
                         Cancel
                     </button>
-                    <button type="button" class="btn btn-primary" onclick="savePurchaseOrder()">
+                    <button type="button" class="btn btn-primary" id="btnSave" onclick="savePurchaseOrder()">
                         Confirm
                     </button>
                 </div>

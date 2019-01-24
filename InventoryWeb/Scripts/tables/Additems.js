@@ -13,7 +13,7 @@ var TableInit = function () {
     oTableInit.Init = function () {
         $('#AddItems').bootstrapTable({
             method: 'get',
-            url: 'http://inventorywebapi2019.azurewebsites.net/api/PurchaseOrder',
+            url: 'https://inventorywebapi2019.azurewebsites.net/api/PurchaseOrder',
             //toolbar: '#toolbar',                
             striped: true,
             cache: false,

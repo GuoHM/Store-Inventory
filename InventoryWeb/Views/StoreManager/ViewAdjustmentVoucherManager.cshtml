@@ -1,0 +1,137 @@
+﻿
+
+
+<style>
+	#requests {
+		font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+		border-collapse: collapse;
+		width: 100%;
+	}
+
+		#requests td, #customers th {
+			border: 1px solid #ddd;
+			padding: 8px;
+		}
+
+		#requests tr:nth-child(even) {
+			background-color: #f2f2f2;
+		}
+
+		#requests tr:hover {
+			background-color: #ddd;
+		}
+
+		#requests th {
+			padding-top: 12px;
+			padding-bottom: 12px;
+			text-align: left;
+			background-color: #1E90FF;
+			color: white;
+		}
+</style>
+@{
+	ViewBag.Title = "ViewAdjustmentVoucherManager";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<div class="col-xs-2 column">
+	@Html.Partial("~/Views/StoreManager/SideBar.cshtml")
+</div>
+<div class="col-xs-10 column">
+
+
+	<div class="panel-body" style="padding-bottom: 0px;">
+		<div class="panel panel-default">
+			<div class="panel-heading">Adjustment Voucher</div>
+			<div class="panel-body">
+				<label id="userid" style="visibility:hidden">@ViewBag.userID</label>
+				<table id="SearchItemTable"></table>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- Edit Modal HTML -->
+<div id="ApproveRequestModal" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form class="form-horizontal" role="form" id="approval-form">
+				<div class="modal-header">
+					<h4 class="modal-title">Approve Or Reject Adjustment Voucher</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<table>
+							<tr>
+								<td> <label>Date Requested:&nbsp;&nbsp;     </label></td>
+								<td><label id="requestDate"></label></td>
+							</tr>
+							<tr>
+								<td><label>Requested By    :  &nbsp;&nbsp;       </label></td>
+								<td><label id="requestedBy"></label></td>
+							</tr>
+						</table>
+
+						<table id="requests"></table>
+
+
+
+					</div>
+					<table>
+						<tr>
+							<td>
+								<label>Remarks</label>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<textarea name="remarks" id="remarks" cols="40" rows="5"></textarea>
+							</td>
+						</tr>
+					</table>
+
+
+
+
+				</div>
+				<div class="modal-footer">
+					<input type="button" class="btn-danger" onclick="postData('Rejected')" value="Reject">
+					<input type="button" class="btn-success" onclick="postData('Approved')" value="Approve">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<div id="successModal" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form id="deleteForm">
+				<div class="modal-header">
+					<h4 class="modal-title">Success</h4>
+					<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">
+						&times;
+					</button>
+				</div>
+				<div class="modal-body">
+					<label>Adjustment Voucher Approved </label>
+				</div>
+				<div class="modal-footer">
+					<input type="button" class="btn btn-success center-block" data-dismiss="modal"
+						   value="OK" onclick="window.location.href='/StoreManager/ViewAdjustmentVoucherManager'">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<script src="~/Scripts/bootstrap-table.js"></script>
+<script src="~/Scripts/tables/ViewAdjustmentVoucherManager.js"></script>
+
+<script src="~/Scripts/bootstrap-table-export.js"></script>
+<script src="//rawgit.com/hhurz/tableExport.jquery.plugin/master/tableExport.js"></script>
+

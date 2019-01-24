@@ -13,7 +13,7 @@ var TableInit = function () {
     oTableInit.Init = function () {
         $('#Viewallcatalogueitems').bootstrapTable({
             method: 'get',
-            url: 'http://inventorywebapi2019.azurewebsites.net/api/Catalogue',
+            url: 'https://inventorywebapi2019.azurewebsites.net/api/Catalogue',
             //toolbar: '#toolbar',                
             striped: true,
             cache: false,
@@ -23,7 +23,7 @@ var TableInit = function () {
             queryParams: oTableInit.queryParams,
             sidePagination: "client",
             pageNumber: 1,
-            pageSize: 10,
+            pageSize: 7,
             pageList: [10, 25, 50, 100],
             search: true,
             strictSearch: false,

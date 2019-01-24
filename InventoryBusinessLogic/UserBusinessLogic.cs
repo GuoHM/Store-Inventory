@@ -46,14 +46,18 @@ namespace InventoryBusinessLogic
         {
 
             AspNetUsers user1 = inventory.AspNetUsers.Where(P => P.Id == id).First<AspNetUsers>();
-            AspNetUsers user2 = inventory.AspNetUsers.Where(P => P.UserType == "Manager").First<AspNetUsers>();
+            AspNetUsers user2 = inventory.AspNetUsers.Where(P => P.UserType == "DeptHead").First<AspNetUsers>();
             Department dep1 = inventory.Department.Where(P => P.DepartmentID == user2.DepartmentID).First<Department>();
             user2.UserType = "Employee";
-            user1.UserType = "Manager";
+            user1.UserType = "De";
             dep1.DepartmentHeadStartDate = startdate;
             dep1.DepartmentHeadEndDate = enddate;
             inventory.SaveChanges();
 
+        }
+        public List<AspNetUsers> getAllstoreClerk()
+        {
+            return inventory.AspNetUsers.Where(x => x.UserType == "StoreClerk").ToList();
         }
 
         public AspNetUsers getStoreStoreSupervisor()

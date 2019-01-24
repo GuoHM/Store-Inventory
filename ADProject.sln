@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryWebAPI.Tests", "In
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryBusinessLogic", "InventoryBusinessLogic\InventoryBusinessLogic.csproj", "{3907D2DE-9373-43EA-AB5C-A5F59893DE3F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestEmail", "..\TestEmail\TestEmail.csproj", "{690CF571-BB1C-48B3-B03B-4CF6E29F7F1A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{3907D2DE-9373-43EA-AB5C-A5F59893DE3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3907D2DE-9373-43EA-AB5C-A5F59893DE3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3907D2DE-9373-43EA-AB5C-A5F59893DE3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{690CF571-BB1C-48B3-B03B-4CF6E29F7F1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{690CF571-BB1C-48B3-B03B-4CF6E29F7F1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{690CF571-BB1C-48B3-B03B-4CF6E29F7F1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{690CF571-BB1C-48B3-B03B-4CF6E29F7F1A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

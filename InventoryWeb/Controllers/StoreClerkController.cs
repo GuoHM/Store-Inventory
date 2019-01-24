@@ -199,7 +199,12 @@ namespace InventoryWeb.Controllers
                     adjustment.Supervisor = userBusinessLogic.getStoreStoreSupervisor().Id;
                 }
                 adjustmentBusinessLogic.updateAdjustment(adjustment);
+                EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
+                string content = emailBusinessLogic.SendPurchaseOrderNotification("1002");
 
+                List<string> toAddress = new List<string>();
+                toAddress.Add("wangxiaoxiaoqiang@gmail.com");
+                emailBusinessLogic.SendEmail("Team3", content, toAddress);
             }
             json.Data = "success";
             return json;

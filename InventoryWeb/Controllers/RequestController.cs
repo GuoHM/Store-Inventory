@@ -72,6 +72,7 @@ namespace InventoryWeb.Controllers
                     }
                 }
             }
+
             return new JsonResult();
         }
         class SelectedList

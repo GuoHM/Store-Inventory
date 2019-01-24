@@ -40,7 +40,14 @@ namespace InventoryWeb.Controllers
         public ActionResult saveDepHead(string dropdown1, DateTime date1, DateTime date2)
         {
             BL.UpdateDepHead(dropdown1, date1, date2);
+            EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
+            string content = emailBusinessLogic.ChangeDeptHeadNotification(dropdown1);
+
+            List<string> toAddress = new List<string>();
+            toAddress.Add("wangxiaoxiaoqiang@gmail.com");
+            emailBusinessLogic.SendEmail("Team3", content, toAddress);
             return View("Index");
+            
         }
 
         public ActionResult ApproveOrReject()

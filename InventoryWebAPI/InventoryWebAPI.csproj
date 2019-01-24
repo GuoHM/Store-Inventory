@@ -291,9 +291,14 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Properties\PublishProfiles\AndroidAPI - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\AndroidAPI - Web Deploy1.pubxml" />
+    <None Include="Properties\PublishProfiles\androidAPIXUMJ - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\Inventory12345 - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\InventoryWebAPI2019 - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\InventoryWebAPI20190122115908 - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\InventoryWebAPMobile - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

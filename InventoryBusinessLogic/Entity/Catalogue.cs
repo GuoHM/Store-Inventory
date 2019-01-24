@@ -69,7 +69,7 @@ namespace InventoryBusinessLogic.Entity
         public virtual ICollection<PurchaseItem> PurchaseItem { get; set; }
         [JsonIgnore]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        [JsonIgnore]
+
         public virtual ICollection<Request> Request { get; set; }
     }
 }

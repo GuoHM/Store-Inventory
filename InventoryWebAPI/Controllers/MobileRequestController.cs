@@ -21,9 +21,9 @@ namespace InventoryWebAPI.Controllers
         // GET: api/MobileRequest/5
         [HttpGet]
         [Route("api/MobileRequest/{userid}")]
-        public IEnumerable<Request> GetRequestsByDeptID(string deptid)
+        public IEnumerable<Request> GetRequestByOrderId(string deptid)
         {
-              return request.GetRequestsByDeptID(deptid);
+              return request.GetRequestByOrderId(deptid);
         }
 
         // POST: api/MobileRequest

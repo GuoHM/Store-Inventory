@@ -63,10 +63,13 @@ namespace InventoryWeb.Controllers
             password = Request.Form.Get("password");
             var result = await SignInManager.PasswordSignInAsync(email, password, true, shouldLockout: false);
             string userid = userlogic.getUserByEmail(email).Id;
+            string name = userlogic.getUserByEmail(email).Name;
+            string dept = userlogic.getUserByEmail(email).DepartmentID;
+            string res = "success" + "/" + "userid:" + userid + "/" + "name:" + name + "/" + "dept:" + dept;
             switch (result)
             {
                 case SignInStatus.Success:
-                    return  "userid:"+userid;
+                    return  res;
                 case SignInStatus.LockedOut:
                     return "LockedOut";
                 case SignInStatus.RequiresVerification:

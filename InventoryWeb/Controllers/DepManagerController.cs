@@ -76,7 +76,6 @@ namespace InventoryWeb.Controllers
         class SelectedList
         {
             public string orderId { get; set; }
-
             public string requestStatus { get; set; }
             public string remarks { get; set; }
         }

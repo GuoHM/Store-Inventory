@@ -125,7 +125,7 @@ var TableInit = function () {
                 sortable: false
             }, {
                 align: "center",
-                title: 'Description',
+                    title: '&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspDescription&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp',
                     sortable: false
             }, {
                 align: "center",

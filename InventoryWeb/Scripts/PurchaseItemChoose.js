@@ -18,7 +18,7 @@
         var price = SearchItemTable.rows[rows].cells[5].innerHTML;
         var supplier = SearchItemTable.rows[rows].cells[6].innerHTML;
         var totalprice = '$'+parseFloat(price.substr(1, price.length)) * orderQuantity+'.00';
-        $("#ItemAddedTable").append("<tr><td><input class='checkbox' checked='checked' type='checkbox'></td><td>" + itemCode + "</td><td>" + Description + "</td><td>" + Quantity + "</td><td>" + ReorderQuantity + "</td><td>" + orderQuantity + "</td><td>" + totalprice + "</td><td>" + supplier + "</td><td><input type='button'  value='remove' class='btn btn-danger' onclick='remove(this)'/></td></tr>");
+        $("#ItemAddedTable").append("<tr align='center'><td><input class='checkbox' checked='checked' type='checkbox'></td><td>" + itemCode + "</td><td>" + Description + "</td><td>" + Quantity + "</td><td>" + ReorderQuantity + "</td><td>" + orderQuantity + "</td><td>" + totalprice + "</td><td>" + supplier + "</td><td><input type='button'  value='remove' class='btn btn-danger' onclick='remove(this)'/></td></tr>");
         $(obj).parents("tr").remove();
     }
 }
@@ -40,6 +40,7 @@ var json;
 function confirm() {
     var tab = document.getElementById("ItemAddedTable");
     var rows = tab.rows;
+    $("#btnConfirm").attr("disabled", true);
     var objCheckBox = tab.getElementsByClassName('checkbox');
     var jsonlist = new Array();
     var supplierlist = new Array();
@@ -52,6 +53,7 @@ function confirm() {
     }
     if (jsonlist.length == 0) {
         alert("Please select item to purchase");
+        $("#btnConfirm").attr("disabled", false);
     } else {
         if (isAllSame(supplierlist)) {
             $.ajax({
@@ -61,6 +63,7 @@ function confirm() {
                 async: true,
                 data: JSON.stringify(jsonlist),
                 success: function (data) {
+                    $("#btnConfirm").attr("disabled", false);
                     $("#confirmTable").empty();
                     $("#confirmTable").append("<thead><tr>"
                         + "<th>Item Code</th>"
@@ -106,6 +109,7 @@ function savePurchaseOrder() {
     json['delieverTo'] = $('#delieverTo').val();
     json['attentionTo'] = $('#attentionTo').val();
     json['dateToDeliver'] = $('#dateToDeliver').val();
+    $("#btnSave").attr("disabled", true);
     $.ajax({
         url: "/StoreClerk/SavePurchaseOrder",
         type: "post",
@@ -115,6 +119,7 @@ function savePurchaseOrder() {
         success: function (data) {
             $('#confirmModal').modal('hide');
             $('#successModal').modal('show');
+            $("#btnSave").attr("disabled", false);
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             alert(XMLHttpRequest.status);
@@ -132,8 +137,13 @@ function lowStock() {
         async: true,
         success: function (data) {
             var json = JSON.parse(data);
+            var ItemAddedTable = document.getElementById("ItemAddedTable");
+            var node = ItemAddedTable.rows[1];
+            if (node && node.cells[0].innerHTML == "No matching records found") {
+                node.parentNode.removeChild(node);
+            }
             for (var i = 0; i < json.length; i++) {
-                $("#ItemAddedTable").append("<tr><td><input class='checkbox' checked='checked' type='checkbox'></td><td>" + json[i].itemID + "</td><td>" + json[i].Description + "</td><td>" + json[i].Quantity + "</td><td>" + json[i].ReorderQuantity + "</td><td>" + json[i].ReorderLevel + "</td><td>" + parseFloat(josn[i].ReorderQuantity) * parseFloat(josn[i].price) + "</td><td>" + json[i].Supplier1 + "</td><td><input type='button'  value='remove' class='btn btn-danger' onclick='remove(this)'/></td></tr>");
+                $("#ItemAddedTable").append("<tr align='center'><td><input class='checkbox' checked='checked' type='checkbox'></td><td>" + json[i].ItemID + "</td><td>" + json[i].Description + "</td><td>" + json[i].Quantity + "</td><td>" + json[i].ReorderQuantity + "</td><td>" + json[i].ReorderLevel + "</td><td>$" + parseFloat(json[i].ReorderQuantity) * parseFloat(json[i].Price) + ".00</td><td>" + json[i].Supplier1 + "</td><td><input type='button'  value='remove' class='btn btn-danger' onclick='remove(this)'/></td></tr>");
             }
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {

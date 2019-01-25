@@ -42,19 +42,19 @@ var TableInit = function() {
                 align: "center",
                 title: 'ItemName',
                 sortable: true,
-                sortable: true,
+                
                 field: 'Description'
             }, {
                 align: "center",
                 title: 'Quantity',
                 sortable: true,
-                sortable: true,
+               
                 formatter: InputTextBox
             }, {
                 align: "center",
                 title: 'Select',
                 sortable: true,
-                sortable: true,
+              
                 formatter: selectItem
             }
             ],
@@ -110,9 +110,7 @@ var TableInit = function() {
         });
     };
 	function InputTextBox(value, row, index) {
-		return [       
-		        '<input type="number" class="form-control" placeholder="Quantity" id="quantity">'
-		        ].join('');
+		return ['<input type="number" class="form-control" placeholder="Quantity" id="quantity">'].join('');
     }
     function selectItem(value, row, index) {
         return [

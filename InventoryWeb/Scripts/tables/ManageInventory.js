@@ -43,19 +43,19 @@ var TableInit = function () {
                 align: "center",
                 title: 'ItemID',
                 sortable: true,
-                sortable: true,
+               
                 field: 'ItemID'
             },{
                 align: "center",
                 title: 'ItemName',
                 sortable: true,
-                sortable: true,
+                
                 field: 'Description'
             }, {
                 align: "center",
                 title: 'Quantity',
                 sortable: true,
-                sortable: true,
+                
                 field : 'Quantity',
                 //events: operateEvents,
                 //formatter: InputTextBox
@@ -63,7 +63,7 @@ var TableInit = function () {
                 align: "center",
                 title: 'Category',
                 sortable: true,
-                sortable: true,
+                
                 field : 'Category',
                 //events: operateEvents,
                 //formatter: selectItem
@@ -71,7 +71,7 @@ var TableInit = function () {
                     align: "center",
                     title: 'Measure Units',
                     sortable: true,
-                    sortable: true,
+              
                     field: 'MeasureUnit',
                     //events: operateEvents,
                     //formatter: selectItem
@@ -79,7 +79,7 @@ var TableInit = function () {
                     align: "center",
                     title: 'Price',
                     sortable: true,
-                    sortable: true,
+                    
                     field: 'Price',
                     //events: operateEvents,
                     //formatter: selectItem
@@ -87,7 +87,7 @@ var TableInit = function () {
                     align: "center",
                     title: 'Bin Number',
                     sortable: true,
-                    sortable: true,
+                    
                     field: 'BinNumber'
                     
                 }, {

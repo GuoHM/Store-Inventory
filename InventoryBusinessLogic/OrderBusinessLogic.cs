@@ -52,6 +52,18 @@ namespace InventoryBusinessLogic
             }         
         }
 
+        public List<Order> GetAllOrders()
+        {
+
+            // return inventory.Order.Where(x=>x.Request.Any(y=>y.RequestStatus.Trim().ToUpper()=="APPROVED")).ToList();
+            return inventory.Order.Where(x => x.OrderStatus.ToUpper().Trim() == "APPROVED").ToList();
+        }
+
+        public List<Order> GetOrdersByStatus(string OrderStatus)
+        {
+            return inventory.Order.Where(x => x.OrderStatus == OrderStatus).ToList();
+        }
+
         public void addOrder(Order order)
         {
             inventory.Order.Add(order);

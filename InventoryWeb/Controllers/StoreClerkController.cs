@@ -700,7 +700,7 @@ namespace InventoryWeb.Controllers
             return View();
         }
 
-        public ActionResult ViewAllStationeryRequisitions()
+        public ActionResult ViewRequest()
         {
             string userId = User.Identity.GetUserId();
             ViewBag.userID = userId;

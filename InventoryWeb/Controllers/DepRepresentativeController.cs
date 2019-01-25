@@ -70,5 +70,22 @@ namespace InventoryWeb.Controllers
             return View();
         }
 
+        public ActionResult ViewRequest()
+        {
+            string userId = User.Identity.GetUserId();
+            ViewBag.userID = userId;
+            new ManageRequestBusinessLogic().getAllStationeryRequest(userId);
+            return View();
+
+
+        }
+
+        public ActionResult ViewAllStationeryRequisitionsByOrderId(string orderId)
+        {
+
+            new ManageRequestBusinessLogic().getStationaryOrderByID(orderId);
+            return View();
+        }
+
     }
 }

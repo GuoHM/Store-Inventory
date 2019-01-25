@@ -475,6 +475,13 @@
     <Content Include="Views\StoreClerk\RetrievalForm.cshtml" />
     <Content Include="Views\StoreClerk\DisbursementList.cshtml" />
     <Content Include="Views\DepRepresentative\ViewAllStationeryRequisitionsDeptRep.cshtml" />
+    <Content Include="Views\StoreClerk\ViewAllAdjustmentVoucherRaised.cshtml" />
+    <Content Include="Views\StoreClerk\ViewAllStationeryRequisitions.cshtml" />
+    <Content Include="Views\ManageRequest\ViewRequestPartial.cshtml" />
+    <Content Include="Views\StoreClerk\ViewRequest.cshtml" />
+    <Content Include="Views\DepRepresentative\ViewRequest.cshtml" />
+    <Content Include="Views\Staff\SideBar.cshtml" />
+    <Content Include="Views\Staff\ViewRequest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

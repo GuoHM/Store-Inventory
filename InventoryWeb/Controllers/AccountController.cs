@@ -111,6 +111,11 @@ namespace InventoryWeb.Controllers
                     {
                         return RedirectToAction("RaiseRequest", "Staff");
                     }
+
+                    else if (roles.Contains("DeptHead"))
+                    {
+                        return RedirectToAction("AssignDepRep", "DepManager");
+                    }
                     //else if (roles.Contains("Admin"))
                     //{
                     //    return RedirectToAction("Admin", "Home");

@@ -12,9 +12,10 @@ namespace InventoryBusinessLogic
     {
         Inventory inventory = new Inventory();
 
-        public List<AspNetUsers> appointNewDepHead(string DepId = "1001")
+        public List<AspNetUsers> appointNewDepHead(string userID)
         {
-            return inventory.AspNetUsers.Where(x => x.DepartmentID == DepId).ToList<AspNetUsers>();
+            AspNetUsers user1 = inventory.AspNetUsers.Where(P => P.Id == userID).First<AspNetUsers>();
+            return inventory.AspNetUsers.Where(x => x.DepartmentID == user1.DepartmentID).ToList<AspNetUsers>();
         }
 
         public List<AspNetUsers> getAllUser()
@@ -27,18 +28,33 @@ namespace InventoryBusinessLogic
             return inventory.AspNetUsers.Where(x => x.Id == ID).First();
         }
 
-        public List<AspNetUsers> getDepUsers(string DepId = "1001")
+        public List<AspNetUsers> getDepUsers(string userID)
         {
-            return inventory.AspNetUsers.Where(x => x.DepartmentID == DepId).ToList<AspNetUsers>();
+            AspNetUsers user1 = inventory.AspNetUsers.Where(P => P.Id == userID).First<AspNetUsers>();
+            return inventory.AspNetUsers.Where(x => x.DepartmentID == user1.DepartmentID).ToList<AspNetUsers>();
         }
 
         public void UpdateDepRep(string id)
         {
             AspNetUsers user1 = inventory.AspNetUsers.Where(P => P.Id == id).First<AspNetUsers>();
-            AspNetUsers user2 = inventory.AspNetUsers.Where(P => P.UserType == "DeptRep").First<AspNetUsers>();
-            user1.UserType = "DeptRep";
-            user2.UserType = "DeptStaff";
-            inventory.SaveChanges();
+            AspNetRoles user1role = inventory.AspNetRoles.Where(p => p.Name == user1.UserType).First<AspNetRoles>();
+            AspNetUserRoles user1IdRole = inventory.AspNetUserRoles.Where(p => p.UserId == user1.Id && p.RoleId == user1role.Id).First<AspNetUserRoles>();
+
+            AspNetUsers user2 = inventory.AspNetUsers.Where(P => P.UserType == "DeptRep" && P.DepartmentID == user1.DepartmentID).First<AspNetUsers>();
+            AspNetRoles user2role = inventory.AspNetRoles.Where(p => p.Name == user2.UserType).First<AspNetRoles>();
+            AspNetUserRoles user2IdRole = inventory.AspNetUserRoles.Where(p => p.UserId == user2.Id && p.RoleId == user2role.Id).First<AspNetUserRoles>();
+
+            string temp = user1.UserType;
+            user1.UserType = user2.UserType;
+            user2.UserType = temp;
+
+
+            string temp2 = user1IdRole.RoleId;
+            user1IdRole.RoleId = user2IdRole.RoleId;
+            user2IdRole.RoleId = temp2;
+         
+            
+            inventory.sa
 
         }
 
@@ -48,8 +64,13 @@ namespace InventoryBusinessLogic
             AspNetUsers user1 = inventory.AspNetUsers.Where(P => P.Id == id).First<AspNetUsers>();
             AspNetUsers user2 = inventory.AspNetUsers.Where(P => P.UserType == "DeptHead").First<AspNetUsers>();
             Department dep1 = inventory.Department.Where(P => P.DepartmentID == user2.DepartmentID).First<Department>();
-            user1.UserType = "DeptHead";
-            user2.UserType = "DeptStaff";
+            string temp = user1.UserType;
+            user1.UserType = user2.UserType;
+            user2.UserType = temp;
+            //AspNetUserRoles alpha = inventory.AspNetUserRoles.Where(p => p.UserId == user1.Id).First<AspNetUserRoles>();
+            //AspNetUserRoles alpha2 = inventory.AspNetUserRoles.Where(p => p.UserId == user2.Id).First<AspNetUserRoles>();
+           
+           
             dep1.DepartmentHeadStartDate = startdate;
             dep1.DepartmentHeadEndDate = enddate;
             inventory.SaveChanges();

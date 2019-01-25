@@ -84,7 +84,7 @@ function confirm() {
    
 function hasDuplicated(arr) {
     for (var i = 0; i + 1 < arr.length; i++) {
-        if (arr[i].itemCode == arr[i + 1].itemCode) {
+        if (arr[i].itemID == arr[i + 1].itemID) {
             return true;
         }
     }

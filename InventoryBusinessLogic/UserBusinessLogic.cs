@@ -26,9 +26,9 @@ namespace InventoryBusinessLogic
         {
             return inventory.AspNetUsers.Where(x => x.Id == ID).First();
         }
-        public AspNetUsers getUserByEmail(string eamil)
+        public AspNetUsers getUserByUsername(string username)
         {
-            return inventory.AspNetUsers.Where(x => x.Email == eamil).First();
+            return inventory.AspNetUsers.Where(x => x.UserName == username).First();
         }
         public List<AspNetUsers> getDepUsers(string DepId = "1001")
         {

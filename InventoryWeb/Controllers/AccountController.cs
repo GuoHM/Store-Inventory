@@ -53,23 +53,33 @@ namespace InventoryWeb.Controllers
             }
         }
         //POST: /Account/MobileLogin
+        [HttpPost]
         [AllowAnonymous]
         public async Task<String> MobileLogin()
         {
             UserBusinessLogic userlogic = new UserBusinessLogic();
-            string email = "";
+            string username= "";
             string password = "";
-            email = Request.Form.Get("username");
+            username = Request.Form.Get("username");
             password = Request.Form.Get("password");
-            var result = await SignInManager.PasswordSignInAsync(email, password, true, shouldLockout: false);
-            string userid = userlogic.getUserByEmail(email).Id;
-            string name = userlogic.getUserByEmail(email).Name;
-            string dept = userlogic.getUserByEmail(email).DepartmentID;
-            string res = "success" + "/" + "userid:" + userid + "/" + "name:" + name + "/" + "dept:" + dept;
+
+            string userid = userlogic.getUserByUsername(username).Id;
+            string name = userlogic.getUserByUsername(username).Name;
+            string dept = userlogic.getUserByUsername(username).DepartmentID;
+            string roles = userlogic.getUserByUsername(username).UserType;
+            string res = "success" + "/" + userid + "/" +name + "/" + dept;
+            var result = await SignInManager.PasswordSignInAsync(username, password, true, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
-                    return  res;
+                    if (roles.Equals("DeptHead"))
+                    {
+                        return res;
+                    }
+                    else
+                    {
+                        return "Fail";
+                    }
                 case SignInStatus.LockedOut:
                     return "LockedOut";
                 case SignInStatus.RequiresVerification:

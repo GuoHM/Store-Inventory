@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using InventoryBusinessLogic;
 using InventoryBusinessLogic.Entity;
+using System.Web.Script.Serialization;
+using Microsoft.AspNet.Identity;
 
 namespace InventoryWeb.Controllers
 {
@@ -50,5 +52,23 @@ namespace InventoryWeb.Controllers
         {
             return View();
         }
+
+        public ActionResult ViewAllStationeryRequisitionsDeptRep()
+        {
+            string userId = User.Identity.GetUserId();
+            ViewBag.userID = userId;
+            new ManageRequestBusinessLogic().getAllStationeryRequest(userId);
+            return View();
+
+
+        }
+
+        public ActionResult ViewAllStationeryRequisitionsByOrderIdDeptRep(string orderId)
+        {
+
+            new ManageRequestBusinessLogic().getStationaryOrderByID(orderId);
+            return View();
+        }
+
     }
 }

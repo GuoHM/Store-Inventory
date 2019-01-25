@@ -11,7 +11,7 @@
         <div class="col-lg-15">
             <div class="panel-body" style="padding-bottom: 0px;">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Iventory Items</div>
+                    <div class="panel-heading">Inventory Items</div>
                     <div class="panel-body">
 
                         <table id="InventoryItemTable">
@@ -55,7 +55,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                         <button type="submit" class="btn btn-primary">Submit</button>
+                         <button type="submit" class="btn btn-primary" id="sub">Submit</button>
                     </div>
                 </form>
             </div>
@@ -65,3 +65,21 @@
 
 <script src="~/Scripts/bootstrap-table.js"></script>
 <script src="~/Scripts/tables/ManageInventory.js"></script>
+<script>
+    $(document).ready(function () {
+
+        $("#sub").click(function (e) {
+            e.preventDefault();
+            if (/^([A-Z]{1})([1-9]{1})$/.test($("#editBinId").val())) {
+               
+                $("#approval-form").submit();
+            }
+            else {
+                //display error
+                alert("Invalid bin Number\n Valid Bin number([A-Z]followed by[1-9])");
+                $("editBinId").val("");
+            }
+        })
+        
+    });
+</script>

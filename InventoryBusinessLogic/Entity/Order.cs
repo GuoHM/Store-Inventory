@@ -31,11 +31,11 @@ namespace InventoryBusinessLogic.Entity
 
         [Column(TypeName = "image")]
         public byte[] Signature { get; set; }
-        [JsonIgnore]
+ 
         public virtual Department Department { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        [JsonIgnore]
+      
         public virtual ICollection<Request> Request { get; set; }
     }
 }

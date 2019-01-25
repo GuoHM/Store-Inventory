@@ -136,6 +136,9 @@
     <Reference Include="Microsoft.Win32.Registry, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Win32.Registry.4.5.0\lib\net461\Microsoft.Win32.Registry.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
@@ -190,6 +193,9 @@
     <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web.Http.Cors, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Cors.5.2.7\lib\net45\System.Web.Http.Cors.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -233,9 +239,6 @@
     <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
-    </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
@@ -330,7 +333,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\CollectionPointController.cs" />
     <Compile Include="Controllers\DepManagerController.cs" />
     <Compile Include="Controllers\DepRepresentativeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -339,7 +341,6 @@
     <Compile Include="Controllers\StaffController.cs" />
     <Compile Include="Controllers\StoreClerkController.cs" />
     <Compile Include="Controllers\StoreManagerController.cs" />
-    <Compile Include="Controllers\StoreSupervisorController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -369,6 +370,10 @@
     </Content>
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\Inventory123 - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\InventoryAandroid - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\InventoryAandroid - Web Deploy1.pubxml" />
+    <None Include="Properties\PublishProfiles\InventoryAandroid - Web Deploy2.pubxml" />
+    <None Include="Properties\PublishProfiles\InventoryWebXUMJ - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\bootstrapValidator.min.js" />
     <Content Include="Scripts\HighCharts\annotations.js" />
@@ -391,6 +396,7 @@
     <Content Include="Scripts\AdjustmentVoucherChoose.js" />
     <Content Include="Scripts\tables\ApproveOrReject.js" />
     <Content Include="Scripts\tables\Additems.js" />
+    <Content Include="Scripts\tables\DisbursementList.js" />
     <Content Include="Scripts\tables\ListDept.js" />
     <Content Include="Scripts\tables\ManageInventory.js" />
     <Content Include="Scripts\tables\PurchaseOrder.js" />
@@ -400,6 +406,8 @@
     <Content Include="Scripts\tables\ViewAllAdjustmentVoucherRaised.js" />
     <Content Include="Scripts\tables\ViewAllStationeryRequisitions.js" />
     <Content Include="Scripts\tables\ViewInventory.js" />
+    <Content Include="Scripts\tables\RetrievalForm.js" />
+    <Content Include="Scripts\tables\ViewOrders.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -449,24 +457,23 @@
     <Content Include="Views\StoreSupervisor\ViewInventory.cshtml" />
     <Content Include="Views\DepManager\DepSpendingHistory.cshtml" />
     <Content Include="Views\StoreClerk\generateChargeBack.cshtml" />
-    <Content Include="Views\StoreSupervisor\SideBar.cshtml" />
     <Content Include="Views\StoreClerk\ChargeBackReport.cshtml" />
     <Content Include="Views\StoreClerk\trenAnalysisByItems.cshtml" />
     <Content Include="Views\StoreClerk\ListDept.cshtml" />
     <Content Include="Views\StoreClerk\Additems.cshtml" />
-    <Content Include="Views\CollectionPoint\Edit.cshtml" />
     <Content Include="Views\StoreSupervisor\ViewAdjustmentVoucher.cshtml" />
-    <Content Include="Views\StoreSupervisor\SideBar.cshtml" />
     <Content Include="Views\StoreManager\ViewAdjustmentVoucherManager.cshtml" />
     <Content Include="Views\StoreManager\SideBar.cshtml" />
-    <Content Include="Views\CollectionPoint\SideBar.cshtml" />
     <Content Include="Views\DepRepresentative\ChangeCollectionPoint.cshtml" />
     <Content Include="Views\DepRepresentative\SideBar.cshtml" />
     <Content Include="Views\DepRepresentative\Index.cshtml" />
     <Content Include="Views\DepRepresentative\StationaryRequest.cshtml" />
     <Content Include="Views\Staff\RaiseRequest.cshtml" />
-    <Content Include="Views\StoreClerk\ViewAllAdjustmentVoucherRaised.cshtml" />
-    <Content Include="Views\StoreClerk\ViewAllStationeryRequisitions.cshtml" />
+    <Content Include="Views\StoreSupervisor\SideBar.cshtml" />
+    <Content Include="Views\StoreClerk\Reports.cshtml" />
+    <Content Include="Views\StoreClerk\ViewOrders.cshtml" />
+    <Content Include="Views\StoreClerk\RetrievalForm.cshtml" />
+    <Content Include="Views\StoreClerk\DisbursementList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

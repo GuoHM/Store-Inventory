@@ -65,14 +65,23 @@ namespace InventoryWeb.Controllers
                         request.RequestStatus = "Unapproved";
                         request.Actual = 0;
                         manageRequestBusinessLogic.addRequest(request);
+
                     } else {
                         //request exist, update
                         request.Needed += Convert.ToInt32(item.quantity);
                         request.RequestDate = DateTime.Now;
                         manageRequestBusinessLogic.UpdateRequest(request);
+
                     }
                 }
             }
+            EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
+            string content = emailBusinessLogic.SendRequestNotification(username);
+
+            List<string> toAddress = new List<string>();
+            toAddress.Add("wangxiaoxiaoqiang@gmail.com");
+            emailBusinessLogic.SendEmail("Team3", content, toAddress);
+
             return new JsonResult();
         }
         class SelectedList

@@ -19,7 +19,6 @@ function selectItem(obj) {
         var price = SearchItemTable.rows[rows].cells[2].innerHTML;
         $("#ItemAddedTable").append("<tr align='center'><td>" + itemCode + "</td><td>" + Description + "</td><td>" + price + "</td><td>" + quantity + "</td><td>" + reason + "</td><td><input type='button'  value='remove' class='btn btn-danger' onclick='remove(this)'/></td></tr>");
         $(obj).parents("tr").remove();
-        debugger;
         totalPrice += Math.abs(quantity) * parseFloat(price.substr(1, price.length));
         document.getElementById("totalPrice").innerHTML = 'Total Price:$' + totalPrice+".00";
     }
@@ -41,7 +40,6 @@ function confirm() {
     $("#saveAdjustment").attr("disabled", true);
     var tab = document.getElementById("ItemAddedTable");
     var rows = tab.rows;
-    debugger;
     var node = tab.rows[1];
     if (node && node.cells[0].innerHTML == "No matching records found") {
         alert("Please select item!");
@@ -49,9 +47,16 @@ function confirm() {
     } else {
         var jsonlist = new Array();
         for (var i = 0; i < rows.length - 1; i++) {
-            var jsonObj = { "itemID": rows[i + 1].cells[0].innerHTML, "quantity": rows[i + 1].cells[3].innerHTML, "price": rows[i + 1].cells[2].innerHTML, "reason": rows[i + 1].cells[4].innerHTML };
-            jsonlist.push(jsonObj);
-        }
+              var jsonObj = { "itemID": rows[i + 1].cells[0].innerHTML, "quantity": rows[i + 1].cells[3].innerHTML, "price": rows[i + 1].cells[2].innerHTML, "reason": rows[i + 1].cells[4].innerHTML };
+              jsonlist.push(jsonObj);
+            }           
+    }
+    debugger;
+    if (hasDuplicated(jsonlist)) {
+        alert('Cannot select duplicated item!');
+        $("#saveAdjustment").attr("disabled", false);
+        return;
+    } else {
         $.ajax({
             url: "/StoreClerk/SaveAdjustmentVoucher",
             type: "post",
@@ -75,7 +80,16 @@ function confirm() {
         });
     }
    
-} 
+    }
+   
+function hasDuplicated(arr) {
+    for (var i = 0; i + 1 < arr.length; i++) {
+        if (arr[i].itemID == arr[i + 1].itemID) {
+            return true;
+        }
+    }
+    return false;
+}
 
 
 

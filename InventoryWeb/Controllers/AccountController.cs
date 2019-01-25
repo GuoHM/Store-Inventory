@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using InventoryWeb.Models;
+using InventoryBusinessLogic;
 
 namespace InventoryWeb.Controllers
 {
@@ -52,18 +53,33 @@ namespace InventoryWeb.Controllers
             }
         }
         //POST: /Account/MobileLogin
+        [HttpPost]
         [AllowAnonymous]
         public async Task<String> MobileLogin()
         {
-            string email = "";
+            UserBusinessLogic userlogic = new UserBusinessLogic();
+            string username= "";
             string password = "";
-            email = Request.Form.Get("username");
+            username = Request.Form.Get("username");
             password = Request.Form.Get("password");
-            var result = await SignInManager.PasswordSignInAsync(email, password, true, shouldLockout: false);
+
+            string userid = userlogic.getUserByUsername(username).Id;
+            string name = userlogic.getUserByUsername(username).Name;
+            string dept = userlogic.getUserByUsername(username).DepartmentID;
+            string roles = userlogic.getUserByUsername(username).UserType;
+            string res = "success" + "/" + userid + "/" +name + "/" + dept;
+            var result = await SignInManager.PasswordSignInAsync(username, password, true, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
-                    return "Success";
+                    if (roles.Equals("DeptHead"))
+                    {
+                        return res;
+                    }
+                    else
+                    {
+                        return "Fail";
+                    }
                 case SignInStatus.LockedOut:
                     return "LockedOut";
                 case SignInStatus.RequiresVerification:
@@ -103,18 +119,32 @@ namespace InventoryWeb.Controllers
                 case SignInStatus.Success:
                     var user = await UserManager.FindAsync(model.UserName, model.Password);
                     var roles = await UserManager.GetRolesAsync(user.Id);
+
                     if (roles.Contains("StoreClerk"))
                     {
                         return RedirectToAction("RaiseRequest", "StoreClerk");
                     }
-                    else if (roles.Contains("DeptStaff"))
+                    else if (roles.Contains("DeptRep"))
                     {
-                        return RedirectToAction("RaiseRequest", "Staff");
+                        return RedirectToAction("Index", "DepRepresentative");
                     }
-                    //else if (roles.Contains("Admin"))
+                    else if (roles.Contains("DeptHead"))
+                    {
+                        return RedirectToAction("ApproveOrReject", "DepManager");
+                    }
+                    else if (roles.Contains("StoreSupervisor"))
+                    {
+                        return RedirectToAction("Sidebar", "StoreSupervisor");
+                    }
+                    //else if (roles.Contains("DeptStaff"))
                     //{
-                    //    return RedirectToAction("Admin", "Home");
+                    //    return RedirectToAction("ViewInventory", "DepStaff");
                     //}
+                    //else if (roles.Contains("StoreManager"))
+                    //{
+                    //    return RedirectToAction("ViewInventory", "StoreManager");
+                    //}
+
                     else
                     {
                         return RedirectToLocal(returnUrl);

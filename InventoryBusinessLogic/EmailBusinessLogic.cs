@@ -52,10 +52,10 @@ namespace InventoryBusinessLogic
             this.client.Send(this.mail);
         }
 
-        //1.郭浩明
-        public string SendPurchaseOrderNotification(string orderIDstring)
+        //1.郭浩明 Test Successful
+        public string SendPurchaseOrderNotification(int orderID)
         {
-            int orderID = Convert.ToInt32(orderIDstring);
+            
             PurchaseOrder purchaseOrder = inventory.PurchaseOrder.Where(x => x.PurchaseOrderID == orderID).First();
             List<PurchaseItem> purchaseItems = inventory.PurchaseItem.Where(x => x.PurchaseOrderID == orderID).ToList();
             string MailBody = "<p> Dear "+purchaseOrder.Supplier.ContactName+",</p>";
@@ -90,75 +90,113 @@ namespace InventoryBusinessLogic
             
             return MailBody;
         }
-        //2.郭浩明
+       //2.郭浩明 Test Successful
+       // EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
+       //string content = emailBusinessLogic.SendRequestNotification(username);
+       //List<string> toAddress = new List<string>();
+       // toAddress.Add("wangxiaoxiaoqiang@gmail.com");
+       //  emailBusinessLogic.SendEmail("Team3", content, toAddress);
         public string SendRequestNotification(string  userID)
         {
         
             AspNetUsers employee = inventory.AspNetUsers.Where(x => x.Id == userID).First();
-            AspNetUsers departmentHead = inventory.AspNetUsers.Where(x => x.Department == employee.Department).First();
+            AspNetUsers departmentHead = inventory.AspNetUsers.Where(x => x.DepartmentID == employee.DepartmentID).First();
             string MailBody = "<p> Dear " + departmentHead.Name + ",</p>";
-            MailBody += "<p> Order request from "+employee.Name+" is awaiting your action.< br> This is a system generated email.<br>Thank you </ p>";
+            MailBody += "<p> Order request from "+employee.Name+" is awaiting your action.<br> This is a system generated email.<br>Thank you </ p>";
 
             return MailBody;
         }
-        //3.郭浩明
-        public string NewVoucherNotification(string adjustmentIDstring ,string userID )
+      //3.郭浩明 Test Successful
+      //  EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
+      //  string content = emailBusinessLogic.NewVoucherNotification(adjustment.AdjustmentID, adjustment.UserID);
+      // List<string> toAddress = new List<string>();
+      //  toAddress.Add("wangxiaoxiaoqiang@gmail.com");
+      //   emailBusinessLogic.SendEmail("Team3", content, toAddress);
+        public string NewVoucherNotification(int adjustmentID ,string userID )
         {
-            int adjustmentID = Convert.ToInt32(adjustmentIDstring);
+            
              
             AspNetUsers employee = inventory.AspNetUsers.Where(x => x.Id == userID).First();
              Adjustment adjustment = inventory.Adjustment.Where(x => x.AdjustmentID == adjustmentID).First();
-            AspNetUsers departmentHead = inventory.AspNetUsers.Where(x => x.Department == employee.Department).First();
+            AspNetUsers departmentHead = inventory.AspNetUsers.Where(x => x.DepartmentID == employee.DepartmentID).First();
             string MailBody = "<p> Dear " + departmentHead.Name + ",</p>";
-            MailBody += "<p> Adjustment voucher request: "+adjustment.AdjustmentID+" from " + employee.Name + " is awaiting your action.< br> This is a system generated email.<br>Thank you </ p>";
+            MailBody += "<p> Adjustment voucher request: "+adjustment.AdjustmentID+" from " + employee.Name + " is awaiting your action.<br> This is a system generated email.<br>Thank you </ p>";
 
             return MailBody;
         }
-        //4.以后再说 Padma
+        //4.Padma Later
         public string LowInventoryNotification()
         {
             return null;
         }
-        //5.RuiXiang
-        public string ChangePointNotification(string RepID,string clerkID,string oldPoint,string newPoint)
+        //5.RuiXiang Test Successful
+        //EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
+        //string content = emailBusinessLogic.ChangePointNotification(User.Identity.Name, CollectionPoint);
+
+        //List<string> toAddress = new List<string>();
+        //toAddress.Add("wangxiaoxiaoqiang@gmail.com");
+        //    emailBusinessLogic.SendEmail("Team3", content, toAddress);
+        public string ChangePointNotification(string RepName,string newPoint)
         {
             
-            AspNetUsers departmentRep = inventory.AspNetUsers.Where(x => x.Id == RepID).First();
-            AspNetUsers clerk= inventory.AspNetUsers.Where(x => x.Id == clerkID).First();
-            string MailBody = "<p> Dear " + clerk.Name + ",</p>";
-            MailBody += "<p> "+departmentRep.Name+" from "+ departmentRep.Department+" has requested to change collection point from "+oldPoint +" to "+newPoint+".< br > This is a system generated email.<br>Thank you </ p>";
+            AspNetUsers departmentRep = inventory.AspNetUsers.Where(x => x.Name == RepName).First();
+            Department department = inventory.Department.Where(x => x.DepartmentID == departmentRep.DepartmentID).First();
+
+ 
+            string MailBody = "<p> Dear Store Clerk,</p>";
+            MailBody += "<p> "+departmentRep.Name+" from "+ department.DepartmentName+" has requested to change collection point to "+newPoint+".<br> This is a system generated email.<br>Thank you </ p>";
 
             return MailBody;
         }
-        //6. Ronith
-        public  string ChangeDeptHeadNotification(string employeeID)
+        //6. Ronith Test Successful
+        //EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
+       // string content = emailBusinessLogic.ChangeDeptHeadNotification(dropdown1);
+
+        //List<string> toAddress = new List<string>();
+        //toAddress.Add("wangxiaoxiaoqiang@gmail.com");
+        //    emailBusinessLogic.SendEmail("Team3", content, toAddress);
+        public string ChangeDeptHeadNotification(string employeeID )
         {
             
             AspNetUsers employee = inventory.AspNetUsers.Where(x => x.Id == employeeID).First();
             Department department = inventory.Department.Where(x => x.DepartmentID == employee.DepartmentID).First();
             string MailBody = "<p> Dear " + employee.Name + ",</p>";
-            MailBody += "<p> The department head is authorising you from "+ department.DepartmentHeadStartDate+" to "+department.DepartmentHeadEndDate+" for department head duties.< br > This is a system generated email.< br > Thank you </ p > ";
+            MailBody += "<p> The department head is authorising you from "+ department.DepartmentHeadStartDate+" to "+department.DepartmentHeadEndDate+" for department head duties.<br> This is a system generated email.<br> Thank you </ p > ";
             return MailBody;
         }
-        //7.Ronith
-        public string ChangeDeptRepNotification(string headID,string oldRep, string clerkID)
+        //7.Ronith Test Successful
+        //EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
+        //string content = emailBusinessLogic.ChangeDeptRepNotification(dropdown1);
+
+       // List<string> toAddress = new List<string>();
+       // toAddress.Add("wangxiaoxiaoqiang@gmail.com");
+       //     emailBusinessLogic.SendEmail("Team3", content, toAddress);
+        public string ChangeDeptRepNotification(string repID)
         {
-            AspNetUsers departmentHead = inventory.AspNetUsers.Where(x => x.Id == headID).First();
-            AspNetUsers departmentRep = inventory.AspNetUsers.Where(x => x.DepartmentID == departmentHead.DepartmentID).First();
-            AspNetUsers clerk = inventory.AspNetUsers.Where(x => x.Id == clerkID).First();
-            string MailBody = "<p> Dear " + clerk.Name + ",</p>";
-            MailBody += "<p> " + departmentHead.Name+" has changed their department representative from "+oldRep+" to "+departmentRep.Name + ".< br > This is a system generated email.<br>Thank you </ p>";
+            AspNetUsers departmentRep = inventory.AspNetUsers.Where(x => x.Id == repID).First();
+            AspNetUsers departmentHead = inventory.AspNetUsers.Where(x => x.DepartmentID == departmentRep.DepartmentID).First();
+            
+            string MailBody = "<p> Dear Store Clerk ,</p>";
+            MailBody += "<p> " + departmentHead.Name+" has changed their department representative to "+departmentRep.Name + ".<br> This is a system generated email.<br>Thank you </ p>";
 
             return MailBody;
         }
-        //8.Padma
-        public string ApproveOrRejectNotification(int requestID,string approveOrReject)
+        //8.Padma 
+       // var item1 = list[0];
+       // EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
+       // int requestID = Convert.ToInt32(item1.orderId);
+       // string content = emailBusinessLogic.ApproveOrRejectNotification(requestID);
+
+     //   List<string> toAddress = new List<string>();
+      //  toAddress.Add("wangxiaoxiaoqiang@gmail.com");
+        //    emailBusinessLogic.SendEmail("Team3", content, toAddress);
+        public string ApproveOrRejectNotification(int requestID)
         {
 
             Request request = inventory.Request.Where(x => x.RequestID == requestID).First();
             AspNetUsers employee = request.AspNetUsers;
             string Mailbody = "<p> Dear " + employee.Name + ",</p>";
-            Mailbody += "<p> Your request has been " + approveOrReject + ".< br > This is a system generated email.<br>Thank you </ p>";
+            Mailbody += "<p> Your request has been " + request.RequestStatus + ".<br> This is a system generated email.<br>Thank you </ p>";
             return Mailbody;
         }
         //9.Padma
@@ -167,7 +205,7 @@ namespace InventoryBusinessLogic
             Department department = inventory.Department.Where(x => x.DepartmentID == departmentId).First();
             AspNetUsers departmentRep = inventory.AspNetUsers.Where(x => x.DepartmentID == departmentId).First();
             string Mailbody = "<p> Dear " + departmentRep.Name + ",</p>";
-            Mailbody += "<p> Your " +department.DepartmentName+" items are ready for collection.< br > This is a system generated email.<br>Thank you </ p>";
+            Mailbody += "<p> Your " +department.DepartmentName+" items are ready for collection.<br> This is a system generated email.<br>Thank you </ p>";
             return Mailbody;
         }
 

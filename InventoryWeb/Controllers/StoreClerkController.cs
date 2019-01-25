@@ -445,7 +445,14 @@ namespace InventoryWeb.Controllers
                 }
                 purchaseOrder.TotalPrice = totalPrice;
                 purchaseOrderBusinessLogic.updatePurchaseOrder(purchaseOrder);
+                EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
+                string content = emailBusinessLogic.SendPurchaseOrderNotification(purchaseOrder.PurchaseOrderID);
+
+                List<string> toAddress = new List<string>();
+                toAddress.Add("wangxiaoxiaoqiang@gmail.com");
+                emailBusinessLogic.SendEmail("Team3", content, toAddress);
             }
+           
             return new JsonResult();
         }
         public ActionResult AddItems()
@@ -512,13 +519,15 @@ namespace InventoryWeb.Controllers
                     adjustment.Supervisor = userBusinessLogic.getStoreStoreSupervisor().Id;
                 }
                 adjustmentBusinessLogic.updateAdjustment(adjustment);
+
                 EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
-                string content = emailBusinessLogic.SendPurchaseOrderNotification("1002");
+                string content = emailBusinessLogic.NewVoucherNotification(adjustment.AdjustmentID,adjustment.UserID);
 
                 List<string> toAddress = new List<string>();
                 toAddress.Add("wangxiaoxiaoqiang@gmail.com");
                 emailBusinessLogic.SendEmail("Team3", content, toAddress);
             }
+            
             json.Data = "success";
             return json;
         }

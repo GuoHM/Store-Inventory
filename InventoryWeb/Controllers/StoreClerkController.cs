@@ -10,6 +10,7 @@ using InventoryBusinessLogic;
 using InventoryBusinessLogic.Entity;
 using Newtonsoft.Json;
 
+
 namespace InventoryWeb.Controllers
 {
     [Authorize(Roles = "StoreClerk")]
@@ -581,7 +582,14 @@ namespace InventoryWeb.Controllers
                 }
                 purchaseOrder.TotalPrice = totalPrice;
                 purchaseOrderBusinessLogic.updatePurchaseOrder(purchaseOrder);
+                EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
+                string content = emailBusinessLogic.SendPurchaseOrderNotification(purchaseOrder.PurchaseOrderID);
+
+                List<string> toAddress = new List<string>();
+                toAddress.Add("wangxiaoxiaoqiang@gmail.com");
+                emailBusinessLogic.SendEmail("Team3", content, toAddress);
             }
+           
             return new JsonResult();
         }
         public ActionResult AddItems()
@@ -649,7 +657,14 @@ namespace InventoryWeb.Controllers
                 }
                 adjustmentBusinessLogic.updateAdjustment(adjustment);
 
+                EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
+                string content = emailBusinessLogic.NewVoucherNotification(adjustment.AdjustmentID,adjustment.UserID);
+
+                List<string> toAddress = new List<string>();
+                toAddress.Add("wangxiaoxiaoqiang@gmail.com");
+                emailBusinessLogic.SendEmail("Team3", content, toAddress);
             }
+            
             json.Data = "success";
             return json;
         }
@@ -676,6 +691,33 @@ namespace InventoryWeb.Controllers
             return json;
 
         }
+
+        public ActionResult ViewAllAdjustmentVoucherRaised()
+        {
+            string userId = User.Identity.GetUserId();
+            ViewBag.userID = userId;
+            new AdjustmentBusinessLogic().getAllAdjustmentList(userId);
+            return View();
+        }
+
+        public ActionResult ViewAllStationeryRequisitions()
+        {
+            string userId = User.Identity.GetUserId();
+            ViewBag.userID = userId;
+            new ManageRequestBusinessLogic().getAllStationeryRequest(userId);
+            return View();
+
+
+        }
+
+        public ActionResult ViewAllStationeryRequisitionsByOrderId(string orderId)
+        {
+
+            new ManageRequestBusinessLogic().getStationaryOrderByID(orderId);
+            return View();
+        }
+
+
 
 
     }

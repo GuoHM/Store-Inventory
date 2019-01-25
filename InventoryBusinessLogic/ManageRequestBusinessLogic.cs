@@ -170,6 +170,19 @@ namespace InventoryBusinessLogic
 
       
 
+        public List<Request> getAllStationeryRequest(string userId)
+        {
+            return inventory.Request.Where(x => x.UserID == userId).ToList();
+
+        }
+
+
+        public List<Request> getStationaryOrderByID(string orderId)
+        {
+            return inventory.Request.Where(x => x.OrderID == orderId).ToList();
+
+        }
+
     }
 }
 

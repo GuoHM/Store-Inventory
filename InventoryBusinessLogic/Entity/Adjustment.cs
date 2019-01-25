@@ -5,6 +5,7 @@ namespace InventoryBusinessLogic.Entity
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using Newtonsoft.Json;
 
     [Table("Adjustment")]
     public partial class Adjustment
@@ -27,7 +28,7 @@ namespace InventoryBusinessLogic.Entity
 
         [StringLength(20)]
         public string AdjustmentStatus { get; set; }
-
+        [JsonIgnore]
         public virtual AspNetUsers AspNetUsers { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

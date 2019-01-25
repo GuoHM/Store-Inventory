@@ -59,8 +59,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdjustmentList.cs" />
+    <Compile Include="AdjustmentVoucherBusinessLogic.cs" />
     <Compile Include="CatalogueBusinessLogic.cs" />
     <Compile Include="DepartmentBusinessLogic.cs" />
+    <Compile Include="DisbursementList.cs" />
     <Compile Include="EmailBusinessLogic.cs" />
     <Compile Include="Entity\Adjustment.cs" />
     <Compile Include="Entity\AdjustmentItem.cs" />

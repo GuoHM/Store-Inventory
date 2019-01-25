@@ -25,25 +25,34 @@
             background-color: #1E90FF;
             color: white;
         }
+    
 </style>
+<style type="text/css" media="print">
+    .noprint {
+        display: none;
+    }
+    </style>
 @{
-    ViewBag.Title = "ApproveOrReject";
+    ViewBag.Title = "ViewOrders";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
 
-<div class="col-xs-2 column">
-    @Html.Partial("~/Views/DepManager/SideBar.cshtml")
+<div class="col-xs-2 column noprint " >
+    @Html.Partial("~/Views/StoreClerk/SideBar.cshtml")
 </div>
-<div class="col-xs-10 column">
+<div class="col-xs-10 column noprint">
 
 
     <div class="panel-body" style="padding-bottom: 0px;">
         <div class="panel panel-default">
-            <div class="panel-heading">Approve Or Reject</div>
+            <div class="panel-heading">Orders List</div>
             <div class="panel-body">
                 <table id="SearchItemTable"></table>
             </div>
+        </div>
+        <div style="margin-top:8px">
+            <input type="button" value="Generate Retrival List" onclick="selectedItems()"  class="btn btn-primary" style="float:right" />
         </div>
     </div>
 </div>
@@ -55,8 +64,8 @@
         <div class="modal-content">
             <form class="form-horizontal" role="form" id="approval-form">
                 <div class="modal-header">
-                    <h4 class="modal-title">Approve Or Reject Request</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Order details</h4>
+                    <button type="button" class="close noprint" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
@@ -73,61 +82,28 @@
 
                         <table id="requests"></table>
 
-
+                      
 
                     </div>
-                    <table>
-                        <tr>
-                            <td>
-                                <label>Remarks</label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <textarea name="remarks" id="remarks" cols="40" rows="5"></textarea>
-                            </td>
-                        </tr>
-                    </table>
+
 
 
 
 
                 </div>
-                <div class="modal-footer">
+                @*<div class="modal-footer">
                     <input type="button" class="btn-danger" onclick="postData('Rejected')" value="Reject">
                     <input type="button" class="btn-success" onclick="postData('Approved')" value="Approve">
-                </div>
+                </div>*@
             </form>
         </div>
     </div>
 </div>
 
-<div id="successModal" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form id="deleteForm">
-                <div class="modal-header">
-                    <h4 class="modal-title">Success</h4>
-                    <button type="button" class="close" data-dismiss="modal"
-                            aria-hidden="true">
-                        &times;
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p>Approved</p>
-                </div>
-                <div class="modal-footer">
-                    <input type="button" class="btn btn-success center-block" data-dismiss="modal"
-                           value="OK" onclick="window.location.href='/DepManager/ApproveOrReject'">
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+
 
 <script src="~/Scripts/bootstrap-table.js"></script>
-<script src="~/Scripts/tables/ApproveOrReject.js"></script>
-
+<script src="~/Scripts/tables/ViewOrders.js"></script>
 <script src="~/Scripts/bootstrap-table-export.js"></script>
 <script src="//rawgit.com/hhurz/tableExport.jquery.plugin/master/tableExport.js"></script>
 

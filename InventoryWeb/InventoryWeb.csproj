@@ -381,10 +381,13 @@
     <Content Include="Scripts\tables\AdjustmentVoucher.js" />
     <Content Include="Scripts\AdjustmentVoucherChoose.js" />
     <Content Include="Scripts\tables\ApproveOrReject.js" />
+    <Content Include="Scripts\tables\DisbursementList.js" />
     <Content Include="Scripts\tables\ListDept.js" />
     <Content Include="Scripts\tables\ManageInventory.js" />
     <Content Include="Scripts\tables\PurchaseOrder.js" />
     <Content Include="Scripts\tables\RaiseRequest.js" />
+    <Content Include="Scripts\tables\RetrievalForm.js" />
+    <Content Include="Scripts\tables\ViewOrders.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -435,6 +438,9 @@
     <Content Include="Views\ManageInventory\InventoryItems.cshtml" />
     <Content Include="Views\DepManager\ApproveOrReject.cshtml" />
     <Content Include="Views\StoreClerk\ListDept.cshtml" />
+    <Content Include="Views\StoreClerk\ViewOrders.cshtml" />
+    <Content Include="Views\StoreClerk\RetrievalForm.cshtml" />
+    <Content Include="Views\StoreClerk\DisbursementList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

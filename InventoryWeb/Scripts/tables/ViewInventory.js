@@ -134,26 +134,7 @@ var TableInit = function () {
 
             $("#editprice").val(row.Price);
 
-            //var citem = {
-            //    itemID: row.ItemID,
-            //    description: row.Description,
-            //    reorderlevel: val(row.ReorderLevel),
-            //    reorderquantity: val(row.ReorderQuantity),
-            //    measureunit: row.MeasureUnit,
-            //    price: val(row.Price)
-            //};
-
-            //$.ajax({
-            //    url: SERVER_NAME + "/StoreSupervisor/Save",
-            //    type: "post",
-            //    dataType: "text",
-            //    async: false,
-            //    data: JSON.stringify(citem),
-            //    success: function (data) {
-            //        data ? alert("It worked!") : alert("It didn't work.");
-            //        //$('#successModal').modal('show');
-            //    }
-            //});
+            
         }
     };
 

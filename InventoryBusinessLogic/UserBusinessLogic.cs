@@ -39,8 +39,27 @@ namespace InventoryBusinessLogic
         {
             AspNetUsers user1 = inventory.AspNetUsers.Where(P => P.Id == id).First<AspNetUsers>();
             AspNetUsers user2 = inventory.AspNetUsers.Where(P => P.UserType == "DeptRep").First<AspNetUsers>();
+            AspNetUserRoles role1 = inventory.AspNetUserRoles.Where(p => p.UserId == user1.Id).First();
+            AspNetUserRoles role2 = inventory.AspNetUserRoles.Where(p => p.UserId == user2.Id).First();
             user1.UserType = "DeptRep";
             user2.UserType = "DeptStaff";
+     
+           
+            inventory.AspNetUserRoles.Remove(role1);
+            inventory.AspNetUserRoles.Remove(role2);
+
+            
+
+            AspNetUserRoles userrole = new AspNetUserRoles();
+            userrole.UserId = role1.UserId;
+            userrole.RoleId = "2";
+            inventory.AspNetUserRoles.Add(userrole);
+
+            AspNetUserRoles userrole1 = new AspNetUserRoles();
+            userrole1.UserId = role2.UserId;
+            userrole1.RoleId = "4";
+            inventory.AspNetUserRoles.Add(userrole1);
+
             inventory.SaveChanges();
 
         }

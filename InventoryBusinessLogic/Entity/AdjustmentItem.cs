@@ -25,7 +25,6 @@ namespace InventoryBusinessLogic.Entity
 
         [StringLength(100)]
         public string Reason { get; set; }
-        
         [JsonIgnore]
         public virtual Adjustment Adjustment { get; set; }
 

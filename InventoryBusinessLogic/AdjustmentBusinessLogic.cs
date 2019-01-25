@@ -91,7 +91,14 @@ namespace InventoryBusinessLogic
 
         }
 
-       
+        public List<Adjustment> getAllAdjustmentList(string userid)
+        {
+            return inventory.Adjustment.Where(x => x.UserID == userid).ToList();
+
+        }
+
+
+
 
 
     }

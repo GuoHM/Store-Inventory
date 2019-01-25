@@ -45,6 +45,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="InventoryBusinessLogic, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\InventoryBusinessLogic\bin\Debug\InventoryBusinessLogic.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNetCore.Authentication, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNetCore.Authentication.2.2.0\lib\netstandard2.0\Microsoft.AspNetCore.Authentication.dll</HintPath>
     </Reference>
@@ -333,14 +337,18 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\DepartmentController.cs" />
+    <Compile Include="Controllers\DepartmentHeadController.cs" />
     <Compile Include="Controllers\DepManagerController.cs" />
     <Compile Include="Controllers\DepRepresentativeController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RequestController.cs" />
     <Compile Include="Controllers\StaffController.cs" />
     <Compile Include="Controllers\StoreClerkController.cs" />
     <Compile Include="Controllers\StoreManagerController.cs" />
+    <Compile Include="Controllers\StoreSupervisorController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -403,6 +411,8 @@
     <Content Include="Scripts\tables\RaiseRequest.js" />
     <Content Include="Scripts\tables\ViewAdjustmentVoucher.js" />
     <Content Include="Scripts\tables\ViewAdjustmentVoucherManager.js" />
+    <Content Include="Scripts\tables\ViewAllAdjustmentVoucherRaised.js" />
+    <Content Include="Scripts\tables\ViewAllStationeryRequisitions.js" />
     <Content Include="Scripts\tables\ViewInventory.js" />
     <Content Include="Scripts\tables\RetrievalForm.js" />
     <Content Include="Scripts\tables\ViewOrders.js" />
@@ -472,6 +482,10 @@
     <Content Include="Views\StoreClerk\ViewOrders.cshtml" />
     <Content Include="Views\StoreClerk\RetrievalForm.cshtml" />
     <Content Include="Views\StoreClerk\DisbursementList.cshtml" />
+    <Content Include="Views\Staff\SideBar.cshtml" />
+    <Content Include="Views\StoreClerk\ViewAllAdjustmentVoucherRaised.cshtml" />
+    <Content Include="Views\StoreClerk\ViewAllStationeryRequisitions.cshtml" />
+    <Content Include="Views\Error\Error.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -491,12 +505,6 @@
     </None>
     <Content Include="Scripts\jquery-3.3.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.3.1.min.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\InventoryBusinessLogic\InventoryBusinessLogic.csproj">
-      <Project>{3907d2de-9373-43ea-ab5c-a5f59893de3f}</Project>
-      <Name>InventoryBusinessLogic</Name>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

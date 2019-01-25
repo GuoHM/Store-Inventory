@@ -11,13 +11,12 @@ var requestedDate = "";
 var reqesterName = "";
 var TableInit = function () {
 	var oTableInit = new Object();
-	
-	//var user = 
 	var userid = document.getElementById('userid').textContent;
+
 	oTableInit.Init = function () {
 		$('#SearchItemTable').bootstrapTable({
 			method: 'get',
-			url: 'https://inventorywebapi2019.azurewebsites.net/api/Adjustment/' + userid,
+			url: 'http://inventorywebapi2019.azurewebsites.net/api/AdjustmentItems/' + userid,
 			//toolbar: '#toolbar',                
 			striped: true,
 			cache: false,
@@ -52,13 +51,13 @@ var TableInit = function () {
 					field: 'AdjustmentID'
 				}, {
 					align: "center",
-					title: 'Employee Name',
+					title: 'Submitted To',
 					sortable: true,
 
 					field: 'AspNetUsers.UserName'
 				}, {
 					align: "center",
-					title: 'Requested Date',
+					title: 'Date Submitted',
 					sortable: true,
 					field: 'Date'
 					//events: operateEvents,
@@ -117,16 +116,16 @@ var TableInit = function () {
 			adjustmentID = row.AdjustmentID;
 			requestedDate = row.Date;
 
-			reqesterName = row.AspNetUsers.UserName;
+			submittedTo= row.AspNetUsers.UserName;
 			document.getElementById('requestDate').innerHTML = requestedDate;
-			document.getElementById('requestedBy').innerHTML = reqesterName;
+			document.getElementById('requestedBy').innerHTML = submittedTo;
 
 
 			var oTableInit = new TableInit1();
 			oTableInit.Init();
 
-			$('#requests').bootstrapTable('refreshOptions', { url: 'https://inventorywebapi2019.azurewebsites.net/api/AdjustmentItem/' + adjustmentID });
-			$('#requests').bootstrapTable('refresh', { url: 'https://inventorywebapi2019.azurewebsites.net/api/AdjustmentItem/' + adjustmentID });
+			$('#requests').bootstrapTable('refreshOptions', { url: 'http://inventorywebapi2019.azurewebsites.net/api/AdjustmentItem/' + adjustmentID });
+			$('#requests').bootstrapTable('refresh', { url: 'http://inventorywebapi2019.azurewebsites.net/api/AdjustmentItem/' + adjustmentID });
 
 		}
 	};
@@ -155,7 +154,7 @@ var TableInit1 = function () {
 	oTableInit.Init = function () {
 		$('#requests').bootstrapTable({
 			method: 'get',
-			url: 'https://inventorywebapi2019.azurewebsites.net/api/AdjustmentItem/' + adjustmentID,
+			url: 'http://inventorywebapi2019.azurewebsites.net/api/AdjustmentItem/' + adjustmentID,
 			//toolbar: '#toolbar',                
 			striped: true,
 			cache: false,
@@ -248,45 +247,6 @@ var TableInit1 = function () {
 	return oTableInit;
 };
 
-function postData(approvalStatus) {
 
-	var tab = document.getElementById("requests");
-	var rows = tab.rows;
-	var remarks = document.getElementById('remarks').value;
-
-
-
-	var jsonlist = new Array();
-
-	var jsonObj = { "AdjustmentID": adjustmentID, "requestStatus": approvalStatus, "remarks": remarks };
-	jsonlist.push(jsonObj);
-
-
-	//alert(JSON.stringify(jsonlist));
-	$.ajax({
-		url: "/StoreManager/SaveRequestStatusManager",
-		type: "post",
-		dataType: "text",
-		async: true,
-		data: JSON.stringify(jsonlist),
-		success: function (data) {
-
-			if (data.approvalStatus == "Approved") {
-				$('#successModal').modal('show');
-			}
-			else {
-				alert('Adjustment voucher Rejected');
-			}
-		},   
-		error: function (XMLHttpRequest, textStatus, errorThrown) {
-			alert(XMLHttpRequest.status);
-			alert(XMLHttpRequest.readyState);
-			alert(textStatus);
-		},
-
-	});
-
-
-};
 
 

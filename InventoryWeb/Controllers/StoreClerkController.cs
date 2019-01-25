@@ -10,6 +10,7 @@ using InventoryBusinessLogic;
 using InventoryBusinessLogic.Entity;
 using Newtonsoft.Json;
 
+
 namespace InventoryWeb.Controllers
 {
     [Authorize(Roles = "StoreClerk")]
@@ -690,6 +691,33 @@ namespace InventoryWeb.Controllers
             return json;
 
         }
+
+        public ActionResult ViewAllAdjustmentVoucherRaised()
+        {
+            string userId = User.Identity.GetUserId();
+            ViewBag.userID = userId;
+            new AdjustmentBusinessLogic().getAllAdjustmentList(userId);
+            return View();
+        }
+
+        public ActionResult ViewAllStationeryRequisitions()
+        {
+            string userId = User.Identity.GetUserId();
+            ViewBag.userID = userId;
+            new ManageRequestBusinessLogic().getAllStationeryRequest(userId);
+            return View();
+
+
+        }
+
+        public ActionResult ViewAllStationeryRequisitionsByOrderId(string orderId)
+        {
+
+            new ManageRequestBusinessLogic().getStationaryOrderByID(orderId);
+            return View();
+        }
+
+
 
 
     }

@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace InventoryWeb.Controllers
 {
+    [Authorize(Roles = "DeptStaff")]
     public class StaffController : Controller
     {
         // GET: Staff

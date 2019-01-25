@@ -431,7 +431,16 @@ namespace InventoryWeb.Controllers
                 representative = p.AspNetUsers.UserName,
                 collectionPoint = p.CollectionPoint
             }).ToList();
-          
+
+           
+            //EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
+            
+            //foreach (Department dept in disbursementList) {
+                //string content = emailBusinessLogic.ReadyForCollectionPoint(dept.DepartmentID);
+ 
+             //List<string> toAddress = new List<string>();
+               // toAddress.Add("wangxiaoxiaoqiang@gmail.com");
+                //emailBusinessLogic.SendEmail("Team3", content, toAddress); }
             return Json(data, JsonRequestBehavior.AllowGet);
         }
        
@@ -582,12 +591,12 @@ namespace InventoryWeb.Controllers
                 }
                 purchaseOrder.TotalPrice = totalPrice;
                 purchaseOrderBusinessLogic.updatePurchaseOrder(purchaseOrder);
-                EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
-                string content = emailBusinessLogic.SendPurchaseOrderNotification(purchaseOrder.PurchaseOrderID);
+                //EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
+                //string content = emailBusinessLogic.SendPurchaseOrderNotification(purchaseOrder.PurchaseOrderID);
 
-                List<string> toAddress = new List<string>();
-                toAddress.Add("wangxiaoxiaoqiang@gmail.com");
-                emailBusinessLogic.SendEmail("Team3", content, toAddress);
+                //List<string> toAddress = new List<string>();
+                //toAddress.Add("wangxiaoxiaoqiang@gmail.com");
+                //emailBusinessLogic.SendEmail("Team3", content, toAddress);
             }
            
             return new JsonResult();
@@ -657,12 +666,12 @@ namespace InventoryWeb.Controllers
                 }
                 adjustmentBusinessLogic.updateAdjustment(adjustment);
 
-                EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
-                string content = emailBusinessLogic.NewVoucherNotification(adjustment.AdjustmentID,adjustment.UserID);
+                //EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
+                //string content = emailBusinessLogic.NewVoucherNotification(adjustment.AdjustmentID,adjustment.UserID);
 
-                List<string> toAddress = new List<string>();
-                toAddress.Add("wangxiaoxiaoqiang@gmail.com");
-                emailBusinessLogic.SendEmail("Team3", content, toAddress);
+               // List<string> toAddress = new List<string>();
+                //toAddress.Add("wangxiaoxiaoqiang@gmail.com");
+                //emailBusinessLogic.SendEmail("Team3", content, toAddress);
             }
             
             json.Data = "success";

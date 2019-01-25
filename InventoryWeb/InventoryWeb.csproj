@@ -335,6 +335,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DepManagerController.cs" />
     <Compile Include="Controllers\DepRepresentativeController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RequestController.cs" />
@@ -474,6 +475,7 @@
     <Content Include="Views\StoreClerk\ViewOrders.cshtml" />
     <Content Include="Views\StoreClerk\RetrievalForm.cshtml" />
     <Content Include="Views\StoreClerk\DisbursementList.cshtml" />
+    <Content Include="Views\Error\Error.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

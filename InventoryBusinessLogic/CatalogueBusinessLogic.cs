@@ -85,6 +85,33 @@ namespace InventoryBusinessLogic
         {
             return inventory.Order.Where(i => i.OrderDate >= date1 && i.OrderDate <= date2).ToList<Order>();
         }
+        
+
+        public void UpdateRetrievedQuantity(string itemDescription, string quantityPicked)
+        {
+            var requests = inventory.Request.Where(x => x.Catalogue.Description == itemDescription).OrderBy(y=>y.RequestDate).ToList();
+            int quantity = Convert.ToInt32(quantityPicked);
+            while (quantity != 0)
+            {
+                foreach (Request req in requests)
+                   {
+                
+                    if (quantity >= req.Needed)
+                    {
+                        req.Actual = req.Needed;
+                       
+                     }
+                    else
+                    {
+                        req.Actual = quantity;                       
+                    }
+
+                    quantity = quantity - Convert.ToInt32(req.Actual);
+                }
+            }
+
+            inventory.SaveChanges();
+        }
 
 
 

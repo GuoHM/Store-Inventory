@@ -472,6 +472,12 @@ var TableInit2 = function () {
                 // field: 'Catalogue.Price * Needed'
                 field: 'availableQuantity'
 
+                }, {
+                    align: "center",
+                    title: 'Quantity Picked',
+                    sortable: true,
+
+                    formatter: InputTextBox
                 },
           
 
@@ -507,6 +513,9 @@ var TableInit2 = function () {
         };
         return id;
     };
+     function InputTextBox(value, row, index) {
+        return ['<input type="number" class="form-control" placeholder="Picked Quantity" id="quantity">'].join('');
+    }
 
     selectItem = function (e, value, row, index) {
 
@@ -528,5 +537,38 @@ var TableInit2 = function () {
 function openDisbursementList() {
     window.location.href = '/StoreClerk/DisbursementList';
 }
+
+function UpdateInventory() {
+    var tab = document.getElementById("RetrievalTable");
+    var rows = tab.rows;
+    var objInput = tab.getElementsByClassName("form-control");
+    //var quantity = objInput[rows - 1].value;
+   var jsonlist = new Array(rows.length - 1);
+    for (var i = 1; i < rows.length; i++) {
+        debugger;
+        if (objInput[i-1].value != null && objInput[i-1].value != "") {
+            var jsonObj = { "itemDescription": rows[i].cells[1].innerHTML, "quantityPicked": objInput[i-1].value };
+        }
+            jsonlist[i - 1] = jsonObj;
+    }
+
+    $.ajax({
+        url: "/StoreClerk/UpdateInventory",
+        type: "post",
+        dataType: "text",
+        async: true,
+        data: JSON.stringify(jsonlist),
+        success: function (data) {
+            alert("Updated Successfully");
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            alert(XMLHttpRequest.status);
+            alert(XMLHttpRequest.readyState);
+            alert(textStatus);
+        },
+
+    });
+};
+
 
 

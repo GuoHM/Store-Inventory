@@ -162,6 +162,14 @@ namespace InventoryBusinessLogic
             }
         }
 
+        public List<Request> getStationaryOrderByID(string orderId)
+        {
+            return inventory.Request.Where(x => x.OrderID == orderId).ToList();
+
+        }
+
+      
+
     }
 }
 

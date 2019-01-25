@@ -59,5 +59,14 @@ namespace InventoryWebAPI.Controllers
         {
             return request.getAllStationeryRequest(userId);
         }
+
+        [HttpGet]
+        [Route("api/StationaryItems/{OrderId}")]
+        public IEnumerable<Request> GetRequestByOrder(string OrderId)
+        {
+            return request.getStationaryOrderByID(OrderId);
+        }
+
+
     }
 }

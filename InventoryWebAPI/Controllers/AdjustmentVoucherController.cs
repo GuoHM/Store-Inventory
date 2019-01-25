@@ -28,6 +28,14 @@ namespace InventoryWebAPI.Controllers
             return adjustment.getAllAdjItems(adjustmentID);
         }
 
+        [HttpGet]
+        [Route("api/AdjustmentItems/{Userid}")]
+        public IEnumerable<Adjustment> GetAdjustmentByUserid(string Userid)
+        {
+            AdjustmentBusinessLogic adjustment = new AdjustmentBusinessLogic();
+            return adjustment.getAllAdjustmentList(Userid);
+        }
+
 
     }
 }

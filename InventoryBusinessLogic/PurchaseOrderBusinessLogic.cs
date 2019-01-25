@@ -28,6 +28,16 @@ namespace InventoryBusinessLogic
             }
         }
 
+        public List<PurchaseOrder> GetAllPurchaseOrders()
+        {
+            return inventory.PurchaseOrder.ToList();
+        }
+
+        public List<PurchaseItem> GetAllPurchaseOrderById(int orderID)
+        {
+            return inventory.PurchaseItem.Where(x => x.PurchaseOrderID == orderID).ToList();
+        }
+
         public void updatePurchaseOrder(PurchaseOrder purchaseOrder)
         {
             PurchaseOrder update = inventory.PurchaseOrder.Where(x => x.PurchaseOrderID == purchaseOrder.PurchaseOrderID).First();

@@ -52,7 +52,7 @@ var TableInit = function () {
                     align: "center",
                     title: 'Quantity',
                     sortable: true,
-                    sortable: true,
+                    //sortable: true,
                 field : 'Quantity',
                 }, {
                 align: "center",

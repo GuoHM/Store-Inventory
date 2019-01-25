@@ -5,6 +5,7 @@ namespace InventoryBusinessLogic.Entity
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using Newtonsoft.Json;
 
     [Table("AdjustmentItem")]
     public partial class AdjustmentItem
@@ -24,7 +25,7 @@ namespace InventoryBusinessLogic.Entity
 
         [StringLength(100)]
         public string Reason { get; set; }
-
+        [JsonIgnore]
         public virtual Adjustment Adjustment { get; set; }
 
         public virtual Catalogue Catalogue { get; set; }

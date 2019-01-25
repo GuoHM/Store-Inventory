@@ -397,6 +397,8 @@
     <Content Include="Scripts\tables\RaiseRequest.js" />
     <Content Include="Scripts\tables\ViewAdjustmentVoucher.js" />
     <Content Include="Scripts\tables\ViewAdjustmentVoucherManager.js" />
+    <Content Include="Scripts\tables\ViewAllAdjustmentVoucherRaised.js" />
+    <Content Include="Scripts\tables\ViewAllStationeryRequisitions.js" />
     <Content Include="Scripts\tables\ViewInventory.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -463,6 +465,8 @@
     <Content Include="Views\DepRepresentative\Index.cshtml" />
     <Content Include="Views\DepRepresentative\StationaryRequest.cshtml" />
     <Content Include="Views\Staff\RaiseRequest.cshtml" />
+    <Content Include="Views\StoreClerk\ViewAllAdjustmentVoucherRaised.cshtml" />
+    <Content Include="Views\StoreClerk\ViewAllStationeryRequisitions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

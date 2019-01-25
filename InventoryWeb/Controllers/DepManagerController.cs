@@ -7,6 +7,9 @@ using System.Web.Script.Serialization;
 using InventoryBusinessLogic;
 using InventoryBusinessLogic.Entity;
 using Newtonsoft.Json;
+using Microsoft.AspNet.Identity;
+using System.Web.Script.Serialization;
+
 
 namespace InventoryWeb.Controllers
 {
@@ -23,7 +26,9 @@ namespace InventoryWeb.Controllers
 
         public ActionResult AssignDepRep()
         {
-            ViewBag.depList = BL.getDepUsers();
+            string userId = User.Identity.GetUserId();
+            
+            ViewBag.depList = BL.getDepUsers(userId);
             return View();
         }
 
@@ -42,7 +47,8 @@ namespace InventoryWeb.Controllers
 
         public ActionResult AssignDepHead()
         {
-            ViewBag.depHead = BL.appointNewDepHead();
+            string userId = User.Identity.GetUserId();
+            ViewBag.depHead = BL.appointNewDepHead(userId);
             return View();
         }
 

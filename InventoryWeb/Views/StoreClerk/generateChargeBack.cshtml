@@ -14,7 +14,7 @@
 </div>
 
 <div class="col-sm-offset-3">
-    <form action="ChargeBackReport" class="rep-form" name="myForm">
+    <form action="ChargeBackReport" class="rep-form" name="myForm" id="form-3">
 
         <div class="form-group ">
             <label class="control-label col-sm-2 requiredField" for="date">
@@ -54,7 +54,7 @@
         </div>
         <br />
         <div class="col-sm-4">
-            <button type="submit" class="btn btn-success">Generate Chargeback</button>
+            <button type="submit" class="btn btn-success" id="button1">Generate Charge back</button>
         </div>
 
     </form>
@@ -94,6 +94,21 @@
             autoclose: true,
         })
     })
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("#button1").click(function (e) {
+            e.preventDefault();
+            var startDate = new Date($("#date1").val());
+            var endDate = new Date($("#date2").val());
+            if (endDate <= startDate) {
+                alert("Invalid Date Range");
+            } else {
+                $("#form-3").submit();
+            }
+        });
+    });
 </script>
 
 <style>

@@ -5,6 +5,7 @@ namespace InventoryBusinessLogic.Entity
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using Newtonsoft.Json;
 
     [Table("PurchaseItem")]
     public partial class PurchaseItem
@@ -22,7 +23,7 @@ namespace InventoryBusinessLogic.Entity
         public int? Quantity { get; set; }
 
         public virtual Catalogue Catalogue { get; set; }
-
+        [JsonIgnore]
         public virtual PurchaseOrder PurchaseOrder { get; set; }
     }
 }

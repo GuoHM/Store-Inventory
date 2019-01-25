@@ -23,13 +23,28 @@ namespace InventoryWebAPI.Controllers
             {
                 return request.GetAllRequests();
             }
-            //GET: api/Catalogue/5
-            //[HttpGet]
-            //[Route("api/Request/{id}")]
-            //public Request GetRequestById(int id)
-            //{
-            //    return request.GetRequestById(id);
-            //}
+        [HttpGet]
+        [Route("api/PendingRequest")]
+
+        public IEnumerable<Request> GetAllPendingRequests()
+        {
+            return request.GetAllApprovalPendingRequests();
+        }
+
+        [HttpGet]
+        [Route("api/PendingRequest/{Orderid}/{Userid}")]
+
+        public IEnumerable<Request> GetAllPendingRequestsbyUserID(string Orderid, string Userid)
+        {
+            return request.GetRequestByOrderIdUserId(Orderid, Userid);
+        }
+
+        //[HttpGet]
+        //[Route("api/Request/{id}")]
+        //public Request GetRequestById(int id)
+        //{
+        //    return request.GetRequestById(id);
+        //}
 
         [HttpGet]
         [Route("api/Request/{OrderId}")]
@@ -37,5 +52,21 @@ namespace InventoryWebAPI.Controllers
         {
             return request.GetRequestByOrderId(OrderId);
         }
+
+        [HttpGet]
+        [Route("api/RequestItems/{userId}")]
+        public IEnumerable<Request> GetItemsByUser(string userId)
+        {
+            return request.getAllStationeryRequest(userId);
+        }
+
+        [HttpGet]
+        [Route("api/StationaryItems/{OrderId}")]
+        public IEnumerable<Request> GetRequestByOrder(string OrderId)
+        {
+            return request.getStationaryOrderByID(OrderId);
+        }
+
+
     }
 }

@@ -10,6 +10,7 @@ using System.Web.Script.Serialization;
 
 namespace InventoryWeb.Controllers
 {
+    [Authorize(Roles = "StoreManager")]
     public class StoreManagerController : Controller
     {
         // GET: StoreManager

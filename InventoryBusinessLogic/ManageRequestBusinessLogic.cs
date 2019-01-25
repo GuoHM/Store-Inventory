@@ -12,34 +12,64 @@ namespace InventoryBusinessLogic
 
         public void ApproveOrRejectRequest(string RequestId, string RequestStatus,string remarks)
         {
-            var request = inventory.Request.Where(x => x.OrderID == RequestId).ToList();
+
+            int requestID = Convert.ToInt32(RequestId);
+            var request = inventory.Request.Where(x => x.RequestID == requestID).ToList();
             foreach (var req in request)
             {
                 req.RequestStatus = RequestStatus;
                 req.Remarks = remarks;
+                if (RequestStatus.ToUpper().Trim() == "APPROVED")
+                {
+                    var order = inventory.Order.Where(x => x.OrderID == req.OrderID).First();
+                    order.OrderStatus = RequestStatus;
+                }
                 inventory.SaveChanges();
             }
-            var order = inventory.Order.Where(x => x.OrderID == RequestId).First();
-            order.OrderStatus = RequestStatus;
-            inventory.SaveChanges();
+          
+            //var order = inventory.Order.Where(x => x.OrderID == RequestId).First();
+            //order.OrderStatus = RequestStatus;
+            //inventory.SaveChanges();
         }
 
         public List<Request> GetAllRequests()
         {
-            List<Request> req = inventory.Request.ToList();
+            List<Request> req = inventory.Request.Where(x => (x.RequestStatus).ToUpper().Trim() == "APPROVED").ToList();
             List<Request> orders = new List<Request>();
 
-            foreach(Request req1 in req)
+
+            foreach (Request req1 in req)
             {
-                if(!orders.Any(x=>x.OrderID==req1.OrderID && x.UserID==req1.UserID))
+                if (!orders.Any(x => x.OrderID == req1.OrderID && x.UserID == req1.UserID))
                 {
+
                     orders.Add(req1);
                 }
             }
+            //if(!order.Any(x=>x.OrderID==req1.OrderID && x.Request.))
+            //}
             return orders;
             //return inventory.Request.ToList();
 
         }
+
+
+
+        public List<Request> GetRetrievalItems()
+        {
+            //var orders = inventory.Order.Select(x => x.OrderID).Distinct().ToList();
+            //List<Request> requests = new List<Request>();
+            //foreach(var order in orders)
+            //{
+            //  requests.AddRange(GetRequestByOrderId(order));
+            //}
+
+
+            return inventory.Request.Where(x => (x.RequestStatus).ToUpper().Trim() == "APPROVED").ToList();
+
+        }
+
+        
         public Request GetRequestById(int requestId)
         {
             try
@@ -55,7 +85,7 @@ namespace InventoryBusinessLogic
         {
             try
             {
-                return inventory.Request.Where(x => x.OrderID == OrderId).ToList();
+                return inventory.Request.Where(x => x.OrderID == OrderId &&x.RequestStatus.ToUpper().Trim()=="APPROVED").ToList();
             }
             catch (Exception)
             {
@@ -93,6 +123,52 @@ namespace InventoryBusinessLogic
             update.Needed = request.Needed;
             inventory.SaveChanges();
         }
+        public List<Request> getAllStationeryRequest(string userId)
+        {
+            return inventory.Request.Where(x => x.UserID == userId).ToList();
+
+        }
+
+        public List<Request> GetAllApprovalPendingRequests()
+        {
+            List<Request> req = inventory.Request.Where(x => (x.RequestStatus).ToUpper().Trim() == "UNAPPROVED").ToList();
+            List<Request> orders = new List<Request>();
+
+
+            foreach (Request req1 in req)
+            {
+                if (!orders.Any(x => x.OrderID == req1.OrderID && x.UserID == req1.UserID))
+                {
+
+                    orders.Add(req1);
+                }
+            }
+            //if(!order.Any(x=>x.OrderID==req1.OrderID && x.Request.))
+            //}
+            return orders;
+            //return inventory.Request.ToList();
+
+        }
+
+        public List<Request> GetRequestByOrderIdUserId(string OrderId,string UserName)
+        {
+            try
+            {
+                return inventory.Request.Where(x => x.OrderID == OrderId && x.AspNetUsers.UserName.ToUpper().Trim()==UserName.ToUpper().Trim() && x.RequestStatus.ToUpper().Trim()=="UNAPPROVED").ToList();
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public List<Request> getStationaryOrderByID(string orderId)
+        {
+            return inventory.Request.Where(x => x.OrderID == orderId).ToList();
+
+        }
+
+      
 
     }
 }

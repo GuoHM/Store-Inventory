@@ -90,8 +90,12 @@ namespace InventoryBusinessLogic
             return inventory.AdjustmentItem.Where(x => x.AdjustmentID == adjustmentID).ToList();
 
         }
+        public List<Adjustment> getAllAdjustmentList(string userid)
+        {
+            return inventory.Adjustment.Where(x => x.UserID == userid).ToList();
 
-       
+        }
+
 
 
     }

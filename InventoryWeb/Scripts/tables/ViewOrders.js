@@ -28,7 +28,7 @@ var TableInit = function () {
     oTableInit.Init = function () {
         $('#SearchItemTable').bootstrapTable({
             method: 'get',
-            url: 'http://inventorywebapi2019.azurewebsites.net//api/Orders/',
+            url: 'https://inventorywebapi2019.azurewebsites.net//api/Orders/',
             //toolbar: '#toolbar',                
             striped: true,
             cache: false,
@@ -165,8 +165,8 @@ var TableInit = function () {
             var oTableInit = new TableInit1();
             oTableInit.Init();
 
-            $('#requests').bootstrapTable('refreshOptions', { url: 'http://inventorywebapi2019.azurewebsites.net//api/Request/' + orderid });
-            $('#requests').bootstrapTable('refresh', { url: 'http://inventorywebapi2019.azurewebsites.net//api/Request/' + orderid });
+            $('#requests').bootstrapTable('refreshOptions', { url: 'https://inventorywebapi2019.azurewebsites.net//api/Request/' + orderid });
+            $('#requests').bootstrapTable('refresh', { url: 'https://inventorywebapi2019.azurewebsites.net//api/Request/' + orderid });
         }
     };
     
@@ -193,7 +193,7 @@ var TableInit1 = function () {
     oTableInit.Init = function () {
         $('#requests').bootstrapTable({
             method: 'get',
-            url: 'http://inventorywebapi2019.azurewebsites.net//api/Request/' + orderid,
+            url: 'https://inventorywebapi2019.azurewebsites.net//api/Request/' + orderid,
             //toolbar: '#toolbar',                
             striped: true,
             cache: false,
@@ -294,7 +294,7 @@ function selectedItems() {
             var OrderId = rows[i].cells[1].innerHTML;
            // orders = { "orderid": OrderId };
             $.ajax({
-                url: 'http://inventorywebapi2019.azurewebsites.net//api/Request/' + OrderId,
+                url: 'https://inventorywebapi2019.azurewebsites.net//api/Request/' + OrderId,
                 data: "",
                 dataType: 'json',
                 async: false,

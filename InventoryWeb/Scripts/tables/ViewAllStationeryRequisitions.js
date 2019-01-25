@@ -11,13 +11,12 @@ var requestedDate = "";
 var reqesterName = "";
 var TableInit = function () {
 	var oTableInit = new Object();
-	
-	//var user = 
 	var userid = document.getElementById('userid').textContent;
+
 	oTableInit.Init = function () {
 		$('#SearchItemTable').bootstrapTable({
 			method: 'get',
-			url: 'https://inventorywebapi2019.azurewebsites.net/api/Adjustment/' + userid,
+			url: 'http://inventorywebapi2019.azurewebsites.net/api/RequestItems/' + userid,
 			//toolbar: '#toolbar',                
 			striped: true,
 			cache: false,
@@ -43,43 +42,36 @@ var TableInit = function () {
 			showExport: false,
 			exportDataType: "basic",              //basic', 'all', 'selected'.
 			showColumns: true,
-			columns: [
-				{
-					align: "center",
-					title: 'AdjustmentID',
-					sortable: true,
+			columns: [{
+				align: "center",
+				title: 'Request ID',
+				sortable: true,
 
-					field: 'AdjustmentID'
-				}, {
-					align: "center",
-					title: 'Employee Name',
-					sortable: true,
+				field: 'RequestID'
+			}, {
+				align: "center",
+				title: 'Requested Date',
+				sortable: true,
+				field: 'RequestDate'
+				//events: operateEvents,
+				// formatter: InputTextBox
+			}, {
+				align: "center",
+				title: 'Request Status',
+				sortable: true,
+				field: 'RequestStatus'
+				//events: operateEvents,
+				// formatter: InputTextBox
+			},
+			{
+				align: "center",
+				title: 'Action',
+				sortable: true,
 
-					field: 'AspNetUsers.UserName'
-				}, {
-					align: "center",
-					title: 'Requested Date',
-					sortable: true,
-					field: 'Date'
-					//events: operateEvents,
-					// formatter: InputTextBox
-				}, {
-					align: "center",
-					title: 'Status',
-					sortable: true,
-					field: 'AdjustmentStatus'
-					//events: operateEvents,
-					// formatter: InputTextBox
-				},
-				{
-					align: "center",
-					title: 'Action',
-					sortable: true,
-
-					//field : 'ID',
-					events: operateEvents,
-					formatter: selectItem
-				}
+				//field : 'ID',
+				events: operateEvents,
+				formatter: selectItem
+			}
 			],
 			formatLoadingMessage: function () {
 				return "loading...";
@@ -107,26 +99,24 @@ var TableInit = function () {
 	function openPopup() {
 		$("#ApproveRequestModal").modal('show');
 	}
+
 	operateEvents = {
 		'click #view': function (e, value, row, index) {
 
 			$("#ApproveRequestModal").modal('show');
-
-
-
-			adjustmentID = row.AdjustmentID;
-			requestedDate = row.Date;
-
-			reqesterName = row.AspNetUsers.UserName;
+			orderid = row.OrderID;
+			requestedDate = row.RequestDate;
+			
 			document.getElementById('requestDate').innerHTML = requestedDate;
-			document.getElementById('requestedBy').innerHTML = reqesterName;
+			
 
 
 			var oTableInit = new TableInit1();
 			oTableInit.Init();
 
-			$('#requests').bootstrapTable('refreshOptions', { url: 'https://inventorywebapi2019.azurewebsites.net/api/AdjustmentItem/' + adjustmentID });
-			$('#requests').bootstrapTable('refresh', { url: 'https://inventorywebapi2019.azurewebsites.net/api/AdjustmentItem/' + adjustmentID });
+			$('#requests').bootstrapTable('refreshOptions', { url: 'http://inventorywebapi2019.azurewebsites.net/api/StationaryItems/' + orderid });
+			$('#requests').bootstrapTable('refresh', { url: 'http://inventorywebapi2019.azurewebsites.net/api/StationaryItems/' + orderid });
+
 
 		}
 	};
@@ -155,7 +145,7 @@ var TableInit1 = function () {
 	oTableInit.Init = function () {
 		$('#requests').bootstrapTable({
 			method: 'get',
-			url: 'https://inventorywebapi2019.azurewebsites.net/api/AdjustmentItem/' + adjustmentID,
+			url: 'http://inventorywebapi2019.azurewebsites.net/api/StationaryItems/' + orderid,
 			//toolbar: '#toolbar',                
 			striped: true,
 			cache: false,
@@ -186,35 +176,21 @@ var TableInit1 = function () {
 				title: 'Item Name',
 				sortable: true,
 
-				field: 'description'
+				field: 'Catalogue.Description'
 			},
 			{
 				align: "center",
-				title: 'Quantity Adjusted',
+				title: 'Quantity',
 				sortable: true,
-				field: 'quantity'
+				field: 'Needed'
 			},
 			{
 				align: "center",
-				title: 'CostPerUnit',
+				title: 'Price',
 				sortable: true,
-				field: 'cost'
+				field: 'Catalogue.Price'
 			},
 
-			{
-				align: "center",
-				title: 'Total Cost',
-				sortable: true,
-				field: 'totalcost'
-				//field: selectItem
-
-			},
-			{
-				align: "center",
-				title: 'Reason',
-				sortable: true,
-				field: 'reason'
-			}
 			],
 			formatLoadingMessage: function () {
 				return "loading...";
@@ -233,7 +209,7 @@ var TableInit1 = function () {
 
 	selectItem = function (e, value, row, index) {
 
-		return row.Catalogue.Price * Quantity;
+		return row.Price;
 
 	}
 
@@ -248,45 +224,6 @@ var TableInit1 = function () {
 	return oTableInit;
 };
 
-function postData(approvalStatus) {
 
-	var tab = document.getElementById("requests");
-	var rows = tab.rows;
-	var remarks = document.getElementById('remarks').value;
-
-
-
-	var jsonlist = new Array();
-
-	var jsonObj = { "AdjustmentID": adjustmentID, "requestStatus": approvalStatus, "remarks": remarks };
-	jsonlist.push(jsonObj);
-
-
-	//alert(JSON.stringify(jsonlist));
-	$.ajax({
-		url: "/StoreManager/SaveRequestStatusManager",
-		type: "post",
-		dataType: "text",
-		async: true,
-		data: JSON.stringify(jsonlist),
-		success: function (data) {
-
-			if (data.approvalStatus == "Approved") {
-				$('#successModal').modal('show');
-			}
-			else {
-				alert('Adjustment voucher Rejected');
-			}
-		},   
-		error: function (XMLHttpRequest, textStatus, errorThrown) {
-			alert(XMLHttpRequest.status);
-			alert(XMLHttpRequest.readyState);
-			alert(textStatus);
-		},
-
-	});
-
-
-};
 
 

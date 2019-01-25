@@ -44,20 +44,20 @@ var TableInit = function () {
                     align: "center",
                     title: 'Select',
                     sortable: true,
-                    sortable: true,
+                    //sortable: true,
                     formatter: ChooseOrder
                     //field: 'RequestID'
                 }, {
                     align: "center",
                     title: 'Date',
                     sortable: true,
-                    sortable: true,
+                    //sortable: true,
                     field: 'PurchaseDate'
                 }, {
                     align: "center",
                     title: 'Purchase Order',
                     sortable: true,
-                    sortable: true,
+                    //sortable: true,
                     field: 'PurchaseOrderID',
                     //events: operateEvents,
                     // formatter: InputTextBox
@@ -65,7 +65,7 @@ var TableInit = function () {
                     align: "center",
                     title: 'Supplier',
                     sortable: true,
-                    sortable: true,
+                   // sortable: true,
                     field: 'Supplier.SupplierName',
                     //events: operateEvents,
                     // formatter: InputTextBox
@@ -74,7 +74,7 @@ var TableInit = function () {
                     align: "center",
                     title: 'Expected',
                     sortable: true,
-                    sortable: true,
+                    //sortable: true,
                     field: 'ExpectedDate',
                     //events: operateEvents,
                     // formatter: InputTextBox
@@ -82,7 +82,7 @@ var TableInit = function () {
                     align: "center",
                     title: 'Status',
                     sortable: true,
-                    sortable: true,
+                    //sortable: true,
                     field: 'PurchaseOrderStatus',
                     //events: operateEvents,
                     // formatter: InputTextBox
@@ -90,7 +90,7 @@ var TableInit = function () {
                     align: "center",
                     title: 'Action',
                     sortable: true,
-                    sortable: true,
+                   // sortable: true,
                     //field : 'ID',
                     events: operateEvents,
                     formatter: selectItem

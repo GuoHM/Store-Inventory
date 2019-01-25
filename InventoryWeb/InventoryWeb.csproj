@@ -403,6 +403,8 @@
     <Content Include="Scripts\tables\RaiseRequest.js" />
     <Content Include="Scripts\tables\ViewAdjustmentVoucher.js" />
     <Content Include="Scripts\tables\ViewAdjustmentVoucherManager.js" />
+    <Content Include="Scripts\tables\ViewAllAdjustmentVoucherRaised.js" />
+    <Content Include="Scripts\tables\ViewAllStationeryRequisitions.js" />
     <Content Include="Scripts\tables\ViewInventory.js" />
     <Content Include="Scripts\tables\RetrievalForm.js" />
     <Content Include="Scripts\tables\ViewOrders.js" />

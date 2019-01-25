@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using InventoryBusinessLogic;
 using InventoryBusinessLogic.Entity;
+using System.Web.Script.Serialization;
+using Microsoft.AspNet.Identity;
 
 namespace InventoryWeb.Controllers
 {
@@ -33,12 +35,12 @@ namespace InventoryWeb.Controllers
         {
 
             CP.ChangeCollectionPoint(CollectionPoint, User.Identity.Name);
-            EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
-            string content = emailBusinessLogic.ChangePointNotification(User.Identity.Name, CollectionPoint);
+           // EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
+            //string content = emailBusinessLogic.ChangePointNotification(User.Identity.Name, CollectionPoint);
 
-            List<string> toAddress = new List<string>();
-            toAddress.Add("wangxiaoxiaoqiang@gmail.com");
-            emailBusinessLogic.SendEmail("Team3", content, toAddress);
+          //  List<string> toAddress = new List<string>();
+          //  toAddress.Add("wangxiaoxiaoqiang@gmail.com");
+          //  emailBusinessLogic.SendEmail("Team3", content, toAddress);
             return RedirectToAction("ChangeCollectionPoint");
         }
         public ActionResult Index()
@@ -50,5 +52,40 @@ namespace InventoryWeb.Controllers
         {
             return View();
         }
+
+        public ActionResult ViewAllStationeryRequisitionsDeptRep()
+        {
+            string userId = User.Identity.GetUserId();
+            ViewBag.userID = userId;
+            new ManageRequestBusinessLogic().getAllStationeryRequest(userId);
+            return View();
+
+
+        }
+
+        public ActionResult ViewAllStationeryRequisitionsByOrderIdDeptRep(string orderId)
+        {
+
+            new ManageRequestBusinessLogic().getStationaryOrderByID(orderId);
+            return View();
+        }
+
+        public ActionResult ViewRequest()
+        {
+            string userId = User.Identity.GetUserId();
+            ViewBag.userID = userId;
+            new ManageRequestBusinessLogic().getAllStationeryRequest(userId);
+            return View();
+
+
+        }
+
+        public ActionResult ViewAllStationeryRequisitionsByOrderId(string orderId)
+        {
+
+            new ManageRequestBusinessLogic().getStationaryOrderByID(orderId);
+            return View();
+        }
+
     }
 }

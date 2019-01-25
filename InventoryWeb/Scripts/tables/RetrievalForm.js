@@ -94,7 +94,7 @@ var TableInit = function () {
         });
 
     };
-
+   
 
     // params
     oTableInit.queryParams = function (params) {

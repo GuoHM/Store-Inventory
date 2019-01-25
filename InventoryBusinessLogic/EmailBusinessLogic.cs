@@ -181,7 +181,7 @@ namespace InventoryBusinessLogic
 
             return MailBody;
         }
-        //8.Padma 
+        //8.Padma test successful
        // var item1 = list[0];
        // EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
        // int requestID = Convert.ToInt32(item1.orderId);
@@ -199,7 +199,7 @@ namespace InventoryBusinessLogic
             Mailbody += "<p> Your request has been " + request.RequestStatus + ".<br> This is a system generated email.<br>Thank you </ p>";
             return Mailbody;
         }
-        //9.Padma
+        //9.Padma test successful
         public string ReadyForCollectionPoint(string departmentId)
         {
             Department department = inventory.Department.Where(x => x.DepartmentID == departmentId).First();

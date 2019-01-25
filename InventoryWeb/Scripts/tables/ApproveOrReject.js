@@ -9,13 +9,15 @@
 var orderid = "";
 var requestedDate = "";
 var reqesterName = "";
+var userid = "";
+var requestid = "";
 var TableInit = function () {
     var oTableInit = new Object();
 
     oTableInit.Init = function () {
         $('#SearchItemTable').bootstrapTable({
             method: 'get',
-            url: 'http://localhost/InventoryWebAPI/api/Request',
+            url: 'http://inventorywebapi2019.azurewebsites.net/api/PendingRequest',
             //toolbar: '#toolbar',                
             striped: true,
             cache: false,
@@ -104,6 +106,9 @@ var TableInit = function () {
          
             $("#ApproveRequestModal").modal('show');
             orderid = row.OrderID;
+            userid = row.AspNetUsers.UserName;
+            
+        
             requestedDate = row.RequestDate;
             reqesterName = row.AspNetUsers.UserName;
             document.getElementById('requestDate').innerHTML = requestedDate;
@@ -113,8 +118,8 @@ var TableInit = function () {
             var oTableInit = new TableInit1();
             oTableInit.Init();
 
-            $('#requests').bootstrapTable('refreshOptions', { url: 'http://localhost/InventoryWebAPI/api/Request/' + orderid });
-            $('#requests').bootstrapTable('refresh', { url: 'http://localhost/InventoryWebAPI/api/Request/' + orderid });
+            $('#requests').bootstrapTable('refreshOptions', { url: 'http://inventorywebapi2019.azurewebsites.net//api/PendingRequest/' + orderid + '/' + userid});
+            $('#requests').bootstrapTable('refresh', { url: 'http://inventorywebapi2019.azurewebsites.net//api/PendingRequest/' + orderid + '/' + userid});
 
             
         }
@@ -144,7 +149,7 @@ var TableInit1 = function () {
     oTableInit.Init = function () {
         $('#requests').bootstrapTable({            
             method: 'get',
-            url: 'http://localhost/InventoryWebAPI/api/Request/' + orderid,
+            url: 'http://inventorywebapi2019.azurewebsites.net//api/PendingRequest/' + orderid + '/' + userid,
             //toolbar: '#toolbar',                
             striped: true,
             cache: false,
@@ -159,15 +164,15 @@ var TableInit1 = function () {
             search: true,
             strictSearch: false,
             queryParamsType: "",
-            showRefresh: true,
+            showRefresh: false,
             minimumCountColumns: 2,
             clickToSelect: false,
-            height: 500,
+            height: 350,
             // uniqueId: "ID", 
-            showToggle: true,
-            cardView: false,
-            detailView: false,
-            showExport: false,
+            //showToggle: true,
+            //cardView: false,
+           // detailView: false,
+           // showExport: false,
             exportDataType: "basic",              //basic', 'all', 'selected'.
             showColumns: true,
             columns: [{
@@ -176,7 +181,12 @@ var TableInit1 = function () {
                 sortable: true,            
                
                 field: 'Catalogue.Description'
-            },
+            }, {
+                    align: "center",
+                    title: 'RequestID',
+                    sortable: true,                    
+                    field: 'RequestID'
+                },
                 {
                     align: "center",
                     title: 'Quantity',
@@ -237,8 +247,9 @@ function postData(approvalStatus) {
     var remarks = document.getElementById('remarks').value;
     var jsonlist = new Array(rows.length - 1);
     for (var i = 1; i < rows.length; i++) {
-        var jsonObj = { "orderId": orderid, "requestStatus": approvalStatus, "remarks": remarks };
-        jsonlist[i - 1] = jsonObj;
+        
+        var jsonObj = { "orderId": rows[i].cells[1].innerHTML, "requestStatus": approvalStatus, "remarks": remarks };
+        jsonlist[i-1] = jsonObj;
     }
     //alert(JSON.stringify(jsonlist));
     $.ajax({
@@ -248,7 +259,7 @@ function postData(approvalStatus) {
         async: true,
         data: JSON.stringify(jsonlist),
         success: function (data) {
-            //  $('#successModal').modal('show');
+            $('#successModal').modal('show');
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             alert(XMLHttpRequest.status);

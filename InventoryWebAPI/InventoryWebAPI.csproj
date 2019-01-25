@@ -242,9 +242,14 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdjustmentVoucherController.cs" />
     <Compile Include="Controllers\CatalogueController.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
+    <Compile Include="Controllers\DisbursementListController.cs" />
     <Compile Include="Controllers\ManageRequestController.cs" />
+    <Compile Include="Controllers\MobileRequestController.cs" />
+    <Compile Include="Controllers\OrdersController.cs" />
+    <Compile Include="Controllers\PurchaseOrderController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -290,9 +295,14 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Properties\PublishProfiles\AndroidAPI - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\AndroidAPI - Web Deploy1.pubxml" />
+    <None Include="Properties\PublishProfiles\androidAPIXUMJ - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\Inventory12345 - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\InventoryWebAPI2019 - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\InventoryWebAPI20190122115908 - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\InventoryWebAPMobile - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

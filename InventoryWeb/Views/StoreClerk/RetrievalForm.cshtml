@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewBag.Title = "RetrievalForm";
+}
+<div class="col-xs-2 column">
+    @Html.Partial("~/Views/StoreClerk/SideBar.cshtml")
+</div>
+<div class="col-xs-10 column">
+
+
+    <div class="panel-body" style="padding-bottom: 0px;">
+        <div class="panel panel-default">
+            <div class="panel-heading">Orders List</div>
+            <div class="panel-body">
+                <table id="RetrievalTable"></table>
+            </div>
+        </div>
+        <div style="margin-top:8px">
+            <input type="button" value="Generate Disbursement List" onclick="openDisbursementList()" class="btn btn-primary" style="float:right" />
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/bootstrap-table.js"></script>
+<script src="~/Scripts/tables/ViewOrders.js"></script>
+<script src="~/Scripts/bootstrap-table-export.js"></script>
+<script src="//rawgit.com/hhurz/tableExport.jquery.plugin/master/tableExport.js"></script>

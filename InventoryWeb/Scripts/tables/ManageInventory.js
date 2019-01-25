@@ -13,7 +13,7 @@ var TableInit = function () {
     oTableInit.Init = function () {
         $('#InventoryItemTable').bootstrapTable({
             method: 'get',
-            url: 'http://inventorywebapi2019.azurewebsites.net/api/Catalogue',
+            url: 'https://inventorywebapi2019.azurewebsites.net/api/Catalogue',
             //toolbar: '#toolbar',                //工具按钮用哪个容器
             striped: true, // 是否显示行间隔色
             cache: false, // 是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）

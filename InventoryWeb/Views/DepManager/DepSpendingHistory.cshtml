@@ -97,9 +97,16 @@
         $(document).ready(function () {
             $("#button-2").click(function (e) {
                 e.preventDefault();
+                var x = document.forms["myForm"]["date1"].value;
+                var y = document.forms["myForm"]["date2"].value;
                 var startDate = new Date($("#date1").val());
                 var endDate = new Date($("#date2").val());
-                if (endDate <= startDate) {
+
+                if (x == "" || y == "")
+                {
+                    alert("Start Date or End Date is Blank")
+                }
+                else if (endDate <= startDate) {
                     alert("Invalid Date Range");
                 } else {
                     $("#form-4").submit();

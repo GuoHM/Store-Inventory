@@ -12,36 +12,11 @@
         <div class="panel panel-default">
             <div class="panel-heading">Searched Itemed</div>
             <div class="panel-body">
-                <table id="SearchItemTable">
-                    <tr>
-                        <td>aaaaaa</td>
-                        <td>123</td>
-                        <td>324342</td>
-           
-                        <td><input type="number" class="form-control" placeholder="CourseID" id="quantity"></td>
-                        
-                        <td>
-                            <input type="button" value="Select" onclick="selectItem(this)" class="btn btn-primary" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>bbbbb</td>
-                        <td>54353</td>
-                        <td>345345675</td>
-                  
-                        <td><input type="number" class="form-control" placeholder="CourseID" id="quantity"></td>
-
-                       
-                        <td>
-                            <input type="button" value="Select" onclick="selectItem(this)" class="btn btn-primary" />
-                        </td>
-                    </tr>
-                </table>
+                <table id="SearchItemTable"></table>
 
             </div>
         </div>
     </div>
-
 
     <div class="panel-body" style="padding-bottom: 0px;">
         <div class="panel panel-default">
@@ -49,12 +24,59 @@
             <div class="panel-body">
                 <table id="ItemAddedTable"></table>
                 <div style="margin-top:8px">
-                    <input type="button" value="Confirm" onclick="" class="btn btn-primary" style="float:right" />
+                    <h4 id="totalPrice">Total Price：</h4>
+                    <input type="button" value="Confirm" id="saveAdjustment" onclick="confirm()" class="btn btn-primary" style="float:right" />
                 </div>
             </div>
-
         </div>
     </div>
+
+    <div id="successModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="deleteForm">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Success</h4>
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">
+                            &times;
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Successfully raise adjustment voucher!</p>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="button" class="btn btn-success center-block" data-dismiss="modal"
+                               value="OK" onclick="window.location.href='/StoreClerk/AdjustmentVoucher'">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="failModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="deleteForm">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Fail</h4>
+                        <button type="button" class="close" data-dismiss="modal"
+                                aria-hidden="true">
+                            &times;
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>You adjustment exceed the current store quantity!</p>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="button" class="btn btn-danger center-block" data-dismiss="modal"
+                               value="OK" onclick="window.location.href='/StoreClerk/AdjustmentVoucher'">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <script src="~/Scripts/bootstrap-table.js"></script>
     <script src="~/Scripts/tables/AdjustmentVoucher.js"></script>
     <script src="~/Scripts/bootstrap-table-export.js"></script>

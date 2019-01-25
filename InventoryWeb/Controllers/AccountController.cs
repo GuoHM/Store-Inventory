@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using InventoryWeb.Models;
+using InventoryBusinessLogic;
 
 namespace InventoryWeb.Controllers
 {
@@ -55,15 +56,20 @@ namespace InventoryWeb.Controllers
         [AllowAnonymous]
         public async Task<String> MobileLogin()
         {
+            UserBusinessLogic userlogic = new UserBusinessLogic();
             string email = "";
             string password = "";
             email = Request.Form.Get("username");
             password = Request.Form.Get("password");
             var result = await SignInManager.PasswordSignInAsync(email, password, true, shouldLockout: false);
+            string userid = userlogic.getUserByEmail(email).Id;
+            string name = userlogic.getUserByEmail(email).Name;
+            string dept = userlogic.getUserByEmail(email).DepartmentID;
+            string res = "success" + "/" + "userid:" + userid + "/" + "name:" + name + "/" + "dept:" + dept;
             switch (result)
             {
                 case SignInStatus.Success:
-                    return "Success";
+                    return  res;
                 case SignInStatus.LockedOut:
                     return "LockedOut";
                 case SignInStatus.RequiresVerification:
@@ -108,14 +114,27 @@ namespace InventoryWeb.Controllers
                     {
                         return RedirectToAction("RaiseRequest", "StoreClerk");
                     }
-                    //else if (roles.Contains("Requestor"))
+                    else if (roles.Contains("DeptRep"))
+                    {
+                        return RedirectToAction("Index", "DepRepresentative");
+                    }
+                    else if (roles.Contains("DeptHead"))
+                    {
+                        return RedirectToAction("ApproveOrReject", "DepManager");
+                    }
+                    else if (roles.Contains("StoreSupervisor"))
+                    {
+                        return RedirectToAction("Sidebar", "StoreSupervisor");
+                    }
+                    //else if (roles.Contains("DeptStaff"))
                     //{
-                    //    return RedirectToAction("Caterer", "Home");
+                    //    return RedirectToAction("ViewInventory", "DepStaff");
                     //}
-                    //else if (roles.Contains("Admin"))
+                    //else if (roles.Contains("StoreManager"))
                     //{
-                    //    return RedirectToAction("Admin", "Home");
+                    //    return RedirectToAction("ViewInventory", "StoreManager");
                     //}
+
                     else
                     {
                         return RedirectToLocal(returnUrl);

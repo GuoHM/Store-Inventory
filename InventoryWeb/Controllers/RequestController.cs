@@ -52,9 +52,10 @@ namespace InventoryWeb.Controllers
                         orderBusinessLogic.updateOrder(order);
                     }
                     Request request = manageRequestBusinessLogic.GetRequestsByOrderAndItem(orderid, catalogue.ItemID);
-                    if (request == null)
+                    if (request == null || request.RequestStatus == "Reject")
                     {
-                        //no exist item in request, insert one
+                        //1.no exist item in request, insert one
+                        //2.exist but reject before, than create new request
                         request = new Request();
                         request.Needed = Convert.ToInt32(item.quantity);
                         request.ItemID = catalogue.ItemID;
@@ -79,6 +80,9 @@ namespace InventoryWeb.Controllers
             public string description { get; set; }
 
             public string quantity { get; set; }
+            public string requestStatus { get; set; }
+            public string orderId { get; set; }
+            public string reason { get; set; }
         }
 
     }

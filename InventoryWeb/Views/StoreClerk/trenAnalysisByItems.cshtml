@@ -1,0 +1,131 @@
+﻿
+@{
+    ViewBag.Title = "trenAnalysisByItems";
+}
+
+
+
+<div class="col-xs-2 column">
+    @Html.Partial("~/Views/StoreClerk/SideBar.cshtml")
+</div>
+
+<div class="col-sm-offset-3">
+    <h2>Generate Trend Analysis By Items</h2> <br /><br />
+</div>
+
+<div class="col-sm-offset-3">
+    <form action="trenAnalysis" class="rep-form" name="myForm">
+
+
+        <div class="form-group ">
+            <label class="control-label col-sm-2" for="select">
+                Select an Item
+            </label>
+
+            <select class="form-control" name="dropdown1">
+
+                @for (int i = 0; i < ViewBag.catalogue.Count; i++)
+                {
+
+
+                    {
+                        <option value="@ViewBag.catalogue[i].ItemID"> @ViewBag.catalogue[i].Description </option>
+                    }
+
+
+                }
+            </select>
+        </div> <br />
+
+        <div class="form-group ">
+            <label class="control-label col-sm-2 requiredField" for="date">
+                Start Date
+                <span class="asteriskField">
+                    *
+                </span>
+            </label>
+
+            <div class="input-group">
+                <div class="input-group-addon">
+                    <i class="fa fa-calendar">
+                    </i>
+                </div>
+                <input class="form-control" id="date1" name="date1" placeholder="YYYY/MM/DD" type="text" required />
+            </div>
+        </div>
+
+
+        <br />
+
+        <div class="form-group ">
+            <label class="control-label col-sm-2 requiredField" for="date">
+                End Date
+                <span class="asteriskField">
+                    *
+                </span>
+            </label>
+
+            <div class="input-group">
+                <div class="input-group-addon">
+                    <i class="fa fa-calendar">
+                    </i>
+                </div>
+                <input class="form-control" id="date2" name="date2" placeholder="YYYY/MM/DD" type="text" required />
+            </div>
+        </div>
+        <br />
+        <div class="col-sm-4">
+            <button type="submit" class="btn btn-success">Generate Chargeback</button>
+        </div>
+
+    </form>
+
+    <div id="container1" style="width: 910px; height: 400px; margin: 0 auto"></div>
+
+</div>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" />
+
+<script>
+    $(document).ready(function () {
+        var date_input = $('input[name="date1"]'); //our date input has the name "date"
+        var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
+        date_input.datepicker({
+            format: 'yyyy/mm/dd',
+            container: container,
+            todayHighlight: true,
+            autoclose: true,
+        })
+    })
+</script>
+
+<script>
+    $(document).ready(function () {
+        var date_input = $('input[name="date2"]'); //our date input has the name "date"
+        var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
+        date_input.datepicker({
+            format: 'yyyy/mm/dd',
+            container: container,
+            todayHighlight: true,
+            autoclose: true,
+        })
+    })
+</script>
+
+<style>
+    .bootstrap-iso .formden_header h2, .bootstrap-iso .formden_header p, .bootstrap-iso form {
+        font-family: Arial, Helvetica, sans-serif;
+        color: black
+    }
+
+        .bootstrap-iso form button, .bootstrap-iso form button:hover {
+            color: white !important;
+        }
+
+    .asteriskField {
+        color: red;
+    }
+</style>
+
+

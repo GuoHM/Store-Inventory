@@ -50,5 +50,10 @@ namespace InventoryBusinessLogic
             update.DeliverAddress = purchaseOrder.DeliverAddress;
             inventory.SaveChanges();
         }
+
+        public PurchaseOrder findById(int id)
+        {
+            return inventory.PurchaseOrder.Where(x => x.PurchaseOrderID == id).First();
+        }
     }
 }

@@ -29,9 +29,9 @@
 </style>
 
 
-<div class="col-xs-9 column">
+<div class="col-xs-offset-3 column">
 
-    <form action="saveDepHead" class="rep-form" name="myForm" onsubmit="return validateForm()">
+    <form action="saveDepHead" class="rep-form" name="myForm">
 
         <h2>Appoint Department Head</h2> <br /><br />
         <div class="form-group">
@@ -42,7 +42,7 @@
             &nbsp;&nbsp;
             @for (int i = 0; i < ViewBag.depHead.Count; i++)
             {
-                if (ViewBag.depHead[i].UserType == "Manager")
+                if (ViewBag.depHead[i].UserType == "DeptHead")
                 {
 
                     <label> @ViewBag.depHead[i].UserName</label>
@@ -65,7 +65,7 @@
 
                 @for (int i = 0; i < ViewBag.depHead.Count; i++)
                 {
-                    if (ViewBag.depHead[i].UserType != "Manager" && ViewBag.depHead[i].UserType != "Rep")
+                    if (ViewBag.depHead[i].UserType != "DeptHead" && ViewBag.depHead[i].UserType != "DeptRep")
 
                     {
                         <option value="@ViewBag.depHead[i].Id"> @ViewBag.depHead[i].UserName </option>

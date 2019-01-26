@@ -76,9 +76,9 @@ namespace InventoryWeb.Controllers
                     {
                         return "DeptHead"+res;
                     }
-                    else if (roles.Equals("StoreClerk"))
+                    else if (roles.Equals("Store Clerk"))
                     {
-                        return "StroeClerk" + res;
+                        return "StoreClerk" + res;
                     }
                     else
                     {

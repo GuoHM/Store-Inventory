@@ -474,6 +474,8 @@
     <Content Include="Views\StoreClerk\ViewOrders.cshtml" />
     <Content Include="Views\StoreClerk\RetrievalForm.cshtml" />
     <Content Include="Views\StoreClerk\DisbursementList.cshtml" />
+    <Content Include="Views\StoreClerk\ViewAllAdjustmentVoucherRaised.cshtml" />
+    <Content Include="Views\StoreClerk\ViewAllStationeryRequisitions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

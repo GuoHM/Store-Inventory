@@ -67,14 +67,18 @@ namespace InventoryWeb.Controllers
             string name = userlogic.getUserByUsername(username).Name;
             string dept = userlogic.getUserByUsername(username).DepartmentID;
             string roles = userlogic.getUserByUsername(username).UserType;
-            string res = "success" + "/" + userid + "/" +name + "/" + dept;
+            string res = "/" + userid + "/" +name + "/" + dept;
             var result = await SignInManager.PasswordSignInAsync(username, password, true, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
                     if (roles.Equals("DeptHead"))
                     {
-                        return res;
+                        return "DeptHead"+res;
+                    }
+                    else if (roles.Equals("StoreClerk"))
+                    {
+                        return "StroeClerk" + res;
                     }
                     else
                     {

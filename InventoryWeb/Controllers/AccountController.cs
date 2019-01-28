@@ -134,7 +134,7 @@ namespace InventoryWeb.Controllers
                     }
                     else if (roles.Contains("DeptHead"))
                     {
-                        return RedirectToAction("ApproveOrReject", "DepManager");
+                        return RedirectToAction("Index", "DepManager");
                     }
                     else if (roles.Contains("StoreSupervisor"))
                     {
@@ -144,10 +144,10 @@ namespace InventoryWeb.Controllers
                     //{
                     //    return RedirectToAction("ViewInventory", "DepStaff");
                     //}
-                    //else if (roles.Contains("StoreManager"))
-                    //{
-                    //    return RedirectToAction("ViewInventory", "StoreManager");
-                    //}
+                    else if (roles.Contains("StoreManager"))
+                    {
+                        return RedirectToAction("ViewAdjustmentVoucherManager", "StoreManager");
+                    }
 
                     else
                     {

@@ -54,7 +54,7 @@ function UpdateQuantity() {
             
         }
     }
-    alert(orderid)
+
  
     $.ajax({
         contentType: 'application/json; charset=utf-8',

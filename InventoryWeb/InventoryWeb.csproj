@@ -485,6 +485,10 @@
     <Content Include="Views\StoreClerk\ViewAllAdjustmentVoucherRaised.cshtml" />
     <Content Include="Views\StoreClerk\ViewAllStationeryRequisitions.cshtml" />
     <Content Include="Views\Error\Error.cshtml" />
+    <Content Include="Views\StoreClerk\ViewRequest.cshtml" />
+    <Content Include="Views\ManageRequest\ViewRequestPartial.cshtml" />
+    <Content Include="Views\DepRepresentative\ViewRequest.cshtml" />
+    <Content Include="Views\Staff\ViewRequest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

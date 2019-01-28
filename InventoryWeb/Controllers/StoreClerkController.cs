@@ -486,7 +486,8 @@ namespace InventoryWeb.Controllers
                         if (items.itemDescription.Trim() == req.Catalogue.Description.Trim())
                         {
                             int needed = Convert.ToInt32(items.neededQuantity);
-                            needed += Convert.ToInt32(req.Needed);
+                            needed += (Convert.ToInt32(req.Needed) - Convert.ToInt32(req.Actual));
+
                             items.neededQuantity = Convert.ToString(needed);
                             alreadyexist = true;
 
@@ -503,13 +504,26 @@ namespace InventoryWeb.Controllers
                     if (!alreadyexist)
                     {
 
-                        itemList.Add(new RetrievalList { orderid = req.OrderID, itemDescription = req.Catalogue.Description, availableQuantity = Convert.ToString(req.Catalogue.Quantity), binNumber = req.Catalogue.BinNumber, neededQuantity = Convert.ToString(req.Needed), remarks = req.Remarks, requestId = Convert.ToString(req.RequestID) });
+
+                        itemList.Add(new RetrievalList { orderid = req.OrderID, itemDescription = req.Catalogue.Description, availableQuantity = Convert.ToString(req.Catalogue.Quantity), alreadyExisting = Convert.ToString(req.Actual), binNumber = req.Catalogue.BinNumber, neededQuantity = Convert.ToString(req.Needed), remarks = req.Remarks, requestId = Convert.ToString(req.RequestID) });
+                        // alreadyexist = false;
                         // alreadyexist = false;
                     }
 
+
                 }
 
+                foreach (var item in itemList)
+                {
+                    item.neededQuantity = Convert.ToString(Convert.ToInt32(item.neededQuantity) - Convert.ToInt32(item.alreadyExisting));
 
+                }
+                var notneeded = itemList.Where(x => x.neededQuantity == "0").ToList();
+                foreach (var item in notneeded)
+                {
+                    itemList.Remove(item);
+                }
+                retrievals = itemList;
                 retrievals = itemList;
             }
             return Json(new { data = retrievals }, JsonRequestBehavior.AllowGet);
@@ -727,6 +741,26 @@ namespace InventoryWeb.Controllers
             return View();
         }
 
+       
+        public JsonResult UpdatePOStatusToCancel(List<CancelPOList> Po)
+        {
+
+            
+            List<CancelPOList> list = Po;
+            if (list.Any())
+            {
+                foreach (var item in list)
+                {
+                    
+                    new PurchaseItemBusinessLogic().getPOByID(Convert.ToInt32(item.orderid));
+                }
+            }
+            
+
+            return new JsonResult();
+        }
+
+
         [HttpPost]
         public ActionResult UpdateInventory()
         {
@@ -738,7 +772,10 @@ namespace InventoryWeb.Controllers
             {
                 foreach (var item in list)
                 {
-                    catalogueBusinessLogic.UpdateRetrievedQuantity(item.itemDescription,item.quantityPicked);
+                    if (item != null)
+                    {
+                        catalogueBusinessLogic.UpdateRetrievedQuantity(item.itemDescription, item.quantityPicked);
+                    }
                 }
             }
             EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
@@ -747,7 +784,8 @@ namespace InventoryWeb.Controllers
             List<string> toAddress = new List<string>();
             toAddress.Add("wangxiaoxiaoqiang@gmail.com");
             emailBusinessLogic.SendEmail("Team3", content, toAddress);
-         
+            catalogueBusinessLogic.ValidateOrderStatus();
+
             return new JsonResult();
 
         }
@@ -819,7 +857,9 @@ namespace InventoryWeb.Controllers
 
             public string neededQuantity { get; set; }
             public string availableQuantity { get; set; }
-            public string binNumber { get; set; }
+        public string alreadyExisting { get; set; }
+
+        public string binNumber { get; set; }
             public string remarks { get; set; }
             public string orderid { get; set; }
             //public string itemDescription { get; set; }
@@ -837,6 +877,21 @@ namespace InventoryWeb.Controllers
             public string uom { get; set; }
 
         }
+
+        public class CancelPOList
+        {
+        public string orderid { get; set; }
+        public string supplierID { get; set; }
+        public string totalPrice { get; set; }
+        public string purchaseDate { get; set; }
+        public string deliverAddress { get; set; }
+        public string orderBy { get; set; }
+        public string expectedDate { get; set; }
+        public string purchaseOrderStatus { get; set; }
+
+        }
+
+
     }
 
 

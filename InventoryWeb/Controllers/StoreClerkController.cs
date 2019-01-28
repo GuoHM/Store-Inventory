@@ -51,7 +51,7 @@ namespace InventoryWeb.Controllers
             return View();
         }
 
-        public ActionResult UpdateInventory(string label1, string binNumber)
+        public ActionResult UpdateInventoryBinNumber(string label1, string binNumber)
         {
 
             catalogueBusinessLogic.UpdateInventory(label1, binNumber);
@@ -733,7 +733,6 @@ namespace InventoryWeb.Controllers
             var stream = sr.ReadToEnd();
             JavaScriptSerializer js = new JavaScriptSerializer();
             var list = js.Deserialize<List<InventoryList>>(stream);
-
             if (list.Any())
             {
                 foreach (var item in list)

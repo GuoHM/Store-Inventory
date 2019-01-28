@@ -65,8 +65,7 @@ namespace InventoryBusinessLogic
             //}
 
 
-            return inventory.Request.Where(x => (x.RequestStatus).ToUpper().Trim() == "APPROVED").ToList();
-
+            return inventory.Request.Where(x => ((x.RequestStatus).ToUpper().Trim() == "APPROVED") && (x.Needed != 0)).ToList();
         }
 
         

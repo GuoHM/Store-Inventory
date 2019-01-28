@@ -533,7 +533,7 @@ namespace InventoryWeb.Controllers
         public JsonResult GetDisbursements()
         {
 
-            var data = req.Select(p => new { itemDescription = p.Catalogue.Description, quantity = p.Needed, uom = p.Catalogue.MeasureUnit }).ToList();
+            var data = req.Select(p => new { itemDescription = p.Catalogue.Description, quantity = p.Needed, uom = p.Catalogue.MeasureUnit,orderid = p.OrderID}).ToList();
 
 
             return Json(data, JsonRequestBehavior.AllowGet);
@@ -620,14 +620,16 @@ namespace InventoryWeb.Controllers
             return View();
 
         }
-        public void UpdateQuantity(List<orderIDList> purchaseIDList)
+        public bool UpdateQuantity(List<orderIDList> purchaseIDList)
         {
             foreach (orderIDList oId in purchaseIDList)
             {
 
                 int orderID = Convert.ToInt32(oId.orderid);
-                Boolean b =  catalogueBusinessLogic.UpdateCataloguesByPurchaseID(orderID);
+                 catalogueBusinessLogic.UpdateCataloguesByPurchaseID(orderID);
+                
             }
+            return true;
         }
         public JsonResult LowStock()
         {
@@ -870,11 +872,12 @@ namespace InventoryWeb.Controllers
             public string deptName { get; set; }
         }
 
-        public class DisbursementListItems
-        {
-            public string itemDescription { get; set; }
-            public string quantity { get; set; }
-            public string uom { get; set; }
+    public class DisbursementListItems
+    {
+        public string itemDescription { get; set; }
+        public string quantity { get; set; }
+        public string uom { get; set; }
+        public string orderid { get; set; }
 
         }
 

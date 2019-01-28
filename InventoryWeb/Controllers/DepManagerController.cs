@@ -27,7 +27,6 @@ namespace InventoryWeb.Controllers
         public ActionResult AssignDepRep()
         {
             string userId = User.Identity.GetUserId();
-            
             ViewBag.depList = BL.getDepUsers(userId);
             return View();
         }
@@ -110,7 +109,8 @@ namespace InventoryWeb.Controllers
 
         public ActionResult spendingHistory(DateTime date1,DateTime date2)
         {
-            List<Order> spendings = BL.getDepSpendingHistory(date1,date2);
+            string userId = User.Identity.GetUserId();
+            List<Order> spendings = BL.getDepSpendingHistory(date1,date2,userId);
             decimal[] money = new decimal[12];
            
             List<decimal> datapoints2 = new List<decimal>();
@@ -199,9 +199,47 @@ namespace InventoryWeb.Controllers
             return View("DepSpendingHistory");
         }
 
+        public ActionResult dashBoard()
+        {
+            string userId = User.Identity.GetUserId();
+            List<Request> var1 = BL.getPendigRequest(userId);
+            List<Request> var2 = BL.getApproveorRejected(userId);
+            int count = 0;
+            int rejected = 0;
+            int approved = 0;
+
+            List<String> array1 = new List<string>();
+            List<String> array2 = new List<string>();
+           
+
+            foreach (Request r in var1)
+            {
+                if (!(array1.Contains(r.UserID)))
+                {
+                    array1.Add(r.UserID);
+                    count++;
+                }
+            }
+            foreach (Request r in var2)
+            {
+                    if (r.RequestStatus == "Rejected")
+                    {
+                        rejected++;
+                    }
+                    else { approved++; }
+                
+            }
+            ViewBag.pendingRequest = count;
+            ViewBag.rejected = rejected;
+            ViewBag.approved = approved;
+            return View();
+        }
 
 
-            public string requestStatus { get; set; }
+
+
+
+        public string requestStatus { get; set; }
             public string remarks { get; set; }
         }
     }

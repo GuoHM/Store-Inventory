@@ -717,6 +717,26 @@ namespace InventoryWeb.Controllers
             return View();
         }
 
+       
+        public JsonResult UpdatePOStatusToCancel(List<CancelPOList> Po)
+        {
+
+            
+            List<CancelPOList> list = Po;
+            if (list.Any())
+            {
+                foreach (var item in list)
+                {
+                    
+                    new PurchaseItemBusinessLogic().getPOByID(Convert.ToInt32(item.orderid));
+                }
+            }
+            
+
+            return new JsonResult();
+        }
+
+
         [HttpPost]
         public ActionResult UpdateInventory()
         {
@@ -821,6 +841,21 @@ namespace InventoryWeb.Controllers
             public string uom { get; set; }
 
         }
+
+        public class CancelPOList
+        {
+        public string orderid { get; set; }
+        public string supplierID { get; set; }
+        public string totalPrice { get; set; }
+        public string purchaseDate { get; set; }
+        public string deliverAddress { get; set; }
+        public string orderBy { get; set; }
+        public string expectedDate { get; set; }
+        public string purchaseOrderStatus { get; set; }
+
+        }
+
+
     }
 
 

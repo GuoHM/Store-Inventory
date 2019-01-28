@@ -545,7 +545,7 @@ function UpdateInventory() {
     //var quantity = objInput[rows - 1].value;
    var jsonlist = new Array(rows.length - 1);
     for (var i = 1; i < rows.length; i++) {
-        debugger;
+    
         if (objInput[i-1].value != null && objInput[i-1].value != "") {
             var jsonObj = { "itemDescription": rows[i].cells[1].innerHTML, "quantityPicked": objInput[i-1].value };
         }

@@ -519,7 +519,7 @@ namespace InventoryWeb.Controllers
         public JsonResult GetDisbursements()
         {
 
-            var data = req.Select(p => new { itemDescription = p.Catalogue.Description, quantity = p.Needed, uom = p.Catalogue.MeasureUnit }).ToList();
+            var data = req.Select(p => new { itemDescription = p.Catalogue.Description, quantity = p.Needed, uom = p.Catalogue.MeasureUnit,orderid = p.OrderID}).ToList();
 
 
             return Json(data, JsonRequestBehavior.AllowGet);
@@ -823,11 +823,12 @@ namespace InventoryWeb.Controllers
             public string deptName { get; set; }
         }
 
-        public class DisbursementListItems
-        {
-            public string itemDescription { get; set; }
-            public string quantity { get; set; }
-            public string uom { get; set; }
+    public class DisbursementListItems
+    {
+        public string itemDescription { get; set; }
+        public string quantity { get; set; }
+        public string uom { get; set; }
+        public string orderid { get; set; }
 
         }
     }

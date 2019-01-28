@@ -42,17 +42,24 @@ namespace InventoryBusinessLogic
             inventory.SaveChanges();
         }
       
-        public void UpdateCataloguesByPurchaseID(int purchaseID)
+        public Boolean UpdateCataloguesByPurchaseID(int purchaseID)
         {
-            List<PurchaseItem> purchaseItems = inventory.PurchaseItem.Where(x => x.PurchaseOrderID == purchaseID).ToList();
-            foreach(PurchaseItem purchaseItem in purchaseItems)
-            {
-                purchaseItem.Catalogue.Quantity +=purchaseItem.Quantity;
-                
-            }
             PurchaseOrder purchaseOrder = inventory.PurchaseOrder.Where(x => x.PurchaseOrderID == purchaseID).First();
-            purchaseOrder.PurchaseOrderStatus = "fullied";
-            inventory.SaveChanges();
+            if (purchaseOrder.PurchaseOrderStatus.Trim().Equals("Unfulfill")) 
+            {
+                List<PurchaseItem> purchaseItems = inventory.PurchaseItem.Where(x => x.PurchaseOrderID == purchaseID).ToList();
+                foreach (PurchaseItem purchaseItem in purchaseItems)
+                {
+                    purchaseItem.Catalogue.Quantity += purchaseItem.Quantity;
+
+                }
+
+                purchaseOrder.PurchaseOrderStatus = "Fulfilled";
+                inventory.SaveChanges();
+                return true;
+            }
+
+            return false;
         }
 
         public List<Catalogue> GetLowStock()
@@ -95,32 +102,69 @@ namespace InventoryBusinessLogic
             {
                 foreach (Request req in requests)
                    {
-                
-                    if (quantity >= req.Needed)
+                    int tempActual = Convert.ToInt32(req.Actual);
+                    if (req.Needed != req.Actual)
                     {
-                        req.Actual = req.Needed;
-                       
-                     }
-                    else
-                    {
-                        req.Actual = quantity;                       
+                        if (quantity >= (req.Needed - tempActual))
+                        {
+                            req.Actual = req.Needed;
+                            quantity = quantity - (Convert.ToInt32(req.Needed) - tempActual);
+                        }
+                        else
+                        {
+                            req.Actual = quantity + tempActual;
+                            // quantity = quantity - (Convert.ToInt32(req.Actual) - tempActual);
+                            quantity = 0;
+                        }
                     }
 
-                    quantity = quantity - Convert.ToInt32(req.Actual);
                 }
+
             }
 
+
             inventory.SaveChanges();
+        }
+        public void ValidateOrderStatus()
+        {
+            var distinctOrders = inventory.Request.Select(x => x.OrderID).Distinct().ToList();
+
+            foreach (var order in distinctOrders)
+            {
+                var requests = inventory.Request.Where(x => x.OrderID == order).ToList();
+                bool unfulfilled = false;
+                foreach (var req in requests)
+                {
+                    if (req.Needed != req.Actual)
+                    {
+                        unfulfilled = true;
+                    }
+                }
+                Order orderRecord = inventory.Order.Where(x => x.OrderID == order).First();
+
+                if (unfulfilled)
+                {
+
+                    orderRecord.OrderStatus = "Unfulfilled";
+                }
+                else
+                {
+                    orderRecord.OrderStatus = "Fulfilled";
+
+                }
+                inventory.SaveChanges();
+
+            }
         }
 
 
 
 
 
+        }
+
+
     }
-
-
-}
 
 
 

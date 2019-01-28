@@ -20,7 +20,6 @@ namespace InventoryWeb.Controllers
         {
             ChangeCollectionPointBusinessLogic ch = new ChangeCollectionPointBusinessLogic();
             Department dep = new Department();
-            //dep= ch.getDeptByID("1001");
             //ViewBag.Department = dep.DepartmentName;
             ViewBag.DeptList = ch.getDeptByID(User.Identity.Name);
 
@@ -33,19 +32,17 @@ namespace InventoryWeb.Controllers
 
         public ActionResult saveNewCollectionPoint(string CollectionPoint)
         {
-
             CP.ChangeCollectionPoint(CollectionPoint, User.Identity.Name);
-           // EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
+            // EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
             //string content = emailBusinessLogic.ChangePointNotification(User.Identity.Name, CollectionPoint);
 
-          //  List<string> toAddress = new List<string>();
-          //  toAddress.Add("wangxiaoxiaoqiang@gmail.com");
-          //  emailBusinessLogic.SendEmail("Team3", content, toAddress);
+            //  List<string> toAddress = new List<string>();
+            //  toAddress.Add("wangxiaoxiaoqiang@gmail.com");
+            //  emailBusinessLogic.SendEmail("Team3", content, toAddress);
             return RedirectToAction("ChangeCollectionPoint");
         }
         public ActionResult Index()
         {
-
             return View();
         }
         public ActionResult StationaryRequest()

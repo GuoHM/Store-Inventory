@@ -40,7 +40,7 @@ namespace InventoryBusinessLogic
         public void UpdateDepRep(string id)
         {
             AspNetUsers user1 = inventory.AspNetUsers.Where(P => P.Id == id).First<AspNetUsers>();
-            AspNetUsers user2 = inventory.AspNetUsers.Where(P => P.UserType == "DeptRep").First<AspNetUsers>();
+            AspNetUsers user2 = inventory.AspNetUsers.Where(P => P.UserType == "DeptRep" && P.DepartmentID.Substring(0,4) == user1.DepartmentID.Substring(0, 4)).First<AspNetUsers>();
             AspNetUserRoles role1 = inventory.AspNetUserRoles.Where(p => p.UserId == user1.Id).First();
             AspNetUserRoles role2 = inventory.AspNetUserRoles.Where(p => p.UserId == user2.Id).First();
             user1.UserType = "DeptRep";
@@ -70,7 +70,7 @@ namespace InventoryBusinessLogic
         {
 
             AspNetUsers user1 = inventory.AspNetUsers.Where(P => P.Id == id).First<AspNetUsers>();
-            AspNetUsers user2 = inventory.AspNetUsers.Where(P => P.UserType == "DeptHead").First<AspNetUsers>();
+            AspNetUsers user2 = inventory.AspNetUsers.Where(P => P.UserType == "DeptHead" && P.DepartmentID.Substring(0,4) == user1.DepartmentID.Substring(0,4)).First<AspNetUsers>();
             AspNetUserRoles role1 = inventory.AspNetUserRoles.Where(p => p.UserId == user1.Id).First();
             AspNetUserRoles role2 = inventory.AspNetUserRoles.Where(p => p.UserId == user2.Id).First();
             user1.UserType = "DeptHead";
@@ -96,9 +96,10 @@ namespace InventoryBusinessLogic
 
         }
 
-        public List<Order> getDepSpendingHistory(DateTime date1,DateTime date2,string DepId = "1001")
+        public List<Order> getDepSpendingHistory(DateTime date1,DateTime date2, string id)
         {
-            return inventory.Order.Where(x => x.DepartmentID==DepId && x.OrderDate >= date1 && x.OrderDate<= date2 ).ToList<Order>();
+            AspNetUsers user1 = inventory.AspNetUsers.Where(x => x.Id == id).First<AspNetUsers>();
+            return inventory.Order.Where(x => x.DepartmentID==user1.DepartmentID && x.OrderDate >= date1 && x.OrderDate<= date2 ).ToList<Order>();
         }
 
         public List<Catalogue> getAllCatalogue()
@@ -122,6 +123,18 @@ namespace InventoryBusinessLogic
         public AspNetUsers getStoreManager()
         {
             return inventory.AspNetUsers.Where(x => x.UserType == "Store Manager").First();
+        }
+
+        public List<Request> getPendigRequest(string id)
+        {
+            AspNetUsers user1 = inventory.AspNetUsers.Where(x => x.Id == id).First<AspNetUsers>();
+            return inventory.Request.Where(x => x.RequestStatus == "Unapproved" && x.OrderID.Substring(0, 4) == user1.DepartmentID.Substring(0,4)).ToList<Request>();
+        }
+
+        public List<Request> getApproveorRejected(string id)
+        {
+            AspNetUsers user1 = inventory.AspNetUsers.Where(x => x.Id == id).First<AspNetUsers>();
+            return inventory.Request.Where(x => (x.RequestStatus == "Rejected" || x.RequestStatus == "Approved") && x.OrderID.Substring(0, 4) == user1.DepartmentID.Substring(0,4)).ToList<Request>();
         }
 
     }

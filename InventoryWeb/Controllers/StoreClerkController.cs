@@ -606,14 +606,16 @@ namespace InventoryWeb.Controllers
             return View();
 
         }
-        public void UpdateQuantity(List<orderIDList> purchaseIDList)
+        public bool UpdateQuantity(List<orderIDList> purchaseIDList)
         {
             foreach (orderIDList oId in purchaseIDList)
             {
 
                 int orderID = Convert.ToInt32(oId.orderid);
-                Boolean b =  catalogueBusinessLogic.UpdateCataloguesByPurchaseID(orderID);
+                 catalogueBusinessLogic.UpdateCataloguesByPurchaseID(orderID);
+                
             }
+            return true;
         }
         public JsonResult LowStock()
         {

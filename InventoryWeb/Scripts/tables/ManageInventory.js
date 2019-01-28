@@ -134,7 +134,7 @@ var TableInit = function () {
     operateEvents = {
         'click #view': function (e, value, row, index) {
             $("#editInventory").modal('show');
-            $("#courseidedit").val(row.ItemID);
+            $("#ItemID").val(row.ItemID);
             $("#itemName").empty();
             $("#itemName").append(row.Description);
             $("#editBinId").val(row.BinNumber)

@@ -51,10 +51,10 @@ namespace InventoryWeb.Controllers
             return View();
         }
 
-        public ActionResult UpdateInventoryBinNumber(string label1, string binNumber)
+        public ActionResult UpdateInventoryBinNumber(string ItemID, string binNumber)
         {
 
-            catalogueBusinessLogic.UpdateInventory(label1, binNumber);
+            catalogueBusinessLogic.UpdateInventory(ItemID, binNumber);
 
 
             return View("ManageInventory");

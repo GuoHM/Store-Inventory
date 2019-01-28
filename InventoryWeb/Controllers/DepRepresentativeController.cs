@@ -41,7 +41,7 @@ namespace InventoryWeb.Controllers
             //  List<string> toAddress = new List<string>();
             //  toAddress.Add("wangxiaoxiaoqiang@gmail.com");
             //  emailBusinessLogic.SendEmail("Team3", content, toAddress);
-            
+            return RedirectToAction("ChangeCollectionPoint");
         }
         public ActionResult Index()
         {

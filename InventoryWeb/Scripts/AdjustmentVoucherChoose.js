@@ -3,7 +3,7 @@ function selectItem(obj) {
     var ItemAddedTable = document.getElementById("ItemAddedTable");
     var SearchItemTable = document.getElementById("SearchItemTable");
     var node = ItemAddedTable.rows[1];
-    if (node && node.cells[0].innerHTML == "No matching records found") {
+    if (node && node.cells[0].innerHTML === "No matching records found") {
         node.parentNode.removeChild(node);
     }
     var rows = obj.parentNode.parentNode.rowIndex;
@@ -11,7 +11,7 @@ function selectItem(obj) {
     var quantity = objQuantity[rows - 1].value;
     var objReason = SearchItemTable.getElementsByClassName("reason");
     var reason = objReason[rows - 1].value;
-    if (reason == "" || quantity == "" || quantity > 999 || quantity<-999) {
+    if (reason === "" || quantity === "" || quantity > 999 || quantity<-999) {
         alert("Please input valid reason and quantity!");
     } else {
         var itemCode = SearchItemTable.rows[rows].cells[0].innerHTML;
@@ -41,7 +41,7 @@ function confirm() {
     var tab = document.getElementById("ItemAddedTable");
     var rows = tab.rows;
     var node = tab.rows[1];
-    if (node && node.cells[0].innerHTML == "No matching records found") {
+    if (node && node.cells[0].innerHTML === "No matching records found") {
         alert("Please select item!");
         $("#saveAdjustment").attr("disabled", false);
     } else {
@@ -65,7 +65,7 @@ function confirm() {
             data: JSON.stringify(jsonlist),
             success: function (data) {
                 var result = JSON.parse(data);
-                if (result == 'success') {
+                if (result === 'success') {
                     $('#successModal').modal('show');
                 } else {
                     $('#failModal').modal('show');
@@ -84,7 +84,7 @@ function confirm() {
    
 function hasDuplicated(arr) {
     for (var i = 0; i + 1 < arr.length; i++) {
-        if (arr[i].itemCode == arr[i + 1].itemCode) {
+        if (arr[i].itemID === arr[i + 1].itemID) {
             return true;
         }
     }

@@ -28,7 +28,7 @@
     <div id="editInventory" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form class="form-horizontal" role="form" action="UpdateInventory"  id="approval-form">
+                <form class="form-horizontal" role="form" action="UpdateInventoryBinNumber"  id="approval-form">
                     <div class="modal-header">
                         <h4 class="modal-title">Edit Quantity</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -55,7 +55,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                         <button type="submit" class="btn btn-primary">Submit</button>
+                         <button type="submit" class="btn btn-primary" id="sub">Submit</button>
                     </div>
                 </form>
             </div>
@@ -65,3 +65,21 @@
 
 <script src="~/Scripts/bootstrap-table.js"></script>
 <script src="~/Scripts/tables/ManageInventory.js"></script>
+<script>
+    $(document).ready(function () {
+
+        $("#sub").click(function (e) {
+            e.preventDefault();
+            if (/^([A-Z]{1})([1-9]{1})$/.test($("#editBinId").val())) {
+               
+                $("#approval-form").submit();
+            }
+            else {
+                //display error
+                alert("Invalid bin Number\n Valid Bin number([A-Z]followed by[1-9])");
+                $("editBinId").val("");
+            }
+        })
+        
+    });
+</script>

@@ -65,8 +65,7 @@ namespace InventoryBusinessLogic
             //}
 
 
-            return inventory.Request.Where(x => (x.RequestStatus).ToUpper().Trim() == "APPROVED").ToList();
-
+            return inventory.Request.Where(x => ((x.RequestStatus).ToUpper().Trim() == "APPROVED") && (x.Needed != 0)).ToList();
         }
 
         
@@ -161,6 +160,18 @@ namespace InventoryBusinessLogic
                 return null;
             }
         }
+
+        public List<Request> getStationaryOrderByID(string orderId)
+        {
+            return inventory.Request.Where(x => x.OrderID == orderId).ToList();
+
+        }
+
+      
+
+      
+
+
 
     }
 }

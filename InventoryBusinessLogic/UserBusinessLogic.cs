@@ -12,9 +12,10 @@ namespace InventoryBusinessLogic
     {
         Inventory inventory = new Inventory();
 
-        public List<AspNetUsers> appointNewDepHead(string DepId = "1001")
+        public List<AspNetUsers> appointNewDepHead(string userID)
         {
-            return inventory.AspNetUsers.Where(x => x.DepartmentID == DepId).ToList<AspNetUsers>();
+            AspNetUsers user1 = inventory.AspNetUsers.Where(x => x.Id == userID).First<AspNetUsers>();
+            return inventory.AspNetUsers.Where(x => x.DepartmentID == user1.DepartmentID).ToList<AspNetUsers>();
         }
 
         public List<AspNetUsers> getAllUser()
@@ -26,21 +27,41 @@ namespace InventoryBusinessLogic
         {
             return inventory.AspNetUsers.Where(x => x.Id == ID).First();
         }
-        public AspNetUsers getUserByEmail(string eamil)
+        public AspNetUsers getUserByUsername(string username)
         {
-            return inventory.AspNetUsers.Where(x => x.Email == eamil).First();
+            return inventory.AspNetUsers.Where(x => x.UserName == username).First();
         }
-        public List<AspNetUsers> getDepUsers(string DepId = "1001")
+        public List<AspNetUsers> getDepUsers(string userID)
         {
-            return inventory.AspNetUsers.Where(x => x.DepartmentID == DepId).ToList<AspNetUsers>();
+            AspNetUsers user1 = inventory.AspNetUsers.Where(x => x.Id == userID).First<AspNetUsers>();
+            return inventory.AspNetUsers.Where(x => x.DepartmentID == user1.DepartmentID).ToList<AspNetUsers>();
         }
 
         public void UpdateDepRep(string id)
         {
             AspNetUsers user1 = inventory.AspNetUsers.Where(P => P.Id == id).First<AspNetUsers>();
             AspNetUsers user2 = inventory.AspNetUsers.Where(P => P.UserType == "DeptRep").First<AspNetUsers>();
+            AspNetUserRoles role1 = inventory.AspNetUserRoles.Where(p => p.UserId == user1.Id).First();
+            AspNetUserRoles role2 = inventory.AspNetUserRoles.Where(p => p.UserId == user2.Id).First();
             user1.UserType = "DeptRep";
             user2.UserType = "DeptStaff";
+     
+           
+            inventory.AspNetUserRoles.Remove(role1);
+            inventory.AspNetUserRoles.Remove(role2);
+
+            
+
+            AspNetUserRoles userrole = new AspNetUserRoles();
+            userrole.UserId = role1.UserId;
+            userrole.RoleId = "2";
+            inventory.AspNetUserRoles.Add(userrole);
+
+            AspNetUserRoles userrole1 = new AspNetUserRoles();
+            userrole1.UserId = role2.UserId;
+            userrole1.RoleId = "4";
+            inventory.AspNetUserRoles.Add(userrole1);
+
             inventory.SaveChanges();
 
         }
@@ -50,11 +71,27 @@ namespace InventoryBusinessLogic
 
             AspNetUsers user1 = inventory.AspNetUsers.Where(P => P.Id == id).First<AspNetUsers>();
             AspNetUsers user2 = inventory.AspNetUsers.Where(P => P.UserType == "DeptHead").First<AspNetUsers>();
-            Department dep1 = inventory.Department.Where(P => P.DepartmentID == user2.DepartmentID).First<Department>();
+            AspNetUserRoles role1 = inventory.AspNetUserRoles.Where(p => p.UserId == user1.Id).First();
+            AspNetUserRoles role2 = inventory.AspNetUserRoles.Where(p => p.UserId == user2.Id).First();
             user1.UserType = "DeptHead";
             user2.UserType = "DeptStaff";
-            dep1.DepartmentHeadStartDate = startdate;
-            dep1.DepartmentHeadEndDate = enddate;
+
+
+            inventory.AspNetUserRoles.Remove(role1);
+            inventory.AspNetUserRoles.Remove(role2);
+
+
+
+            AspNetUserRoles userrole = new AspNetUserRoles();
+            userrole.UserId = role1.UserId;
+            userrole.RoleId = "3";
+            inventory.AspNetUserRoles.Add(userrole);
+
+            AspNetUserRoles userrole1 = new AspNetUserRoles();
+            userrole1.UserId = role2.UserId;
+            userrole1.RoleId = "4";
+            inventory.AspNetUserRoles.Add(userrole1);
+
             inventory.SaveChanges();
 
         }

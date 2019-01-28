@@ -22,6 +22,21 @@ namespace InventoryBusinessLogic
             return inventory.PurchaseItem.Where(x => x.PurchaseOrderID == OrderID).ToList();
         }
 
+        public void getPOByID(int pod)
+        {
+           // int purchaseid = Po.PurchaseOrderID;
+
+            var porder = inventory.PurchaseOrder.Where(x => x.PurchaseOrderID == pod).FirstOrDefault();
+
+            if (porder.PurchaseOrderStatus.Trim() == "Unfullfill")
+            {
+                porder.PurchaseOrderStatus = "Cancel";
+                inventory.SaveChanges();
+            }
+
+
+        }
+
     }
 
 }

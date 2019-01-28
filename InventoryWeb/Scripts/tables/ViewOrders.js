@@ -18,6 +18,7 @@ var orderlist = [];
 var requestId = "";
 var binNumber = "";
 var needed = "";
+var alreadyExistingQuantity = "";
 var actual = "";
 var itemDescription = "";
 var jsonObj = null;
@@ -28,7 +29,7 @@ var TableInit = function () {
     oTableInit.Init = function () {
         $('#SearchItemTable').bootstrapTable({
             method: 'get',
-            url: 'http://inventorywebapi2019.azurewebsites.net//api/Orders/',
+            url: 'https://inventorywebapi2019.azurewebsites.net//api/Orders/',
             //toolbar: '#toolbar',                
             striped: true,
             cache: false,
@@ -165,8 +166,8 @@ var TableInit = function () {
             var oTableInit = new TableInit1();
             oTableInit.Init();
 
-            $('#requests').bootstrapTable('refreshOptions', { url: 'http://inventorywebapi2019.azurewebsites.net//api/Request/' + orderid });
-            $('#requests').bootstrapTable('refresh', { url: 'http://inventorywebapi2019.azurewebsites.net//api/Request/' + orderid });
+            $('#requests').bootstrapTable('refreshOptions', { url: 'https://inventorywebapi2019.azurewebsites.net//api/Request/' + orderid });
+            $('#requests').bootstrapTable('refresh', { url: 'https://inventorywebapi2019.azurewebsites.net//api/Request/' + orderid });
         }
     };
     
@@ -193,7 +194,7 @@ var TableInit1 = function () {
     oTableInit.Init = function () {
         $('#requests').bootstrapTable({
             method: 'get',
-            url: 'http://inventorywebapi2019.azurewebsites.net//api/Request/' + orderid,
+            url: 'https://inventorywebapi2019.azurewebsites.net//api/Request/' + orderid,
             //toolbar: '#toolbar',                
             striped: true,
             cache: false,
@@ -294,7 +295,7 @@ function selectedItems() {
             var OrderId = rows[i].cells[1].innerHTML;
            // orders = { "orderid": OrderId };
             $.ajax({
-                url: 'http://inventorywebapi2019.azurewebsites.net//api/Request/' + OrderId,
+                url: 'https://inventorywebapi2019.azurewebsites.net//api/Request/' + OrderId,
                 data: "",
                 dataType: 'json',
                 async: false,
@@ -306,6 +307,7 @@ function selectedItems() {
                         requestId = data.Catalogue.ItemID;
                         binNumber = data.Catalogue.BinNumber;
                         needed = data.Needed;
+                        alreadyExistingQuantity = data.Actual;
                         actual = data.Catalogue.Quantity;
                         itemDescription = data.Catalogue.Description;
                         if (needed > actual) {
@@ -316,8 +318,8 @@ function selectedItems() {
                             remarks = "";
                         }
                         
-                        jsonObj = { "RequestID": requestId, "ItemDescription": itemDescription, "neededQuantity": needed, "availableQuantity": actual, "binNumber": binNumber, "remarks": remarks, "orderid": OrderId };
-                     
+                        jsonObj = { "RequestID": requestId, "ItemDescription": itemDescription, "neededQuantity": needed, "availableQuantity": actual, "alreadyExisting": alreadyExistingQuantity, "binNumber": binNumber, "remarks": remarks, "orderid": OrderId };
+
                         for (var j in jsonlist1) {
                             if (jsonlist1[j].RequestID === requestId) {
                                 jsonlist1[j].neededQuantity += needed;
@@ -472,6 +474,12 @@ var TableInit2 = function () {
                 // field: 'Catalogue.Price * Needed'
                 field: 'availableQuantity'
 
+                }, {
+                    align: "center",
+                    title: 'Quantity Picked',
+                    sortable: true,
+
+                    formatter: InputTextBox
                 },
           
 
@@ -507,6 +515,9 @@ var TableInit2 = function () {
         };
         return id;
     };
+     function InputTextBox(value, row, index) {
+        return ['<input type="number" class="form-control" placeholder="Picked Quantity" id="quantity">'].join('');
+    }
 
     selectItem = function (e, value, row, index) {
 
@@ -528,5 +539,38 @@ var TableInit2 = function () {
 function openDisbursementList() {
     window.location.href = '/StoreClerk/DisbursementList';
 }
+
+function UpdateInventory() {
+    var tab = document.getElementById("RetrievalTable");
+    var rows = tab.rows;
+    var objInput = tab.getElementsByClassName("form-control");
+    //var quantity = objInput[rows - 1].value;
+   var jsonlist = new Array(rows.length - 1);
+    for (var i = 1; i < rows.length; i++) {
+       
+        if (objInput[i-1].value !== null && objInput[i-1].value !== "") {
+            var jsonObj = { "itemDescription": rows[i].cells[1].innerHTML, "quantityPicked": objInput[i-1].value };
+            jsonlist[i - 1] = jsonObj;
+        }
+    }
+
+    $.ajax({
+        url: "/StoreClerk/UpdateInventory",
+        type: "post",
+        dataType: "text",
+        async: true,
+        data: JSON.stringify(jsonlist),
+        success: function (data) {
+            alert("Updated Successfully");
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            alert(XMLHttpRequest.status);
+            alert(XMLHttpRequest.readyState);
+            alert(textStatus);
+        },
+
+    });
+};
+
 
 

@@ -1,21 +1,18 @@
-﻿
-@{
-    ViewBag.Title = "SideBar";
-}
-
-<nav class="hidden-print hidden-xs hidden-sm affix">
+﻿<nav class="hidden-print hidden-xs hidden-sm affix">
     <ul class="nav">
-
         <li>
             <a href="/StoreSupervisor/RequsitionRequest">
                 <span>Requsition Request</span>
             </a>
         </li>
         <li>
-            <a href="/StoreSupervisor/ViewAdjustmentVoucher">
-                <span>AdjustmentVoucher</span>
-            </a>
+            <a href="#" id="btn-1" data-toggle="collapse" data-target="#submenu1" aria-expanded="false">Adjustment Voucher</a>
+            <ul class="nav collapse" id="submenu1" role="menu" aria-labelledby="btn-1">
+                <li><a href="/StoreSupervisor/ViewAdjustmentVoucherManager">View all adjustment voucher</a></li>
+                <li><a href="#">Approve/Reject adjustment voucher</a></li>
+            </ul>
         </li>
+
         <li>
             <a href="/StoreSupervisor/EditReorder">
                 <span>Edit Reorder Level & Quantity</span>
@@ -27,15 +24,15 @@
             </a>
         </li>
         <li>
-            <a href="/StoreSupervisor/ViewInventory">
-                <span>Inventory</span>
-            </a>
+            <a href="#" id="btn-1" data-toggle="collapse" data-target="#submenu4" aria-expanded="false">Reports</a>
+            <ul class="nav collapse" id="submenu4" role="menu" aria-labelledby="btn-1">
+                <li><a href="#">Generate charge back report</a></li>
+                <li><a href="#">Generate trend analysis by item</a></li>
+            </ul>
         </li>
-        <li>
-            <a href="/StoreSupervisor/Reports">
-                <span>Reports</span>
-            </a>
-        </li>
+
+
+
 
 
     </ul>

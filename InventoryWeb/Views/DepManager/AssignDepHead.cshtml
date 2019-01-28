@@ -31,7 +31,7 @@
 
 <div class="col-xs-offset-3 column">
 
-    <form action="saveDepHead" class="rep-form" name="myForm">
+    <form action="saveDepHead" class="rep-form" name="myForm" id="form-1">
 
         <h2>Delegate Department Head</h2> <br /><br />
         <div class="form-group">
@@ -115,7 +115,7 @@
             </div>
         </div>
 
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary" id="button-2">Submit</button>
 
     </form>
 </div>
@@ -135,8 +135,8 @@
             container: container,
             todayHighlight: true,
             autoclose: true,
-        })
-    })
+        });
+    });
 </script>
 
 <script>
@@ -150,6 +150,29 @@
             autoclose: true,
         })
     })
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("#button-2").click(function (e) {
+            e.preventDefault();
+            var x = document.forms["myForm"]["date1"].value;
+            var y = document.forms["myForm"]["date2"].value;
+            var startDate = new Date($("#date1").val());
+            var endDate = new Date($("#date2").val());
+
+            if (x == "" || y == "")
+            {
+                alert("Start date or End date is empty")
+            }
+         
+            else if (endDate <= startDate) {
+                alert("Invalid Date Range");
+            } else {
+                $("#form-1").submit();
+            }
+        });
+    });
 </script>
 
 

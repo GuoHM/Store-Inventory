@@ -94,7 +94,7 @@ var TableInit = function () {
         });
 
     };
-
+   
 
     // params
     oTableInit.queryParams = function (params) {
@@ -133,8 +133,8 @@ var TableInit = function () {
             var oTableInit = new TableInit1();
             oTableInit.Init();
 
-            $('#requests').bootstrapTable('refreshOptions', { url: 'http://inventorywebapi2019.azurewebsites.net//api/Request/' + orderid });
-            $('#requests').bootstrapTable('refresh', { url: 'http://inventorywebapi2019.azurewebsites.net//api/Request/' + orderid });
+            $('#requests').bootstrapTable('refreshOptions', { url: 'https://inventorywebapi2019.azurewebsites.net//api/Request/' + orderid });
+            $('#requests').bootstrapTable('refresh', { url: 'https://inventorywebapi2019.azurewebsites.net//api/Request/' + orderid });
         }
     };
 

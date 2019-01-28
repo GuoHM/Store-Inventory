@@ -14,7 +14,7 @@
 </div>
 
 <div class="col-sm-offset-3">
-    <form action="trenAnalysis" class="rep-form" name="myForm">
+    <form action="trenAnalysis" class="rep-form" name="myForm" id="form-2">
 
 
         <div class="form-group ">
@@ -75,7 +75,7 @@
         </div>
         <br />
         <div class="col-sm-4">
-            <button type="submit" class="btn btn-success">Generate Chargeback</button>
+            <button type="submit" class="btn btn-success" id="button1">Generate Charge back</button>
         </div>
 
     </form>
@@ -113,6 +113,27 @@
     })
 </script>
 
+<script>
+    $(document).ready(function () {
+        $("#button1").click(function (e) {
+            e.preventDefault();
+            var x = document.forms["myForm"]["date1"].value;
+            var y = document.forms["myForm"]["date2"].value;
+            var startDate = new Date($("#date1").val());
+            var endDate = new Date($("#date2").val());
+            if (x == "" || y == "")
+            {
+                alert("Start Date or End Date is empty");
+            }
+            else if (endDate <= startDate) {
+                alert("Invalid Date Range");
+            } else {
+                $("#form-2").submit();
+            }
+        });
+    });
+</script>
+
 <style>
     .bootstrap-iso .formden_header h2, .bootstrap-iso .formden_header p, .bootstrap-iso form {
         font-family: Arial, Helvetica, sans-serif;
@@ -129,3 +150,12 @@
 </style>
 
 
+ var x = document.forms["myForm"]["date1"].value;
+            var y = document.forms["myForm"]["date2"].value;
+            var startDate = new Date($("#date1").val());
+            var endDate = new Date($("#date2").val());
+
+            if (x == "" || y == "")
+            {
+                alert("Invalid Date Range")
+            }

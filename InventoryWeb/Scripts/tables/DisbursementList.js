@@ -96,7 +96,11 @@ var TableInit = function () {
     operateEvents = {
         'click #view': function (e, value, row, index) {
             $("#DisbursementModal").modal('show');
-    
+           
+            document.getElementById("departmentName").textContent = row.departmentName;
+            document.getElementById("representative").textContent = row.representative;
+            document.getElementById("collectionPoint").textContent = row.collectionPoint;
+
             department = [];
             deptName1 = row.departmentName;
             var jsonobj = { "deptName": deptName1}
@@ -164,7 +168,7 @@ var TableInit1 = function () {
             //showToggle: true,
             //cardView: false,
             // detailView: false,
-            // showExport: false,
+            showExport: true,
             exportDataType: "basic",              //basic', 'all', 'selected'.
             showColumns: false,
             columns: [{

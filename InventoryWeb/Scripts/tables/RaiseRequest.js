@@ -32,29 +32,29 @@ var TableInit = function() {
             clickToSelect: false, // 是否启用点击选中行
             height: 500, // 行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
             // uniqueId: "ID", //每一行的唯一标识，一般为主键列
-            showToggle: true, // 是否显示详细视图和列表视图的切换按钮
+            showToggle: false, // 是否显示详细视图和列表视图的切换按钮
             cardView: false, // 是否显示详细视图
             detailView: false, // 是否显示父子表
             showExport: false,                     //是否显示导出
             exportDataType: "basic",              //basic', 'all', 'selected'.
-            showColumns: true,
+            showColumns: false,
             columns: [{
                 align: "center",
-                title: 'ItemName',
+                title: 'Item Name',
                 sortable: true,
-                sortable: true,
+                
                 field: 'Description'
             }, {
                 align: "center",
                 title: 'Quantity',
                 sortable: true,
-                sortable: true,
+               
                 formatter: InputTextBox
             }, {
                 align: "center",
                 title: 'Select',
                 sortable: true,
-                sortable: true,
+              
                 formatter: selectItem
             }
             ],
@@ -92,7 +92,7 @@ var TableInit = function() {
             showColumns: false,
             columns: [{
                 align: "center",
-                title: 'ItemName',
+                title: 'Item Name',
                 sortable: false
             }, {
                 align: "center",
@@ -110,9 +110,7 @@ var TableInit = function() {
         });
     };
 	function InputTextBox(value, row, index) {
-		return [       
-		        '<input type="number" class="form-control" placeholder="Quantity" id="quantity">'
-		        ].join('');
+		return ['<input type="number" class="form-control" placeholder="Quantity" id="quantity">'].join('');
     }
     function selectItem(value, row, index) {
         return [

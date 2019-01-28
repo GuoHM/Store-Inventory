@@ -7,6 +7,9 @@ using System.Web.Script.Serialization;
 using InventoryBusinessLogic;
 using InventoryBusinessLogic.Entity;
 using Newtonsoft.Json;
+using Microsoft.AspNet.Identity;
+using System.Web.Script.Serialization;
+
 
 namespace InventoryWeb.Controllers
 {
@@ -23,26 +26,43 @@ namespace InventoryWeb.Controllers
 
         public ActionResult AssignDepRep()
         {
-            ViewBag.depList = BL.getDepUsers();
+            string userId = User.Identity.GetUserId();
+            
+            ViewBag.depList = BL.getDepUsers(userId);
             return View();
         }
 
         public ActionResult saveNewRep(string dropdown1)
         {
             BL.UpdateDepRep(dropdown1);
+            //EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
+            //string content = emailBusinessLogic.ChangeDeptRepNotification(dropdown1);
+
+            //List<string> toAddress = new List<string>();
+            //toAddress.Add("wangxiaoxiaoqiang@gmail.com");
+            //emailBusinessLogic.SendEmail("Team3", content, toAddress);
             return View("Index");
+
         }
 
         public ActionResult AssignDepHead()
         {
-            ViewBag.depHead = BL.appointNewDepHead();
+            string userId = User.Identity.GetUserId();
+            ViewBag.depHead = BL.appointNewDepHead(userId);
             return View();
         }
 
         public ActionResult saveDepHead(string dropdown1, DateTime date1, DateTime date2)
         {
             BL.UpdateDepHead(dropdown1, date1, date2);
+            //EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
+            //string content = emailBusinessLogic.ChangeDeptHeadNotification(dropdown1);
+
+            //List<string> toAddress = new List<string>();
+            //toAddress.Add("wangxiaoxiaoqiang@gmail.com");
+            //emailBusinessLogic.SendEmail("Team3", content, toAddress);
             return View("Index");
+            
         }
 
         public ActionResult ApproveOrReject()
@@ -72,6 +92,14 @@ namespace InventoryWeb.Controllers
                     req.ApproveOrRejectRequest(item.orderId, item.requestStatus,item.reason);
                 }
             }
+            var item1 = list[0];
+            //EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
+            //int requestID = Convert.ToInt32(item1.orderId);
+            //string content = emailBusinessLogic.ApproveOrRejectNotification(requestID);
+
+            //List<string> toAddress = new List<string>();
+            //toAddress.Add("wangxiaoxiaoqiang@gmail.com");
+            //emailBusinessLogic.SendEmail("Team3", content, toAddress);
             return new JsonResult();
         }
 

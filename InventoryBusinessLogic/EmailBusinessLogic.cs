@@ -125,10 +125,36 @@ namespace InventoryBusinessLogic
             return MailBody;
         }
         //4.Padma Later
-        public string LowInventoryNotification()
+        public string LowStockNotification()
         {
-            return null;
+            inventory.Configuration.ProxyCreationEnabled = false;
+            List<Catalogue>  lowstockItems = inventory.Catalogue.Where(x => x.Quantity <= x.ReorderLevel ).ToList();
+            
+            string MailBody = "<p> Dear Store Clerk,</p>";
+            MailBody += "<p>Items below are falling below reorder level. </p>";
+            MailBody += "<div>";
+            MailBody += "<table border='1'>";
+            MailBody += "<tr>";
+            MailBody += "<td>Item No</td><td>Description</td><td>Category</td><td>Quantity</td><td>Measure Unit</td><td>Reorder Quantity</td><td>Bin</td>";
+            MailBody += "</tr>";
+
+            foreach (Catalogue item in lowstockItems)
+
+            {
+
+                MailBody += "<tr>";
+                MailBody += "<td>" + item.ItemID + "</td><td>" + item.Description + "</td><td>" + item.Category + "</td><td>" + item.Quantity + "</td><td>" + item.MeasureUnit + "</td><td>" + item.ReorderQuantity + "</td><td>" + item.BinNumber+ "</td>";
+                MailBody += "</tr>";
+                
+            }
+            
+            MailBody += "</table>";
+            MailBody += "</div>";
+            MailBody += "<p> This is a system generated email.<br>Thank you. </ p>";
+
+            return MailBody;
         }
+       
         //5.RuiXiang Test Successful
         //EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
         //string content = emailBusinessLogic.ChangePointNotification(User.Identity.Name, CollectionPoint);
@@ -181,7 +207,7 @@ namespace InventoryBusinessLogic
 
             return MailBody;
         }
-        //8.Padma 
+        //8.Padma test successful
        // var item1 = list[0];
        // EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
        // int requestID = Convert.ToInt32(item1.orderId);
@@ -199,7 +225,7 @@ namespace InventoryBusinessLogic
             Mailbody += "<p> Your request has been " + request.RequestStatus + ".<br> This is a system generated email.<br>Thank you </ p>";
             return Mailbody;
         }
-        //9.Padma
+        //9.Padma test successful
         public string ReadyForCollectionPoint(string departmentId)
         {
             Department department = inventory.Department.Where(x => x.DepartmentID == departmentId).First();

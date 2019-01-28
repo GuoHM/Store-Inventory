@@ -51,7 +51,7 @@ namespace InventoryWeb.Controllers
             return View();
         }
 
-        public ActionResult UpdateInventory(string label1, string binNumber)
+        public ActionResult UpdateInventoryBinNumber(string label1, string binNumber)
         {
 
             catalogueBusinessLogic.UpdateInventory(label1, binNumber);
@@ -432,6 +432,15 @@ namespace InventoryWeb.Controllers
                 collectionPoint = p.CollectionPoint
             }).ToList();
 
+           
+            //EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
+            
+            //foreach (Department dept in disbursementList) {
+                //string content = emailBusinessLogic.ReadyForCollectionPoint(dept.DepartmentID);
+ 
+             //List<string> toAddress = new List<string>();
+               // toAddress.Add("wangxiaoxiaoqiang@gmail.com");
+                //emailBusinessLogic.SendEmail("Team3", content, toAddress); }
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
@@ -477,7 +486,8 @@ namespace InventoryWeb.Controllers
                         if (items.itemDescription.Trim() == req.Catalogue.Description.Trim())
                         {
                             int needed = Convert.ToInt32(items.neededQuantity);
-                            needed += Convert.ToInt32(req.Needed);
+                            needed += (Convert.ToInt32(req.Needed) - Convert.ToInt32(req.Actual));
+
                             items.neededQuantity = Convert.ToString(needed);
                             alreadyexist = true;
 
@@ -494,13 +504,26 @@ namespace InventoryWeb.Controllers
                     if (!alreadyexist)
                     {
 
-                        itemList.Add(new RetrievalList { orderid = req.OrderID, itemDescription = req.Catalogue.Description, availableQuantity = Convert.ToString(req.Catalogue.Quantity), binNumber = req.Catalogue.BinNumber, neededQuantity = Convert.ToString(req.Needed), remarks = req.Remarks, requestId = Convert.ToString(req.RequestID) });
+
+                        itemList.Add(new RetrievalList { orderid = req.OrderID, itemDescription = req.Catalogue.Description, availableQuantity = Convert.ToString(req.Catalogue.Quantity), alreadyExisting = Convert.ToString(req.Actual), binNumber = req.Catalogue.BinNumber, neededQuantity = Convert.ToString(req.Needed), remarks = req.Remarks, requestId = Convert.ToString(req.RequestID) });
+                        // alreadyexist = false;
                         // alreadyexist = false;
                     }
 
+
                 }
 
+                foreach (var item in itemList)
+                {
+                    item.neededQuantity = Convert.ToString(Convert.ToInt32(item.neededQuantity) - Convert.ToInt32(item.alreadyExisting));
 
+                }
+                var notneeded = itemList.Where(x => x.neededQuantity == "0").ToList();
+                foreach (var item in notneeded)
+                {
+                    itemList.Remove(item);
+                }
+                retrievals = itemList;
                 retrievals = itemList;
             }
             return Json(new { data = retrievals }, JsonRequestBehavior.AllowGet);
@@ -582,12 +605,12 @@ namespace InventoryWeb.Controllers
                 }
                 purchaseOrder.TotalPrice = totalPrice;
                 purchaseOrderBusinessLogic.updatePurchaseOrder(purchaseOrder);
-                EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
-                string content = emailBusinessLogic.SendPurchaseOrderNotification(purchaseOrder.PurchaseOrderID);
+                //EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
+                //string content = emailBusinessLogic.SendPurchaseOrderNotification(purchaseOrder.PurchaseOrderID);
 
-                List<string> toAddress = new List<string>();
-                toAddress.Add("wangxiaoxiaoqiang@gmail.com");
-                emailBusinessLogic.SendEmail("Team3", content, toAddress);
+                //List<string> toAddress = new List<string>();
+                //toAddress.Add("wangxiaoxiaoqiang@gmail.com");
+                //emailBusinessLogic.SendEmail("Team3", content, toAddress);
             }
 
             return new JsonResult();
@@ -603,7 +626,7 @@ namespace InventoryWeb.Controllers
             {
 
                 int orderID = Convert.ToInt32(oId.orderid);
-                catalogueBusinessLogic.UpdateCataloguesByPurchaseID(orderID);
+                Boolean b =  catalogueBusinessLogic.UpdateCataloguesByPurchaseID(orderID);
             }
         }
         public JsonResult LowStock()
@@ -657,12 +680,13 @@ namespace InventoryWeb.Controllers
                 }
                 adjustmentBusinessLogic.updateAdjustment(adjustment);
 
-                EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
-                string content = emailBusinessLogic.NewVoucherNotification(adjustment.AdjustmentID, adjustment.UserID);
+                //EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
+                //string content = emailBusinessLogic.NewVoucherNotification(adjustment.AdjustmentID,adjustment.UserID);
 
-                List<string> toAddress = new List<string>();
-                toAddress.Add("wangxiaoxiaoqiang@gmail.com");
-                emailBusinessLogic.SendEmail("Team3", content, toAddress);
+                // List<string> toAddress = new List<string>();
+                //toAddress.Add("wangxiaoxiaoqiang@gmail.com");
+                //emailBusinessLogic.SendEmail("Team3", content, toAddress);
+               
             }
 
             json.Data = "success";
@@ -744,14 +768,24 @@ namespace InventoryWeb.Controllers
             var stream = sr.ReadToEnd();
             JavaScriptSerializer js = new JavaScriptSerializer();
             var list = js.Deserialize<List<InventoryList>>(stream);
-
             if (list.Any())
             {
                 foreach (var item in list)
                 {
-                    catalogueBusinessLogic.UpdateRetrievedQuantity(item.itemDescription,item.quantityPicked);
+                    if (item != null)
+                    {
+                        catalogueBusinessLogic.UpdateRetrievedQuantity(item.itemDescription, item.quantityPicked);
+                    }
                 }
             }
+            EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
+            string content = emailBusinessLogic.LowStockNotification();
+
+            List<string> toAddress = new List<string>();
+            toAddress.Add("wangxiaoxiaoqiang@gmail.com");
+            emailBusinessLogic.SendEmail("Team3", content, toAddress);
+            catalogueBusinessLogic.ValidateOrderStatus();
+
             return new JsonResult();
 
         }
@@ -823,7 +857,9 @@ namespace InventoryWeb.Controllers
 
             public string neededQuantity { get; set; }
             public string availableQuantity { get; set; }
-            public string binNumber { get; set; }
+        public string alreadyExisting { get; set; }
+
+        public string binNumber { get; set; }
             public string remarks { get; set; }
             public string orderid { get; set; }
             //public string itemDescription { get; set; }

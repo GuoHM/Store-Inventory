@@ -18,6 +18,7 @@ var orderlist = [];
 var requestId = "";
 var binNumber = "";
 var needed = "";
+var alreadyExistingQuantity = "";
 var actual = "";
 var itemDescription = "";
 var jsonObj = null;
@@ -306,6 +307,7 @@ function selectedItems() {
                         requestId = data.Catalogue.ItemID;
                         binNumber = data.Catalogue.BinNumber;
                         needed = data.Needed;
+                        alreadyExistingQuantity = data.Actual;
                         actual = data.Catalogue.Quantity;
                         itemDescription = data.Catalogue.Description;
                         if (needed > actual) {
@@ -316,8 +318,8 @@ function selectedItems() {
                             remarks = "";
                         }
                         
-                        jsonObj = { "RequestID": requestId, "ItemDescription": itemDescription, "neededQuantity": needed, "availableQuantity": actual, "binNumber": binNumber, "remarks": remarks, "orderid": OrderId };
-                     
+                        jsonObj = { "RequestID": requestId, "ItemDescription": itemDescription, "neededQuantity": needed, "availableQuantity": actual, "alreadyExisting": alreadyExistingQuantity, "binNumber": binNumber, "remarks": remarks, "orderid": OrderId };
+
                         for (var j in jsonlist1) {
                             if (jsonlist1[j].RequestID === requestId) {
                                 jsonlist1[j].neededQuantity += needed;
@@ -545,11 +547,11 @@ function UpdateInventory() {
     //var quantity = objInput[rows - 1].value;
    var jsonlist = new Array(rows.length - 1);
     for (var i = 1; i < rows.length; i++) {
-    
-        if (objInput[i-1].value != null && objInput[i-1].value != "") {
+       
+        if (objInput[i-1].value !== null && objInput[i-1].value !== "") {
             var jsonObj = { "itemDescription": rows[i].cells[1].innerHTML, "quantityPicked": objInput[i-1].value };
-        }
             jsonlist[i - 1] = jsonObj;
+        }
     }
 
     $.ajax({

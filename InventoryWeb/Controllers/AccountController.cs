@@ -138,7 +138,7 @@ namespace InventoryWeb.Controllers
                     }
                     else if (roles.Contains("StoreSupervisor"))
                     {
-                        return RedirectToAction("Sidebar", "StoreSupervisor");
+                        return RedirectToAction("ViewInventory", "StoreSupervisor");
                     }
                     //else if (roles.Contains("DeptStaff"))
                     //{

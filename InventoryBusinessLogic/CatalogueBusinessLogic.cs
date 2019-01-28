@@ -42,17 +42,24 @@ namespace InventoryBusinessLogic
             inventory.SaveChanges();
         }
       
-        public void UpdateCataloguesByPurchaseID(int purchaseID)
+        public Boolean UpdateCataloguesByPurchaseID(int purchaseID)
         {
-            List<PurchaseItem> purchaseItems = inventory.PurchaseItem.Where(x => x.PurchaseOrderID == purchaseID).ToList();
-            foreach(PurchaseItem purchaseItem in purchaseItems)
-            {
-                purchaseItem.Catalogue.Quantity +=purchaseItem.Quantity;
-                
-            }
             PurchaseOrder purchaseOrder = inventory.PurchaseOrder.Where(x => x.PurchaseOrderID == purchaseID).First();
-            purchaseOrder.PurchaseOrderStatus = "fullied";
-            inventory.SaveChanges();
+            if (purchaseOrder.PurchaseOrderStatus.Trim().Equals("Unfullfill")) 
+            {
+                List<PurchaseItem> purchaseItems = inventory.PurchaseItem.Where(x => x.PurchaseOrderID == purchaseID).ToList();
+                foreach (PurchaseItem purchaseItem in purchaseItems)
+                {
+                    purchaseItem.Catalogue.Quantity += purchaseItem.Quantity;
+
+                }
+
+                purchaseOrder.PurchaseOrderStatus = "Fulfilled";
+                inventory.SaveChanges();
+                return true;
+            }
+
+            return false;
         }
 
         public List<Catalogue> GetLowStock()

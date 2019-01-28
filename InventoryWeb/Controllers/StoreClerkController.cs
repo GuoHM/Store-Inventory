@@ -456,7 +456,7 @@ namespace InventoryWeb.Controllers
                 req.AddRange(disbursement.GetDisbursementList(department[0].deptName, req1));
             }
 
-            var data = req.Select(p => new { itemDescription = p.Catalogue.Description, quantity = p.Needed, uom = p.Catalogue.MeasureUnit }).ToList();
+            var data = req.Select(p => new { itemDescription = p.Catalogue.Description, quantity = p.Needed, uom = p.Catalogue.MeasureUnit,orderid=p.OrderID}).ToList();
 
 
             return Json(data, JsonRequestBehavior.AllowGet);

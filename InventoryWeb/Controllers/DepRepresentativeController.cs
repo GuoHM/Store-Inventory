@@ -35,13 +35,13 @@ namespace InventoryWeb.Controllers
         {
 
             CP.ChangeCollectionPoint(CollectionPoint, User.Identity.Name);
-           // EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
+            // EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
             //string content = emailBusinessLogic.ChangePointNotification(User.Identity.Name, CollectionPoint);
 
-          //  List<string> toAddress = new List<string>();
-          //  toAddress.Add("wangxiaoxiaoqiang@gmail.com");
-          //  emailBusinessLogic.SendEmail("Team3", content, toAddress);
-            return RedirectToAction("ChangeCollectionPoint");
+            //  List<string> toAddress = new List<string>();
+            //  toAddress.Add("wangxiaoxiaoqiang@gmail.com");
+            //  emailBusinessLogic.SendEmail("Team3", content, toAddress);
+            
         }
         public ActionResult Index()
         {

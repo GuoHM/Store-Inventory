@@ -612,7 +612,7 @@ namespace InventoryWeb.Controllers
             {
 
                 int orderID = Convert.ToInt32(oId.orderid);
-                catalogueBusinessLogic.UpdateCataloguesByPurchaseID(orderID);
+                Boolean b =  catalogueBusinessLogic.UpdateCataloguesByPurchaseID(orderID);
             }
         }
         public JsonResult LowStock()
@@ -669,9 +669,10 @@ namespace InventoryWeb.Controllers
                 //EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
                 //string content = emailBusinessLogic.NewVoucherNotification(adjustment.AdjustmentID,adjustment.UserID);
 
-               // List<string> toAddress = new List<string>();
+                // List<string> toAddress = new List<string>();
                 //toAddress.Add("wangxiaoxiaoqiang@gmail.com");
                 //emailBusinessLogic.SendEmail("Team3", content, toAddress);
+               
             }
 
             json.Data = "success";
@@ -741,6 +742,13 @@ namespace InventoryWeb.Controllers
                     catalogueBusinessLogic.UpdateRetrievedQuantity(item.itemDescription,item.quantityPicked);
                 }
             }
+            EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
+            string content = emailBusinessLogic.LowStockNotification();
+
+            List<string> toAddress = new List<string>();
+            toAddress.Add("wangxiaoxiaoqiang@gmail.com");
+            emailBusinessLogic.SendEmail("Team3", content, toAddress);
+         
             return new JsonResult();
 
         }

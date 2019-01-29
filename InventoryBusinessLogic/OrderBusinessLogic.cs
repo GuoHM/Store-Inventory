@@ -81,6 +81,13 @@ namespace InventoryBusinessLogic
             inventory.SaveChanges();
         }
 
+        public void updateImage(string orderid,byte[] bt)
+        {
+            Order o = inventory.Order.Where( x => x.OrderID == orderid ).First();
+            o.Signature = bt;
+            inventory.SaveChanges();
+        }
+
 
     }
 }

@@ -491,10 +491,10 @@ namespace InventoryWeb.Controllers
                             items.neededQuantity = Convert.ToString(needed);
                             alreadyexist = true;
 
-                            if (Convert.ToInt32(items.neededQuantity) > req.Catalogue.Quantity)
-                            {
-                                items.remarks = "Not enough Stock";
-                            }
+                            //if (Convert.ToInt32(items.neededQuantity) > req.Catalogue.Quantity)
+                            //{
+                            //    items.remarks = "Not enough Stock";
+                            //}
                             break;
                         }
 
@@ -533,7 +533,7 @@ namespace InventoryWeb.Controllers
         public JsonResult GetDisbursements()
         {
 
-            var data = req.Select(p => new { itemDescription = p.Catalogue.Description, quantity = p.Needed, uom = p.Catalogue.MeasureUnit }).ToList();
+            var data = req.Select(p => new { itemDescription = p.Catalogue.Description, quantity = p.Needed, uom = p.Catalogue.MeasureUnit,orderid = p.OrderID}).ToList();
 
 
             return Json(data, JsonRequestBehavior.AllowGet);
@@ -776,16 +776,16 @@ namespace InventoryWeb.Controllers
                 {
                     if (item != null)
                     {
-                        catalogueBusinessLogic.UpdateRetrievedQuantity(item.itemDescription, item.quantityPicked);
+                        catalogueBusinessLogic.UpdateRetrievedQuantity(item.itemDescription, item.quantityPicked, item.remarks);
                     }
                 }
             }
-            EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
-            string content = emailBusinessLogic.LowStockNotification();
+            //EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
+            //string content = emailBusinessLogic.LowStockNotification();
 
-            List<string> toAddress = new List<string>();
-            toAddress.Add("wangxiaoxiaoqiang@gmail.com");
-            emailBusinessLogic.SendEmail("Team3", content, toAddress);
+            //List<string> toAddress = new List<string>();
+            //toAddress.Add("wangxiaoxiaoqiang@gmail.com");
+            //emailBusinessLogic.SendEmail("Team3", content, toAddress);
             catalogueBusinessLogic.ValidateOrderStatus();
 
             return new JsonResult();
@@ -808,6 +808,7 @@ namespace InventoryWeb.Controllers
         {
             public string itemDescription { get; set; }
             public string quantityPicked { get; set; }
+        public string remarks { get; set; }
         }
 
 
@@ -872,11 +873,12 @@ namespace InventoryWeb.Controllers
             public string deptName { get; set; }
         }
 
-        public class DisbursementListItems
-        {
-            public string itemDescription { get; set; }
-            public string quantity { get; set; }
-            public string uom { get; set; }
+    public class DisbursementListItems
+    {
+        public string itemDescription { get; set; }
+        public string quantity { get; set; }
+        public string uom { get; set; }
+        public string orderid { get; set; }
 
         }
 

@@ -94,32 +94,41 @@ namespace InventoryBusinessLogic
         }
         
 
-        public void UpdateRetrievedQuantity(string itemDescription, string quantityPicked)
+        public void UpdateRetrievedQuantity(string itemDescription, string quantityPicked, string remarks)
         {
             var requests = inventory.Request.Where(x => x.Catalogue.Description == itemDescription).OrderBy(y=>y.RequestDate).ToList();
-            int quantity = Convert.ToInt32(quantityPicked);
-            while (quantity != 0)
+            if (quantityPicked != null && quantityPicked!="")
             {
-                foreach (Request req in requests)
-                   {
-                    int tempActual = Convert.ToInt32(req.Actual);
-                    if (req.Needed != req.Actual)
+                int quantity = Convert.ToInt32(quantityPicked);
+                while (quantity != 0)
+                {
+                    foreach (Request req in requests)
                     {
-                        if (quantity >= (req.Needed - tempActual))
+                        int tempActual = Convert.ToInt32(req.Actual);
+                        if (req.Needed != req.Actual)
                         {
-                            req.Actual = req.Needed;
-                            quantity = quantity - (Convert.ToInt32(req.Needed) - tempActual);
+                            if (quantity >= (req.Needed - tempActual))
+                            {
+                                req.Actual = req.Needed;
+                                quantity = quantity - (Convert.ToInt32(req.Needed) - tempActual);
+                            }
+                            else
+                            {
+                                req.Actual = quantity + tempActual;
+                                // quantity = quantity - (Convert.ToInt32(req.Actual) - tempActual);
+                                quantity = 0;
+                            }
                         }
-                        else
-                        {
-                            req.Actual = quantity + tempActual;
-                            // quantity = quantity - (Convert.ToInt32(req.Actual) - tempActual);
-                            quantity = 0;
-                        }
+
+
                     }
 
                 }
+            }
 
+            foreach(Request req in requests)
+            {
+                req.Remarks = remarks;
             }
 
 

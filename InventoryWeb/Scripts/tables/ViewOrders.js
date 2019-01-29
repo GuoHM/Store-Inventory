@@ -29,7 +29,7 @@ var TableInit = function () {
     oTableInit.Init = function () {
         $('#SearchItemTable').bootstrapTable({
             method: 'get',
-            url: 'https://inventorywebapi2019.azurewebsites.net//api/Orders/',
+            url: 'https://inventorywebapi2019.azurewebsites.net/api/Orders/',
             //toolbar: '#toolbar',                
             striped: true,
             cache: false,
@@ -59,7 +59,7 @@ var TableInit = function () {
                 align: "center",
                // title: 'Order ID',
                 checkbox: "true",
-                onSelectAll: this.onSelectAll
+                //onSelectAll: this.onSelectAll
                 
                // sortable: true,
               //  field: 'OrderID',
@@ -166,8 +166,8 @@ var TableInit = function () {
             var oTableInit = new TableInit1();
             oTableInit.Init();
 
-            $('#requests').bootstrapTable('refreshOptions', { url: 'https://inventorywebapi2019.azurewebsites.net//api/Request/' + orderid });
-            $('#requests').bootstrapTable('refresh', { url: 'https://inventorywebapi2019.azurewebsites.net//api/Request/' + orderid });
+            $('#requests').bootstrapTable('refreshOptions', { url: 'https://inventorywebapi2019.azurewebsites.net/api/Request/' + orderid });
+            $('#requests').bootstrapTable('refresh', { url: 'https://inventorywebapi2019.azurewebsites.net/api/Request/' + orderid });
         }
     };
     
@@ -194,7 +194,7 @@ var TableInit1 = function () {
     oTableInit.Init = function () {
         $('#requests').bootstrapTable({
             method: 'get',
-            url: 'https://inventorywebapi2019.azurewebsites.net//api/Request/' + orderid,
+            url: 'https://inventorywebapi2019.azurewebsites.net/api/Request/' + orderid,
             //toolbar: '#toolbar',                
             striped: true,
             cache: false,
@@ -295,7 +295,7 @@ function selectedItems() {
             var OrderId = rows[i].cells[1].innerHTML;
            // orders = { "orderid": OrderId };
             $.ajax({
-                url: 'https://inventorywebapi2019.azurewebsites.net//api/Request/' + OrderId,
+                url: 'https://inventorywebapi2019.azurewebsites.net/api/Request/' + OrderId,
                 data: "",
                 dataType: 'json',
                 async: false,
@@ -310,13 +310,13 @@ function selectedItems() {
                         alreadyExistingQuantity = data.Actual;
                         actual = data.Catalogue.Quantity;
                         itemDescription = data.Catalogue.Description;
-                        if (needed > actual) {
-                            remarks = "Not enough Stock";
-                          //  alert(remarks);
-                        }
-                        else {
-                            remarks = "";
-                        }
+                        //if (needed > actual) {
+                        //    remarks = "Not enough Stock";
+                        //  //  alert(remarks);
+                        //}
+                        //else {
+                        //    remarks = "";
+                        //}
                         
                         jsonObj = { "RequestID": requestId, "ItemDescription": itemDescription, "neededQuantity": needed, "availableQuantity": actual, "alreadyExisting": alreadyExistingQuantity, "binNumber": binNumber, "remarks": remarks, "orderid": OrderId };
 
@@ -325,9 +325,9 @@ function selectedItems() {
                                 jsonlist1[j].neededQuantity += needed;
                                 existingItem = true;
 
-                                if (jsonlist1[j].neededQuantity > jsonlist1.availableQuantity) {
-                                    remarks = "Not enough Stock";
-                                }
+                                //if (jsonlist1[j].neededQuantity > jsonlist1.availableQuantity) {
+                                //    remarks = "Not enough Stock";
+                                //}
                                 break;
                             }                          
 
@@ -446,12 +446,12 @@ var TableInit2 = function () {
             detailView: false,
             showExport: false,
             // exportDataType: "basic",              //basic', 'all', 'selected'.
-            showColumns: false,
+            showColumns: true,
             columns: [{
                 align: "center",
                 title: 'Request ID',
                 sortable: true,
-
+              
                 field: 'requestId'
             },
             {
@@ -462,14 +462,14 @@ var TableInit2 = function () {
             },
             {
                 align: "center",
-                title: 'Requested Quantity',
+                title: 'Requested Qty',
                 sortable: true,
                 field: 'neededQuantity'
             },
 
             {
                 align: "center",
-                title: 'Available Quantity',
+                title: 'Available Qty',
                 sortable: true,
                 // field: 'Catalogue.Price * Needed'
                 field: 'availableQuantity'
@@ -478,7 +478,6 @@ var TableInit2 = function () {
                     align: "center",
                     title: 'Quantity Picked',
                     sortable: true,
-
                     formatter: InputTextBox
                 },
           
@@ -496,10 +495,22 @@ var TableInit2 = function () {
                     align: "center",
                     title: 'Remarks',
                     sortable: true,
-                    // field: 'Catalogue.Price * Needed'
+                    //formatter: RemarksTextBox,
                     field: 'remarks'
 
                 }
+                ,
+
+                {
+                    align: "center",
+                    title: 'Update Remarks',
+                    sortable: true,
+                    formatter: RemarksTextBox
+                    //field: 'remarks'
+
+                }
+
+
             ],
             formatLoadingMessage: function () {
                 return "loading...";
@@ -517,6 +528,9 @@ var TableInit2 = function () {
     };
      function InputTextBox(value, row, index) {
         return ['<input type="number" class="form-control" placeholder="Picked Quantity" id="quantity">'].join('');
+    }
+    function RemarksTextBox(value, row, index) {
+        return ['<input type="input" class="input-sm" placeholder="Remarks" id="remarks">'].join('');
     }
 
     selectItem = function (e, value, row, index) {
@@ -541,15 +555,18 @@ function openDisbursementList() {
 }
 
 function UpdateInventory() {
+    debugger;
     var tab = document.getElementById("RetrievalTable");
     var rows = tab.rows;
     var objInput = tab.getElementsByClassName("form-control");
+    var objRemarks = tab.getElementsByClassName("input-sm");
     //var quantity = objInput[rows - 1].value;
    var jsonlist = new Array(rows.length - 1);
     for (var i = 1; i < rows.length; i++) {
-       
-        if (objInput[i-1].value !== null && objInput[i-1].value !== "") {
-            var jsonObj = { "itemDescription": rows[i].cells[1].innerHTML, "quantityPicked": objInput[i-1].value };
+
+        if ((objInput[i - 1].value !== null && objInput[i - 1].value !== "") || (objRemarks[i-1].value !== null && objRemarks[i-1].value !== ""))
+        {
+            var jsonObj = { "itemDescription": rows[i].cells[1].innerHTML, "quantityPicked": objInput[i - 1].value, "remarks": objRemarks[i-1].value };
             jsonlist[i - 1] = jsonObj;
         }
     }

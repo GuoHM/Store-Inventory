@@ -20,7 +20,9 @@ namespace InventoryBusinessLogic
         {
             string result="";
             string departmentID = inventory.AspNetUsers.Where(x => x.Id == id).First().DepartmentID;
-            result += departmentID + GetWeekOfYear() + DateTime.Now.Year;
+            departmentID = departmentID.Replace("\r\n", "");
+            result += departmentID + GetWeekOfYear().Trim() + DateTime.Now.Year;
+          //  result = result.Replace(@"\r\n", "");
             return result;
         }
 

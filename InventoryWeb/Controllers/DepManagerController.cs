@@ -66,8 +66,7 @@ namespace InventoryWeb.Controllers
 
         public ActionResult ApproveOrReject()
         {
-            ViewBag.reqList = req.GetRequestById(1024);
-            return View();
+               return View();
         }
 
         //public ActionResult SaveRequestStatus(int reqID, string reqStatus)

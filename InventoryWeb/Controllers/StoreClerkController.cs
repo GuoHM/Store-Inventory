@@ -506,10 +506,10 @@ namespace InventoryWeb.Controllers
                             items.neededQuantity = Convert.ToString(needed);
                             alreadyexist = true;
 
-                            if (Convert.ToInt32(items.neededQuantity) > req.Catalogue.Quantity)
-                            {
-                                items.remarks = "Not enough Stock";
-                            }
+                            //if (Convert.ToInt32(items.neededQuantity) > req.Catalogue.Quantity)
+                            //{
+                            //    items.remarks = "Not enough Stock";
+                            //}
                             break;
                         }
 
@@ -791,16 +791,16 @@ namespace InventoryWeb.Controllers
                 {
                     if (item != null)
                     {
-                        catalogueBusinessLogic.UpdateRetrievedQuantity(item.itemDescription, item.quantityPicked);
+                        catalogueBusinessLogic.UpdateRetrievedQuantity(item.itemDescription, item.quantityPicked, item.remarks);
                     }
                 }
             }
-            EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
-            string content = emailBusinessLogic.LowStockNotification();
+            //EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
+            //string content = emailBusinessLogic.LowStockNotification();
 
-            List<string> toAddress = new List<string>();
-            toAddress.Add("wangxiaoxiaoqiang@gmail.com");
-            emailBusinessLogic.SendEmail("Team3", content, toAddress);
+            //List<string> toAddress = new List<string>();
+            //toAddress.Add("wangxiaoxiaoqiang@gmail.com");
+            //emailBusinessLogic.SendEmail("Team3", content, toAddress);
             catalogueBusinessLogic.ValidateOrderStatus();
 
             return new JsonResult();
@@ -825,6 +825,7 @@ namespace InventoryWeb.Controllers
         {
             public string itemDescription { get; set; }
             public string quantityPicked { get; set; }
+        public string remarks { get; set; }
         }
 
 

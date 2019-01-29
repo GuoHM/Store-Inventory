@@ -16,7 +16,7 @@ var TableInit = function () {
 	oTableInit.Init = function () {
 		$('#SearchItemTable').bootstrapTable({
 			method: 'get',
-			url: 'http://inventorywebapi2019.azurewebsites.net/api/RequestItems/' + userid,
+			url: 'https://inventorywebapi2019.azurewebsites.net/api/RequestItems/' + userid,
 			//toolbar: '#toolbar',                
 			striped: true,
 			cache: false,
@@ -114,8 +114,8 @@ var TableInit = function () {
 			var oTableInit = new TableInit1();
 			oTableInit.Init();
 
-			$('#requests').bootstrapTable('refreshOptions', { url: 'http://inventorywebapi2019.azurewebsites.net/api/StationaryItems/' + orderid });
-			$('#requests').bootstrapTable('refresh', { url: 'http://inventorywebapi2019.azurewebsites.net/api/StationaryItems/' + orderid });
+			$('#requests').bootstrapTable('refreshOptions', { url: 'https://inventorywebapi2019.azurewebsites.net/api/StationaryItems/' + orderid });
+			$('#requests').bootstrapTable('refresh', { url: 'https://inventorywebapi2019.azurewebsites.net/api/StationaryItems/' + orderid });
 
 
 		}
@@ -145,7 +145,7 @@ var TableInit1 = function () {
 	oTableInit.Init = function () {
 		$('#requests').bootstrapTable({
 			method: 'get',
-			url: 'http://inventorywebapi2019.azurewebsites.net/api/StationaryItems/' + orderid,
+			url: 'https://inventorywebapi2019.azurewebsites.net/api/StationaryItems/' + orderid,
 			//toolbar: '#toolbar',                
 			striped: true,
 			cache: false,

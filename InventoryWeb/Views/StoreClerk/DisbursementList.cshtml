@@ -28,7 +28,7 @@
 <div id="DisbursementModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form class="form-horizontal" role="form" id="approval-form">
+           
                 <div class="modal-header">
                     <h4 class="modal-title">Disbursement List</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -55,20 +55,28 @@
                             <label class="col-sm-4 control-label"
                                    for="attentionTo">Collection Point</label>
                             <div class="col-sm-8">
-                                <label  id="collectionPoint" />
+                                <label id="collectionPoint" />
                             </div>
                         </div>
+                        @{
+                            var imgsrc = ViewBag.image; // useful when image is not available
+                            
+                            var base64 = Convert.ToBase64String(imgsrc);
+                            imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
+                            
+                            <img src='@imgsrc' style="max-width:100px;max-height:100px" />
+                        }
                         <div class="form-group">
 
                             <table id="requests"></table>
 
                         </div>
-                        </form>
+                    </form>
                 </div>
                 <div class="modal-footer">
                     <input type="button" class="btn btn-primary" data-dismiss="modal" value="Ok">
                 </div>
-            </form>
+            
         </div>
     </div>
 </div>

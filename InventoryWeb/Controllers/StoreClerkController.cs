@@ -13,7 +13,7 @@ using Newtonsoft.Json;
 
 namespace InventoryWeb.Controllers
 {
-    [Authorize(Roles = "StoreClerk")]
+    //[Authorize(Roles = "StoreClerk")]
     public class StoreClerkController : Controller
     {
         CatalogueBusinessLogic catalogueBusinessLogic = new CatalogueBusinessLogic();

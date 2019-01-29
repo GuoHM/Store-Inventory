@@ -566,13 +566,13 @@ function openDisbursementList() {
         var quantityPicked = objInput[i - 1].value;
         var available = rows[i].cells[3].innerHTML;
 
-        if (quantityPicked != null && quantityPicked != "") {
+        if (quantityPicked !== null && quantityPicked !== "") {
             if (quantityPicked >= 0) {
                 if (quantityPicked > available) {
                     alert("Can not pick more than available quantity");
                     verified = false;
-                }
             }
+                }
             else {
                 alert("Negative numbers not accepted");
                 verified = false;

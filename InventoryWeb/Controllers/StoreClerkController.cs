@@ -825,7 +825,7 @@ namespace InventoryWeb.Controllers
 
     
 
-    class PurchaseItemList
+        class PurchaseItemList
         {
             public string itemID { get; set; }
             public string description { get; set; }
@@ -926,7 +926,7 @@ namespace InventoryWeb.Controllers
         }
 
 
-    }
+}
 
 
 

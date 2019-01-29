@@ -1,98 +1,98 @@
 ﻿<style>
 
-    #requests {
-        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-        border-collapse: collapse;
-        width: 100%;
-    }
+	#requests {
+		font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+		border-collapse: collapse;
+		width: 100%;
+	}
 
-        #requests td, #customers th {
-            border: 1px solid #ddd;
-            padding: 8px;
-        }
+		#requests td, #customers th {
+			border: 1px solid #ddd;
+			padding: 8px;
+		}
 
-        #requests tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
+		#requests tr:nth-child(even) {
+			background-color: #f2f2f2;
+		}
 
-        #requests tr:hover {
-            background-color: #ddd;
-        }
+		#requests tr:hover {
+			background-color: #ddd;
+		}
 
-        #requests th {
-            padding-top: 12px;
-            padding-bottom: 12px;
-            text-align: left;
-            background-color: #1E90FF;
-            color: white;
-        }
+		#requests th {
+			padding-top: 12px;
+			padding-bottom: 12px;
+			text-align: left;
+			background-color: #1E90FF;
+			color: white;
+		}
 </style>
 @{
-    ViewBag.Title = "ViewInventory";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewBag.Title = "ViewInventory";
+	Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
 
 <div class="col-xs-2 column">
-    @Html.Partial("~/Views/StoreSupervisor/SideBar.cshtml")
+	@Html.Partial("~/Views/StoreSupervisor/SideBar.cshtml")
 </div>
 
 <div class="col-xs-10 column">
 
-    <div class="panel-body" style="padding-bottom: 0px;">
-        <div class="panel panel-default">
-            <div class="panel-heading">View Inventory</div>
-            <div class="panel-body">
-                <table id="Viewallcatalogueitems"></table>
-            </div>
-        </div>
-    </div>
+	<div class="panel-body" style="padding-bottom: 0px;">
+		<div class="panel panel-default">
+			<div class="panel-heading">View Inventory</div>
+			<div class="panel-body">
+				<table id="Viewallcatalogueitems"></table>
+			</div>
+		</div>
+	</div>
 </div>
 
 <!-- Edit Modal HTML -->
 <div id="EditInventoryModal" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form class="form-horizontal" role="form" action="Save" method="post" id="approval-form">
-                <div class="modal-header">
-                    <h4 class="modal-title">Edit Inventory</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group-sm">
-                        <label for="Text">ItemID :</label>
-                        <input type="text" class="form-control" id="idedit" readonly="readonly" name="itemid">
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="Text">Description :</label>
-                        <label id="descriptionedit"></label>
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form class="form-horizontal" role="form" action="Save" method="post" id="approval-form">
+				<div class="modal-header">
+					<h4 class="modal-title">Edit Inventory</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				</div>
+				<div class="modal-body">
+					<div class="form-group-sm">
+						<label for="Text">ItemID :</label>
+						<input type="text" class="form-control" id="idedit" readonly="readonly" name="itemid">
+					</div>
+					<div class="form-group-sm">
+						<label for="Text">Description :</label>
+						<label id="descriptionedit"></label>
 
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="Text">Reorder Level</label>
-                        <input type="text" class="form-control" id="editreorderlevel" name="reorderlevel">
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="Text">Reorder Quantity</label>
-                        <input type="text" class="form-control" id="editreorderquantity" name="reorderquantity">
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="Text">Unit of Measure:</label>
-                        <label id="measureunit"></label>
-                    </div>
-                    <div class="form-group-sm">
-                        <label for="Text">Price</label>
-                        <input type="text" class="form-control" id="editprice" name="price">
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-10 col-sm-offset-2 control-label">
-                            <button type="submit" class="btn btn-primary" id="save">Save</button>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
+					</div>
+					<div class="form-group-sm">
+						<label for="Text">Reorder Level</label>
+						<input type="text" class="form-control" id="editreorderlevel" name="reorderlevel" onkeypress="return isNumberKey(event)">
+					</div>
+					<div class="form-group-sm">
+						<label for="Text">Reorder Quantity</label>
+						<input type="text" class="form-control" id="editreorderquantity" name="reorderquantity" onkeypress="return isNumberKey(event)">
+					</div>
+					<div class="form-group-sm">
+						<label for="Text">Unit of Measure:</label>
+						<label id="measureunit"></label>
+					</div>
+					<div class="form-group-sm">
+						<label for="Text">Price</label>
+						<input type="text" class="form-control" id="editprice" name="price" onkeypress="return isNumberKey(event)">
+					</div>
+					<div class="form-group">
+						<div class="col-sm-10 col-sm-offset-2 control-label">
+							<button type="submit" class="btn btn-primary" id="save">Save</button>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
 </div>
 
 <script src="~/Scripts/bootstrap-table.js"></script>
@@ -101,19 +101,36 @@
 <script src="//rawgit.com/hhurz/tableExport.jquery.plugin/master/tableExport.js"></script>
 
 <script>
+	function isNumberKey(evt) {
+		var charCode = (evt.which) ? evt.which : event.keyCode
+		if (charCode == 8)//back space
+			return true;
+		if (charCode < 48 || charCode > 57)//0-9
+		{
+			alert("Please Enter Only Numbers.");
+			return false;
+		}
+
+		return true;
+
+	}
+
 	$(document).ready(function () {
 		$("#save").click(function (e) {
-			e.preventDefault();
+			
+			
 
-			if ((($("reorderlevel").val()) > 0) && (($("reorderquantity").val()) > 0) && (($("price").val()) > 0) && !(/^[a-zA-Z]+$/.test($("reorderlevel").val())) && !(/^[a-zA-Z]+$/.test($("reorderquantity").val())) && !(/^[a-zA-Z]+$/.test($("price").val()))) {
-				$("#approval-form").submit();
-			}
-
-			else
-			{
-				alert("Please enter only values  greater than Zero and only Numericals ");
+			if (($("#editreorderquantity").val() == "") || ($("#editreorderlevel").val() == "") || ($("#editprice").val() == "")) {
+				alert("cannot be empty");
+				e.preventDefault();
+				
 			}
 
 		});
 	});
+
 </script>
+
+
+
+

@@ -271,7 +271,7 @@ function postData(approvalStatus) {
 		data: JSON.stringify(jsonlist),
 		success: function (data) {
 
-			if (data.approvalStatus == "Approved") {
+			if (data.approvalStatus === "Approved") {
 				$('#successModal').modal('show');
 			}
 			else {

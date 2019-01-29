@@ -58,14 +58,14 @@
                                 <label id="collectionPoint" />
                             </div>
                         </div>
-                        @{
+                        @*@{
                             var imgsrc = ViewBag.image; // useful when image is not available
                             
                             var base64 = Convert.ToBase64String(imgsrc);
                             imgsrc = string.Format("data:image/jpg;base64,{0}", base64);
                             
                             <img src='@imgsrc' style="max-width:100px;max-height:100px" />
-                        }
+                        }*@
                         <div class="form-group">
 
                             <table id="requests"></table>

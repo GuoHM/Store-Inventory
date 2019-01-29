@@ -13,7 +13,7 @@ using Newtonsoft.Json;
 
 namespace InventoryWeb.Controllers
 {
-    //[Authorize(Roles = "StoreClerk")]
+    [Authorize(Roles = "StoreClerk")]
     public class StoreClerkController : Controller
     {
         CatalogueBusinessLogic catalogueBusinessLogic = new CatalogueBusinessLogic();
@@ -58,14 +58,27 @@ namespace InventoryWeb.Controllers
         {
             //int bookid = id;
             //int plenth = Request.Properties.Count;
-            var s = HttpContext.Request.Params;
             MemoryStream m = new MemoryStream();
             HttpContext.Request.InputStream.CopyTo(m);
             byte[] v = m.ToArray();
-
-            orderbusinesslogic.updateImage("1001", v);
+            var s = HttpContext.Request.QueryString;
+            int i = s.Count;
+            for(int j = 0; j < i; j++)
+            {
+                orderbusinesslogic.updateSignture(s.Get(j), v);
+            }
+            
             return "success";
         }
+
+        [HttpGet]
+        public string GetImage(string orderid)
+        {
+            byte[] b = orderbusinesslogic.getSignature(orderid);
+            Response.BinaryWrite(b);
+            return b.ToString();
+        }
+
         public ActionResult UpdateInventoryBinNumber(string ItemID, string binNumber)
         {
 
@@ -808,7 +821,7 @@ namespace InventoryWeb.Controllers
         }
 
 
-        }
+    }
 
     
 
@@ -890,8 +903,8 @@ namespace InventoryWeb.Controllers
             public string deptName { get; set; }
         }
 
-    public class DisbursementListItems
-    {
+        public class DisbursementListItems
+        {
         public string itemDescription { get; set; }
         public string quantity { get; set; }
         public string uom { get; set; }

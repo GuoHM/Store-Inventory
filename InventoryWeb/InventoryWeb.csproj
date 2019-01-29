@@ -489,6 +489,7 @@
     <Content Include="Views\ManageRequest\ViewRequestPartial.cshtml" />
     <Content Include="Views\DepRepresentative\ViewRequest.cshtml" />
     <Content Include="Views\Staff\ViewRequest.cshtml" />
+    <Content Include="Views\DepRepresentative\DisbursementList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -134,11 +134,16 @@ namespace InventoryWeb.Controllers
                     }
                     else if (roles.Contains("DeptHead"))
                     {
-                        return RedirectToAction("Index", "DepManager");
+                        return RedirectToAction("dashBoard", "DepManager");
                     }
                     else if (roles.Contains("StoreSupervisor"))
                     {
                         return RedirectToAction("ViewInventory", "StoreSupervisor");
+                    }
+
+                    else if (roles.Contains("DeptStaff"))
+                    {
+                        return RedirectToAction("RaiseRequest", "Staff");
                     }
                     //else if (roles.Contains("DeptStaff"))
                     //{
@@ -465,7 +470,7 @@ namespace InventoryWeb.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
 
         //

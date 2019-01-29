@@ -56,10 +56,13 @@ namespace InventoryWeb.Controllers
             ViewBag.userID = userId;
             new ManageRequestBusinessLogic().getAllStationeryRequest(userId);
             return View();
+
+
         }
 
         public ActionResult ViewAllStationeryRequisitionsByOrderIdDeptRep(string orderId)
         {
+
             new ManageRequestBusinessLogic().getStationaryOrderByID(orderId);
             return View();
         }
@@ -70,6 +73,8 @@ namespace InventoryWeb.Controllers
             ViewBag.userID = userId;
             new ManageRequestBusinessLogic().getAllStationeryRequest(userId);
             return View();
+
+
         }
 
         public ActionResult ViewAllStationeryRequisitionsByOrderId(string orderId)
@@ -79,62 +84,36 @@ namespace InventoryWeb.Controllers
             return View();
         }
 
-        static List<Department> disbursementList = new List<Department>();
-        static List<RetrievalList> retrievals = new List<RetrievalList>();
-        static List<Request> req = new List<Request>();
-        [HttpGet]
-        public JsonResult GetDisbursementList()
-        {
-            disbursementList = new List<Department>();
-            DisbursementList disbursement = new DisbursementList();
-            foreach (RetrievalList req1 in retrievals)
-            {
-                List<Department> dep = disbursement.GetDisbursements(req1.orderid);
-                disbursementList.AddRange(dep);
+        public ActionResult ViewDisbursementList()
+        {   
 
+
+            return View();
+        }
+
+
+        [HttpGet]
+        public JsonResult getDisbursementList()
+        {
+            string userId = User.Identity.GetUserId();
+            DisbursementList disbursement = new DisbursementList();
+            List<Order> orders = disbursement.GetDisbursementByDepartment(userId);
+            List<Request> request = new List<Request>();
+            foreach (Order order in orders)
+            {
+                List<Request> req = disbursement.GetDisburementItemsByDepartment(order.OrderID);
+                request.AddRange(req);
             }
 
-            var data = disbursementList.Distinct().Select(p => new
+            var data = request.Select(p => new
             {
-                departmentName = p.DepartmentName,
-                representative = p.AspNetUsers.UserName,
-                collectionPoint = p.CollectionPoint
+                RequesterName = p.AspNetUsers.UserName,
+                ItemDescription = p.Catalogue.Description,
+                needed = p.Needed,
+                actual = p.Actual
             }).ToList();
 
-
-            //EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
-
-            //foreach (Department dept in disbursementList) {
-            //string content = emailBusinessLogic.ReadyForCollectionPoint(dept.DepartmentID);
-
-            //List<string> toAddress = new List<string>();
-            // toAddress.Add("wangxiaoxiaoqiang@gmail.com");
-            //emailBusinessLogic.SendEmail("Team3", content, toAddress); }
             return Json(data, JsonRequestBehavior.AllowGet);
         }
-
-
-        public ActionResult GetDisbursementItems(List<DepartmentList> department)
-        {
-
-            DisbursementList disbursement = new DisbursementList();
-            req = new List<Request>();
-            var orderslist = retrievals.Select(p => p.orderid).Distinct().ToList();
-            foreach (var req1 in orderslist)
-            {
-                req.AddRange(disbursement.GetDisbursementList(department[0].deptName, req1));
-            }
-
-            var data = req.Select(p => new { itemDescription = p.Catalogue.Description, quantity = p.Needed, uom = p.Catalogue.MeasureUnit }).ToList();
-
-
-            return Json(data, JsonRequestBehavior.AllowGet);
-            // var data  = req.Select(p => new { itemDescription = p.Catalogue.Description, quantity = p.Needed, uom=p.Catalogue.MeasureUnit });
-
-
-            //return Json(data, JsonRequestBehavior.AllowGet);
-            // return Json(new { redirecturl = "DisbursementList" }, JsonRequestBehavior.AllowGet);
-        }
-
     }
 }

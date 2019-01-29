@@ -105,7 +105,7 @@ var TableInit = function () {
         'click #view': function (e, value, row, index) {
          
             $("#ApproveRequestModal").modal('show');
-            debugger;
+           
             orderid = row.OrderID;
 
             orderid = orderid.replace(/\s/g, '');

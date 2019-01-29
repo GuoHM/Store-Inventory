@@ -45,7 +45,7 @@ namespace InventoryBusinessLogic
         public Boolean UpdateCataloguesByPurchaseID(int purchaseID)
         {
             PurchaseOrder purchaseOrder = inventory.PurchaseOrder.Where(x => x.PurchaseOrderID == purchaseID).First();
-            if (purchaseOrder.PurchaseOrderStatus.Trim().Equals("Unfullfill")) 
+            if (purchaseOrder.PurchaseOrderStatus.Trim().Equals("Unfulfill")) 
             {
                 List<PurchaseItem> purchaseItems = inventory.PurchaseItem.Where(x => x.PurchaseOrderID == purchaseID).ToList();
                 foreach (PurchaseItem purchaseItem in purchaseItems)

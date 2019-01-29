@@ -83,6 +83,19 @@ namespace InventoryBusinessLogic
             inventory.SaveChanges();
         }
 
+        public void updateSignture(string orderid,byte[] bt)
+        {
+            Order o = inventory.Order.Where( x => x.OrderID == orderid ).First();
+            o.Signature = bt;
+            inventory.SaveChanges();
+        }
+
+        public byte[] getSignature(string orderid)
+        {
+            Order o = inventory.Order.Where(x => x.OrderID == orderid).First();
+            return o.Signature;
+
+        }
 
     }
 }

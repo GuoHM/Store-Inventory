@@ -24,6 +24,7 @@ namespace InventoryWeb.Controllers
         AdjustmentBusinessLogic adjustmentBusinessLogic = new AdjustmentBusinessLogic();
         AdjustmentItemBusinessLogic adjustmentItemBusinessLogic = new AdjustmentItemBusinessLogic();
         UserBusinessLogic userBusinessLogic = new UserBusinessLogic();
+        
 
         ManageRequestBusinessLogic manageRequests = new ManageRequestBusinessLogic();
 
@@ -31,6 +32,8 @@ namespace InventoryWeb.Controllers
         static List<orderlist> orders = new List<orderlist>();
         static List<Department> disbursementList = new List<Department>();
         static List<Request> req = new List<Request>();
+        OrderBusinessLogic orderbusinesslogic = new OrderBusinessLogic();
+       
         public ActionResult RaiseRequest()
         {
             return View();
@@ -49,6 +52,31 @@ namespace InventoryWeb.Controllers
         public ActionResult ManageInventory()
         {
             return View();
+        }
+        [HttpPost]
+        public string SaveImage()
+        {
+            //int bookid = id;
+            //int plenth = Request.Properties.Count;
+            MemoryStream m = new MemoryStream();
+            HttpContext.Request.InputStream.CopyTo(m);
+            byte[] v = m.ToArray();
+            var s = HttpContext.Request.QueryString;
+            int i = s.Count;
+            for(int j = 0; j < i; j++)
+            {
+                orderbusinesslogic.updateSignture(s.Get(j), v);
+            }
+            
+            return "success";
+        }
+
+        [HttpGet]
+        public string GetImage(string orderid)
+        {
+            byte[] b = orderbusinesslogic.getSignature(orderid);
+            Response.BinaryWrite(b);
+            return b.ToString();
         }
 
         public ActionResult UpdateInventoryBinNumber(string ItemID, string binNumber)
@@ -456,7 +484,7 @@ namespace InventoryWeb.Controllers
                 req.AddRange(disbursement.GetDisbursementList(department[0].deptName, req1));
             }
 
-            var data = req.Select(p => new { itemDescription = p.Catalogue.Description, quantity = p.Needed, uom = p.Catalogue.MeasureUnit }).ToList();
+            var data = req.Select(p => new { itemDescription = p.Catalogue.Description, quantity = p.Needed, uom = p.Catalogue.MeasureUnit,orderid=p.OrderID}).ToList();
 
 
             return Json(data, JsonRequestBehavior.AllowGet);
@@ -793,9 +821,11 @@ namespace InventoryWeb.Controllers
         }
 
 
-        }
+    }
 
-        class PurchaseItemList
+    
+
+    class PurchaseItemList
         {
             public string itemID { get; set; }
             public string description { get; set; }
@@ -873,8 +903,8 @@ namespace InventoryWeb.Controllers
             public string deptName { get; set; }
         }
 
-    public class DisbursementListItems
-    {
+        public class DisbursementListItems
+        {
         public string itemDescription { get; set; }
         public string quantity { get; set; }
         public string uom { get; set; }

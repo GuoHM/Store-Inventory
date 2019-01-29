@@ -1,44 +1,76 @@
 ﻿@{ var dept = ViewBag.Department; }
 @{
-    ViewBag.Title = "ChangeCollectionPoint";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+	ViewBag.Title = "ChangeCollectionPoint";
+	Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="col-xs-2 column">
-    @Html.Partial("~/Views/DepRepresentative/SideBar.cshtml")
+	@Html.Partial("~/Views/DepRepresentative/SideBar.cshtml")
 </div>
 
 <div class="col-xs-9 column">
-    @*<h2>Collection Point</h2>
-        <ul>
-            <li>
-                <a href="Show/@ViewBag.DeptList.DepartmentID">
-                    @ViewBag.DeptList.CollectionPoint
-                </a>
-            </li>
+	@*<h2>Collection Point</h2>
+		<ul>
+			<li>
+				<a href="Show/@ViewBag.DeptList.DepartmentID">
+					@ViewBag.DeptList.CollectionPoint
+				</a>
+			</li>
 
-        </ul>*@
-    <div class="col-xs-9 column">
-        <form action="saveNewCollectionPoint" class="rep-form">
+		</ul>*@
+	<div class="col-xs-9 column">
 
-            <label>Current Collection Point: </label>
-            <a href="Show/@ViewBag.DeptList.DepartmentID">
-                @ViewBag.DeptList.CollectionPoint
-            </a>
 
-    </div>
-    <br />
-    <br />
-    <label>New Collection Point: </label>
-    <form action="saveNewCollectionPoint">
-        <br />
-        @Html.RadioButton("CollectionPoint", "Stationary Store - Administration Building")<span>Stationary Store - Administration Building</span> <br />
-        @Html.RadioButton("CollectionPoint", "Management School")<span>Management School</span><br />
-        @Html.RadioButton("CollectionPoint", "Medical School")<span>Medical School</span><br />
-        @Html.RadioButton("CollectionPoint", "Engineering School")<span>Engineering School</span><br />
-        @Html.RadioButton("CollectionPoint", "Science School")<span>Science School</span><br />
-        @Html.RadioButton("CollectionPoint", "University Hospital")<span>University Hospital</span><br />
-        <br />
-        <button type="submit" class="btn btn-primary" button id="myBtn">Submit</button>
-    </form>
-</div>
+		<label>Current Collection Point: </label>
+		<a href="Show/@ViewBag.DeptList.DepartmentID" onclick="return false;">
+			@ViewBag.DeptList.CollectionPoint
+		</a>
+
+	</div>
+	<br />
+
+	<div class="col-xs-9 column">
+		<label> </label>
+		<form action="saveNewCollectionPoint" method="post" id="approval-form">
+			<br />
+			@Html.RadioButton("CollectionPoint", "Stationary Store - Administration Building", new { @id = "option1",@name = "hello1" })<span>Stationary Store - Administration Building</span> <br />
+			@Html.RadioButton("CollectionPoint", "Management School", new { @id = "option2", @name = "hello2" })<span>Management School</span><br />
+			@Html.RadioButton("CollectionPoint", "Medical School", new { @id = "option3", @name = "hello3" })<span>Medical School</span><br />
+			@Html.RadioButton("CollectionPoint", "Engineering School", new { @id = "option4", @name = "hello4" })<span>Engineering School</span><br />
+			@Html.RadioButton("CollectionPoint", "Science School", new { @id = "option5", @name = "hello5" })<span>Science School</span><br />
+			@Html.RadioButton("CollectionPoint", "University Hospital", new { @id = "option6", @name = "hello6" })<span>University Hospital</span><br />
+			<br />
+			<button type="submit" class="btn btn-primary" button id="myBtn">Submit</button>
+		</form>
+	</div>
+
+
+
+	<script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+	<script type='text/javascript'>
+		$(document).ready(function () {
+			//Event handler for clicking next button
+			$("#myBtn").click(function (e) {
+
+
+				if ((!document.getElementById("option1").checked) && (!document.getElementById("option2").checked) && (!document.getElementById("option3").checked) && (!document.getElementById("option4").checked) && (!document.getElementById("option5").checked) && (!document.getElementById("option6").checked)) {
+
+					alert("SELECT ONE!");
+					e.preventDefault();
+					
+					
+				}
+
+				else {
+					$("#approval-form").submit();
+
+				}
+
+				
+
+			})
+		});
+	</script>
+
+
+	

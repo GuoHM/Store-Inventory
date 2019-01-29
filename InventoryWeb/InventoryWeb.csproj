@@ -404,6 +404,7 @@
     <Content Include="Scripts\AdjustmentVoucherChoose.js" />
     <Content Include="Scripts\tables\ApproveOrReject.js" />
     <Content Include="Scripts\tables\Additems.js" />
+    <Content Include="Scripts\tables\DepRepDisbursementList.js" />
     <Content Include="Scripts\tables\DisbursementList.js" />
     <Content Include="Scripts\tables\ListDept.js" />
     <Content Include="Scripts\tables\ManageInventory.js" />
@@ -491,6 +492,7 @@
     <Content Include="Views\DepRepresentative\ViewRequest.cshtml" />
     <Content Include="Views\Staff\ViewRequest.cshtml" />
     <Content Include="Views\DepManager\dashBoard.cshtml" />
+    <Content Include="Views\DepRepresentative\ViewDisbursementList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

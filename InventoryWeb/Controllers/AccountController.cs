@@ -67,14 +67,18 @@ namespace InventoryWeb.Controllers
             string name = userlogic.getUserByUsername(username).Name;
             string dept = userlogic.getUserByUsername(username).DepartmentID;
             string roles = userlogic.getUserByUsername(username).UserType;
-            string res = "success" + "/" + userid + "/" +name + "/" + dept;
+            string res = "/" + userid + "/" +name + "/" + dept;
             var result = await SignInManager.PasswordSignInAsync(username, password, true, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
                     if (roles.Equals("DeptHead"))
                     {
-                        return res;
+                        return "DeptHead"+res;
+                    }
+                    else if (roles.Equals("Store Clerk"))
+                    {
+                        return "StoreClerk" + res;
                     }
                     else
                     {
@@ -130,20 +134,25 @@ namespace InventoryWeb.Controllers
                     }
                     else if (roles.Contains("DeptHead"))
                     {
-                        return RedirectToAction("ApproveOrReject", "DepManager");
+                        return RedirectToAction("dashBoard", "DepManager");
                     }
                     else if (roles.Contains("StoreSupervisor"))
                     {
-                        return RedirectToAction("Sidebar", "StoreSupervisor");
+                        return RedirectToAction("ViewInventory", "StoreSupervisor");
+                    }
+
+                    else if (roles.Contains("DeptStaff"))
+                    {
+                        return RedirectToAction("RaiseRequest", "Staff");
                     }
                     //else if (roles.Contains("DeptStaff"))
                     //{
                     //    return RedirectToAction("ViewInventory", "DepStaff");
                     //}
-                    //else if (roles.Contains("StoreManager"))
-                    //{
-                    //    return RedirectToAction("ViewInventory", "StoreManager");
-                    //}
+                    else if (roles.Contains("StoreManager"))
+                    {
+                        return RedirectToAction("ViewAdjustmentVoucherManager", "StoreManager");
+                    }
 
                     else
                     {
@@ -461,7 +470,7 @@ namespace InventoryWeb.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
 
         //

@@ -45,26 +45,60 @@ function UpdateQuantity() {
     var rows = tab.rows;
     var objCheckBox = tab.getElementsByClassName('checkbox');
     var purchaseIDList = new Array();
-   
-    for (var i = 0; i < objCheckBox.length; i++) {
-        if (objCheckBox[i].checked) {
-            var jsonObj = { "orderid": rows[i + 1].cells[2].innerHTML };
-            var orderid = rows[i + 1].cells[2].innerHTML;
-            purchaseIDList.push(jsonObj);
+    var isUnfulfill = false;
+
             
-        }
+    debugger;
+            for (var j = 0; j < objCheckBox.length; j++) {
+                if (objCheckBox[j].checked) {
+
+                    var status = rows[j + 1].cells[5].innerHTML;
+                    var jsonObj = { "orderid": rows[j + 1].cells[2].innerHTML };
+                    var statustrim = myTrim(status);
+                    if (statustrim != "Unfulfill") 
+                        {
+                        // 
+                        isUnfulfill = true;
+                            
+                        } 
+                        else {
+                           
+                        purchaseIDList.push(jsonObj);
+                     
+
+                        }
+
+                    }
+
     }
-    alert(orderid)
- 
-    $.ajax({
-        contentType: 'application/json; charset=utf-8',
-        url: "/StoreClerk/UpdateQuantity",
-        type: "post",
-        dataType: "text",
-        async: true,
-        data: JSON.stringify(purchaseIDList)
-    
-    });
+    if (!isUnfulfill) {
+        $.ajax({
+            contentType: 'application/json; charset=utf-8',
+            url: "/StoreClerk/UpdateQuantity",
+            type: "post",
+            dataType: "text",
+            async: true,
+            data: JSON.stringify(purchaseIDList),
+            success: function () {
+                alert("Update Successful!")
+            }
+
+        });
+    }
+    else {
+        alert("Please choose unfulfill order to update!") ;
+    }
+
+
+   
 }
+
+function myTrim(x) {
+    debugger
+    return x.replace(/^\s+|\s+$/gm, '');
+}
+
+      
+    
 
 

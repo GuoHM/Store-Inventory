@@ -65,8 +65,7 @@ namespace InventoryBusinessLogic
             //}
 
 
-            return inventory.Request.Where(x => (x.RequestStatus).ToUpper().Trim() == "APPROVED").ToList();
-
+            return inventory.Request.Where(x => ((x.RequestStatus).ToUpper().Trim() == "APPROVED") && (x.Needed != 0)).ToList();
         }
 
         
@@ -154,7 +153,7 @@ namespace InventoryBusinessLogic
         {
             try
             {
-                return inventory.Request.Where(x => x.OrderID == OrderId && x.AspNetUsers.UserName.ToUpper().Trim()==UserName.ToUpper().Trim() && x.RequestStatus.ToUpper().Trim()=="UNAPPROVED").ToList();
+                return inventory.Request.Where(x => x.OrderID == OrderId && x.AspNetUsers.UserName.Trim()==UserName.Trim() && x.RequestStatus.ToUpper().Trim()=="UNAPPROVED").ToList();
             }
             catch (Exception)
             {

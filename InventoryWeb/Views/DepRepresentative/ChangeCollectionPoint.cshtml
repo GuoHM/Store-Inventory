@@ -21,28 +21,30 @@
 	<div class="col-xs-9 column">
 
 
-		<label>Current Collection Point: </label>
+		<label> Current Collection Point: </label>
 		<a href="Show/@ViewBag.DeptList.DepartmentID" onclick="return false;">
 			@ViewBag.DeptList.CollectionPoint
 		</a>
-
+		<br />
 	</div>
+	<br />
 	<br />
 
 	<div class="col-xs-9 column">
-		<label> </label>
+		<label style="color:green;font-size:medium"> Please select from below list to change the current collection point </label>
 		<form action="saveNewCollectionPoint" method="post" id="approval-form">
-			<br />
-			@Html.RadioButton("CollectionPoint", "Stationary Store - Administration Building", new { @id = "option1",@name = "hello1" })<span>Stationary Store - Administration Building</span> <br />
+		
+			@Html.RadioButton("CollectionPoint", "Stationary Store - Administration Building", new { @id = "option1", @name = "hello1" })<span>Stationary Store - Administration Building</span> <br />
 			@Html.RadioButton("CollectionPoint", "Management School", new { @id = "option2", @name = "hello2" })<span>Management School</span><br />
 			@Html.RadioButton("CollectionPoint", "Medical School", new { @id = "option3", @name = "hello3" })<span>Medical School</span><br />
 			@Html.RadioButton("CollectionPoint", "Engineering School", new { @id = "option4", @name = "hello4" })<span>Engineering School</span><br />
 			@Html.RadioButton("CollectionPoint", "Science School", new { @id = "option5", @name = "hello5" })<span>Science School</span><br />
 			@Html.RadioButton("CollectionPoint", "University Hospital", new { @id = "option6", @name = "hello6" })<span>University Hospital</span><br />
 			<br />
-			<button type="submit" class="btn btn-primary" button id="myBtn">Submit</button>
+			<button type="submit" class="btn btn-primary" button id="myBtn">Change Collection Point</button>
 		</form>
 	</div>
+
 
 
 
@@ -57,20 +59,21 @@
 
 					alert("SELECT ONE!");
 					e.preventDefault();
-					
-					
+
+
 				}
 
 				else {
 					$("#approval-form").submit();
+					alert("Collection point Successfully changed");
+
 
 				}
 
-				
+
 
 			})
 		});
 	</script>
 
 
-	

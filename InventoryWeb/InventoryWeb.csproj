@@ -383,6 +383,8 @@
     <None Include="Properties\PublishProfiles\InventoryAandroid - Web Deploy1.pubxml" />
     <None Include="Properties\PublishProfiles\InventoryAandroid - Web Deploy2.pubxml" />
     <None Include="Properties\PublishProfiles\InventoryWebXUMJ - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\LogicUniversityInventory - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\lusis - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\bootstrapValidator.min.js" />
     <Content Include="Scripts\HighCharts\annotations.js" />

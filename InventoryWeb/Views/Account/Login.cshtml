@@ -16,14 +16,14 @@
                 <div class="form-group">
                     @Html.LabelFor(m => m.UserName, new { @class = "control-label sr-only" })
                     <div class="col-md-12">
-                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+                        @Html.TextBoxFor(m => m.UserName, new { placeholder = "User Name",@class = "form-control" })
                         @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.Password, new { @class = "control-label sr-only" })
                     <div class="col-md-12">
-                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                        @Html.PasswordFor(m => m.Password, new { placeholder = "Password",@class = "form-control" })
                         @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                     </div>
                 </div>

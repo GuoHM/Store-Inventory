@@ -99,7 +99,13 @@ namespace InventoryBusinessLogic
         public List<Order> getDepSpendingHistory(DateTime date1,DateTime date2, string id)
         {
             AspNetUsers user1 = inventory.AspNetUsers.Where(x => x.Id == id).First<AspNetUsers>();
-            return inventory.Order.Where(x => x.DepartmentID==user1.DepartmentID && x.OrderDate >= date1 && x.OrderDate<= date2 ).ToList<Order>();
+            return inventory.Order.Where(x => x.DepartmentID.Substring(0,4)==user1.DepartmentID.Substring(0,4) && x.OrderDate >= date1 && x.OrderDate<= date2 ).ToList<Order>();
+        }
+
+        public List<Order> getOverallSpendingHistory(DateTime date1, DateTime date2, string id)
+        {
+            Department dep = inventory.Department.Where(x => x.DepartmentID.Substring(0,4) == id.Substring(0,4)).First<Department>();
+            return inventory.Order.Where(x => x.DepartmentID.Substring(0, 4) == dep.DepartmentID.Substring(0, 4) && x.OrderDate >= date1 && x.OrderDate <= date2).ToList<Order>();
         }
 
         public List<Catalogue> getAllCatalogue()

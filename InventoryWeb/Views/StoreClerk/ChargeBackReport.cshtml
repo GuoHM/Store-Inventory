@@ -26,7 +26,7 @@
         },
 
         xAxis: {
-            categories:@Html.Raw(ViewBag.datapoints3),
+            categories:@Html.Raw(ViewBag.months),
             crosshair: true
         },
         yAxis: {
@@ -51,26 +51,26 @@
         },
        series: [{
         name: 'Science',
-        data: @Html.Raw(ViewBag.datasci)
+        data: @Html.Raw(ViewBag.dataSCI)
 
     }	, {
         name: 'Commerce',
-        data: @Html.Raw(ViewBag.comm)
+        data: @Html.Raw(ViewBag.dataCOMM)
 
     }, {
         name: 'Computer Science',
-        data: @Html.Raw(ViewBag.cpsc)
+        data: @Html.Raw(ViewBag.dataCPSC)
     }, {
         name: 'English',
-        data: @Html.Raw(ViewBag.engl)
+        data: @Html.Raw(ViewBag.dataENGL)
 
     }, {
         name: 'Registra',
-        data: @Html.Raw(ViewBag.regr)
+        data: @Html.Raw(ViewBag.dataREGR)
 
     }, {
         name: 'Zoology',
-        data: @Html.Raw(ViewBag.zool)
+        data: @Html.Raw(ViewBag.dataZOOL)
 
     }]
 

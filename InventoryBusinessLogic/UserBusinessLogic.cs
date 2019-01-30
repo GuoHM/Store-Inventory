@@ -43,8 +43,10 @@ namespace InventoryBusinessLogic
             AspNetUsers user2 = inventory.AspNetUsers.Where(P => P.UserType == "DeptRep" && P.DepartmentID.Substring(0,4) == user1.DepartmentID.Substring(0, 4)).First<AspNetUsers>();
             AspNetUserRoles role1 = inventory.AspNetUserRoles.Where(p => p.UserId == user1.Id).First();
             AspNetUserRoles role2 = inventory.AspNetUserRoles.Where(p => p.UserId == user2.Id).First();
+            Department dep1 = inventory.Department.Where(p => p.DepartmentID == user1.DepartmentID).First();
             user1.UserType = "DeptRep";
             user2.UserType = "DeptStaff";
+            dep1.DepartmentRep = user1.Id;
      
            
             inventory.AspNetUserRoles.Remove(role1);
@@ -73,8 +75,11 @@ namespace InventoryBusinessLogic
             AspNetUsers user2 = inventory.AspNetUsers.Where(P => P.UserType == "DeptHead" && P.DepartmentID.Substring(0,4) == user1.DepartmentID.Substring(0,4)).First<AspNetUsers>();
             AspNetUserRoles role1 = inventory.AspNetUserRoles.Where(p => p.UserId == user1.Id).First();
             AspNetUserRoles role2 = inventory.AspNetUserRoles.Where(p => p.UserId == user2.Id).First();
+            Department dep1 = inventory.Department.Where(p => p.DepartmentID == user1.DepartmentID).First();
+
             user1.UserType = "DeptHead";
             user2.UserType = "DeptStaff";
+            dep1.DepartmentHead = user1.Id;
 
 
             inventory.AspNetUserRoles.Remove(role1);

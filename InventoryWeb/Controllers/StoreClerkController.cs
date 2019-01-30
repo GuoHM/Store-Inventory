@@ -13,7 +13,7 @@ using Newtonsoft.Json;
 
 namespace InventoryWeb.Controllers
 {
-    //[Authorize(Roles = "StoreClerk")]
+    [Authorize(Roles = "StoreClerk")]
     public class StoreClerkController : Controller
     {
         CatalogueBusinessLogic catalogueBusinessLogic = new CatalogueBusinessLogic();
@@ -446,6 +446,7 @@ namespace InventoryWeb.Controllers
         {
             disbursementList = new List<Department>();
             DisbursementList disbursement = new DisbursementList();
+            GetRetrievals();
             foreach (RetrievalList req1 in retrievals)
             {
                 List<Department> dep = disbursement.GetDisbursements(req1.orderid);
@@ -557,6 +558,7 @@ namespace InventoryWeb.Controllers
             return Json(new { data = retrievals }, JsonRequestBehavior.AllowGet);
 
         }
+
         [HttpGet]
         public JsonResult GetDisbursements()
         {
@@ -838,7 +840,7 @@ namespace InventoryWeb.Controllers
         {
             public string itemDescription { get; set; }
             public string quantityPicked { get; set; }
-        public string remarks { get; set; }
+            public string remarks { get; set; }
         }
 
 
@@ -905,23 +907,23 @@ namespace InventoryWeb.Controllers
 
         public class DisbursementListItems
         {
-        public string itemDescription { get; set; }
-        public string quantity { get; set; }
-        public string uom { get; set; }
-        public string orderid { get; set; }
+            public string itemDescription { get; set; }
+            public string quantity { get; set; }
+            public string uom { get; set; }
+            public string orderid { get; set; }
 
         }
 
         public class CancelPOList
         {
-        public string orderid { get; set; }
-        public string supplierID { get; set; }
-        public string totalPrice { get; set; }
-        public string purchaseDate { get; set; }
-        public string deliverAddress { get; set; }
-        public string orderBy { get; set; }
-        public string expectedDate { get; set; }
-        public string purchaseOrderStatus { get; set; }
+            public string orderid { get; set; }
+            public string supplierID { get; set; }
+            public string totalPrice { get; set; }
+            public string purchaseDate { get; set; }
+            public string deliverAddress { get; set; }
+            public string orderBy { get; set; }
+            public string expectedDate { get; set; }
+            public string purchaseOrderStatus { get; set; }
 
         }
 

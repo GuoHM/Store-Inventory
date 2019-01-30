@@ -84,5 +84,36 @@ namespace InventoryWeb.Controllers
             return View();
         }
 
+        public ActionResult ViewDisbursementList()
+        {   
+
+
+            return View();
+        }
+
+
+        [HttpGet]
+        public JsonResult getDisbursementList()
+        {
+            string userId = User.Identity.GetUserId();
+            DisbursementList disbursement = new DisbursementList();
+            List<Order> orders = disbursement.GetDisbursementByDepartment(userId);
+            List<Request> request = new List<Request>();
+            foreach (Order order in orders)
+            {
+                List<Request> req = disbursement.GetDisburementItemsByDepartment(order.OrderID);
+                request.AddRange(req);
+            }
+
+            var data = request.Select(p => new
+            {
+                RequesterName = p.AspNetUsers.UserName,
+                ItemDescription = p.Catalogue.Description,
+                needed = p.Needed,
+                actual = p.Actual
+            }).ToList();
+
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
     }
 }

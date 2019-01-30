@@ -96,7 +96,8 @@ namespace InventoryBusinessLogic
 
         public void UpdateRetrievedQuantity(string itemDescription, string quantityPicked, string remarks)
         {
-            var requests = inventory.Request.Where(x => x.Catalogue.Description == itemDescription).OrderBy(y=>y.RequestDate).ToList();
+            var requests = inventory.Request.Where(x => x.Catalogue.Description == itemDescription && x.RequestStatus.Trim().ToUpper()=="APPROVED").OrderBy(y=>y.RequestDate).ToList();
+            var items = inventory.Catalogue.Where(x => x.Description == itemDescription).First();
             if (quantityPicked != null && quantityPicked!="")
             {
                 int quantity = Convert.ToInt32(quantityPicked);
@@ -104,6 +105,7 @@ namespace InventoryBusinessLogic
                 {
                     foreach (Request req in requests)
                     {
+                    
                         int tempActual = Convert.ToInt32(req.Actual);
                         if (req.Needed != req.Actual)
                         {
@@ -117,13 +119,18 @@ namespace InventoryBusinessLogic
                                 req.Actual = quantity + tempActual;
                                 // quantity = quantity - (Convert.ToInt32(req.Actual) - tempActual);
                                 quantity = 0;
+                               // break;
                             }
                         }
 
-
+                        if(quantity==0)
+                        {
+                            break;
+                        }
                     }
 
                 }
+                items.Quantity = items.Quantity - Convert.ToInt32(quantityPicked);
             }
 
             foreach(Request req in requests)
@@ -164,6 +171,11 @@ namespace InventoryBusinessLogic
                 inventory.SaveChanges();
 
             }
+        }
+
+        public List<Department> getDepartments()
+        {
+            return inventory.Department.ToList<Department>();
         }
 
 

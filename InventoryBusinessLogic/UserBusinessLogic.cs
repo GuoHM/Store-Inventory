@@ -43,8 +43,10 @@ namespace InventoryBusinessLogic
             AspNetUsers user2 = inventory.AspNetUsers.Where(P => P.UserType == "DeptRep" && P.DepartmentID.Substring(0,4) == user1.DepartmentID.Substring(0, 4)).First<AspNetUsers>();
             AspNetUserRoles role1 = inventory.AspNetUserRoles.Where(p => p.UserId == user1.Id).First();
             AspNetUserRoles role2 = inventory.AspNetUserRoles.Where(p => p.UserId == user2.Id).First();
+            Department dep1 = inventory.Department.Where(p => p.DepartmentID == user1.DepartmentID).First();
             user1.UserType = "DeptRep";
             user2.UserType = "DeptStaff";
+            dep1.DepartmentRep = user1.Id;
      
            
             inventory.AspNetUserRoles.Remove(role1);
@@ -73,8 +75,11 @@ namespace InventoryBusinessLogic
             AspNetUsers user2 = inventory.AspNetUsers.Where(P => P.UserType == "DeptHead" && P.DepartmentID.Substring(0,4) == user1.DepartmentID.Substring(0,4)).First<AspNetUsers>();
             AspNetUserRoles role1 = inventory.AspNetUserRoles.Where(p => p.UserId == user1.Id).First();
             AspNetUserRoles role2 = inventory.AspNetUserRoles.Where(p => p.UserId == user2.Id).First();
+            Department dep1 = inventory.Department.Where(p => p.DepartmentID == user1.DepartmentID).First();
+
             user1.UserType = "DeptHead";
             user2.UserType = "DeptStaff";
+            dep1.DepartmentHead = user1.Id;
 
 
             inventory.AspNetUserRoles.Remove(role1);
@@ -99,7 +104,13 @@ namespace InventoryBusinessLogic
         public List<Order> getDepSpendingHistory(DateTime date1,DateTime date2, string id)
         {
             AspNetUsers user1 = inventory.AspNetUsers.Where(x => x.Id == id).First<AspNetUsers>();
-            return inventory.Order.Where(x => x.DepartmentID==user1.DepartmentID && x.OrderDate >= date1 && x.OrderDate<= date2 ).ToList<Order>();
+            return inventory.Order.Where(x => x.DepartmentID.Substring(0,4)==user1.DepartmentID.Substring(0,4) && x.OrderDate >= date1 && x.OrderDate<= date2 ).ToList<Order>();
+        }
+
+        public List<Order> getOverallSpendingHistory(DateTime date1, DateTime date2, string id)
+        {
+            Department dep = inventory.Department.Where(x => x.DepartmentID.Substring(0,4) == id.Substring(0,4)).First<Department>();
+            return inventory.Order.Where(x => x.DepartmentID.Substring(0, 4) == dep.DepartmentID.Substring(0, 4) && x.OrderDate >= date1 && x.OrderDate <= date2).ToList<Order>();
         }
 
         public List<Catalogue> getAllCatalogue()

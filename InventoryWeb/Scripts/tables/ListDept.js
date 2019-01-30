@@ -13,7 +13,7 @@ var TableInit = function () {
     oTableInit.Init = function () {
         $('#SearchItemTable').bootstrapTable({
             method: 'get',
-            url: 'https://inventorywebapi2019.azurewebsites.net/api/department',
+            url: 'https://inventorywebapi2019.azurewebsites.net/api/Department',
             //toolbar: '#toolbar',                
             striped: true,
             cache: false,
@@ -58,7 +58,7 @@ var TableInit = function () {
                 title: 'Department Rep',
                 sortable: true,
                
-                    field: 'DepartmentRep',
+                    field: 'AspNetUsers.UserName',
                 //events: operateEvents,
                 // formatter: InputTextBox
             }, {
@@ -75,7 +75,7 @@ var TableInit = function () {
                 title: 'Department Head',
                 sortable: true,
                 
-                field: 'DepartmentHead',
+                field: 'AspNetUsers1.UserName',
                 //events: operateEvents,
                 // formatter: InputTextBox
             }

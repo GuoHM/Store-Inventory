@@ -55,7 +55,7 @@ var TableInit = function () {
 					title: 'Employee Name',
 					sortable: true,
 
-					field: 'AspNetUsers.UserName'
+					field: 'AspNetUsers1.UserName'
 				}, {
 					align: "center",
 					title: 'Requested Date',
@@ -117,7 +117,7 @@ var TableInit = function () {
 			adjustmentID = row.AdjustmentID;
 			requestedDate = row.Date;
 
-			reqesterName = row.AspNetUsers.UserName;
+			reqesterName = row.AspNetUsers1.UserName;
 			document.getElementById('requestDate').innerHTML = requestedDate;
 			document.getElementById('requestedBy').innerHTML = reqesterName;
 
@@ -271,7 +271,7 @@ function postData(approvalStatus) {
 		data: JSON.stringify(jsonlist),
 		success: function (data) {
 
-			if (data.approvalStatus == "Approved") {
+			if (data.approvalStatus === "Approved") {
 				$('#successModal').modal('show');
 			}
 			else {

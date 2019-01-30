@@ -377,9 +377,6 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="ClassDiagram1.cd" />
-    <Content Include="ClassDiagram2.cd" />
-    <Content Include="ClassDiagram3.cd" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Properties\PublishProfiles\Inventory123 - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\InventoryAandroid - Web Deploy.pubxml" />
@@ -387,6 +384,7 @@
     <None Include="Properties\PublishProfiles\InventoryAandroid - Web Deploy2.pubxml" />
     <None Include="Properties\PublishProfiles\InventoryWebXUMJ - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\LogicUniversityInventory - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\lusis - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\bootstrapValidator.min.js" />
     <Content Include="Scripts\HighCharts\annotations.js" />

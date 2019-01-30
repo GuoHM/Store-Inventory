@@ -105,7 +105,10 @@ var TableInit = function () {
         'click #view': function (e, value, row, index) {
          
             $("#ApproveRequestModal").modal('show');
+           
             orderid = row.OrderID;
+
+            orderid = orderid.replace(/\s/g, '');
             userid = row.AspNetUsers.UserName;
             
         
@@ -118,8 +121,8 @@ var TableInit = function () {
             var oTableInit = new TableInit1();
             oTableInit.Init();
 
-            $('#requests').bootstrapTable('refreshOptions', { url: 'https://inventorywebapi2019.azurewebsites.net//api/PendingRequest/' + orderid + '/' + userid});
-            $('#requests').bootstrapTable('refresh', { url: 'https://inventorywebapi2019.azurewebsites.net//api/PendingRequest/' + orderid + '/' + userid});
+            $('#requests').bootstrapTable('refreshOptions', { url: 'https://inventorywebapi2019.azurewebsites.net/api/PendingRequest/' + orderid + '/' + userid});
+            $('#requests').bootstrapTable('refresh', { url: 'https://inventorywebapi2019.azurewebsites.net/api/PendingRequest/' + orderid + '/' + userid});
 
             
         }
@@ -149,7 +152,7 @@ var TableInit1 = function () {
     oTableInit.Init = function () {
         $('#requests').bootstrapTable({            
             method: 'get',
-            url: 'https://inventorywebapi2019.azurewebsites.net//api/PendingRequest/' + orderid + '/' + userid,
+            url: 'https://inventorywebapi2019.azurewebsites.net/api/PendingRequest/' + orderid + '/' + userid,
             //toolbar: '#toolbar',                
             striped: true,
             cache: false,

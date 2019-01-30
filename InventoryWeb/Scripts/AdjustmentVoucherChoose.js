@@ -51,7 +51,7 @@ function confirm() {
               jsonlist.push(jsonObj);
             }           
     }
-    debugger;
+  
     if (hasDuplicated(jsonlist)) {
         alert('Cannot select duplicated item!');
         $("#saveAdjustment").attr("disabled", false);

@@ -24,6 +24,7 @@ namespace InventoryWeb.Controllers
         AdjustmentBusinessLogic adjustmentBusinessLogic = new AdjustmentBusinessLogic();
         AdjustmentItemBusinessLogic adjustmentItemBusinessLogic = new AdjustmentItemBusinessLogic();
         UserBusinessLogic userBusinessLogic = new UserBusinessLogic();
+        
 
         ManageRequestBusinessLogic manageRequests = new ManageRequestBusinessLogic();
 
@@ -31,6 +32,8 @@ namespace InventoryWeb.Controllers
         static List<orderlist> orders = new List<orderlist>();
         static List<Department> disbursementList = new List<Department>();
         static List<Request> req = new List<Request>();
+        OrderBusinessLogic orderbusinesslogic = new OrderBusinessLogic();
+       
         public ActionResult RaiseRequest()
         {
             return View();
@@ -49,6 +52,31 @@ namespace InventoryWeb.Controllers
         public ActionResult ManageInventory()
         {
             return View();
+        }
+        [HttpPost]
+        public string SaveImage()
+        {
+            //int bookid = id;
+            //int plenth = Request.Properties.Count;
+            MemoryStream m = new MemoryStream();
+            HttpContext.Request.InputStream.CopyTo(m);
+            byte[] v = m.ToArray();
+            var s = HttpContext.Request.QueryString;
+            int i = s.Count;
+            for(int j = 0; j < i; j++)
+            {
+                orderbusinesslogic.updateSignture(s.Get(j), v);
+            }
+            
+            return "success";
+        }
+
+        [HttpGet]
+        public string GetImage(string orderid)
+        {
+            byte[] b = orderbusinesslogic.getSignature(orderid);
+            Response.BinaryWrite(b);
+            return b.ToString();
         }
 
         public ActionResult UpdateInventoryBinNumber(string ItemID, string binNumber)
@@ -327,7 +355,7 @@ namespace InventoryWeb.Controllers
                 req.AddRange(disbursement.GetDisbursementList(department[0].deptName, req1));
             }
 
-            var data = req.Select(p => new { itemDescription = p.Catalogue.Description, quantity = p.Needed, uom = p.Catalogue.MeasureUnit }).ToList();
+            var data = req.Select(p => new { itemDescription = p.Catalogue.Description, quantity = p.Needed, uom = p.Catalogue.MeasureUnit,orderid=p.OrderID}).ToList();
 
 
             return Json(data, JsonRequestBehavior.AllowGet);
@@ -362,10 +390,10 @@ namespace InventoryWeb.Controllers
                             items.neededQuantity = Convert.ToString(needed);
                             alreadyexist = true;
 
-                            if (Convert.ToInt32(items.neededQuantity) > req.Catalogue.Quantity)
-                            {
-                                items.remarks = "Not enough Stock";
-                            }
+                            //if (Convert.ToInt32(items.neededQuantity) > req.Catalogue.Quantity)
+                            //{
+                            //    items.remarks = "Not enough Stock";
+                            //}
                             break;
                         }
 
@@ -404,7 +432,7 @@ namespace InventoryWeb.Controllers
         public JsonResult GetDisbursements()
         {
 
-            var data = req.Select(p => new { itemDescription = p.Catalogue.Description, quantity = p.Needed, uom = p.Catalogue.MeasureUnit }).ToList();
+            var data = req.Select(p => new { itemDescription = p.Catalogue.Description, quantity = p.Needed, uom = p.Catalogue.MeasureUnit,orderid = p.OrderID}).ToList();
 
 
             return Json(data, JsonRequestBehavior.AllowGet);
@@ -491,14 +519,16 @@ namespace InventoryWeb.Controllers
             return View();
 
         }
-        public void UpdateQuantity(List<orderIDList> purchaseIDList)
+        public bool UpdateQuantity(List<orderIDList> purchaseIDList)
         {
             foreach (orderIDList oId in purchaseIDList)
             {
 
                 int orderID = Convert.ToInt32(oId.orderid);
-                Boolean b =  catalogueBusinessLogic.UpdateCataloguesByPurchaseID(orderID);
+                 catalogueBusinessLogic.UpdateCataloguesByPurchaseID(orderID);
+                
             }
+            return true;
         }
         public JsonResult LowStock()
         {
@@ -645,16 +675,16 @@ namespace InventoryWeb.Controllers
                 {
                     if (item != null)
                     {
-                        catalogueBusinessLogic.UpdateRetrievedQuantity(item.itemDescription, item.quantityPicked);
+                        catalogueBusinessLogic.UpdateRetrievedQuantity(item.itemDescription, item.quantityPicked, item.remarks);
                     }
                 }
             }
-            EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
-            string content = emailBusinessLogic.LowStockNotification();
+            //EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
+            //string content = emailBusinessLogic.LowStockNotification();
 
-            List<string> toAddress = new List<string>();
-            toAddress.Add("wangxiaoxiaoqiang@gmail.com");
-            emailBusinessLogic.SendEmail("Team3", content, toAddress);
+            //List<string> toAddress = new List<string>();
+            //toAddress.Add("wangxiaoxiaoqiang@gmail.com");
+            //emailBusinessLogic.SendEmail("Team3", content, toAddress);
             catalogueBusinessLogic.ValidateOrderStatus();
 
             return new JsonResult();
@@ -662,7 +692,9 @@ namespace InventoryWeb.Controllers
         }
 
 
-        }
+    }
+
+    
 
         class PurchaseItemList
         {
@@ -677,6 +709,7 @@ namespace InventoryWeb.Controllers
         {
             public string itemDescription { get; set; }
             public string quantityPicked { get; set; }
+        public string remarks { get; set; }
         }
 
 
@@ -743,9 +776,10 @@ namespace InventoryWeb.Controllers
 
         public class DisbursementListItems
         {
-            public string itemDescription { get; set; }
-            public string quantity { get; set; }
-            public string uom { get; set; }
+        public string itemDescription { get; set; }
+        public string quantity { get; set; }
+        public string uom { get; set; }
+        public string orderid { get; set; }
 
         }
 
@@ -763,7 +797,7 @@ namespace InventoryWeb.Controllers
         }
 
 
-    }
+}
 
 
 

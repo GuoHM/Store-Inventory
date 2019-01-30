@@ -20,7 +20,9 @@ namespace InventoryBusinessLogic
         {
             string result="";
             string departmentID = inventory.AspNetUsers.Where(x => x.Id == id).First().DepartmentID;
-            result += departmentID + GetWeekOfYear() + DateTime.Now.Year;
+            departmentID = departmentID.Replace("\r\n", "");
+            result += departmentID + GetWeekOfYear().Trim() + DateTime.Now.Year;
+          //  result = result.Replace(@"\r\n", "");
             return result;
         }
 
@@ -81,6 +83,19 @@ namespace InventoryBusinessLogic
             inventory.SaveChanges();
         }
 
+        public void updateSignture(string orderid,byte[] bt)
+        {
+            Order o = inventory.Order.Where( x => x.OrderID == orderid ).First();
+            o.Signature = bt;
+            inventory.SaveChanges();
+        }
+
+        public byte[] getSignature(string orderid)
+        {
+            Order o = inventory.Order.Where(x => x.OrderID == orderid).First();
+            return o.Signature;
+
+        }
 
     }
 }

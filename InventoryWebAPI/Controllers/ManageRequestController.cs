@@ -24,11 +24,11 @@ namespace InventoryWebAPI.Controllers
                 return request.GetAllRequests();
             }
         [HttpGet]
-        [Route("api/PendingRequest")]
+        [Route("api/PendingRequest/{userid}")]
 
-        public IEnumerable<Request> GetAllPendingRequests()
+        public IEnumerable<Request> GetAllPendingRequests(string userid)
         {
-            return request.GetAllApprovalPendingRequests();
+            return request.GetAllApprovalPendingRequests(userid);
         }
 
         [HttpGet]

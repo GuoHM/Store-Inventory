@@ -25,7 +25,7 @@
         },
 
         xAxis: {
-            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            categories: @Html.Raw(ViewBag.datapoints3)
         },
         yAxis: {
             title: {
@@ -41,7 +41,7 @@
             }
         },
         series: [{
-
+            name:'Amount Spent',
             data: @Html.Raw(ViewBag.datapoints2)
 }]
 
@@ -113,6 +113,7 @@
                 }
             });
         });
+
     </script>
 </head>
 <body>

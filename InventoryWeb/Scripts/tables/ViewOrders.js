@@ -555,9 +555,8 @@ function openDisbursementList() {
     window.location.href = '/StoreClerk/DisbursementList';
 }
 
- function textboxValidation() {
-
-
+function textboxValidation() {
+   
     var tab = document.getElementById("RetrievalTable");
     var rows = tab.rows;
     var objInput = tab.getElementsByClassName("form-control");
@@ -565,17 +564,24 @@ function openDisbursementList() {
     for (var i = 1; i < rows.length; i++) {
         var quantityPicked = objInput[i - 1].value;
         var available = rows[i].cells[3].innerHTML;
-
+        var needed = rows[i].cells[2].innerHTML;
         if (quantityPicked !== null && quantityPicked !== "") {
-            if (quantityPicked >= 0) {
-                if (quantityPicked > available) {
+            if (Number(quantityPicked) >= 0) {
+                if (Number(quantityPicked) > Number(available)) {
                     alert("Can not pick more than available quantity");
                     verified = false;
-            }
+                    return false;
+                }
+                if (Number(quantityPicked) > Number(needed)) {
+                    alert("Can not pick more than needed quantity");
+                    verified = false;
+                    return false;
+                }
                 }
             else {
                 alert("Negative numbers not accepted");
                 verified = false;
+                return false;
             }
         }
 

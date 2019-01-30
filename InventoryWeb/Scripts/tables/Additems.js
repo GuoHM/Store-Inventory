@@ -127,7 +127,7 @@ var TableInit = function () {
 			return [
 				'<input type="button" id="view" value="View Details"onclick="ShowPurchaseDetails(this)"  class="btn btn-primary" />',
 
-				'<input type="button" id="view1" value="Cancel PurchaseOrder"onclick="Cancel PO(this)"  class="btn btn-info" />'
+				'<input type="button" id="view1" value="Cancel PO"onclick="Cancel PO(this)"  class="btn btn-warning" />'
 			].join('');
 		
 	}
@@ -170,8 +170,8 @@ var TableInit = function () {
 				"purchaseOrderStatus": purchaseOrderStatus,
 
 			};
-			if (purchaseOrderStatus === "Fulfilled           ") {
-				alert("Cannot cancel fulfilled request");
+			if ((purchaseOrderStatus === "Fulfilled           ") || (purchaseOrderStatus === "Cancel              ")){
+				alert("Cannot cancel fulfilled or cancelled request");
 			}
 			else {
 				PurchaseOrder1.push(jsonobj);
@@ -185,10 +185,11 @@ var TableInit = function () {
 					data: JSON.stringify(PurchaseOrder1),
 					//data: jsonobj
 					success: function (data) {
-						alert(data);
+						
 					},
 					error: function (result) {
-						alert(result);
+						//alert(result);
+						$("#successModal").modal('show');
 					}
 
 				});

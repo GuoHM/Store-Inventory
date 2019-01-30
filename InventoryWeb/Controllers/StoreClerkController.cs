@@ -72,157 +72,28 @@ namespace InventoryWeb.Controllers
 
         public ActionResult ChargeBackReport(DateTime date1, DateTime date2)
         {
-            List<Order> orderList = catalogueBusinessLogic.depSpendings(date1, date2);
+            
+            List<Department> dep = catalogueBusinessLogic.getDepartments();
+            ReportsController depManager = new ReportsController();
+           
 
-            decimal[] SCI = new decimal[12];
-            decimal[] COMM = new decimal[12];
-            decimal[] CPSC = new decimal[12];
-            decimal[] ENGL = new decimal[12];
-            decimal[] REGR = new decimal[12];
-            decimal[] ZOOL = new decimal[12];
-
-
-            for (int i = 0; i < orderList.Count; i++)
+            foreach (Department d in dep)
             {
-                string department = orderList[i].DepartmentID;
-                DateTime myval = (DateTime)orderList[i].OrderDate;
-                string month = myval.Month.ToString();
-
-                if (month == "1")
-                {
-                    SCI[0] += (department == "1001") ? (decimal)orderList[i].TotalPrice : 0;
-                    COMM[0] += (department == "COMM\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    CPSC[0] += (department == "CPSC\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    ENGL[0] += (department == "ENGL\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    REGR[0] += (department == "REGR\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    ZOOL[0] += (department == "ZOOL\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                }
-                else if (month == "2")
-                {
-
-                    SCI[1] += (department == "1001") ? (decimal)orderList[i].TotalPrice : 0;
-                    COMM[1] += (department == "COMM\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    CPSC[1] += (department == "CPSC\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    ENGL[1] += (department == "ENGL\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    REGR[1] += (department == "REGR\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    ZOOL[1] += (department == "ZOOL\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                }
-                else if (month == "3")
-                {
-
-                    SCI[2] += (department == "1001") ? (decimal)orderList[i].TotalPrice : 0;
-                    COMM[2] += (department == "COMM\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    CPSC[2] += (department == "CPSC\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    ENGL[2] += (department == "ENGL\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    REGR[2] += (department == "REGR\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    ZOOL[2] += (department == "ZOOL\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                }
-
-                else if (month == "4")
-                {
-
-                    SCI[3] += (department == "1001") ? (decimal)orderList[i].TotalPrice : 0;
-                    COMM[3] += (department == "COMM\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    CPSC[3] += (department == "CPSC\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    ENGL[3] += (department == "ENGL\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    REGR[3] += (department == "REGR\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    ZOOL[3] += (department == "ZOOL\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                }
-
-                else if (month == "5")
-                {
-
-                    SCI[4] += (department == "1001") ? (decimal)orderList[i].TotalPrice : 0;
-                    COMM[4] += (department == "COMM\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    CPSC[4] += (department == "CPSC\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    ENGL[4] += (department == "ENGL\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    REGR[4] += (department == "REGR\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    ZOOL[4] += (department == "ZOOL\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                }
-
-                else if (month == "6")
-                {
-
-                    SCI[5] += (department == "1001") ? (decimal)orderList[i].TotalPrice : 0;
-                    COMM[5] += (department == "COMM\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    CPSC[5] += (department == "CPSC\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    ENGL[5] += (department == "ENGL\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    REGR[5] += (department == "REGR\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    ZOOL[5] += (department == "ZOOL\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                }
-
-                else if (month == "7")
-                {
-
-                    SCI[6] += (department == "1001") ? (decimal)orderList[i].TotalPrice : 0;
-                    COMM[6] += (department == "COMM\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    CPSC[6] += (department == "CPSC\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    ENGL[6] += (department == "ENGL\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    REGR[6] += (department == "REGR\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    ZOOL[6] += (department == "ZOOL\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                }
-
-                else if (month == "8")
-                {
-
-                    SCI[7] += (department == "1001") ? (decimal)orderList[i].TotalPrice : 0;
-                    COMM[7] += (department == "COMM\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    CPSC[7] += (department == "CPSC\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    ENGL[7] += (department == "ENGL\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    REGR[7] += (department == "REGR\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    ZOOL[7] += (department == "ZOOL\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                }
-                else if (month == "9")
-                {
-
-                    SCI[8] += (department == "1001") ? (decimal)orderList[i].TotalPrice : 0;
-                    COMM[8] += (department == "COMM\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    CPSC[8] += (department == "CPSC\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    ENGL[8] += (department == "ENGL\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    REGR[8] += (department == "REGR\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    ZOOL[8] += (department == "ZOOL\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                }
-                else if (month == "10")
-                {
-
-                    SCI[9] += (department == "1001") ? (decimal)orderList[i].TotalPrice : 0;
-                    COMM[9] += (department == "COMM\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    CPSC[9] += (department == "CPSC\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    ENGL[9] += (department == "ENGL\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    REGR[9] += (department == "REGR\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    ZOOL[9] += (department == "ZOOL\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                }
-                else if (month == "11")
-                {
-
-                    SCI[10] += (department == "1001") ? (decimal)orderList[i].TotalPrice : 0;
-                    COMM[10] += (department == "COMM\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    CPSC[10] += (department == "CPSC\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    ENGL[10] += (department == "ENGL\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    REGR[10] += (department == "REGR\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    ZOOL[10] += (department == "ZOOL\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                }
-
-                else
-                {
-
-                    SCI[11] += (department == "1001") ? (decimal)orderList[i].TotalPrice : 0;
-                    COMM[11] += (department == "COMM\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    CPSC[11] += (department == "CPSC\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    ENGL[11] += (department == "ENGL\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    REGR[11] += (department == "REGR\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    ZOOL[11] += (department == "ZOOL\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                }
-
+               depManager.spendingHistorytwo(date1, date2, d.DepartmentID);
             }
 
-            ViewBag.datapoints2 = JsonConvert.SerializeObject(SCI);
-            ViewBag.datapoints3 = JsonConvert.SerializeObject(COMM);
-            ViewBag.datapoints4 = JsonConvert.SerializeObject(CPSC);
-            ViewBag.datapoints5 = JsonConvert.SerializeObject(ENGL);
-            ViewBag.datapoints6 = JsonConvert.SerializeObject(REGR);
-            ViewBag.datapoints7 = JsonConvert.SerializeObject(ZOOL);
+            ViewBag.dataSCI = JsonConvert.SerializeObject(depManager.dataSCI);
+            ViewBag.dataCOMM = JsonConvert.SerializeObject(depManager.dataCOMM);
+            ViewBag.dataCPSC = JsonConvert.SerializeObject(depManager.dataCPSC);
+            ViewBag.dataENGL = JsonConvert.SerializeObject(depManager.dataENGL);
+            ViewBag.dataREGR = JsonConvert.SerializeObject(depManager.dataREGR);
+            ViewBag.dataZOOL = JsonConvert.SerializeObject(depManager.dataZOOL);
+            ViewBag.months = JsonConvert.SerializeObject(depManager.datamonths);
             return View("generateChargeBack");
+
+
+
+
         }
 
         public ActionResult trenAnalysisByItems()

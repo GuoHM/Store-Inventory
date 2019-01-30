@@ -102,6 +102,12 @@ namespace InventoryBusinessLogic
             return inventory.Order.Where(x => x.DepartmentID.Substring(0,4)==user1.DepartmentID.Substring(0,4) && x.OrderDate >= date1 && x.OrderDate<= date2 ).ToList<Order>();
         }
 
+        public List<Order> getOverallSpendingHistory(DateTime date1, DateTime date2, string id)
+        {
+            Department dep = inventory.Department.Where(x => x.DepartmentID.Substring(0,4) == id.Substring(0,4)).First<Department>();
+            return inventory.Order.Where(x => x.DepartmentID.Substring(0, 4) == dep.DepartmentID.Substring(0, 4) && x.OrderDate >= date1 && x.OrderDate <= date2).ToList<Order>();
+        }
+
         public List<Catalogue> getAllCatalogue()
         {
             return inventory.Catalogue.ToList<Catalogue>();

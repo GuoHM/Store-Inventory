@@ -157,6 +157,11 @@ namespace InventoryBusinessLogic
             }
         }
 
+        public List<Department> getDepartments()
+        {
+            return inventory.Department.ToList<Department>();
+        }
+
 
 
 

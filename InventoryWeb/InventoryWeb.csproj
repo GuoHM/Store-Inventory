@@ -498,7 +498,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\DepManager\Images\" />
-    <Folder Include="Views\Request\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

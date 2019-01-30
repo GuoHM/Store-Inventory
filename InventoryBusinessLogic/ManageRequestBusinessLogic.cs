@@ -128,9 +128,10 @@ namespace InventoryBusinessLogic
 
         }
 
-        public List<Request> GetAllApprovalPendingRequests()
+        public List<Request> GetAllApprovalPendingRequests(string userid)
         {
-            List<Request> req = inventory.Request.Where(x => (x.RequestStatus).ToUpper().Trim() == "UNAPPROVED").ToList();
+            AspNetUsers dept = inventory.AspNetUsers.Where(x => x.Id == userid).First();
+            List<Request> req = inventory.Request.Where(x => (x.RequestStatus).ToUpper().Trim() == "UNAPPROVED" && x.OrderID.Substring(0,4) ==dept.DepartmentID.Substring(0,4)).ToList();
             List<Request> orders = new List<Request>();
 
 
@@ -142,10 +143,18 @@ namespace InventoryBusinessLogic
                     orders.Add(req1);
                 }
             }
-            //if(!order.Any(x=>x.OrderID==req1.OrderID && x.Request.))
-            //}
+
+            foreach (Request req2 in orders)
+            {
+                 string input = Convert.ToString(req2.RequestDate);
+
+                //  DateTime dt = DateTime.ParseExact(Convert.ToString(req2.RequestDate), "MM/dd/yy", System.Globalization.CultureInfo.InvariantCulture);
+
+                string date = req2.RequestDate.Value.ToString("yyyyMMdd HH:mm tt");
+                req2.RequestDate = DateTime.ParseExact(date, "yyyyMMdd HH:mm tt", System.Globalization.CultureInfo.InvariantCulture);
+            }
             return orders;
-            //return inventory.Request.ToList();
+           
 
         }
 

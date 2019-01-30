@@ -13,11 +13,11 @@ var userid = "";
 var requestid = "";
 var TableInit = function () {
     var oTableInit = new Object();
-
+    var userid = document.getElementById('userid').textContent;
     oTableInit.Init = function () {
         $('#SearchItemTable').bootstrapTable({
             method: 'get',
-            url: 'https://inventorywebapi2019.azurewebsites.net/api/PendingRequest',
+            url: 'https://inventorywebapi2019.azurewebsites.net/api/PendingRequest/' + userid,
             //toolbar: '#toolbar',                
             striped: true,
             cache: false,
@@ -110,9 +110,11 @@ var TableInit = function () {
 
             orderid = orderid.replace(/\s/g, '');
             userid = row.AspNetUsers.UserName;
-            
+
+            var date = row.RequestDate;
         
-            requestedDate = row.RequestDate;
+           // requestedDate = row.RequestDate;
+            requestedDate = new Date(date).toLocaleDateString();
             reqesterName = row.AspNetUsers.UserName;
             document.getElementById('requestDate').innerHTML = requestedDate;
             document.getElementById('requestedBy').innerHTML = reqesterName;
@@ -253,6 +255,16 @@ function postData(approvalStatus) {
         
         var jsonObj = { "orderId": rows[i].cells[1].innerHTML, "requestStatus": approvalStatus, "remarks": remarks };
         jsonlist[i-1] = jsonObj;
+    }
+
+    var tab = document.getElementById("successModal");
+    debugger;
+    var objCheckBox = tab.getElementsByClassName('message');
+    if (approvalStatus == "Rejected") {
+        objCheckBox[0].innerHTML = "Rejected";
+    }
+    else {
+        objCheckBox[0].innerHTML = "Approved";
     }
     //alert(JSON.stringify(jsonlist));
     $.ajax({

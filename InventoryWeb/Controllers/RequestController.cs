@@ -52,7 +52,7 @@ namespace InventoryWeb.Controllers
                         orderBusinessLogic.updateOrder(order);
                     }
                     Request request = manageRequestBusinessLogic.GetRequestsByOrderAndItem(orderid, catalogue.ItemID);
-                    if (request == null || request.RequestStatus == "Reject")
+                    if (request == null || request.RequestStatus.ToUpper() == "REJECTED" || request.RequestStatus.ToUpper()=="APPROVED")
                     {
                         //1.no exist item in request, insert one
                         //2.exist but reject before, than create new request

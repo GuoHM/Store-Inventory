@@ -67,7 +67,9 @@ namespace InventoryWeb.Controllers
 
         public ActionResult ApproveOrReject()
         {
-               return View();
+            string userId = User.Identity.GetUserId();
+            ViewBag.userID = userId;
+            return View();
         }
 
         //public ActionResult SaveRequestStatus(int reqID, string reqStatus)

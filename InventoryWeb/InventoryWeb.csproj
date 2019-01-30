@@ -493,11 +493,11 @@
     <Content Include="Views\Staff\ViewRequest.cshtml" />
     <Content Include="Views\DepManager\dashBoard.cshtml" />
     <Content Include="Views\DepRepresentative\ViewDisbursementList.cshtml" />
+    <Content Include="Views\StoreSupervisor\RequsitionRequest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\DepManager\Images\" />
-    <Folder Include="Views\Request\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

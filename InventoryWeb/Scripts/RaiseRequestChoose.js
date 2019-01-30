@@ -27,6 +27,11 @@ function postData() {
     $("#btnConfirm").attr("disabled", true);
     var tab = document.getElementById("ItemAddedTable");
     var rows = tab.rows;
+    if (ItemAddedTable.rows[1].cells[0].innerHTML == "No matching records found") {
+        $("#btnConfirm").attr("disabled", false);
+        alert("Please select a item!");
+        return;
+    }
     var jsonlist = new Array(rows.length - 1);
     for (var i = 1; i < rows.length; i++) {  
         var jsonObj = { "description": rows[i].cells[0].innerHTML, "quantity": rows[i].cells[1].innerHTML};

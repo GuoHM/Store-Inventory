@@ -216,12 +216,19 @@ namespace InventoryWeb.Controllers
             var data = req.Select(p => new { itemDescription = p.Catalogue.Description, quantity = p.Needed, uom = p.Catalogue.MeasureUnit,orderid=p.OrderID}).ToList();
 
 
-            return Json(data, JsonRequestBehavior.AllowGet);
+            JsonResult json =  Json(data, JsonRequestBehavior.AllowGet);
+            return json;
             // var data  = req.Select(p => new { itemDescription = p.Catalogue.Description, quantity = p.Needed, uom=p.Catalogue.MeasureUnit });
 
 
             //return Json(data, JsonRequestBehavior.AllowGet);
             // return Json(new { redirecturl = "DisbursementList" }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetSignature()
+        {
+            var data = req.Select(p => new { signature = p.Order.Signature }).ToList();
+            return Json(data[0], JsonRequestBehavior.AllowGet);
         }
 
 

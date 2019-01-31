@@ -65,7 +65,7 @@ namespace InventoryBusinessLogic
             //}
 
 
-            return inventory.Request.Where(x => ((x.RequestStatus).ToUpper().Trim() == "APPROVED") && (x.Needed != 0)).ToList();
+            return inventory.Request.Where(x => ((x.RequestStatus).ToUpper().Trim() == "APPROVED") && (x.Needed != x.Actual)).ToList();
         }
 
         
@@ -122,12 +122,14 @@ namespace InventoryBusinessLogic
             update.Needed = request.Needed;
             inventory.SaveChanges();
         }
+
+       
         public List<Request> getAllStationeryRequest(string userId)
         {
-            return inventory.Request.Where(x => x.UserID == userId).ToList();
+            return inventory.Request.Where(x => x.UserID == userId).GroupBy(x => new { x.OrderID, x.RequestStatus }).Select(x => x.FirstOrDefault()).ToList();
 
         }
-
+      
         public List<Request> GetAllApprovalPendingRequests(string userid)
         {
             AspNetUsers dept = inventory.AspNetUsers.Where(x => x.Id == userid).First();
@@ -144,15 +146,7 @@ namespace InventoryBusinessLogic
                 }
             }
 
-            foreach (Request req2 in orders)
-            {
-                 string input = Convert.ToString(req2.RequestDate);
-
-                //  DateTime dt = DateTime.ParseExact(Convert.ToString(req2.RequestDate), "MM/dd/yy", System.Globalization.CultureInfo.InvariantCulture);
-
-                string date = req2.RequestDate.Value.ToString("yyyyMMdd HH:mm tt");
-                req2.RequestDate = DateTime.ParseExact(date, "yyyyMMdd HH:mm tt", System.Globalization.CultureInfo.InvariantCulture);
-            }
+            
             return orders;
            
 
@@ -170,9 +164,9 @@ namespace InventoryBusinessLogic
             }
         }
 
-        public List<Request> getStationaryOrderByID(string orderId)
+        public List<Request> getStationaryOrderByID(string orderId, string userid, string status)
         {
-            return inventory.Request.Where(x => x.OrderID == orderId).ToList();
+            return inventory.Request.Where(x => x.OrderID == orderId && x.UserID==userid && x.RequestStatus.Trim()==status.Trim()).ToList();
 
         }
 
@@ -182,6 +176,15 @@ namespace InventoryBusinessLogic
 
 
 
+    }
+
+
+    public class RequestList
+    {
+        public string OrderID { get; set; }
+        public string RequestDate { get; set; }
+        public string UserID { get; set; }
+        public string RequestStatus { get; set; }
     }
 }
 

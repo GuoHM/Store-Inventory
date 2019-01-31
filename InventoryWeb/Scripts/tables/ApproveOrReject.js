@@ -250,10 +250,11 @@ function postData(approvalStatus) {
     var tab = document.getElementById("requests");
     var rows = tab.rows;
     var remarks = document.getElementById('remarks').value;
+    debugger;
     var jsonlist = new Array(rows.length - 1);
     for (var i = 1; i < rows.length; i++) {
         
-        var jsonObj = { "orderId": rows[i].cells[1].innerHTML, "requestStatus": approvalStatus, "remarks": remarks };
+        var jsonObj = { "orderId": rows[i].cells[1].innerHTML, "requestStatus": approvalStatus, "reason": remarks };
         jsonlist[i-1] = jsonObj;
     }
 

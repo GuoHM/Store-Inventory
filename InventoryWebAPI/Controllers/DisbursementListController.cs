@@ -17,7 +17,7 @@ namespace InventoryWebAPI.Controllers
         [HttpGet]
         [Route("api/Disbursement/{orderID}")]
 
-        public List<Department> GetDisbursementByOrderID(string orderID)
+        public List<Department> GetDisbursementByOrderID(int orderID)
         {
             return dl.GetDisbursements(orderID);
         }

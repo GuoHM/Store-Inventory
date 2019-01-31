@@ -497,6 +497,12 @@
     <Content Include="Views\DepManager\dashBoard.cshtml" />
     <Content Include="Views\DepRepresentative\ViewDisbursementList.cshtml" />
     <Content Include="Views\StoreSupervisor\RequsitionRequest.cshtml" />
+    <Content Include="Views\StoreSupervisor\generateChargeBack.cshtml" />
+    <Content Include="Views\StoreSupervisor\trenAnalysisByItems.cshtml" />
+    <Content Include="Views\StoreSupervisor\ChargeBackReport.cshtml" />
+    <Content Include="Views\StoreManager\ChargeBackReport.cshtml" />
+    <Content Include="Views\StoreManager\generateChargeBack.cshtml" />
+    <Content Include="Views\StoreManager\trenAnalysisByItems.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

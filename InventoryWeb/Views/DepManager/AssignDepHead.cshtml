@@ -160,10 +160,18 @@
             var y = document.forms["myForm"]["date2"].value;
             var startDate = new Date($("#date1").val());
             var endDate = new Date($("#date2").val());
+            var curDate = new Date();
+            
+           
 
             if (x == "" || y == "")
             {
                 alert("Start date or End date is empty")
+            }
+
+            else if (startDate < curDate)
+            {
+                alert("Start Date is less than todays Date")
             }
          
             else if (endDate <= startDate) {

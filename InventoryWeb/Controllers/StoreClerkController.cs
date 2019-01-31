@@ -24,13 +24,19 @@ namespace InventoryWeb.Controllers
         AdjustmentBusinessLogic adjustmentBusinessLogic = new AdjustmentBusinessLogic();
         AdjustmentItemBusinessLogic adjustmentItemBusinessLogic = new AdjustmentItemBusinessLogic();
         UserBusinessLogic userBusinessLogic = new UserBusinessLogic();
-
+        public static List<Request> reqBackup = new List<Request>();
+        public static List<Request> requestBackup = new List<Request>();
         ManageRequestBusinessLogic manageRequests = new ManageRequestBusinessLogic();
 
         static List<RetrievalList> retrievals = new List<RetrievalList>();
         static List<orderlist> orders = new List<orderlist>();
         static List<Department> disbursementList = new List<Department>();
         static List<Request> req = new List<Request>();
+        OrderBusinessLogic orderbusinesslogic = new OrderBusinessLogic();
+        static bool retrivalRequest = false;
+
+        public static List<int> updateRequest = new List<int>();
+
         public ActionResult RaiseRequest()
         {
             return View();
@@ -49,6 +55,31 @@ namespace InventoryWeb.Controllers
         public ActionResult ManageInventory()
         {
             return View();
+        }
+        [HttpPost]
+        public string SaveImage()
+        {
+            //int bookid = id;
+            //int plenth = Request.Properties.Count;
+            MemoryStream m = new MemoryStream();
+            HttpContext.Request.InputStream.CopyTo(m);
+            byte[] v = m.ToArray();
+            var s = HttpContext.Request.QueryString;
+            int i = s.Count;
+            for(int j = 0; j < i; j++)
+            {
+                orderbusinesslogic.updateSignture(s.Get(j), v);
+            }
+            
+            return "success";
+        }
+
+        [HttpGet]
+        public string GetImage(string orderid)
+        {
+            byte[] b = orderbusinesslogic.getSignature(orderid);
+            Response.BinaryWrite(b);
+            return b.ToString();
         }
 
         public ActionResult UpdateInventoryBinNumber(string ItemID, string binNumber)
@@ -72,157 +103,28 @@ namespace InventoryWeb.Controllers
 
         public ActionResult ChargeBackReport(DateTime date1, DateTime date2)
         {
-            List<Order> orderList = catalogueBusinessLogic.depSpendings(date1, date2);
+            
+            List<Department> dep = catalogueBusinessLogic.getDepartments();
+            ReportsController depManager = new ReportsController();
+           
 
-            decimal[] SCI = new decimal[12];
-            decimal[] COMM = new decimal[12];
-            decimal[] CPSC = new decimal[12];
-            decimal[] ENGL = new decimal[12];
-            decimal[] REGR = new decimal[12];
-            decimal[] ZOOL = new decimal[12];
-
-
-            for (int i = 0; i < orderList.Count; i++)
+            foreach (Department d in dep)
             {
-                string department = orderList[i].DepartmentID;
-                DateTime myval = (DateTime)orderList[i].OrderDate;
-                string month = myval.Month.ToString();
-
-                if (month == "1")
-                {
-                    SCI[0] += (department == "1001") ? (decimal)orderList[i].TotalPrice : 0;
-                    COMM[0] += (department == "COMM\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    CPSC[0] += (department == "CPSC\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    ENGL[0] += (department == "ENGL\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    REGR[0] += (department == "REGR\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    ZOOL[0] += (department == "ZOOL\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                }
-                else if (month == "2")
-                {
-
-                    SCI[1] += (department == "1001") ? (decimal)orderList[i].TotalPrice : 0;
-                    COMM[1] += (department == "COMM\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    CPSC[1] += (department == "CPSC\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    ENGL[1] += (department == "ENGL\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    REGR[1] += (department == "REGR\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    ZOOL[1] += (department == "ZOOL\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                }
-                else if (month == "3")
-                {
-
-                    SCI[2] += (department == "1001") ? (decimal)orderList[i].TotalPrice : 0;
-                    COMM[2] += (department == "COMM\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    CPSC[2] += (department == "CPSC\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    ENGL[2] += (department == "ENGL\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    REGR[2] += (department == "REGR\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    ZOOL[2] += (department == "ZOOL\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                }
-
-                else if (month == "4")
-                {
-
-                    SCI[3] += (department == "1001") ? (decimal)orderList[i].TotalPrice : 0;
-                    COMM[3] += (department == "COMM\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    CPSC[3] += (department == "CPSC\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    ENGL[3] += (department == "ENGL\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    REGR[3] += (department == "REGR\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    ZOOL[3] += (department == "ZOOL\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                }
-
-                else if (month == "5")
-                {
-
-                    SCI[4] += (department == "1001") ? (decimal)orderList[i].TotalPrice : 0;
-                    COMM[4] += (department == "COMM\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    CPSC[4] += (department == "CPSC\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    ENGL[4] += (department == "ENGL\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    REGR[4] += (department == "REGR\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    ZOOL[4] += (department == "ZOOL\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                }
-
-                else if (month == "6")
-                {
-
-                    SCI[5] += (department == "1001") ? (decimal)orderList[i].TotalPrice : 0;
-                    COMM[5] += (department == "COMM\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    CPSC[5] += (department == "CPSC\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    ENGL[5] += (department == "ENGL\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    REGR[5] += (department == "REGR\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    ZOOL[5] += (department == "ZOOL\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                }
-
-                else if (month == "7")
-                {
-
-                    SCI[6] += (department == "1001") ? (decimal)orderList[i].TotalPrice : 0;
-                    COMM[6] += (department == "COMM\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    CPSC[6] += (department == "CPSC\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    ENGL[6] += (department == "ENGL\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    REGR[6] += (department == "REGR\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    ZOOL[6] += (department == "ZOOL\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                }
-
-                else if (month == "8")
-                {
-
-                    SCI[7] += (department == "1001") ? (decimal)orderList[i].TotalPrice : 0;
-                    COMM[7] += (department == "COMM\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    CPSC[7] += (department == "CPSC\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    ENGL[7] += (department == "ENGL\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    REGR[7] += (department == "REGR\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    ZOOL[7] += (department == "ZOOL\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                }
-                else if (month == "9")
-                {
-
-                    SCI[8] += (department == "1001") ? (decimal)orderList[i].TotalPrice : 0;
-                    COMM[8] += (department == "COMM\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    CPSC[8] += (department == "CPSC\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    ENGL[8] += (department == "ENGL\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    REGR[8] += (department == "REGR\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    ZOOL[8] += (department == "ZOOL\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                }
-                else if (month == "10")
-                {
-
-                    SCI[9] += (department == "1001") ? (decimal)orderList[i].TotalPrice : 0;
-                    COMM[9] += (department == "COMM\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    CPSC[9] += (department == "CPSC\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    ENGL[9] += (department == "ENGL\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    REGR[9] += (department == "REGR\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    ZOOL[9] += (department == "ZOOL\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                }
-                else if (month == "11")
-                {
-
-                    SCI[10] += (department == "1001") ? (decimal)orderList[i].TotalPrice : 0;
-                    COMM[10] += (department == "COMM\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    CPSC[10] += (department == "CPSC\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    ENGL[10] += (department == "ENGL\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    REGR[10] += (department == "REGR\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    ZOOL[10] += (department == "ZOOL\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                }
-
-                else
-                {
-
-                    SCI[11] += (department == "1001") ? (decimal)orderList[i].TotalPrice : 0;
-                    COMM[11] += (department == "COMM\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    CPSC[11] += (department == "CPSC\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    ENGL[11] += (department == "ENGL\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    REGR[11] += (department == "REGR\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                    ZOOL[11] += (department == "ZOOL\r\n") ? (decimal)orderList[i].TotalPrice : 0;
-                }
-
+               depManager.spendingHistorytwo(date1, date2, d.DepartmentID);
             }
 
-            ViewBag.datapoints2 = JsonConvert.SerializeObject(SCI);
-            ViewBag.datapoints3 = JsonConvert.SerializeObject(COMM);
-            ViewBag.datapoints4 = JsonConvert.SerializeObject(CPSC);
-            ViewBag.datapoints5 = JsonConvert.SerializeObject(ENGL);
-            ViewBag.datapoints6 = JsonConvert.SerializeObject(REGR);
-            ViewBag.datapoints7 = JsonConvert.SerializeObject(ZOOL);
+            ViewBag.dataSCI = JsonConvert.SerializeObject(depManager.dataSCI);
+            ViewBag.dataCOMM = JsonConvert.SerializeObject(depManager.dataCOMM);
+            ViewBag.dataCPSC = JsonConvert.SerializeObject(depManager.dataCPSC);
+            ViewBag.dataENGL = JsonConvert.SerializeObject(depManager.dataENGL);
+            ViewBag.dataREGR = JsonConvert.SerializeObject(depManager.dataREGR);
+            ViewBag.dataZOOL = JsonConvert.SerializeObject(depManager.dataZOOL);
+            ViewBag.months = JsonConvert.SerializeObject(depManager.datamonths);
             return View("generateChargeBack");
+
+
+
+
         }
 
         public ActionResult trenAnalysisByItems()
@@ -234,167 +136,25 @@ namespace InventoryWeb.Controllers
 
         public ActionResult trenAnalysis(string dropDown1, DateTime date1, DateTime date2)
         {
-            Inventory inventory = new Inventory();
-            UserBusinessLogic BL = new UserBusinessLogic();
-            List<Request> req = BL.getRequestOrders(dropDown1, date1, date2);
+
+            List<Department> dep = catalogueBusinessLogic.getDepartments();
+            ReportsController depManager = new ReportsController();
 
 
-            int[] SCI = new int[12];
-            int[] COMM = new int[12];
-            int[] CPSC = new int[12];
-            int[] ENGL = new int[12];
-            int[] REGR = new int[12];
-            int[] ZOOL = new int[12];
-
-
-            for (int i = 0; i < req.Count; i++)
+            foreach (Department d in dep)
             {
-                string userID = req[i].UserID;
-                List<AspNetUsers> dep = inventory.AspNetUsers.Where(x => x.Id == userID).ToList<AspNetUsers>();
-                string department = dep[0].DepartmentID;
-                DateTime myval = (DateTime)req[i].RequestDate;
-                string month = myval.Month.ToString();
-
-
-                if (month == "1")
-                {
-
-                    SCI[0] += (department == "1001") ? (int)req[i].Needed : 0;
-                    COMM[0] += (department == "COMM\r\n") ? (int)req[i].Needed : 0;
-                    CPSC[0] += (department == "CPSC\r\n") ? (int)req[i].Needed : 0;
-                    ENGL[0] += (department == "ENGL\r\n") ? (int)req[i].Needed : 0;
-                    REGR[0] += (department == "REGR\r\n") ? (int)req[i].Needed : 0;
-                    ZOOL[0] += (department == "ZOOL\r\n") ? (int)req[i].Needed : 0;
-                }
-                else if (month == "2")
-                {
-
-                    SCI[1] += (department == "1001") ? (int)req[i].Needed : 0;
-                    COMM[1] += (department == "COMM\r\n") ? (int)req[i].Needed : 0;
-                    CPSC[1] += (department == "CPSC\r\n") ? (int)req[i].Needed : 0;
-                    ENGL[1] += (department == "ENGL\r\n") ? (int)req[i].Needed : 0;
-                    REGR[1] += (department == "REGR\r\n") ? (int)req[i].Needed : 0;
-                    ZOOL[1] += (department == "ZOOL\r\n") ? (int)req[i].Needed : 0;
-                }
-                else if (month == "3")
-                {
-
-                    SCI[2] += (department == "1001") ? (int)req[i].Needed : 0;
-                    COMM[2] += (department == "COMM\r\n") ? (int)req[i].Needed : 0;
-                    CPSC[2] += (department == "CPSC\r\n") ? (int)req[i].Needed : 0;
-                    ENGL[2] += (department == "ENGL\r\n") ? (int)req[i].Needed : 0;
-                    REGR[2] += (department == "REGR\r\n") ? (int)req[i].Needed : 0;
-                    ZOOL[2] += (department == "ZOOL\r\n") ? (int)req[i].Needed : 0;
-                }
-
-                else if (month == "4")
-                {
-
-                    SCI[3] += (department == "1001") ? (int)req[i].Needed : 0;
-                    COMM[3] += (department == "COMM\r\n") ? (int)req[i].Needed : 0;
-                    CPSC[3] += (department == "CPSC\r\n") ? (int)req[i].Needed : 0;
-                    ENGL[3] += (department == "ENGL\r\n") ? (int)req[i].Needed : 0;
-                    REGR[3] += (department == "REGR\r\n") ? (int)req[i].Needed : 0;
-                    ZOOL[3] += (department == "ZOOL\r\n") ? (int)req[i].Needed : 0;
-                }
-
-                else if (month == "5")
-                {
-
-                    SCI[4] += (department == "1001") ? (int)req[i].Needed : 0;
-                    COMM[4] += (department == "COMM\r\n") ? (int)req[i].Needed : 0;
-                    CPSC[4] += (department == "CPSC\r\n") ? (int)req[i].Needed : 0;
-                    ENGL[4] += (department == "ENGL\r\n") ? (int)req[i].Needed : 0;
-                    REGR[4] += (department == "REGR\r\n") ? (int)req[i].Needed : 0;
-                    ZOOL[4] += (department == "ZOOL\r\n") ? (int)req[i].Needed : 0;
-                }
-
-                else if (month == "6")
-                {
-
-                    SCI[5] += (department == "1001") ? (int)req[i].Needed : 0;
-                    COMM[5] += (department == "COMM\r\n") ? (int)req[i].Needed : 0;
-                    CPSC[5] += (department == "CPSC\r\n") ? (int)req[i].Needed : 0;
-                    ENGL[5] += (department == "ENGL\r\n") ? (int)req[i].Needed : 0;
-                    REGR[5] += (department == "REGR\r\n") ? (int)req[i].Needed : 0;
-                    ZOOL[5] += (department == "ZOOL\r\n") ? (int)req[i].Needed : 0;
-                }
-
-                else if (month == "7")
-                {
-
-                    SCI[6] += (department == "1001") ? (int)req[i].Needed : 0;
-                    COMM[6] += (department == "COMM\r\n") ? (int)req[i].Needed : 0;
-                    CPSC[6] += (department == "CPSC\r\n") ? (int)req[i].Needed : 0;
-                    ENGL[6] += (department == "ENGL\r\n") ? (int)req[i].Needed : 0;
-                    REGR[6] += (department == "REGR\r\n") ? (int)req[i].Needed : 0;
-                    ZOOL[6] += (department == "ZOOL\r\n") ? (int)req[i].Needed : 0;
-                }
-
-                else if (month == "8")
-                {
-
-                    SCI[7] += (department == "1001") ? (int)req[i].Needed : 0;
-                    COMM[7] += (department == "COMM\r\n") ? (int)req[i].Needed : 0;
-                    CPSC[7] += (department == "CPSC\r\n") ? (int)req[i].Needed : 0;
-                    ENGL[7] += (department == "ENGL\r\n") ? (int)req[i].Needed : 0;
-                    REGR[7] += (department == "REGR\r\n") ? (int)req[i].Needed : 0;
-                    ZOOL[7] += (department == "ZOOL\r\n") ? (int)req[i].Needed : 0;
-                }
-                else if (month == "9")
-                {
-
-                    SCI[8] += (department == "1001") ? (int)req[i].Needed : 0;
-                    COMM[8] += (department == "COMM\r\n") ? (int)req[i].Needed : 0;
-                    CPSC[8] += (department == "CPSC\r\n") ? (int)req[i].Needed : 0;
-                    ENGL[8] += (department == "ENGL\r\n") ? (int)req[i].Needed : 0;
-                    REGR[8] += (department == "REGR\r\n") ? (int)req[i].Needed : 0;
-                    ZOOL[8] += (department == "ZOOL\r\n") ? (int)req[i].Needed : 0;
-                }
-                else if (month == "10")
-                {
-
-                    SCI[9] += (department == "1001") ? (int)req[i].Needed : 0;
-                    COMM[9] += (department == "COMM\r\n") ? (int)req[i].Needed : 0;
-                    CPSC[9] += (department == "CPSC\r\n") ? (int)req[i].Needed : 0;
-                    ENGL[9] += (department == "ENGL\r\n") ? (int)req[i].Needed : 0;
-                    REGR[9] += (department == "REGR\r\n") ? (int)req[i].Needed : 0;
-                    ZOOL[9] += (department == "ZOOL\r\n") ? (int)req[i].Needed : 0;
-                }
-                else if (month == "11")
-                {
-
-                    SCI[10] += (department == "1001") ? (int)req[i].Needed : 0;
-                    COMM[10] += (department == "COMM\r\n") ? (int)req[i].Needed : 0;
-                    CPSC[10] += (department == "CPSC\r\n") ? (int)req[i].Needed : 0;
-                    ENGL[10] += (department == "ENGL\r\n") ? (int)req[i].Needed : 0;
-                    REGR[10] += (department == "REGR\r\n") ? (int)req[i].Needed : 0;
-                    ZOOL[10] += (department == "ZOOL\r\n") ? (int)req[i].Needed : 0;
-                }
-
-                else
-                {
-
-                    SCI[11] += (department == "1001") ? (int)req[i].Needed : 0;
-                    COMM[11] += (department == "COMM\r\n") ? (int)req[i].Needed : 0;
-                    CPSC[11] += (department == "CPSC\r\n") ? (int)req[i].Needed : 0;
-                    ENGL[11] += (department == "ENGL\r\n") ? (int)req[i].Needed : 0;
-                    REGR[11] += (department == "REGR\r\n") ? (int)req[i].Needed : 0;
-                    ZOOL[11] += (department == "ZOOL\r\n") ? (int)req[i].Needed : 0;
-                }
-
-
+                depManager.itemsDepSpendings(date1, date2, d.DepartmentID,dropDown1);
             }
 
-            ViewBag.datapoints2 = JsonConvert.SerializeObject(SCI);
-            ViewBag.datapoints3 = JsonConvert.SerializeObject(COMM);
-            ViewBag.datapoints4 = JsonConvert.SerializeObject(CPSC);
-            ViewBag.datapoints5 = JsonConvert.SerializeObject(ENGL);
-            ViewBag.datapoints6 = JsonConvert.SerializeObject(REGR);
-            ViewBag.datapoints7 = JsonConvert.SerializeObject(ZOOL);
+            ViewBag.dataSCI = JsonConvert.SerializeObject(depManager.dataSCI);
+            ViewBag.dataCOMM = JsonConvert.SerializeObject(depManager.dataCOMM);
+            ViewBag.dataCPSC = JsonConvert.SerializeObject(depManager.dataCPSC);
+            ViewBag.dataENGL = JsonConvert.SerializeObject(depManager.dataENGL);
+            ViewBag.dataREGR = JsonConvert.SerializeObject(depManager.dataREGR);
+            ViewBag.dataZOOL = JsonConvert.SerializeObject(depManager.dataZOOL);
+            ViewBag.months = JsonConvert.SerializeObject(depManager.datamonths);
             return View("ChargeBackReport");
-
-
+            
         }
         public ActionResult ListDept()
         {
@@ -408,8 +168,10 @@ namespace InventoryWeb.Controllers
 
         public ActionResult GetRetrievalData(List<RetrievalList> jsonlist3, List<orderlist> orderlist2)
         {
+            
             //orders = orderlist2;
             retrievals = jsonlist3;
+            retrivalRequest = true;
             return Json(new { redirecturl = "RetrievalForm" }, JsonRequestBehavior.AllowGet);
         }
 
@@ -418,9 +180,12 @@ namespace InventoryWeb.Controllers
         {
             disbursementList = new List<Department>();
             DisbursementList disbursement = new DisbursementList();
-            foreach (RetrievalList req1 in retrievals)
+            CatalogueBusinessLogic catalogue = new CatalogueBusinessLogic();
+            reqBackup = requestBackup;
+
+            foreach (int req1 in updateRequest)
             {
-                List<Department> dep = disbursement.GetDisbursements(req1.orderid);
+                List<Department> dep = disbursement.GetDisbursements(req1);
                 disbursementList.AddRange(dep);
 
             }
@@ -451,15 +216,23 @@ namespace InventoryWeb.Controllers
             DisbursementList disbursement = new DisbursementList();
             req = new List<Request>();
             var orderslist = retrievals.Select(p => p.orderid).Distinct().ToList();
-            foreach (var req1 in orderslist)
+          // reqBackup = CatalogueBusinessLogic.requestBackup;
+           
+            foreach (int req1 in updateRequest)
             {
                 req.AddRange(disbursement.GetDisbursementList(department[0].deptName, req1));
             }
 
-            var data = req.Select(p => new { itemDescription = p.Catalogue.Description, quantity = p.Needed, uom = p.Catalogue.MeasureUnit }).ToList();
+          
+            foreach(Request req1 in req)
+            {
+                Request request = reqBackup.Where(x => x.RequestID == req1.RequestID).First();
+                req1.Needed = req1.Actual - request.Actual;
+            }
+            var data = req.Select(p => new { itemDescription = p.Catalogue.Description, quantity = p.Needed, uom = p.Catalogue.MeasureUnit, orderid = p.OrderID }).ToList();
 
-
-            return Json(data, JsonRequestBehavior.AllowGet);
+            JsonResult json =  Json(data, JsonRequestBehavior.AllowGet);
+            return json;
             // var data  = req.Select(p => new { itemDescription = p.Catalogue.Description, quantity = p.Needed, uom=p.Catalogue.MeasureUnit });
 
 
@@ -467,13 +240,20 @@ namespace InventoryWeb.Controllers
             // return Json(new { redirecturl = "DisbursementList" }, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult GetSignature()
+        {
+            var data = req.Select(p => new { signature = p.Order.Signature }).ToList();
+            return Json(data[0], JsonRequestBehavior.AllowGet);
+        }
+
 
 
         [HttpGet]
         public JsonResult GetRetrievals()
         {
-            if (retrievals.Count == 0)
+            if (!retrivalRequest)
             {
+               
                 List<Request> allRequests = manageRequests.GetRetrievalItems();
                 //List<Request> allRequests = manageRequests.GetAllRequests();
                 List<RetrievalList> itemList = new List<RetrievalList>();
@@ -513,22 +293,24 @@ namespace InventoryWeb.Controllers
 
                 }
 
-                foreach (var item in itemList)
-                {
-                    item.neededQuantity = Convert.ToString(Convert.ToInt32(item.neededQuantity) - Convert.ToInt32(item.alreadyExisting));
+                //foreach (var item in itemList)
+                //{
+                //    item.neededQuantity = Convert.ToString(Convert.ToInt32(item.neededQuantity) - Convert.ToInt32(item.alreadyExisting));
 
-                }
-                var notneeded = itemList.Where(x => x.neededQuantity == "0").ToList();
-                foreach (var item in notneeded)
-                {
-                    itemList.Remove(item);
-                }
+                //}
+                //var notneeded = itemList.Where(x => x.neededQuantity == "0").ToList();
+                //foreach (var item in notneeded)
+                //{
+                //    itemList.Remove(item);
+                //}
                 retrievals = itemList;
-                retrievals = itemList;
+              
             }
+            retrivalRequest = false;
             return Json(new { data = retrievals }, JsonRequestBehavior.AllowGet);
 
         }
+
         [HttpGet]
         public JsonResult GetDisbursements()
         {
@@ -653,7 +435,7 @@ namespace InventoryWeb.Controllers
                 adjustment.TotalPrice = 0;
                 adjustment.Date = DateTime.Now;
                 adjustment.AdjustmentID = adjustmentBusinessLogic.generateAdjustmentID();
-                adjustment.AdjustmentStatus = "Unapprove";
+                adjustment.AdjustmentStatus = "Unapproved";
                 adjustmentBusinessLogic.addAdjustment(adjustment);
                 foreach (var item in list)
                 {
@@ -736,12 +518,12 @@ namespace InventoryWeb.Controllers
 
         }
 
-        public ActionResult ViewAllStationeryRequisitionsByOrderId(string orderId)
-        {
+        //public ActionResult ViewAllStationeryRequisitionsByOrderId(string orderId)
+        //{
 
-            new ManageRequestBusinessLogic().getStationaryOrderByID(orderId);
-            return View();
-        }
+        //    new ManageRequestBusinessLogic().getStationaryOrderByID(orderId);
+        //    return View();
+        //}
 
        
         public JsonResult UpdatePOStatusToCancel(List<CancelPOList> Po)
@@ -770,13 +552,16 @@ namespace InventoryWeb.Controllers
             var stream = sr.ReadToEnd();
             JavaScriptSerializer js = new JavaScriptSerializer();
             var list = js.Deserialize<List<InventoryList>>(stream);
+            Inventory inventory = new Inventory();
+            requestBackup = inventory.Request.Where(x => x.RequestStatus.Trim().ToUpper() == "APPROVED").OrderBy(y => y.RequestDate).ToList();
+
             if (list.Any())
             {
                 foreach (var item in list)
                 {
                     if (item != null)
                     {
-                        catalogueBusinessLogic.UpdateRetrievedQuantity(item.itemDescription, item.quantityPicked, item.remarks);
+                      updateRequest.AddRange(catalogueBusinessLogic.UpdateRetrievedQuantity(item.itemDescription, item.quantityPicked, item.remarks));
                     }
                 }
             }
@@ -792,8 +577,15 @@ namespace InventoryWeb.Controllers
 
         }
 
-
+        public ActionResult ViewLowStock()
+        {
+            return View();  
         }
+
+
+    }
+
+    
 
         class PurchaseItemList
         {
@@ -808,7 +600,7 @@ namespace InventoryWeb.Controllers
         {
             public string itemDescription { get; set; }
             public string quantityPicked { get; set; }
-        public string remarks { get; set; }
+            public string remarks { get; set; }
         }
 
 
@@ -873,30 +665,30 @@ namespace InventoryWeb.Controllers
             public string deptName { get; set; }
         }
 
-    public class DisbursementListItems
-    {
-        public string itemDescription { get; set; }
-        public string quantity { get; set; }
-        public string uom { get; set; }
-        public string orderid { get; set; }
+        public class DisbursementListItems
+        {
+            public string itemDescription { get; set; }
+            public string quantity { get; set; }
+            public string uom { get; set; }
+            public string orderid { get; set; }
 
         }
 
         public class CancelPOList
         {
-        public string orderid { get; set; }
-        public string supplierID { get; set; }
-        public string totalPrice { get; set; }
-        public string purchaseDate { get; set; }
-        public string deliverAddress { get; set; }
-        public string orderBy { get; set; }
-        public string expectedDate { get; set; }
-        public string purchaseOrderStatus { get; set; }
+            public string orderid { get; set; }
+            public string supplierID { get; set; }
+            public string totalPrice { get; set; }
+            public string purchaseDate { get; set; }
+            public string deliverAddress { get; set; }
+            public string orderBy { get; set; }
+            public string expectedDate { get; set; }
+            public string purchaseOrderStatus { get; set; }
 
         }
 
 
-    }
+}
 
 
 

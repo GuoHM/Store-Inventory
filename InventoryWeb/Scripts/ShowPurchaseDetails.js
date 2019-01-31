@@ -45,10 +45,8 @@ function UpdateQuantity() {
     var rows = tab.rows;
     var objCheckBox = tab.getElementsByClassName('checkbox');
     var purchaseIDList = new Array();
-    var isUnfulfill = false;
-
-            
-    debugger;
+    var isUnfulfill = false;            
+   
             for (var j = 0; j < objCheckBox.length; j++) {
                 if (objCheckBox[j].checked) {
 

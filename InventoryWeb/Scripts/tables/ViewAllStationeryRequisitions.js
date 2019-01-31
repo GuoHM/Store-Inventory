@@ -9,6 +9,7 @@
 var orderid = "";
 var requestedDate = "";
 var reqesterName = "";
+var requeststatus = "";
 var TableInit = function () {
 	var oTableInit = new Object();
 	var userid = document.getElementById('userid').textContent;
@@ -44,10 +45,10 @@ var TableInit = function () {
 			showColumns: true,
 			columns: [{
 				align: "center",
-				title: 'Request ID',
+				title: 'OrderID',
 				sortable: true,
 
-				field: 'RequestID'
+				field: 'OrderID'
 			}, {
 				align: "center",
 				title: 'Requested Date',
@@ -106,6 +107,7 @@ var TableInit = function () {
 			$("#ApproveRequestModal").modal('show');
 			orderid = row.OrderID;
 			requestedDate = row.RequestDate;
+			requeststatus = row.RequestStatus;
 			
 			document.getElementById('requestDate').innerHTML = requestedDate;
 			
@@ -114,9 +116,10 @@ var TableInit = function () {
 			var oTableInit = new TableInit1();
 			oTableInit.Init();
 
-			$('#requests').bootstrapTable('refreshOptions', { url: 'https://inventorywebapi2019.azurewebsites.net/api/StationaryItems/' + orderid });
-			$('#requests').bootstrapTable('refresh', { url: 'https://inventorywebapi2019.azurewebsites.net/api/StationaryItems/' + orderid });
-
+			
+			$('#requests').bootstrapTable('refreshOptions', { url: 'https://inventorywebapi2019.azurewebsites.net/api/StationaryItems/' + orderid + '/' + userid + '/' + requeststatus});
+			$('#requests').bootstrapTable('refresh', { url: 'https://inventorywebapi2019.azurewebsites.net/api/StationaryItems/' + orderid + '/' + userid + '/' + requeststatus});
+			
 
 		}
 	};
@@ -145,7 +148,7 @@ var TableInit1 = function () {
 	oTableInit.Init = function () {
 		$('#requests').bootstrapTable({
 			method: 'get',
-			url: 'https://inventorywebapi2019.azurewebsites.net/api/StationaryItems/' + orderid,
+			url: 'https://inventorywebapi2019.azurewebsites.net/api/StationaryItems/' + orderid +'/' + userid,
 			//toolbar: '#toolbar',                
 			striped: true,
 			cache: false,

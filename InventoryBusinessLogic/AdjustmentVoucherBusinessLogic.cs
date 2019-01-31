@@ -13,7 +13,7 @@ namespace InventoryBusinessLogic
 
         public List<Adjustment> getAllAdjustment(string userid)
         {
-            return inventory.Adjustment.Where(x => x.Supervisor == userid).ToList();
+            return inventory.Adjustment.Where(x => x.Supervisor == userid && (x.AdjustmentStatus).ToUpper().Trim() == "UNAPPROVED").ToList();
         }
         public List<AdjustmentList> getAllAdjItems(int adjustmentID)
         {
@@ -26,7 +26,7 @@ namespace InventoryBusinessLogic
                 ad.description = req1.Catalogue.Description;
                 ad.quantity = req1.Quantity;
                 ad.cost = req1.Catalogue.Price;
-                ad.totalcost = Convert.ToDouble(req1.Quantity) * Convert.ToDouble(req1.Catalogue.Price);
+                ad.totalcost = Math.Abs(Convert.ToDouble(req1.Quantity) * Convert.ToDouble(req1.Catalogue.Price));
                 ad.reason = req1.Reason;
                 adjustmentItem.Add(ad);
 

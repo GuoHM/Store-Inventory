@@ -58,7 +58,15 @@ namespace InventoryBusinessLogic
         {
 
             // return inventory.Order.Where(x=>x.Request.Any(y=>y.RequestStatus.Trim().ToUpper()=="APPROVED")).ToList();
-            return inventory.Order.Where(x => x.OrderStatus.ToUpper().Trim() == "APPROVED").ToList();
+            // return inventory.Order.Where(x => x.OrderStatus.ToUpper().Trim() == "APPROVED").ToList();
+           var reqs = inventory.Request.Where(x => x.RequestStatus.ToUpper().Trim() == "APPROVED").Select(x => x.OrderID).Distinct().ToList();
+            List<Order> orders = new List<Order>();
+            foreach(var req in reqs)
+            {
+                Order order = inventory.Order.Where(x => x.OrderID == req).First();
+                orders.Add(order);
+            }
+            return orders;
         }
 
         public List<Order> GetOrdersByStatus(string OrderStatus)
@@ -83,6 +91,20 @@ namespace InventoryBusinessLogic
             inventory.SaveChanges();
         }
 
+        public void updateSignture(string orderid,byte[] bt)
+        {
+            Order o = inventory.Order.Where( x => x.OrderID == orderid ).First();
+            o.Signature = bt;
+            o.OrderStatus = "Fulfilled";
+            inventory.SaveChanges();
+        }
+
+        public byte[] getSignature(string orderid)
+        {
+            Order o = inventory.Order.Where(x => x.OrderID == orderid).First();
+            return o.Signature;
+
+        }
 
     }
 }

@@ -72,6 +72,11 @@ var TableInit = function () {
                     formatter: price
                 }, {
                     align: "center",
+                    title: 'MeasureUnit',
+                    sortable: true,
+                    field: 'MeasureUnit'
+                }, {
+                    align: "center",
                     title: 'Supplier',
                     sortable: true,
                     field: 'Supplier1'
@@ -143,7 +148,11 @@ var TableInit = function () {
                 align: "center",
                 title: 'Total Price',
                     sortable: false
-            }, {
+                }, {
+                    align: "center",
+                    title: 'MeasureUnit',
+                    sortable: true
+                }, {
                 align: "center",
                 title: 'Supplier',
                     sortable: false

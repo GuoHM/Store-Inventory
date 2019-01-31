@@ -479,6 +479,7 @@ var TableInit2 = function () {
                     title: 'Quantity Picked',
                     sortable: true,
                     formatter: InputTextBox
+                 
                 },
           
 
@@ -538,7 +539,7 @@ var TableInit2 = function () {
         return row.Price;
 
     }
-
+   
 
     operateEvents = {
         'click #view': function (e, value, row, index) {
@@ -554,39 +555,80 @@ function openDisbursementList() {
     window.location.href = '/StoreClerk/DisbursementList';
 }
 
-function UpdateInventory() {
-    debugger;
+function textboxValidation() {
+   
     var tab = document.getElementById("RetrievalTable");
     var rows = tab.rows;
     var objInput = tab.getElementsByClassName("form-control");
-    var objRemarks = tab.getElementsByClassName("input-sm");
-    //var quantity = objInput[rows - 1].value;
-   var jsonlist = new Array(rows.length - 1);
+    var verified = true;
     for (var i = 1; i < rows.length; i++) {
-
-        if ((objInput[i - 1].value !== null && objInput[i - 1].value !== "") || (objRemarks[i-1].value !== null && objRemarks[i-1].value !== ""))
-        {
-            var jsonObj = { "itemDescription": rows[i].cells[1].innerHTML, "quantityPicked": objInput[i - 1].value, "remarks": objRemarks[i-1].value };
-            jsonlist[i - 1] = jsonObj;
+        var quantityPicked = objInput[i - 1].value;
+        var available = rows[i].cells[3].innerHTML;
+        var needed = rows[i].cells[2].innerHTML;
+        if (quantityPicked !== null && quantityPicked !== "") {
+            if (Number(quantityPicked) >= 0) {
+                if (Number(quantityPicked) > Number(available)) {
+                    alert("Can not pick more than available quantity");
+                    verified = false;
+                    return false;
+                }
+                if (Number(quantityPicked) > Number(needed)) {
+                    alert("Can not pick more than needed quantity");
+                    verified = false;
+                    return false;
+                }
+                }
+            else {
+                alert("Negative numbers not accepted");
+                verified = false;
+                return false;
+            }
         }
+
+    }
+    if (verified) {
+        return true;
+    }
+    else {
+        return false;
     }
 
-    $.ajax({
-        url: "/StoreClerk/UpdateInventory",
-        type: "post",
-        dataType: "text",
-        async: true,
-        data: JSON.stringify(jsonlist),
-        success: function (data) {
-            alert("Updated Successfully");
-        },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
-            alert(XMLHttpRequest.status);
-            alert(XMLHttpRequest.readyState);
-            alert(textStatus);
-        },
+}
 
-    });
+function UpdateInventory() {
+  
+    if (textboxValidation()) {
+        var tab = document.getElementById("RetrievalTable");
+        var rows = tab.rows;
+        var objInput = tab.getElementsByClassName("form-control");
+        var objRemarks = tab.getElementsByClassName("input-sm");
+        //var quantity = objInput[rows - 1].value;
+        var jsonlist = new Array(rows.length - 1);
+        for (var i = 1; i < rows.length; i++) {
+
+            if ((objInput[i - 1].value !== null && objInput[i - 1].value !== "") || (objRemarks[i - 1].value !== null && objRemarks[i - 1].value !== "")) {
+                var jsonObj = { "itemDescription": rows[i].cells[1].innerHTML, "quantityPicked": objInput[i - 1].value, "remarks": objRemarks[i - 1].value };
+                jsonlist[i - 1] = jsonObj;
+            }
+        }
+
+        $.ajax({
+            url: "/StoreClerk/UpdateInventory",
+            type: "post",
+            dataType: "text",
+            async: true,
+            data: JSON.stringify(jsonlist),
+            success: function (data) {
+                alert("Updated Successfully");
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert(XMLHttpRequest.status);
+                alert(XMLHttpRequest.readyState);
+                alert(textStatus);
+            },
+
+        });
+    }
 };
 
 

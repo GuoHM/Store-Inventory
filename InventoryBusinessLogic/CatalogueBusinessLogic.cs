@@ -10,6 +10,7 @@ namespace InventoryBusinessLogic
     public class CatalogueBusinessLogic
     {
         public Inventory inventory = new Inventory();
+   
         public  List<Catalogue> getAllCatalogue()
         {
             return inventory.Catalogue.ToList();
@@ -67,6 +68,8 @@ namespace InventoryBusinessLogic
             inventory.Configuration.ProxyCreationEnabled = false;
             return inventory.Catalogue.Where(x => x.Quantity <= x.ReorderLevel).ToList();
         }
+
+       
         public void UpdateInventory(string id, string editBinId)
         {
             Catalogue item1 = inventory.Catalogue.Where(P => P.ItemID == id).First<Catalogue>();
@@ -94,9 +97,11 @@ namespace InventoryBusinessLogic
         }
         
 
-        public void UpdateRetrievedQuantity(string itemDescription, string quantityPicked, string remarks)
+        public List<int> UpdateRetrievedQuantity(string itemDescription, string quantityPicked, string remarks)
         {
-            var requests = inventory.Request.Where(x => x.Catalogue.Description == itemDescription).OrderBy(y=>y.RequestDate).ToList();
+           var requests = inventory.Request.Where(x => x.Catalogue.Description == itemDescription && x.RequestStatus.Trim().ToUpper()=="APPROVED").OrderBy(y=>y.RequestDate).ToList();
+            var items = inventory.Catalogue.Where(x => x.Description == itemDescription).First();
+            List<int> updatedRequests = new List<int>();
             if (quantityPicked != null && quantityPicked!="")
             {
                 int quantity = Convert.ToInt32(quantityPicked);
@@ -104,26 +109,34 @@ namespace InventoryBusinessLogic
                 {
                     foreach (Request req in requests)
                     {
+                    
                         int tempActual = Convert.ToInt32(req.Actual);
                         if (req.Needed != req.Actual)
                         {
                             if (quantity >= (req.Needed - tempActual))
                             {
+                                updatedRequests.Add(req.RequestID);
                                 req.Actual = req.Needed;
                                 quantity = quantity - (Convert.ToInt32(req.Needed) - tempActual);
                             }
                             else
                             {
+                                updatedRequests.Add(req.RequestID);
                                 req.Actual = quantity + tempActual;
                                 // quantity = quantity - (Convert.ToInt32(req.Actual) - tempActual);
                                 quantity = 0;
+                               // break;
                             }
                         }
 
-
+                        if(quantity==0)
+                        {
+                            break;
+                        }
                     }
 
                 }
+                items.Quantity = items.Quantity - Convert.ToInt32(quantityPicked);
             }
 
             foreach(Request req in requests)
@@ -133,6 +146,7 @@ namespace InventoryBusinessLogic
 
 
             inventory.SaveChanges();
+            return updatedRequests;
         }
         public void ValidateOrderStatus()
         {
@@ -164,6 +178,11 @@ namespace InventoryBusinessLogic
                 inventory.SaveChanges();
 
             }
+        }
+
+        public List<Department> getDepartments()
+        {
+            return inventory.Department.ToList<Department>();
         }
 
 

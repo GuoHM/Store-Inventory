@@ -343,6 +343,7 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\RequestController.cs" />
     <Compile Include="Controllers\StaffController.cs" />
     <Compile Include="Controllers\StoreClerkController.cs" />
@@ -382,6 +383,8 @@
     <None Include="Properties\PublishProfiles\InventoryAandroid - Web Deploy1.pubxml" />
     <None Include="Properties\PublishProfiles\InventoryAandroid - Web Deploy2.pubxml" />
     <None Include="Properties\PublishProfiles\InventoryWebXUMJ - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\LogicUniversityInventory - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\lusis - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\bootstrapValidator.min.js" />
     <Content Include="Scripts\HighCharts\annotations.js" />
@@ -416,6 +419,7 @@
     <Content Include="Scripts\tables\ViewAllStationeryRequisitions.js" />
     <Content Include="Scripts\tables\ViewInventory.js" />
     <Content Include="Scripts\tables\RetrievalForm.js" />
+    <Content Include="Scripts\tables\ViewLowStock.js" />
     <Content Include="Scripts\tables\ViewOrders.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -493,11 +497,21 @@
     <Content Include="Views\Staff\ViewRequest.cshtml" />
     <Content Include="Views\DepManager\dashBoard.cshtml" />
     <Content Include="Views\DepRepresentative\ViewDisbursementList.cshtml" />
-    <Content Include="Views\StoreManager\PurchaseOrder.cshtml" />
+    <Content Include="Views\StoreSupervisor\RequsitionRequest.cshtml" />
+    <Content Include="Views\StoreSupervisor\generateChargeBack.cshtml" />
+    <Content Include="Views\StoreSupervisor\trenAnalysisByItems.cshtml" />
+    <Content Include="Views\StoreSupervisor\ChargeBackReport.cshtml" />
+    <Content Include="Views\StoreManager\ChargeBackReport.cshtml" />
+    <Content Include="Views\StoreManager\generateChargeBack.cshtml" />
+    <Content Include="Views\StoreManager\trenAnalysisByItems.cshtml" />
+    <Content Include="Views\StoreClerk\ViewLowStock.cshtml" />
+    <Content Include="Views\StoreSupervisor\ViewLowStock.cshtml" />
+    <Content Include="Views\StoreManager\ViewLowStock.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\DepManager\Images\" />
+    <Folder Include="Views\Reports\" />
     <Folder Include="Views\Request\" />
   </ItemGroup>
   <ItemGroup>

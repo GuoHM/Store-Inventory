@@ -130,7 +130,7 @@ namespace InventoryWeb.Controllers
                     }
                     else if (roles.Contains("DeptRep"))
                     {
-                        return RedirectToAction("Index", "DepRepresentative");
+                        return RedirectToAction("StationaryRequest", "DepRepresentative");
                     }
                     else if (roles.Contains("DeptHead"))
                     {

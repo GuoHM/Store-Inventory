@@ -17,6 +17,7 @@ namespace InventoryWeb.Controllers
     {
         UserBusinessLogic BL = new UserBusinessLogic();
         ManageRequestBusinessLogic req = new ManageRequestBusinessLogic();
+       
         // GET: DepManager
         public ActionResult Index()
         {
@@ -40,7 +41,7 @@ namespace InventoryWeb.Controllers
             //List<string> toAddress = new List<string>();
             //toAddress.Add("wangxiaoxiaoqiang@gmail.com");
             //emailBusinessLogic.SendEmail("Team3", content, toAddress);
-            return View("Index");
+            return RedirectToAction("AssignDepRep");
 
         }
 
@@ -60,13 +61,15 @@ namespace InventoryWeb.Controllers
             //List<string> toAddress = new List<string>();
             //toAddress.Add("wangxiaoxiaoqiang@gmail.com");
             //emailBusinessLogic.SendEmail("Team3", content, toAddress);
-            return View("Index");
-            
+            return RedirectToAction("AssignDepHead");
+
         }
 
         public ActionResult ApproveOrReject()
         {
-               return View();
+            string userId = User.Identity.GetUserId();
+            ViewBag.userID = userId;
+            return View();
         }
 
         //public ActionResult SaveRequestStatus(int reqID, string reqStatus)
@@ -108,95 +111,211 @@ namespace InventoryWeb.Controllers
 
         public ActionResult spendingHistory(DateTime date1,DateTime date2)
         {
+
             string userId = User.Identity.GetUserId();
             List<Order> spendings = BL.getDepSpendingHistory(date1,date2,userId);
-            decimal[] money = new decimal[12];
-           
+            List<Object> months = new List<Object>();
+            List<Object> secondmonths = new List<Object>();
+            List<Object> years = new List<object>();
             List<decimal> datapoints2 = new List<decimal>();
 
             for (int i = 0; i < spendings.Count; i++)
             {
                 DateTime myval = (DateTime)spendings[i].OrderDate;
                 string month = myval.Month.ToString();
+                string year = myval.Year.ToString();
+
 
                 if (month == "1")
                 {
+                    if (!(secondmonths.Contains(month+year)))
+                    {
+                        months.Add("Jan"+" "+year.Substring(2,2));
+                        secondmonths.Add(month + year);
+                        datapoints2.Add((decimal)spendings[i].TotalPrice);
+                    }
+                    else
+                    {
+                        datapoints2[datapoints2.Count - 1] += (decimal)spendings[i].TotalPrice;
 
-                    money[0] += (decimal)spendings[i].TotalPrice;
+                    }
+
                 }
+
                 else if (month == "2")
                 {
+                    if (!(secondmonths.Contains(month + year)))
+                    {
+                        months.Add("Feb" + " " + year.Substring(2, 2));
+                        secondmonths.Add(month + year);
+                        datapoints2.Add((decimal)spendings[i].TotalPrice);
+                    }
+                    else
+                    {
+                        datapoints2[datapoints2.Count - 1] += (decimal)spendings[i].TotalPrice;
 
-                    money[1] += (decimal)spendings[i].TotalPrice;
+                    }
                 }
                 else if (month == "3")
                 {
 
-                    money[2] += (decimal)spendings[i].TotalPrice;
+                    if (!(secondmonths.Contains(month + year)))
+                    {
+                        months.Add("Mar" + " " + year.Substring(2, 2));
+                        secondmonths.Add(month + year);
+                        datapoints2.Add((decimal)spendings[i].TotalPrice);
+                    }
+                    else
+                    {
+                        
+                        datapoints2[datapoints2.Count - 1] += (decimal)spendings[i].TotalPrice;
+                        
+                    }
                 }
 
                 else if (month == "4")
                 {
 
-                    money[3] += (decimal)spendings[i].TotalPrice;
+                    if (!(secondmonths.Contains(month + year)))
+                    {
+                        months.Add("Apr" + " " + year.Substring(2, 2));
+                        secondmonths.Add(month + year);
+                        datapoints2.Add((decimal)spendings[i].TotalPrice);
+                    }
+                    else
+                    {
+                        datapoints2[datapoints2.Count - 1] += (decimal)spendings[i].TotalPrice;
+
+                    }
                 }
 
                 else if (month == "5")
                 {
+                    if (!(secondmonths.Contains(month + year)))
+                    {
+                        months.Add("May" + " " + year.Substring(2, 2));
+                        secondmonths.Add(month + year);
+                        datapoints2.Add((decimal)spendings[i].TotalPrice);
+                    }
+                    else
+                    {
+                        datapoints2[datapoints2.Count - 1] += (decimal)spendings[i].TotalPrice;
 
-                    money[4] += (decimal)spendings[i].TotalPrice;
+                    }
                 }
 
                 else if (month == "6")
                 {
+                    if (!(secondmonths.Contains(month + year)))
+                    {
+                        months.Add("Jun" + " " + year.Substring(2, 2));
+                        secondmonths.Add(month + year);
+                        datapoints2.Add((decimal)spendings[i].TotalPrice);
+                    }
+                    else
+                    {
+                        datapoints2[datapoints2.Count - 1] += (decimal)spendings[i].TotalPrice;
 
-                    money[5] += (decimal)spendings[i].TotalPrice;
+                    }
                 }
 
                 else if (month == "7")
                 {
+                    if (!(secondmonths.Contains(month + year)))
+                    {
+                        months.Add("Jul" + " " + year.Substring(2, 2));
+                        secondmonths.Add(month + year);
+                        datapoints2.Add((decimal)spendings[i].TotalPrice);
+                    }
+                    else
+                    {
+                        datapoints2[datapoints2.Count - 1] += (decimal)spendings[i].TotalPrice;
 
-                    money[6] += (decimal)spendings[i].TotalPrice;
+                    }
                 }
 
                 else if (month == "8")
                 {
+                    if (!(secondmonths.Contains(month + year)))
+                    {
+                        months.Add("Aug" + " " + year.Substring(2, 2));
+                        secondmonths.Add(month + year);
+                        datapoints2.Add((decimal)spendings[i].TotalPrice);
+                    }
+                    else
+                    {
+                        datapoints2[datapoints2.Count - 1] += (decimal)spendings[i].TotalPrice;
 
-                    money[7] += (decimal)spendings[i].TotalPrice;
+                    }
                 }
+
                 else if (month == "9")
                 {
+                    if (!(secondmonths.Contains(month + year)))
+                    {
+                        months.Add("Sep" + " " + year.Substring(2, 2));
+                        secondmonths.Add(month + year);
+                        datapoints2.Add((decimal)spendings[i].TotalPrice);
+                    }
+                    else
+                    {
+                        datapoints2[datapoints2.Count - 1] += (decimal)spendings[i].TotalPrice;
 
-                    money[8] += (decimal)spendings[i].TotalPrice;
+                    }
                 }
                 else if (month == "10")
                 {
+                    if (!(secondmonths.Contains(month + year)))
+                    {
+                        months.Add("Oct" + " " + year.Substring(2, 2));
+                        secondmonths.Add(month + year);
+                        datapoints2.Add((decimal)spendings[i].TotalPrice);
+                    }
+                    else
+                    {
+                        datapoints2[datapoints2.Count - 1] += (decimal)spendings[i].TotalPrice;
 
-                    money[9] += (decimal)spendings[i].TotalPrice;
+                    }
                 }
                 else if (month == "11")
                 {
+                    if (!(secondmonths.Contains(month + year)))
+                    {
+                        months.Add("Nov" + " " + year.Substring(2, 2));
+                        secondmonths.Add(month + year);
+                        datapoints2.Add((decimal)spendings[i].TotalPrice);
+                    }
+                    else
+                    {
+                        datapoints2[datapoints2.Count - 1] += (decimal)spendings[i].TotalPrice;
 
-                    money[10] += (decimal)spendings[i].TotalPrice;
+                    }
                 }
 
                 else
                 {
-                     
-                    money[11] += (decimal)spendings[i].TotalPrice;
+                    if (!(secondmonths.Contains(month + year)))
+                    {
+                        months.Add("Dec" + " " + year.Substring(2, 2));
+                        secondmonths.Add(month + year);
+                        datapoints2.Add((decimal)spendings[i].TotalPrice);
+                    }
+                    else
+                    {
+                        datapoints2[datapoints2.Count - 1] += (decimal)spendings[i].TotalPrice;
+
+                    }
                 }
             }
 
-            for (int i = 0; i < money.Length; i++)
-            {
-                if (money[i] > 0)
-                {
-                    datapoints2.Add(money[i]);
-                }
-            }
+          
+            
             ViewBag.datapoints2 = JsonConvert.SerializeObject(datapoints2);
+            ViewBag.datapoints3 = JsonConvert.SerializeObject(months);
             return View("DepSpendingHistory");
         }
+
+      
 
         public ActionResult dashBoard()
         {

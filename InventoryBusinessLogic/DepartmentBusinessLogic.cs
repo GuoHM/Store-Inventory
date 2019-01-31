@@ -14,5 +14,10 @@ namespace InventoryBusinessLogic
         {
             return inv.Department.ToList();
         }
+
+        public List<Department> GetDepartmentByID(string id)
+        {
+            return inv.Department.Where(x => x.DepartmentID == id).ToList();
+        }
     }
 }

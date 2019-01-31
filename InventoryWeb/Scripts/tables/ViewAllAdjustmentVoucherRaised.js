@@ -16,7 +16,7 @@ var TableInit = function () {
 	oTableInit.Init = function () {
 		$('#SearchItemTable').bootstrapTable({
 			method: 'get',
-			url: 'http://inventorywebapi2019.azurewebsites.net/api/AdjustmentItems/' + userid,
+			url: 'https://inventorywebapi2019.azurewebsites.net/api/AdjustmentItems/' + userid,
 			//toolbar: '#toolbar',                
 			striped: true,
 			cache: false,
@@ -124,8 +124,8 @@ var TableInit = function () {
 			var oTableInit = new TableInit1();
 			oTableInit.Init();
 
-			$('#requests').bootstrapTable('refreshOptions', { url: 'http://inventorywebapi2019.azurewebsites.net/api/AdjustmentItem/' + adjustmentID });
-			$('#requests').bootstrapTable('refresh', { url: 'http://inventorywebapi2019.azurewebsites.net/api/AdjustmentItem/' + adjustmentID });
+			$('#requests').bootstrapTable('refreshOptions', { url: 'https://inventorywebapi2019.azurewebsites.net/api/AdjustmentItem/' + adjustmentID });
+			$('#requests').bootstrapTable('refresh', { url: 'https://inventorywebapi2019.azurewebsites.net/api/AdjustmentItem/' + adjustmentID });
 
 		}
 	};
@@ -154,7 +154,7 @@ var TableInit1 = function () {
 	oTableInit.Init = function () {
 		$('#requests').bootstrapTable({
 			method: 'get',
-			url: 'http://inventorywebapi2019.azurewebsites.net/api/AdjustmentItem/' + adjustmentID,
+			url: 'https://inventorywebapi2019.azurewebsites.net/api/AdjustmentItem/' + adjustmentID,
 			//toolbar: '#toolbar',                
 			striped: true,
 			cache: false,

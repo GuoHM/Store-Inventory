@@ -9,15 +9,16 @@ namespace InventoryBusinessLogic
    public class DisbursementList
     {
         Inventory inv = new Inventory();
-        public List<Department> GetDisbursements(string orderID)
+        public List<Department> GetDisbursements(int RequestID)
         {
-           Order orders = inv.Order.Where(x => x.OrderID == orderID).First();
-            return inv.Department.Where(x => x.DepartmentID == orders.DepartmentID).ToList();
+           Request orders = inv.Request.Where(x => x.RequestID == RequestID).First();
+            return inv.Department.Where(x => x.DepartmentID == orders.Order.DepartmentID).ToList();
         }
 
-        public List<Request> GetDisbursementList(string deptName, string orderID)
+        public List<Request> GetDisbursementList(string deptName, int RequestID)
         {
-            return inv.Request.Where(x => x.Order.Department.DepartmentName == deptName && x.OrderID==orderID&& x.RequestStatus.ToUpper().Trim()=="APPROVED").ToList();
+            string dept = deptName.Replace("\r\n", ""); 
+            return inv.Request.Where(x => x.Order.Department.DepartmentName == deptName && x.RequestID==RequestID&& x.RequestStatus.ToUpper().Trim()=="APPROVED").ToList();
            
         }
 

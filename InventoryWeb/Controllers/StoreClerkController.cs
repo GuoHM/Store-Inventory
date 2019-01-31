@@ -24,8 +24,8 @@ namespace InventoryWeb.Controllers
         AdjustmentBusinessLogic adjustmentBusinessLogic = new AdjustmentBusinessLogic();
         AdjustmentItemBusinessLogic adjustmentItemBusinessLogic = new AdjustmentItemBusinessLogic();
         UserBusinessLogic userBusinessLogic = new UserBusinessLogic();
-        
-
+        public static List<Request> reqBackup = new List<Request>();
+        public static List<Request> requestBackup = new List<Request>();
         ManageRequestBusinessLogic manageRequests = new ManageRequestBusinessLogic();
 
         static List<RetrievalList> retrievals = new List<RetrievalList>();
@@ -33,7 +33,10 @@ namespace InventoryWeb.Controllers
         static List<Department> disbursementList = new List<Department>();
         static List<Request> req = new List<Request>();
         OrderBusinessLogic orderbusinesslogic = new OrderBusinessLogic();
-       
+        static bool retrivalRequest = false;
+
+        public static List<int> updateRequest = new List<int>();
+
         public ActionResult RaiseRequest()
         {
             return View();
@@ -165,8 +168,10 @@ namespace InventoryWeb.Controllers
 
         public ActionResult GetRetrievalData(List<RetrievalList> jsonlist3, List<orderlist> orderlist2)
         {
+            
             //orders = orderlist2;
             retrievals = jsonlist3;
+            retrivalRequest = true;
             return Json(new { redirecturl = "RetrievalForm" }, JsonRequestBehavior.AllowGet);
         }
 
@@ -175,9 +180,12 @@ namespace InventoryWeb.Controllers
         {
             disbursementList = new List<Department>();
             DisbursementList disbursement = new DisbursementList();
-            foreach (RetrievalList req1 in retrievals)
+            CatalogueBusinessLogic catalogue = new CatalogueBusinessLogic();
+            reqBackup = requestBackup;
+
+            foreach (int req1 in updateRequest)
             {
-                List<Department> dep = disbursement.GetDisbursements(req1.orderid);
+                List<Department> dep = disbursement.GetDisbursements(req1);
                 disbursementList.AddRange(dep);
 
             }
@@ -208,15 +216,23 @@ namespace InventoryWeb.Controllers
             DisbursementList disbursement = new DisbursementList();
             req = new List<Request>();
             var orderslist = retrievals.Select(p => p.orderid).Distinct().ToList();
-            foreach (var req1 in orderslist)
+          // reqBackup = CatalogueBusinessLogic.requestBackup;
+           
+            foreach (int req1 in updateRequest)
             {
                 req.AddRange(disbursement.GetDisbursementList(department[0].deptName, req1));
             }
 
-            var data = req.Select(p => new { itemDescription = p.Catalogue.Description, quantity = p.Needed, uom = p.Catalogue.MeasureUnit,orderid=p.OrderID}).ToList();
+          
+            foreach(Request req1 in req)
+            {
+                Request request = reqBackup.Where(x => x.RequestID == req1.RequestID).First();
+                req1.Needed = req1.Actual - request.Actual;
+            }
+            var data = req.Select(p => new { itemDescription = p.Catalogue.Description, quantity = p.Needed, uom = p.Catalogue.MeasureUnit, orderid = p.OrderID }).ToList();
 
-
-            return Json(data, JsonRequestBehavior.AllowGet);
+            JsonResult json =  Json(data, JsonRequestBehavior.AllowGet);
+            return json;
             // var data  = req.Select(p => new { itemDescription = p.Catalogue.Description, quantity = p.Needed, uom=p.Catalogue.MeasureUnit });
 
 
@@ -224,13 +240,20 @@ namespace InventoryWeb.Controllers
             // return Json(new { redirecturl = "DisbursementList" }, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult GetSignature()
+        {
+            var data = req.Select(p => new { signature = p.Order.Signature }).ToList();
+            return Json(data[0], JsonRequestBehavior.AllowGet);
+        }
+
 
 
         [HttpGet]
         public JsonResult GetRetrievals()
         {
-            if (retrievals.Count == 0)
+            if (!retrivalRequest)
             {
+               
                 List<Request> allRequests = manageRequests.GetRetrievalItems();
                 //List<Request> allRequests = manageRequests.GetAllRequests();
                 List<RetrievalList> itemList = new List<RetrievalList>();
@@ -270,19 +293,20 @@ namespace InventoryWeb.Controllers
 
                 }
 
-                foreach (var item in itemList)
-                {
-                    item.neededQuantity = Convert.ToString(Convert.ToInt32(item.neededQuantity) - Convert.ToInt32(item.alreadyExisting));
+                //foreach (var item in itemList)
+                //{
+                //    item.neededQuantity = Convert.ToString(Convert.ToInt32(item.neededQuantity) - Convert.ToInt32(item.alreadyExisting));
 
-                }
-                var notneeded = itemList.Where(x => x.neededQuantity == "0").ToList();
-                foreach (var item in notneeded)
-                {
-                    itemList.Remove(item);
-                }
+                //}
+                //var notneeded = itemList.Where(x => x.neededQuantity == "0").ToList();
+                //foreach (var item in notneeded)
+                //{
+                //    itemList.Remove(item);
+                //}
                 retrievals = itemList;
-                retrievals = itemList;
+              
             }
+            retrivalRequest = false;
             return Json(new { data = retrievals }, JsonRequestBehavior.AllowGet);
 
         }
@@ -493,12 +517,12 @@ namespace InventoryWeb.Controllers
 
         }
 
-        public ActionResult ViewAllStationeryRequisitionsByOrderId(string orderId)
-        {
+        //public ActionResult ViewAllStationeryRequisitionsByOrderId(string orderId)
+        //{
 
-            new ManageRequestBusinessLogic().getStationaryOrderByID(orderId);
-            return View();
-        }
+        //    new ManageRequestBusinessLogic().getStationaryOrderByID(orderId);
+        //    return View();
+        //}
 
        
         public JsonResult UpdatePOStatusToCancel(List<CancelPOList> Po)
@@ -527,13 +551,16 @@ namespace InventoryWeb.Controllers
             var stream = sr.ReadToEnd();
             JavaScriptSerializer js = new JavaScriptSerializer();
             var list = js.Deserialize<List<InventoryList>>(stream);
+            Inventory inventory = new Inventory();
+            requestBackup = inventory.Request.Where(x => x.RequestStatus.Trim().ToUpper() == "APPROVED").OrderBy(y => y.RequestDate).ToList();
+
             if (list.Any())
             {
                 foreach (var item in list)
                 {
                     if (item != null)
                     {
-                        catalogueBusinessLogic.UpdateRetrievedQuantity(item.itemDescription, item.quantityPicked, item.remarks);
+                      updateRequest.AddRange(catalogueBusinessLogic.UpdateRetrievedQuantity(item.itemDescription, item.quantityPicked, item.remarks));
                     }
                 }
             }

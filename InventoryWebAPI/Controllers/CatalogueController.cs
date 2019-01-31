@@ -24,6 +24,13 @@ namespace InventoryWebAPI.Controllers
             return catalogue.getAllCatalogue();
         }
 
+        [HttpGet]
+        [Route("api/Lowstock")]
+        public IEnumerable<Catalogue> GetLowStocks()
+        {
+            return catalogue.GetLowStock();
+        }
+
         // GET: api/Catalogue/5
         public string Get(int id)
         {

@@ -124,7 +124,6 @@ namespace InventoryBusinessLogic
 
 
             Catalogue item = inventory.Catalogue.Where(x => x.ItemID == dropdown1).First<Catalogue>();
- 
             return inventory.Request.Where(x => x.ItemID.Equals(item.ItemID) &&  x.RequestDate >= date1 && x.RequestDate <= date2 && x.RequestStatus == "Approved" && x.OrderID.Substring(0,4) == depID.Substring(0,4)).OrderBy(x => x.RequestDate).ToList<Request>();
         }
 

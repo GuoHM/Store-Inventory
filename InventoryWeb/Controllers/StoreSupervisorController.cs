@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using InventoryBusinessLogic.Entity;
 using InventoryBusinessLogic;
 using Microsoft.AspNet.Identity;
-
+using Newtonsoft.Json;
 using System.Web.Script.Serialization;
 
 
@@ -80,6 +80,68 @@ namespace InventoryWeb.Controllers
                     
             }
             return new JsonResult();
+        }
+
+        public ActionResult generateChargeBack()
+        {
+            return View();
+        }
+
+        public ActionResult ChargeBackReport(DateTime date1, DateTime date2)
+        {
+            CatalogueBusinessLogic bl = new CatalogueBusinessLogic();
+
+            List<Department> dep = bl.getDepartments();
+            ReportsController depManager = new ReportsController();
+
+
+            foreach (Department d in dep)
+            {
+                depManager.spendingHistorytwo(date1, date2, d.DepartmentID);
+            }
+
+            ViewBag.dataSCI = JsonConvert.SerializeObject(depManager.dataSCI);
+            ViewBag.dataCOMM = JsonConvert.SerializeObject(depManager.dataCOMM);
+            ViewBag.dataCPSC = JsonConvert.SerializeObject(depManager.dataCPSC);
+            ViewBag.dataENGL = JsonConvert.SerializeObject(depManager.dataENGL);
+            ViewBag.dataREGR = JsonConvert.SerializeObject(depManager.dataREGR);
+            ViewBag.dataZOOL = JsonConvert.SerializeObject(depManager.dataZOOL);
+            ViewBag.months = JsonConvert.SerializeObject(depManager.datamonths);
+            return View("generateChargeBack");
+
+
+
+
+        }
+
+        public ActionResult trenAnalysisByItems()
+        {
+            UserBusinessLogic BL = new UserBusinessLogic();
+            ViewBag.catalogue = BL.getAllCatalogue();
+            return View();
+        }
+
+        public ActionResult trenAnalysis(string dropDown1, DateTime date1, DateTime date2)
+        {
+            CatalogueBusinessLogic bl = new CatalogueBusinessLogic();
+            List<Department> dep = bl.getDepartments();
+            ReportsController depManager = new ReportsController();
+
+
+            foreach (Department d in dep)
+            {
+                depManager.itemsDepSpendings(date1, date2, d.DepartmentID, dropDown1);
+            }
+
+            ViewBag.dataSCI = JsonConvert.SerializeObject(depManager.dataSCI);
+            ViewBag.dataCOMM = JsonConvert.SerializeObject(depManager.dataCOMM);
+            ViewBag.dataCPSC = JsonConvert.SerializeObject(depManager.dataCPSC);
+            ViewBag.dataENGL = JsonConvert.SerializeObject(depManager.dataENGL);
+            ViewBag.dataREGR = JsonConvert.SerializeObject(depManager.dataREGR);
+            ViewBag.dataZOOL = JsonConvert.SerializeObject(depManager.dataZOOL);
+            ViewBag.months = JsonConvert.SerializeObject(depManager.datamonths);
+            return View("ChargeBackReport");
+
         }
 
         class SelectedList

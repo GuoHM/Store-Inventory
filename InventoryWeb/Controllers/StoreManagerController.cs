@@ -66,5 +66,11 @@ namespace InventoryWeb.Controllers
             public string remarks { get; set; }
 
         }
+
+        PurchaseOrderBusinessLogic purchaseOrderBusinessLogic = new PurchaseOrderBusinessLogic();
+        public ActionResult PurchaseOrder()
+        {
+            return View();
+        }
     }
 }

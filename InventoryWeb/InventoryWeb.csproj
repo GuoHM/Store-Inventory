@@ -493,6 +493,7 @@
     <Content Include="Views\Staff\ViewRequest.cshtml" />
     <Content Include="Views\DepManager\dashBoard.cshtml" />
     <Content Include="Views\DepRepresentative\ViewDisbursementList.cshtml" />
+    <Content Include="Views\StoreManager\PurchaseOrder.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

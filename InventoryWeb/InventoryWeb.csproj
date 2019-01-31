@@ -419,6 +419,7 @@
     <Content Include="Scripts\tables\ViewAllStationeryRequisitions.js" />
     <Content Include="Scripts\tables\ViewInventory.js" />
     <Content Include="Scripts\tables\RetrievalForm.js" />
+    <Content Include="Scripts\tables\ViewLowStock.js" />
     <Content Include="Scripts\tables\ViewOrders.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -497,6 +498,15 @@
     <Content Include="Views\DepManager\dashBoard.cshtml" />
     <Content Include="Views\DepRepresentative\ViewDisbursementList.cshtml" />
     <Content Include="Views\StoreSupervisor\RequsitionRequest.cshtml" />
+    <Content Include="Views\StoreSupervisor\generateChargeBack.cshtml" />
+    <Content Include="Views\StoreSupervisor\trenAnalysisByItems.cshtml" />
+    <Content Include="Views\StoreSupervisor\ChargeBackReport.cshtml" />
+    <Content Include="Views\StoreManager\ChargeBackReport.cshtml" />
+    <Content Include="Views\StoreManager\generateChargeBack.cshtml" />
+    <Content Include="Views\StoreManager\trenAnalysisByItems.cshtml" />
+    <Content Include="Views\StoreClerk\ViewLowStock.cshtml" />
+    <Content Include="Views\StoreSupervisor\ViewLowStock.cshtml" />
+    <Content Include="Views\StoreManager\ViewLowStock.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

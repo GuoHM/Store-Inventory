@@ -1,0 +1,65 @@
+﻿
+<style>
+
+	#requests {
+		font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+		border-collapse: collapse;
+		width: 100%;
+	}
+
+		#requests td, #customers th {
+			border: 1px solid #ddd;
+			padding: 8px;
+		}
+
+		#requests tr:nth-child(even) {
+			background-color: #f2f2f2;
+		}
+
+		#requests tr:hover {
+			background-color: #ddd;
+		}
+
+		#requests th {
+			padding-top: 12px;
+			padding-bottom: 12px;
+			text-align: left;
+			background-color: #1E90FF;
+			color: white;
+		}
+</style>
+@{
+	ViewBag.Title = "ViewLowStock";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<div class="col-xs-2 column">
+	@Html.Partial("~/Views/StoreManager/SideBar.cshtml")
+</div>
+
+<div class="col-xs-10 column">
+
+	<div class="panel-body" style="padding-bottom: 0px;">
+		<div class="panel panel-default">
+			<div class="panel-heading">Low Stock Items</div>
+			<div class="panel-body">
+				<table id="Viewallcatalogueitems"></table>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<script src="~/Scripts/bootstrap-table.js"></script>
+<script src="~/Scripts/tables/ViewLowStock.js"></script>
+<script src="~/Scripts/bootstrap-table-export.js"></script>
+<script src="//rawgit.com/hhurz/tableExport.jquery.plugin/master/tableExport.js"></script>
+
+
+
+
+
+
+

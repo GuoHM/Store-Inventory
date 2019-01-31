@@ -106,7 +106,7 @@ var TableInit = function () {
             var jsonobj = { "deptName": deptName1}
             department.push(jsonobj);
             orderid = row.orderid;
-          
+            var signature;
             $.ajax({
                 contentType: 'application/json; charset=utf-8',
                 url: '/StoreClerk/GetDisbursementItems',
@@ -121,6 +121,44 @@ var TableInit = function () {
 
 
             });
+              $.ajax({
+                contentType: 'application/json; charset=utf-8',
+                url: '/StoreClerk/GetSignature',
+                type: 'post',
+                dataType: 'text',
+                async: false,
+
+                success: function (data) {
+                    signature = data;
+                },
+
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert(XMLHttpRequest.status);
+                    alert(XMLHttpRequest.readyState);
+                    alert(textStatus);
+                }
+
+
+            });
+
+            function arrayBufferToBase64(buffer) {
+                var binary = '';
+                var bytes = new Uint8Array(buffer);
+                var len = bytes.byteLength;
+                for (var i = 0; i < len; i++) {
+                    binary += String.fromCharCode(bytes[i]);
+                }
+                return window.btoa(binary);
+            }
+            var jsonArray = JSON.parse(signature);
+            debugger;
+            if (jsonArray.signature) {
+                var str12 = arrayBufferToBase64(jsonArray.signature);
+                document.getElementById("signature").src = "data:image/png;base64," + str12;
+            } else {
+                document.getElementById("signature").src = '';
+            }
+
             var oTableInit = new TableInit1();
             oTableInit.Init();
 

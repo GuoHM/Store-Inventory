@@ -13,11 +13,11 @@ var userid = "";
 var requestid = "";
 var TableInit = function () {
     var oTableInit = new Object();
-
+    var userid = document.getElementById('userid').textContent;
     oTableInit.Init = function () {
         $('#SearchItemTable').bootstrapTable({
             method: 'get',
-            url: 'https://inventorywebapi2019.azurewebsites.net/api/PendingRequest',
+            url: 'https://inventorywebapi2019.azurewebsites.net/api/PendingRequest/' + userid,
             //toolbar: '#toolbar',                
             striped: true,
             cache: false,
@@ -110,9 +110,11 @@ var TableInit = function () {
 
             orderid = orderid.replace(/\s/g, '');
             userid = row.AspNetUsers.UserName;
-            
+
+            var date = row.RequestDate;
         
-            requestedDate = row.RequestDate;
+           // requestedDate = row.RequestDate;
+            requestedDate = new Date(date).toLocaleDateString();
             reqesterName = row.AspNetUsers.UserName;
             document.getElementById('requestDate').innerHTML = requestedDate;
             document.getElementById('requestedBy').innerHTML = reqesterName;
@@ -248,11 +250,22 @@ function postData(approvalStatus) {
     var tab = document.getElementById("requests");
     var rows = tab.rows;
     var remarks = document.getElementById('remarks').value;
+    debugger;
     var jsonlist = new Array(rows.length - 1);
     for (var i = 1; i < rows.length; i++) {
         
-        var jsonObj = { "orderId": rows[i].cells[1].innerHTML, "requestStatus": approvalStatus, "remarks": remarks };
+        var jsonObj = { "orderId": rows[i].cells[1].innerHTML, "requestStatus": approvalStatus, "reason": remarks };
         jsonlist[i-1] = jsonObj;
+    }
+
+    var tab = document.getElementById("successModal");
+    debugger;
+    var objCheckBox = tab.getElementsByClassName('message');
+    if (approvalStatus == "Rejected") {
+        objCheckBox[0].innerHTML = "Rejected";
+    }
+    else {
+        objCheckBox[0].innerHTML = "Approved";
     }
     //alert(JSON.stringify(jsonlist));
     $.ajax({

@@ -110,7 +110,7 @@ namespace InventoryBusinessLogic
         public List<Order> getOverallSpendingHistory(DateTime date1, DateTime date2, string id)
         {
             Department dep = inventory.Department.Where(x => x.DepartmentID.Substring(0,4) == id.Substring(0,4)).First<Department>();
-            return inventory.Order.Where(x => x.DepartmentID.Substring(0, 4) == dep.DepartmentID.Substring(0, 4) && x.OrderDate >= date1 && x.OrderDate <= date2).ToList<Order>();
+            return inventory.Order.Where(x => x.DepartmentID.Substring(0, 4) == dep.DepartmentID.Substring(0, 4) && x.OrderDate >= date1 && x.OrderDate <= date2).OrderBy(x => x.OrderDate).ToList<Order>();
         }
 
         public List<Catalogue> getAllCatalogue()
@@ -118,22 +118,24 @@ namespace InventoryBusinessLogic
             return inventory.Catalogue.ToList<Catalogue>();
         }
 
-        public List<Request> getRequestOrders(string dropdown1,DateTime date1,DateTime date2)
+        public List<Request> getRequestOrders(DateTime date1,DateTime date2,string depID,string dropdown1)
 
         {
+
+
             Catalogue item = inventory.Catalogue.Where(x => x.ItemID == dropdown1).First<Catalogue>();
-             return inventory.Request.Where(x => x.ItemID.Equals(item.ItemID) &&  x.RequestDate >= date1 && x.RequestDate <= date2 && x.RequestStatus == "Approved" ).ToList<Request>();
+            return inventory.Request.Where(x => x.ItemID.Equals(item.ItemID) &&  x.RequestDate >= date1 && x.RequestDate <= date2 && x.RequestStatus == "Approved" && x.OrderID.Substring(0,4) == depID.Substring(0,4)).OrderBy(x => x.RequestDate).ToList<Request>();
         }
 
      
         public AspNetUsers getStoreStoreSupervisor()
         {
-            return inventory.AspNetUsers.Where(x => x.UserType == "StoreSupervisor").First();
+            return inventory.AspNetUsers.Where(x => x.UserType == "Store Supervisor").First();
         }
 
         public AspNetUsers getStoreManager()
         {
-            return inventory.AspNetUsers.Where(x => x.UserType == "Store Manager").First();
+            return inventory.AspNetUsers.Where(x => x.UserType == "StoreManager").First();
         }
 
         public List<Request> getPendigRequest(string id)

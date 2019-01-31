@@ -16,9 +16,10 @@
         var Quantity = SearchItemTable.rows[rows].cells[2].innerHTML;
         var ReorderQuantity = SearchItemTable.rows[rows].cells[3].innerHTML;
         var price = SearchItemTable.rows[rows].cells[5].innerHTML;
-        var supplier = SearchItemTable.rows[rows].cells[6].innerHTML;
+        var uom = SearchItemTable.rows[rows].cells[6].innerHTML;
+        var supplier = SearchItemTable.rows[rows].cells[7].innerHTML;
         var totalprice = '$'+parseFloat(price.substr(1, price.length)) * orderQuantity+'.00';
-        $("#ItemAddedTable").append("<tr align='center'><td><input class='checkbox' checked='checked' type='checkbox'></td><td>" + itemCode + "</td><td>" + Description + "</td><td>" + Quantity + "</td><td>" + ReorderQuantity + "</td><td>" + orderQuantity + "</td><td>" + totalprice + "</td><td>" + supplier + "</td><td><input type='button'  value='remove' class='btn btn-danger' onclick='remove(this)'/></td></tr>");
+        $("#ItemAddedTable").append("<tr align='center'><td><input class='checkbox' checked='checked' type='checkbox'></td><td>" + itemCode + "</td><td>" + Description + "</td><td>" + Quantity + "</td><td>" + ReorderQuantity + "</td><td>" + orderQuantity + "</td><td>" + totalprice + "</td><td>" + uom + "</td><td>" + supplier + "</td><td><input type='button'  value='remove' class='btn btn-danger' onclick='remove(this)'/></td></tr>");
         $(obj).parents("tr").remove();
     }
 }
@@ -31,9 +32,10 @@ function remove(obj) {
     var ReorderQuantity = ItemAddedTable.rows[rows].cells[4].innerHTML;
     var orderQuantity = ItemAddedTable.rows[rows].cells[5].innerHTML;
     var totalprice = ItemAddedTable.rows[rows].cells[6].innerHTML;
-    var supplier = ItemAddedTable.rows[rows].cells[7].innerHTML;
+    var uom = ItemAddedTable.rows[rows].cells[7].innerHTML;
+    var supplier = ItemAddedTable.rows[rows].cells[8].innerHTML;
     var price = totalprice.substr(1, totalprice.length) / orderQuantity;
-    $("#SearchItemTable").append("<tr align='center'><td>" + itemCode + "</td><td>" + Description + "</td><td>" + Quantity + "</td><td>" + ReorderQuantity + "</td><td><input type='number' class='form-control' placeholder='Quantity'></td><td>$" + price + ".00</td><td>" + supplier + "</td><td><input type='button'  value='Select' class='btn btn-primary' onclick='selectItem(this)'/></td></tr>");
+    $("#SearchItemTable").append("<tr align='center'><td>" + itemCode + "</td><td>" + Description + "</td><td>" + Quantity + "</td><td>" + ReorderQuantity + "</td><td><input type='number' class='form-control' placeholder='Quantity'></td><td>$" + price + ".00</td><td>" + uom + "</td><td>" + supplier + "</td><td><input type='button'  value='Select' class='btn btn-primary' onclick='selectItem(this)'/></td></tr>");
      $(obj).parents("tr").remove();
 }
 var json;
@@ -46,7 +48,7 @@ function confirm() {
     var supplierlist = new Array();
     for (var i = 0; i < objCheckBox.length; i++) {
         if (objCheckBox[i].checked) {
-            var jsonObj = { "itemID": rows[i + 1].cells[1].innerHTML, "quantity": rows[i + 1].cells[5].innerHTML, "totalPrice": rows[i + 1].cells[6].innerHTML, "supplier": rows[i + 1].cells[7].innerHTML, "description": rows[i + 1].cells[2].innerHTML };  
+            var jsonObj = { "itemID": rows[i + 1].cells[1].innerHTML, "quantity": rows[i + 1].cells[5].innerHTML, "totalPrice": rows[i + 1].cells[6].innerHTML, "supplier": rows[i + 1].cells[8].innerHTML, "description": rows[i + 1].cells[2].innerHTML };  
             jsonlist.push(jsonObj);
             supplierlist.push(rows[i + 1].cells[7].innerHTML);
         }

@@ -7,6 +7,7 @@ using System.Web.Http;
 using InventoryBusinessLogic.Entity;
 using InventoryBusinessLogic;
 using System.Web.Http.Cors;
+using Newtonsoft.Json;
 
 namespace InventoryWebAPI.Controllers
 {
@@ -24,11 +25,11 @@ namespace InventoryWebAPI.Controllers
                 return request.GetAllRequests();
             }
         [HttpGet]
-        [Route("api/PendingRequest")]
+        [Route("api/PendingRequest/{userid}")]
 
-        public IEnumerable<Request> GetAllPendingRequests()
+        public IEnumerable<Request> GetAllPendingRequests(string userid)
         {
-            return request.GetAllApprovalPendingRequests();
+            return request.GetAllApprovalPendingRequests(userid);
         }
 
         [HttpGet]
@@ -61,10 +62,10 @@ namespace InventoryWebAPI.Controllers
         }
 
         [HttpGet]
-        [Route("api/StationaryItems/{OrderId}")]
-        public IEnumerable<Request> GetRequestByOrder(string OrderId)
+        [Route("api/StationaryItems/{OrderId}/{UserId}/{Status}")]
+        public IEnumerable<Request> GetRequestByOrder(string orderId,string userId,string status)
         {
-            return request.getStationaryOrderByID(OrderId);
+            return request.getStationaryOrderByID(orderId, userId,status);
         }
 
 

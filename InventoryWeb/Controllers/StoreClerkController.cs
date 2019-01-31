@@ -410,7 +410,7 @@ namespace InventoryWeb.Controllers
                 adjustment.TotalPrice = 0;
                 adjustment.Date = DateTime.Now;
                 adjustment.AdjustmentID = adjustmentBusinessLogic.generateAdjustmentID();
-                adjustment.AdjustmentStatus = "Unapprove";
+                adjustment.AdjustmentStatus = "Unapproved";
                 adjustmentBusinessLogic.addAdjustment(adjustment);
                 foreach (var item in list)
                 {
@@ -547,6 +547,11 @@ namespace InventoryWeb.Controllers
 
             return new JsonResult();
 
+        }
+
+        public ActionResult ViewLowStock()
+        {
+            return View();  
         }
 
 

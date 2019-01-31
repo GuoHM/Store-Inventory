@@ -21,5 +21,14 @@ namespace InventoryWebAPI.Controllers
         {
             return dept.GetDepartments();
         }
+
+        [HttpGet]
+        [Route("api/Department/{id}")]
+
+        public IEnumerable<Department> GetAllDepartmentByID(string id)
+        {
+            return dept.GetDepartmentByID(id);
+        }
+
     }
 }

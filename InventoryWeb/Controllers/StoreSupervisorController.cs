@@ -121,6 +121,11 @@ namespace InventoryWeb.Controllers
             return View();
         }
 
+        public ActionResult ViewLowStock()
+        {
+            return View();
+        }
+
         public ActionResult trenAnalysis(string dropDown1, DateTime date1, DateTime date2)
         {
             CatalogueBusinessLogic bl = new CatalogueBusinessLogic();

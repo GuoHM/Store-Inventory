@@ -57,6 +57,7 @@ function confirm() {
         alert("Please select item to purchase");
         $("#btnConfirm").attr("disabled", false);
     } else {
+        debugger;
         if (isAllSame(supplierlist) && !hasDuplicated(jsonlist)) {
             $.ajax({
                 url: "/StoreClerk/ConfirmOrder",
@@ -147,7 +148,7 @@ function lowStock() {
                 i--;
             }
             for (var i = 0; i < json.length; i++) {
-                $("#ItemAddedTable").append("<tr align='center'><td><input class='checkbox' checked='checked' type='checkbox'></td><td>" + json[i].ItemID + "</td><td>" + json[i].Description + "</td><td>" + json[i].Quantity + "</td><td>" + json[i].ReorderQuantity + "</td><td>" + json[i].ReorderLevel + "</td><td>$" + parseFloat(json[i].ReorderQuantity) * parseFloat(json[i].Price) + ".00</td><td>" + json[i].Supplier1 + "</td><td><input type='button'  value='remove' class='btn btn-danger' onclick='remove(this)'/></td></tr>");
+                $("#ItemAddedTable").append("<tr align='center'><td><input class='checkbox' checked='checked' type='checkbox'></td><td>" + json[i].ItemID + "</td><td>" + json[i].Description + "</td><td>" + json[i].Quantity + "</td><td>" + json[i].ReorderQuantity + "</td><td>" + json[i].ReorderQuantity + "</td><td>$" + parseFloat(json[i].ReorderQuantity) * parseFloat(json[i].Price) + ".00</td><td>" + json[i].MeasureUnit + "</td><td>" + json[i].Supplier1 + "</td><td><input type='button'  value='remove' class='btn btn-danger' onclick='remove(this)'/></td></tr>");
             }
             $("#btnLowStock").attr("disabled", false);
         },
@@ -170,7 +171,7 @@ function isAllSame(arr) {
 
 function hasDuplicated(arr) {
     for (var i = 0; i + 1 < arr.length; i++) {
-        if (arr[i].itemCode == arr[i + 1].itemCode) {
+        if (arr[i].itemID == arr[i + 1].itemID) {
             return true;
         }
     }

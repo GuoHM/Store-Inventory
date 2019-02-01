@@ -153,12 +153,12 @@ namespace InventoryBusinessLogic
      
         public AspNetUsers getStoreStoreSupervisor()
         {
-            return inventory.AspNetUsers.Where(x => x.UserType == "StoreSupervisor").First();
+            return inventory.AspNetUsers.Where(x => x.UserType == "Store Supervisor").First();
         }
 
         public AspNetUsers getStoreManager()
         {
-            return inventory.AspNetUsers.Where(x => x.UserType == "Store Manager").First();
+            return inventory.AspNetUsers.Where(x => x.UserType == "StoreManager").First();
         }
 
         public List<Request> getPendigRequest(string id)

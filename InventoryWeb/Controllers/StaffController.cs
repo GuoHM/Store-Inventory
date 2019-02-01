@@ -29,11 +29,11 @@ namespace InventoryWeb.Controllers
 
         }
 
-        public ActionResult ViewAllStationeryRequisitionsByOrderId(string orderId)
-        {
+        //public ActionResult ViewAllStationeryRequisitionsByOrderId(string orderId)
+        //{
 
-            new ManageRequestBusinessLogic().getStationaryOrderByID(orderId);
-            return View();
-        }
+        //    new ManageRequestBusinessLogic().getStationaryOrderByID(orderId);
+        //    return View();
+        //}
     }
 }

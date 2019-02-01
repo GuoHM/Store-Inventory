@@ -7,6 +7,7 @@ using System.Web.Http;
 using InventoryBusinessLogic.Entity;
 using InventoryBusinessLogic;
 using System.Web.Http.Cors;
+using Newtonsoft.Json;
 
 namespace InventoryWebAPI.Controllers
 {
@@ -61,10 +62,10 @@ namespace InventoryWebAPI.Controllers
         }
 
         [HttpGet]
-        [Route("api/StationaryItems/{OrderId}")]
-        public IEnumerable<Request> GetRequestByOrder(string OrderId)
+        [Route("api/StationaryItems/{OrderId}/{UserId}/{Status}")]
+        public IEnumerable<Request> GetRequestByOrder(string orderId,string userId,string status)
         {
-            return request.getStationaryOrderByID(OrderId);
+            return request.getStationaryOrderByID(orderId, userId,status);
         }
 
 

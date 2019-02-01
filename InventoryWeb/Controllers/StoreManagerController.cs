@@ -157,6 +157,25 @@ namespace InventoryWeb.Controllers
 
         }
 
+        public ActionResult GetUnApprovalRequest(string orderid, string userid)
+        {
+            ManageRequestBusinessLogic request = new ManageRequestBusinessLogic();
+            var requests = request.GetRequestByOrderIdUserId(orderid, userid);
+            double totalPrice = 0;
+            var data = requests.Select(p => new
+            {
+                Description = p.Catalogue.Description,
+                RequestID = p.RequestID,
+                Needed = p.Needed,
+                Price = p.Catalogue.Price,
+                MeasureUnit = p.Catalogue.MeasureUnit,
+                Total = p.Needed * p.Catalogue.Price,
+
+            }).ToList();
+
+
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
         [HttpPost]
         public ActionResult SaveRequestStatusManager()
         {

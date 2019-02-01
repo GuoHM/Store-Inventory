@@ -407,6 +407,7 @@
     <Content Include="Scripts\AdjustmentVoucherChoose.js" />
     <Content Include="Scripts\tables\ApproveOrReject.js" />
     <Content Include="Scripts\tables\Additems.js" />
+    <Content Include="Scripts\tables\ApproveOrReject1.js" />
     <Content Include="Scripts\tables\DepRepDisbursementList.js" />
     <Content Include="Scripts\tables\DisbursementList.js" />
     <Content Include="Scripts\tables\ListDept.js" />
@@ -417,6 +418,7 @@
     <Content Include="Scripts\tables\ViewAdjustmentVoucherManager.js" />
     <Content Include="Scripts\tables\ViewAllAdjustmentVoucherRaised.js" />
     <Content Include="Scripts\tables\ViewAllStationeryRequisitions.js" />
+    <Content Include="Scripts\tables\ViewCatalogueItems.js" />
     <Content Include="Scripts\tables\ViewInventory.js" />
     <Content Include="Scripts\tables\RetrievalForm.js" />
     <Content Include="Scripts\tables\ViewLowStock.js" />
@@ -508,6 +510,8 @@
     <Content Include="Views\StoreSupervisor\ViewLowStock.cshtml" />
     <Content Include="Views\StoreManager\ViewLowStock.cshtml" />
     <Content Include="Views\StoreSupervisor\ViewRequest.cshtml" />
+    <Content Include="Views\StoreManager\ViewCatalogueItems.cshtml" />
+    <Content Include="Views\StoreManager\ApproveOrReject.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

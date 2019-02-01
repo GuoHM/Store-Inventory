@@ -14,6 +14,8 @@ namespace InventoryWeb.Controllers
     [Authorize(Roles = "StoreManager")]
     public class StoreManagerController : Controller
     {
+        ManageRequestBusinessLogic req = new ManageRequestBusinessLogic();
+
         // GET: StoreManager
         public ActionResult Index()
         {
@@ -79,6 +81,12 @@ namespace InventoryWeb.Controllers
         {
             return View();
         }
+
+        public ActionResult ViewCatalogueItems()
+        {
+            return View();
+        }
+
         public ActionResult trenAnalysis(string dropDown1, DateTime date1, DateTime date2)
         {
             CatalogueBusinessLogic bl = new CatalogueBusinessLogic();
@@ -102,6 +110,45 @@ namespace InventoryWeb.Controllers
 
         }
 
+        public ActionResult ApproveOrReject()
+        {
+            string userId = User.Identity.GetUserId();
+            ViewBag.userID = userId;
+            return View();
+        }
+
+        //public ActionResult SaveRequestStatus(int reqID, string reqStatus)
+        //{
+        //    req.ApproveOrRejectRequest(reqID, reqStatus);
+        //    return View();
+        //}
+
+        [HttpPost]
+        public ActionResult SaveRequestStatus()
+        {
+            var sr = new System.IO.StreamReader(Request.InputStream);
+            var stream = sr.ReadToEnd();
+            JavaScriptSerializer js = new JavaScriptSerializer();
+            var list = js.Deserialize<List<SelectedList1>>(stream);
+
+            if (list.Any())
+            {
+                foreach (var item in list)
+                {
+                    req.ApproveOrRejectRequest(item.orderId, item.requestStatus, item.reason);
+                }
+            }
+            var item1 = list[0];
+            //EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
+            //int requestID = Convert.ToInt32(item1.orderId);
+            //string content = emailBusinessLogic.ApproveOrRejectNotification(requestID);
+
+            //List<string> toAddress = new List<string>();
+            //toAddress.Add("wangxiaoxiaoqiang@gmail.com");
+            //emailBusinessLogic.SendEmail("Team3", content, toAddress);
+            return new JsonResult();
+        }
+
         public ActionResult ViewAdjustmentVoucherItems(int adjustmentID)
         {
 
@@ -110,6 +157,25 @@ namespace InventoryWeb.Controllers
 
         }
 
+        public ActionResult GetUnApprovalRequest(string orderid, string userid)
+        {
+            ManageRequestBusinessLogic request = new ManageRequestBusinessLogic();
+            var requests = request.GetRequestByOrderIdUserId(orderid, userid);
+            double totalPrice = 0;
+            var data = requests.Select(p => new
+            {
+                Description = p.Catalogue.Description,
+                RequestID = p.RequestID,
+                Needed = p.Needed,
+                Price = p.Catalogue.Price,
+                MeasureUnit = p.Catalogue.MeasureUnit,
+                Total = p.Needed * p.Catalogue.Price,
+
+            }).ToList();
+
+
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
         [HttpPost]
         public ActionResult SaveRequestStatusManager()
         {
@@ -132,6 +198,25 @@ namespace InventoryWeb.Controllers
             public string requestStatus { get; set; }
             public string remarks { get; set; }
 
+        }
+
+        public class SelectedList1
+        {
+            public string itemID { get; set; }
+
+            public string description { get; set; }
+
+            public string quantity { get; set; }
+
+            public string totalPrice { get; set; }
+
+            public string supplier { get; set; }
+
+            public string price { get; set; }
+
+            public string reason { get; set; }
+            public string requestStatus { get; set; }
+            public string orderId { get; set; }
         }
 
         PurchaseOrderBusinessLogic purchaseOrderBusinessLogic = new PurchaseOrderBusinessLogic();

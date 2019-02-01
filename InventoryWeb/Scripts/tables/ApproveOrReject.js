@@ -13,8 +13,8 @@ var userid = "";
 var requestid = "";
 var jsonlist = "";
 var TableInit = function () {
-    var oTableInit = new Object();
-    var userid = document.getElementById('userid').textContent;
+	var oTableInit = new Object();	
+	var userid = document.getElementById('userid').textContent;
     oTableInit.Init = function () {
         $('#SearchItemTable').bootstrapTable({
             method: 'get',
@@ -308,7 +308,7 @@ function postData(approvalStatus) {
     }
     //alert(JSON.stringify(jsonlist));
     $.ajax({
-        url: "/DepManager/SaveRequestStatus",
+		url: "/DepManager/SaveRequestStatus",
         type: "post",
         dataType: "text",
         async: true,

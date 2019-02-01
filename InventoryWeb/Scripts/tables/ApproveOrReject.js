@@ -12,8 +12,8 @@ var reqesterName = "";
 var userid = "";
 var requestid = "";
 var TableInit = function () {
-    var oTableInit = new Object();
-    var userid = document.getElementById('userid').textContent;
+	var oTableInit = new Object();	
+	var userid = document.getElementById('userid').textContent;
     oTableInit.Init = function () {
         $('#SearchItemTable').bootstrapTable({
             method: 'get',
@@ -269,7 +269,7 @@ function postData(approvalStatus) {
     }
     //alert(JSON.stringify(jsonlist));
     $.ajax({
-        url: "/DepManager/SaveRequestStatus",
+        url: "/StoreManager/SaveRequestStatus",
         type: "post",
         dataType: "text",
         async: true,

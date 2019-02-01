@@ -553,8 +553,10 @@ namespace InventoryWeb.Controllers
             JavaScriptSerializer js = new JavaScriptSerializer();
             var list = js.Deserialize<List<InventoryList>>(stream);
             Inventory inventory = new Inventory();
-            requestBackup = inventory.Request.Where(x => x.RequestStatus.Trim().ToUpper() == "APPROVED").OrderBy(y => y.RequestDate).ToList();
-
+            if (requestBackup.Count == 0)
+            {
+                requestBackup = inventory.Request.Where(x => x.RequestStatus.Trim().ToUpper() == "APPROVED").OrderBy(y => y.RequestDate).ToList();
+            }
             if (list.Any())
             {
                 foreach (var item in list)

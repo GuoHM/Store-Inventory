@@ -95,6 +95,7 @@ namespace InventoryBusinessLogic
         {
             Order o = inventory.Order.Where( x => x.OrderID == orderid ).First();
             o.Signature = bt;
+            o.OrderStatus = "Fulfilled";
             inventory.SaveChanges();
         }
 

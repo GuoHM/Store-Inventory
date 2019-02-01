@@ -231,12 +231,19 @@ namespace InventoryWeb.Controllers
             }
             var data = req.Select(p => new { itemDescription = p.Catalogue.Description, quantity = p.Needed, uom = p.Catalogue.MeasureUnit, orderid = p.OrderID }).ToList();
 
-            return Json(data, JsonRequestBehavior.AllowGet);
+            JsonResult json =  Json(data, JsonRequestBehavior.AllowGet);
+            return json;
             // var data  = req.Select(p => new { itemDescription = p.Catalogue.Description, quantity = p.Needed, uom=p.Catalogue.MeasureUnit });
 
 
             //return Json(data, JsonRequestBehavior.AllowGet);
             // return Json(new { redirecturl = "DisbursementList" }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetSignature()
+        {
+            var data = req.Select(p => new { signature = p.Order.Signature }).ToList();
+            return Json(data[0], JsonRequestBehavior.AllowGet);
         }
 
 
@@ -303,6 +310,7 @@ namespace InventoryWeb.Controllers
             return Json(new { data = retrievals }, JsonRequestBehavior.AllowGet);
 
         }
+
         [HttpGet]
         public JsonResult GetDisbursements()
         {
@@ -571,6 +579,11 @@ namespace InventoryWeb.Controllers
 
         }
 
+        public ActionResult ViewLowStock()
+        {
+            return View();  
+        }
+
 
     }
 
@@ -589,7 +602,7 @@ namespace InventoryWeb.Controllers
         {
             public string itemDescription { get; set; }
             public string quantityPicked { get; set; }
-        public string remarks { get; set; }
+            public string remarks { get; set; }
         }
 
 
@@ -656,23 +669,23 @@ namespace InventoryWeb.Controllers
 
         public class DisbursementListItems
         {
-        public string itemDescription { get; set; }
-        public string quantity { get; set; }
-        public string uom { get; set; }
-        public string orderid { get; set; }
+            public string itemDescription { get; set; }
+            public string quantity { get; set; }
+            public string uom { get; set; }
+            public string orderid { get; set; }
 
         }
 
         public class CancelPOList
         {
-        public string orderid { get; set; }
-        public string supplierID { get; set; }
-        public string totalPrice { get; set; }
-        public string purchaseDate { get; set; }
-        public string deliverAddress { get; set; }
-        public string orderBy { get; set; }
-        public string expectedDate { get; set; }
-        public string purchaseOrderStatus { get; set; }
+            public string orderid { get; set; }
+            public string supplierID { get; set; }
+            public string totalPrice { get; set; }
+            public string purchaseDate { get; set; }
+            public string deliverAddress { get; set; }
+            public string orderBy { get; set; }
+            public string expectedDate { get; set; }
+            public string purchaseOrderStatus { get; set; }
 
         }
 

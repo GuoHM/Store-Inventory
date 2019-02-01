@@ -259,7 +259,16 @@ function postData(approvalStatus) {
 
 	var jsonObj = { "AdjustmentID": adjustmentID, "requestStatus": approvalStatus, "remarks": remarks };
 	jsonlist.push(jsonObj);
+	
+	var tab1 = document.getElementById("successModal");
 
+	var objCheckBox = tab1.getElementsByClassName('message');
+	if (approvalStatus === "Rejected") {
+		objCheckBox[0].innerHTML = "Rejected";
+	}
+	else {
+		objCheckBox[0].innerHTML = "Approved";
+	}
 
 	//alert(JSON.stringify(jsonlist));
 	$.ajax({
@@ -268,8 +277,7 @@ function postData(approvalStatus) {
 		dataType: "text",
 		async: true,
 		data: JSON.stringify(jsonlist),
-		success: function (data) {
-			 $('#successModal').modal('show');
+		success: function (data) {$('#successModal').modal('show');
 		},
 		error: function (XMLHttpRequest, textStatus, errorThrown) {
 			alert(XMLHttpRequest.status);

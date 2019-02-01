@@ -13,14 +13,16 @@
     }
     else {
         var itemName = SearchItemTable.rows[rows].cells[0].innerHTML;
-        $("#ItemAddedTable").append("<tr><td>" + itemName + "</td><td>" + quantity + "</td><td><input type='button'  value='remove' class='btn btn-danger' onclick='remove(this)'/></td></tr>");
+        var uom = SearchItemTable.rows[rows].cells[1].innerHTML;
+        $("#ItemAddedTable").append("<tr><td>" + itemName + "</td><td>" + uom + "</td><td>" + quantity + "</td><td><input type='button'  value='remove' class='btn btn-danger' onclick='remove(this)'/></td></tr>");
         $(obj).parents("tr").remove();
     }
 }
 function remove(obj) {
     var rows = obj.parentNode.parentNode.rowIndex;
     var itemName = document.getElementById("ItemAddedTable").rows[rows].cells[0].innerHTML;
-    $("#SearchItemTable").append("<tr align='center'><td>" + itemName + "</td><td><input type='number' max='9999' min='0' class='form-control' placeholder='quantity'></td><td><input type='button'  value='Add' class='btn btn-primary' onclick='selectItem(this)'/></td></tr>");
+    var uom = document.getElementById("ItemAddedTable").rows[rows].cells[1].innerHTML;
+    $("#SearchItemTable").append("<tr align='center'><td>" + itemName + "</td><td>" + uom + "</td><td><input type='number' max='9999' min='0' class='form-control' placeholder='Quant'></td><td><input type='button'  value='Add' class='btn btn-primary' onclick='selectItem(this)'/></td></tr>");
     $(obj).parents("tr").remove();
 }
 function postData() {
@@ -34,7 +36,7 @@ function postData() {
     }
     var jsonlist = new Array(rows.length - 1);
     for (var i = 1; i < rows.length; i++) {  
-        var jsonObj = { "description": rows[i].cells[0].innerHTML, "quantity": rows[i].cells[1].innerHTML};
+        var jsonObj = { "description": rows[i].cells[0].innerHTML, "quantity": rows[i].cells[2].innerHTML};
         jsonlist[i-1] = jsonObj;
     }
     if (hasDuplicated(jsonlist)) {

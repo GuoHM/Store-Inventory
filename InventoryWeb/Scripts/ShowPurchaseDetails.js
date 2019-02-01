@@ -45,31 +45,22 @@ function UpdateQuantity() {
     var rows = tab.rows;
     var objCheckBox = tab.getElementsByClassName('checkbox');
     var purchaseIDList = new Array();
-    var isUnfulfill = false;            
-   
+    var isUnfulfilled = false;
+    debugger;
             for (var j = 0; j < objCheckBox.length; j++) {
                 if (objCheckBox[j].checked) {
-
                     var status = rows[j + 1].cells[5].innerHTML;
-                    var jsonObj = { "orderid": rows[j + 1].cells[2].innerHTML };
                     var statustrim = myTrim(status);
-                    if (statustrim != "Unfulfill") 
-                        {
-                        // 
-                        isUnfulfill = true;
-                            
-                        } 
-                        else {
-                           
-                        purchaseIDList.push(jsonObj);
-                     
-
-                        }
-
-                    }
-
+                    if (statustrim == "Unfullfill") {
+                        isUnfulfilled = true;
+                        var jsonObj = { "orderid": rows[j + 1].cells[2].innerHTML };
+                        purchaseIDList.push(jsonObj); 
+                    } else {                    
+                        isUnfulfilled = false;       
+                    }                                                       
+          }
     }
-    if (!isUnfulfill) {
+    if (isUnfulfilled) {
         $.ajax({
             contentType: 'application/json; charset=utf-8',
             url: "/StoreClerk/UpdateQuantity",
@@ -80,19 +71,14 @@ function UpdateQuantity() {
             success: function () {
                 alert("Update Successful!")
             }
-
         });
     }
     else {
         alert("Please choose unfulfill order to update!") ;
-    }
-
-
-   
+    } 
 }
 
 function myTrim(x) {
-   
     return x.replace(/^\s+|\s+$/gm, '');
 }
 

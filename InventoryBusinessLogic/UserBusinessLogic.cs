@@ -68,36 +68,59 @@ namespace InventoryBusinessLogic
 
         }
 
-        public void UpdateDepHead(string id, DateTime startdate, DateTime enddate)
+        public void UpdateDepHead(string id, DateTime startdate, DateTime enddate, string interimhead)
         {
 
             AspNetUsers user1 = inventory.AspNetUsers.Where(P => P.Id == id).First<AspNetUsers>();
-            AspNetUsers user2 = inventory.AspNetUsers.Where(P => P.UserType == "DeptHead" && P.DepartmentID.Substring(0,4) == user1.DepartmentID.Substring(0,4)).First<AspNetUsers>();
-            AspNetUserRoles role1 = inventory.AspNetUserRoles.Where(p => p.UserId == user1.Id).First();
-            AspNetUserRoles role2 = inventory.AspNetUserRoles.Where(p => p.UserId == user2.Id).First();
             Department dep1 = inventory.Department.Where(p => p.DepartmentID == user1.DepartmentID).First();
+            dep1.DepartmentHeadStartDate = startdate;
+            dep1.DepartmentHeadEndDate = enddate;
+            if (interimhead == "")
+            {
+                AspNetUserRoles role1 = inventory.AspNetUserRoles.Where(p => p.UserId == user1.Id).First();
+                user1.UserType = "InterimDepHead";
+                dep1.DepartmentHead = user1.Id;
+                inventory.AspNetUserRoles.Remove(role1);
 
-            user1.UserType = "DeptHead";
-            user2.UserType = "DeptStaff";
-            dep1.DepartmentHead = user1.Id;
+                AspNetUserRoles userrole = new AspNetUserRoles();
+                userrole.UserId = role1.UserId;
+                userrole.RoleId = "7";
+                inventory.AspNetUserRoles.Add(userrole);
+                inventory.SaveChanges();
+            }
+            else
+            {
+                AspNetUsers user2 = inventory.AspNetUsers.Where(P => P.UserType == "InterimDepHead" && P.DepartmentID.Substring(0, 4) == user1.DepartmentID.Substring(0, 4)).First<AspNetUsers>();
+                AspNetUserRoles role1 = inventory.AspNetUserRoles.Where(p => p.UserId == user1.Id).First();
+                AspNetUserRoles role2 = inventory.AspNetUserRoles.Where(p => p.UserId == user2.Id).First();
+
+                user1.UserType = "InterimDepHead";
+                user2.UserType = "DeptStaff";
+                dep1.DepartmentHead = user1.Id;
 
 
-            inventory.AspNetUserRoles.Remove(role1);
-            inventory.AspNetUserRoles.Remove(role2);
 
+                inventory.AspNetUserRoles.Remove(role1);
+                inventory.AspNetUserRoles.Remove(role2);
 
+                AspNetUserRoles userrole = new AspNetUserRoles();
+                userrole.UserId = role1.UserId;
+                userrole.RoleId = "7";
+                inventory.AspNetUserRoles.Add(userrole);
 
-            AspNetUserRoles userrole = new AspNetUserRoles();
-            userrole.UserId = role1.UserId;
-            userrole.RoleId = "3";
-            inventory.AspNetUserRoles.Add(userrole);
+                AspNetUserRoles userrole1 = new AspNetUserRoles();
+                userrole1.UserId = role2.UserId;
+                userrole1.RoleId = "4";
+                inventory.AspNetUserRoles.Add(userrole1);
+                inventory.SaveChanges();
+            }
+            
+           
 
-            AspNetUserRoles userrole1 = new AspNetUserRoles();
-            userrole1.UserId = role2.UserId;
-            userrole1.RoleId = "4";
-            inventory.AspNetUserRoles.Add(userrole1);
+           
+            
 
-            inventory.SaveChanges();
+            
 
         }
 
@@ -130,12 +153,12 @@ namespace InventoryBusinessLogic
      
         public AspNetUsers getStoreStoreSupervisor()
         {
-            return inventory.AspNetUsers.Where(x => x.UserType == "StoreSupervisor").First();
+            return inventory.AspNetUsers.Where(x => x.UserType == "Store Supervisor").First();
         }
 
         public AspNetUsers getStoreManager()
         {
-            return inventory.AspNetUsers.Where(x => x.UserType == "Store Manager").First();
+            return inventory.AspNetUsers.Where(x => x.UserType == "StoreManager").First();
         }
 
         public List<Request> getPendigRequest(string id)

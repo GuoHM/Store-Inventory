@@ -37,7 +37,7 @@
         <div class="form-group">
             &nbsp;&nbsp;
             <label>
-                Current Department Head :
+                Main Department Head :
             </label>
             &nbsp;&nbsp;
             @for (int i = 0; i < ViewBag.depHead.Count; i++)
@@ -53,6 +53,30 @@
 
         <br />
 
+        <div class="form-group">
+            &nbsp;&nbsp;
+            <label>
+                Interim Department Head :
+            </label>
+            &nbsp;&nbsp;
+            @for (int i = 0; i < ViewBag.depHead.Count; i++)
+            {
+                if (ViewBag.depHead[i].UserType == "InterimDepHead")
+                {
+
+                    //<input type="text" class="form-control" readonly="readonly" name="interimhead" id="ItemID" value="@ViewBag.depHead[i].UserName">
+                    <label name="interimhead"> @ViewBag.depHead[i].UserName</label>
+                    break;
+                }
+                else if ((ViewBag.depHead.Count - 1) == i)
+                {
+                    <label> None</label>
+                }
+            }
+
+        </div>
+        <br />
+
         <div class="form-group ">
             <label class="control-label col-sm-2" for="select">
                 New Department Head
@@ -61,11 +85,11 @@
 
 
 
-            <select class="form-control" name="dropdown1">
+            <select class="form-control" name="dropdown1" id="drp">
 
                 @for (int i = 0; i < ViewBag.depHead.Count; i++)
                 {
-                    if (ViewBag.depHead[i].UserType != "DeptHead" && ViewBag.depHead[i].UserType != "DeptRep" && ViewBag.depHead[i].UserType != "Store Clerk")
+                    if (ViewBag.depHead[i].UserType != "DeptHead" && ViewBag.depHead[i].UserType != "DeptRep" && ViewBag.depHead[i].UserType != "Store Clerk" && ViewBag.depHead[i].UserType != "InterimDepHead")
 
                     {
                         <option value="@ViewBag.depHead[i].Id"> @ViewBag.depHead[i].UserName </option>
@@ -169,8 +193,9 @@
                 alert("Start date or End date is empty")
             }
 
-            else if (startDate < curDate)
+            else if (startDate.getDate < curDate.getDate)
             {
+                
                 alert("Start Date is less than todays Date")
             }
          

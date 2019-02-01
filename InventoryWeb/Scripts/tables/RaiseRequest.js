@@ -45,6 +45,12 @@ var TableInit = function() {
                 
                 field: 'Description'
             }, {
+                    align: "center",
+                    title: 'UOM',
+                    sortable: true,
+
+                    field: 'MeasureUnit'
+                }, {
                 align: "center",
                 title: 'Quantity',
                 sortable: true,
@@ -95,6 +101,10 @@ var TableInit = function() {
                 title: 'Item Name',
                 sortable: false
             }, {
+                    align: "center",
+                    title: 'UOM',
+                    sortable: false
+                },{
                 align: "center",
                 title: 'Quantity',
                 sortable: false

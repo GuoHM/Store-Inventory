@@ -17,7 +17,8 @@ namespace InventoryWeb.Controllers
     {
         UserBusinessLogic BL = new UserBusinessLogic();
         ManageRequestBusinessLogic req = new ManageRequestBusinessLogic();
-       
+        Inventory i = new Inventory();
+
         // GET: DepManager
         public ActionResult Index()
         {
@@ -28,10 +29,13 @@ namespace InventoryWeb.Controllers
         public ActionResult AssignDepRep()
         {
             string userId = User.Identity.GetUserId();
+            AspNetUsers user1 = i.AspNetUsers.Where(x => x.Id == userId).First<AspNetUsers>();
+            ViewBag.usertype = user1.UserType;
             ViewBag.depList = BL.getDepUsers(userId);
             return View();
         }
 
+        [HttpGet]
         public ActionResult saveNewRep(string dropdown1)
         {
             BL.UpdateDepRep(dropdown1);
@@ -54,7 +58,22 @@ namespace InventoryWeb.Controllers
 
         public ActionResult saveDepHead(string dropdown1, DateTime date1, DateTime date2)
         {
-            BL.UpdateDepHead(dropdown1, date1, date2);
+            string interimhead = "";
+            string userId = User.Identity.GetUserId();
+            ViewBag.depHead = BL.appointNewDepHead(userId);
+
+            for(int i = 0; i < ViewBag.depHead.Count; i++)
+            {
+                if (ViewBag.depHead[i].UserType == "InterimDepHead")
+                {
+
+                    interimhead = ViewBag.depHead[i].UserType;
+                    break;
+                }
+
+            }
+            
+            BL.UpdateDepHead(dropdown1, date1, date2, interimhead);
             //EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
             //string content = emailBusinessLogic.ChangeDeptHeadNotification(dropdown1);
 
@@ -68,6 +87,8 @@ namespace InventoryWeb.Controllers
         public ActionResult ApproveOrReject()
         {
             string userId = User.Identity.GetUserId();
+            AspNetUsers user1 = i.AspNetUsers.Where(x => x.Id == userId).First<AspNetUsers>();
+            ViewBag.usertype = user1.UserType;
             ViewBag.userID = userId;
             return View();
         }
@@ -106,14 +127,20 @@ namespace InventoryWeb.Controllers
 
         public ActionResult DepSpendingHistory()
         {
+            string userId = User.Identity.GetUserId();
+            AspNetUsers user1 = i.AspNetUsers.Where(x => x.Id == userId).First<AspNetUsers>();
+            ViewBag.usertype = user1.UserType;
             return View();
         }
+
+       
 
         public ActionResult spendingHistory(DateTime date1,DateTime date2)
         {
 
             string userId = User.Identity.GetUserId();
             List<Order> spendings = BL.getDepSpendingHistory(date1,date2,userId);
+            
             List<Object> months = new List<Object>();
             List<Object> secondmonths = new List<Object>();
             List<Object> years = new List<object>();
@@ -337,7 +364,10 @@ namespace InventoryWeb.Controllers
         }
         public ActionResult dashBoard()
         {
+            
             string userId = User.Identity.GetUserId();
+            AspNetUsers user1 = i.AspNetUsers.Where(x => x.Id == userId).First<AspNetUsers>();
+            ViewBag.usertype = user1.UserType;
             List<Request> var1 = BL.getPendigRequest(userId);
             List<Request> var2 = BL.getApproveorRejected(userId);
             int count = 0;

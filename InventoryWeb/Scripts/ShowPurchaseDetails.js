@@ -92,7 +92,7 @@ function UpdateQuantity() {
 }
 
 function myTrim(x) {
-    debugger
+   
     return x.replace(/^\s+|\s+$/gm, '');
 }
 

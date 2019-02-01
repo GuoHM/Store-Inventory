@@ -8,7 +8,7 @@ using InventoryBusinessLogic;
 using InventoryBusinessLogic.Entity;
 using Newtonsoft.Json;
 using Microsoft.AspNet.Identity;
-using System.Web.Script.Serialization;
+
 
 
 namespace InventoryWeb.Controllers
@@ -315,8 +315,26 @@ namespace InventoryWeb.Controllers
             return View("DepSpendingHistory");
         }
 
-      
 
+        public ActionResult GetUnApprovalRequest(string orderid, string userid)
+        {
+            ManageRequestBusinessLogic request = new ManageRequestBusinessLogic();
+            var requests = request.GetRequestByOrderIdUserId(orderid, userid);
+            double totalPrice = 0;
+            var data = requests.Select(p => new
+            {
+                Description = p.Catalogue.Description,
+                RequestID = p.RequestID,
+                Needed = p.Needed,
+                Price = p.Catalogue.Price,
+                MeasureUnit = p.Catalogue.MeasureUnit,
+                Total = p.Needed * p.Catalogue.Price,
+               
+            }).ToList();
+
+                     
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
         public ActionResult dashBoard()
         {
             string userId = User.Identity.GetUserId();
@@ -360,5 +378,7 @@ namespace InventoryWeb.Controllers
         public string requestStatus { get; set; }
             public string remarks { get; set; }
         }
+
+   
     }
 

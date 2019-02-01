@@ -507,6 +507,7 @@
     <Content Include="Views\StoreClerk\ViewLowStock.cshtml" />
     <Content Include="Views\StoreSupervisor\ViewLowStock.cshtml" />
     <Content Include="Views\StoreManager\ViewLowStock.cshtml" />
+    <Content Include="Views\StoreSupervisor\ViewRequest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

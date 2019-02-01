@@ -126,6 +126,16 @@ namespace InventoryWeb.Controllers
             return View();
         }
 
+        public ActionResult ViewRequest()
+        {
+            string userId = User.Identity.GetUserId();
+            ViewBag.userID = userId;
+            new ManageRequestBusinessLogic().getAllStationeryRequest(userId);
+            return View();
+
+
+        }
+
         public ActionResult trenAnalysis(string dropDown1, DateTime date1, DateTime date2)
         {
             CatalogueBusinessLogic bl = new CatalogueBusinessLogic();

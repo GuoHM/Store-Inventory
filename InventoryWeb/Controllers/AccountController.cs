@@ -156,7 +156,7 @@ namespace InventoryWeb.Controllers
                         }
                         else
                         {
-                            return RedirectToAction("dashBoard", "DepManager");
+                            return RedirectToAction("ApproveOrReject", "DepManager");
                         }
                     }
                     

@@ -285,7 +285,7 @@ namespace InventoryWeb.Controllers
                     {
 
 
-                        itemList.Add(new RetrievalList { orderid = req.OrderID, itemDescription = req.Catalogue.Description, availableQuantity = Convert.ToString(req.Catalogue.Quantity), alreadyExisting = Convert.ToString(req.Actual), binNumber = req.Catalogue.BinNumber, neededQuantity = Convert.ToString(req.Needed), remarks = req.Remarks, requestId = Convert.ToString(req.RequestID) });
+                        itemList.Add(new RetrievalList { orderid = req.OrderID, itemDescription = req.Catalogue.Description, availableQuantity = Convert.ToString(req.Catalogue.Quantity), alreadyExisting = Convert.ToString(req.Actual), binNumber = req.Catalogue.BinNumber, neededQuantity = Convert.ToString(req.Needed-req.Actual), remarks = req.Remarks, requestId = Convert.ToString(req.RequestID) });
                         // alreadyexist = false;
                         // alreadyexist = false;
                     }

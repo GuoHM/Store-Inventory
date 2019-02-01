@@ -11,9 +11,10 @@ var requestedDate = "";
 var reqesterName = "";
 var userid = "";
 var requestid = "";
+var jsonlist = "";
 var TableInit = function () {
-    var oTableInit = new Object();
-    var userid = document.getElementById('userid').textContent;
+	var oTableInit = new Object();	
+	var userid = document.getElementById('userid').textContent;
     oTableInit.Init = function () {
         $('#SearchItemTable').bootstrapTable({
             method: 'get',
@@ -110,7 +111,7 @@ var TableInit = function () {
 
             orderid = orderid.replace(/\s/g, '');
             userid = row.AspNetUsers.UserName;
-
+      
             var date = row.RequestDate;
         
            // requestedDate = row.RequestDate;
@@ -119,12 +120,42 @@ var TableInit = function () {
             document.getElementById('requestDate').innerHTML = requestedDate;
             document.getElementById('requestedBy').innerHTML = reqesterName;
            
+            $.ajax({
+               
+                url: '/DepManager/GetUnApprovalRequest',
+                type: 'post',
+                
+                async: false,
+                data: {
+                    'orderid': orderid,
+                    'userid': userid
+                },
+                success: function (data) {
+                    jsonlist = data;        
+                                           
+                    
+                }
+
+
+            });
+            var totalPrice = 0.00;
+            for (var i = 0; i < jsonlist.length; i++) {
+                totalPrice += jsonlist[i].Total;
+            }
+
+            var totalPriceLable = document.getElementById("totalPrice");
+            totalPriceLable.innerHTML = totalPrice;
             
             var oTableInit = new TableInit1();
             oTableInit.Init();
+            
+           
 
-            $('#requests').bootstrapTable('refreshOptions', { url: 'https://inventorywebapi2019.azurewebsites.net/api/PendingRequest/' + orderid + '/' + userid});
-            $('#requests').bootstrapTable('refresh', { url: 'https://inventorywebapi2019.azurewebsites.net/api/PendingRequest/' + orderid + '/' + userid});
+            $('#requests').bootstrapTable('refreshOptions', { data: jsonlist });
+            $('#requests').bootstrapTable('refresh', { data: jsonlist });
+
+            //$('#requests').bootstrapTable('refreshOptions', { url: 'https://inventorywebapi2019.azurewebsites.net/api/PendingRequest/' + orderid + '/' + userid});
+            //$('#requests').bootstrapTable('refresh', { url: 'https://inventorywebapi2019.azurewebsites.net/api/PendingRequest/' + orderid + '/' + userid});
 
             
         }
@@ -154,8 +185,9 @@ var TableInit1 = function () {
     oTableInit.Init = function () {
         $('#requests').bootstrapTable({            
             method: 'get',
-            url: 'https://inventorywebapi2019.azurewebsites.net/api/PendingRequest/' + orderid + '/' + userid,
-            //toolbar: '#toolbar',                
+           // url: 'https://inventorywebapi2019.azurewebsites.net/api/PendingRequest/' + orderid + '/' + userid,
+            data: jsonlist,
+            //toolbar: '#toolbar',
             striped: true,
             cache: false,
             pagination: true,
@@ -172,7 +204,7 @@ var TableInit1 = function () {
             showRefresh: false,
             minimumCountColumns: 2,
             clickToSelect: false,
-            height: 350,
+            height: 250,
             // uniqueId: "ID", 
             //showToggle: true,
             //cardView: false,
@@ -185,12 +217,12 @@ var TableInit1 = function () {
                 title: 'Item Name',
                 sortable: true,            
                
-                field: 'Catalogue.Description'
+                field: 'Description'
             }, {
                     align: "center",
                     title: 'RequestID',
-                    sortable: true,                    
-                    field: 'RequestID'
+                    sortable: true,
+                   field: 'RequestID'
                 },
                 {
                     align: "center",
@@ -202,15 +234,22 @@ var TableInit1 = function () {
                     align: "center",
                     title: 'Price',
                     sortable: true,
-                    field: 'Catalogue.Price'
+                    field: 'Price'
                 },
+                {
+                    align: "center",
+                    title: 'UOM',
+                    sortable: true,
+                    field: 'MeasureUnit'
+                },
+
                 
                 {
                     align: "center",
                     title: 'Total',
                     sortable: true,
-                  // field: 'Catalogue.Price * Needed'
-                    field: selectItem
+                    field: 'Total'
+                    
                
                 }
             ],
@@ -250,7 +289,7 @@ function postData(approvalStatus) {
     var tab = document.getElementById("requests");
     var rows = tab.rows;
     var remarks = document.getElementById('remarks').value;
-    debugger;
+
     var jsonlist = new Array(rows.length - 1);
     for (var i = 1; i < rows.length; i++) {
         
@@ -259,7 +298,7 @@ function postData(approvalStatus) {
     }
 
     var tab = document.getElementById("successModal");
-    debugger;
+
     var objCheckBox = tab.getElementsByClassName('message');
     if (approvalStatus == "Rejected") {
         objCheckBox[0].innerHTML = "Rejected";
@@ -269,7 +308,7 @@ function postData(approvalStatus) {
     }
     //alert(JSON.stringify(jsonlist));
     $.ajax({
-        url: "/DepManager/SaveRequestStatus",
+        url: "/StoreManager/SaveRequestStatus",
         type: "post",
         dataType: "text",
         async: true,

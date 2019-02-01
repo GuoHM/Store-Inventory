@@ -32,6 +32,7 @@ namespace InventoryWeb.Controllers
             return View();
         }
 
+        [HttpGet]
         public ActionResult saveNewRep(string dropdown1)
         {
             BL.UpdateDepRep(dropdown1);

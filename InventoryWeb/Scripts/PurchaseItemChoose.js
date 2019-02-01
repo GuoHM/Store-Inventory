@@ -50,7 +50,7 @@ function confirm() {
         if (objCheckBox[i].checked) {
             var jsonObj = { "itemID": rows[i + 1].cells[1].innerHTML, "quantity": rows[i + 1].cells[5].innerHTML, "totalPrice": rows[i + 1].cells[6].innerHTML, "supplier": rows[i + 1].cells[8].innerHTML, "description": rows[i + 1].cells[2].innerHTML };  
             jsonlist.push(jsonObj);
-            supplierlist.push(rows[i + 1].cells[7].innerHTML);
+            supplierlist.push(rows[i + 1].cells[8].innerHTML);
         }
     }
     if (jsonlist.length == 0) {

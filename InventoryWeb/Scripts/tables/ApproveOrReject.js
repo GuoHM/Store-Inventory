@@ -297,10 +297,10 @@ function postData(approvalStatus) {
         jsonlist[i-1] = jsonObj;
     }
 
-    var tab = document.getElementById("successModal");
+    var tab1 = document.getElementById("successModal");
 
-    var objCheckBox = tab.getElementsByClassName('message');
-    if (approvalStatus == "Rejected") {
+    var objCheckBox = tab1.getElementsByClassName('message');
+    if (approvalStatus === "Rejected") {
         objCheckBox[0].innerHTML = "Rejected";
     }
     else {

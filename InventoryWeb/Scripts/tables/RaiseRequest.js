@@ -102,7 +102,7 @@ var TableInit = function() {
                 sortable: false
             }, {
                     align: "center",
-                    title: 'Measure Unit',
+                    title: 'UOM',
                     sortable: false
                 },{
                 align: "center",

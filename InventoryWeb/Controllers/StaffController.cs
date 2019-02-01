@@ -10,7 +10,7 @@ using InventoryBusinessLogic.Entity;
 
 namespace InventoryWeb.Controllers
 {
-    [Authorize(Roles = "DeptStaff")]
+    [Authorize(Roles = "DeptStaff, InterimDepHead")]
     public class StaffController : Controller
     {
         // GET: Staff

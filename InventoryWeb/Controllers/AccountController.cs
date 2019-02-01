@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using InventoryWeb.Models;
 using InventoryBusinessLogic;
+using InventoryBusinessLogic.Entity;
 
 namespace InventoryWeb.Controllers
 {
@@ -124,6 +125,42 @@ namespace InventoryWeb.Controllers
                     var user = await UserManager.FindAsync(model.UserName, model.Password);
                     var roles = await UserManager.GetRolesAsync(user.Id);
 
+                    if (roles.Contains("InterimDepHead"))
+                    {
+                        DateTime today = DateTime.Now.Date;
+                        Inventory i = new Inventory();
+                        AspNetUsers user1 = i.AspNetUsers.Where(x => x.Id == user.Id).First<AspNetUsers>();
+                        Department dep = i.Department.Where(x => x.DepartmentID == user1.DepartmentID).First<Department>();
+                        if (today > dep.DepartmentHeadEndDate)
+                        {
+                            AspNetUserRoles role1 = i.AspNetUserRoles.Where(p => p.UserId == user1.Id).First();
+                            AspNetUsers dephead = i.AspNetUsers.Where(p => p.UserType == "DeptHead" && p.DepartmentID == user1.DepartmentID).First();
+                            dep.DepartmentHead = dephead.Id;
+                            user1.UserType = "DeptStaff";
+                            i.AspNetUserRoles.Remove(role1);
+                            AspNetUserRoles userrole = new AspNetUserRoles();
+                            userrole.UserId = role1.UserId;
+                            userrole.RoleId = "4";
+                            i.AspNetUserRoles.Add(userrole);
+                            i.SaveChanges();
+                            
+                            roles = await UserManager.GetRolesAsync(user.Id);
+
+                            if (roles.Contains("DeptStaff"))
+                            {
+                                return RedirectToAction("RaiseRequest", "Staff");
+                            }
+
+
+
+                        }
+                        else
+                        {
+                            return RedirectToAction("dashBoard", "DepManager");
+                        }
+                    }
+                    
+
                     if (roles.Contains("StoreClerk"))
                     {
                         return RedirectToAction("RaiseRequest", "StoreClerk");
@@ -134,7 +171,7 @@ namespace InventoryWeb.Controllers
                     }
                     else if (roles.Contains("DeptHead"))
                     {
-                        return RedirectToAction("dashBoard", "DepManager");
+                        return RedirectToAction("ApproveOrReject", "DepManager");
                     }
                     else if (roles.Contains("StoreSupervisor"))
                     {

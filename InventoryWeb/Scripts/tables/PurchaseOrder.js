@@ -72,7 +72,7 @@ var TableInit = function () {
                     formatter: price
                 }, {
                     align: "center",
-                    title: 'MeasureUnit',
+                    title: 'UOM',
                     sortable: true,
                     field: 'MeasureUnit'
                 }, {
@@ -150,7 +150,7 @@ var TableInit = function () {
                     sortable: false
                 }, {
                     align: "center",
-                    title: 'MeasureUnit',
+                    title: 'UOM',
                     sortable: true
                 }, {
                 align: "center",

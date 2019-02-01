@@ -407,6 +407,7 @@
     <Content Include="Scripts\AdjustmentVoucherChoose.js" />
     <Content Include="Scripts\tables\ApproveOrReject.js" />
     <Content Include="Scripts\tables\Additems.js" />
+    <Content Include="Scripts\tables\ApproveOrReject1.js" />
     <Content Include="Scripts\tables\DepRepDisbursementList.js" />
     <Content Include="Scripts\tables\DisbursementList.js" />
     <Content Include="Scripts\tables\ListDept.js" />

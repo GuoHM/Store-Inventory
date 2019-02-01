@@ -51,7 +51,7 @@ function UpdateQuantity() {
                 if (objCheckBox[j].checked) {
                     var status = rows[j + 1].cells[5].innerHTML;
                     var statustrim = myTrim(status);
-                    if (statustrim == "Unfullfill") {
+                    if (statustrim === "Unfullfill") {
                         isUnfulfilled = true;
                         var jsonObj = { "orderid": rows[j + 1].cells[2].innerHTML };
                         purchaseIDList.push(jsonObj); 

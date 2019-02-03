@@ -14,7 +14,7 @@
             }
             else if (Request.IsAuthenticated && User.IsInRole("DeptRep"))
             {
-                @Html.ActionLink("Home", "", "DepRepresentative", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Home", "StationaryRequest", "DepRepresentative", new { area = "" }, new { @class = "navbar-brand" })
 
             }
             else if (Request.IsAuthenticated && User.IsInRole("DeptStaff"))

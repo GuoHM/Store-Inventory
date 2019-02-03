@@ -53,7 +53,7 @@ namespace InventoryWeb.Controllers
             {
                 
                 jui.Add(temp.Year.ToString()+temp.Month.ToString());
-                xaxis.Add(temp.Year + "/" + temp.Month.ToString());
+                xaxis.Add(temp.ToString("MMM")+ temp.Year.ToString().Substring(2, 2));
                 temp = temp.AddMonths(1);
             }
 
@@ -335,7 +335,7 @@ namespace InventoryWeb.Controllers
             {
 
                 jui.Add(temp.Year.ToString() + temp.Month.ToString());
-                xaxis.Add(temp.Year + "/" + temp.Month.ToString());
+                xaxis.Add(temp.ToString("MMM") + temp.Year.ToString().Substring(2, 2));
                 temp = temp.AddMonths(1);
             }
 

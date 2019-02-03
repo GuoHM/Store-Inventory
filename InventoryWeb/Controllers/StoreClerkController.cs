@@ -121,10 +121,6 @@ namespace InventoryWeb.Controllers
             ViewBag.dataZOOL = JsonConvert.SerializeObject(depManager.dataZOOL);
             ViewBag.months = JsonConvert.SerializeObject(depManager.datamonths);
             return View("generateChargeBack");
-
-
-
-
         }
 
         public ActionResult trenAnalysisByItems()
@@ -155,6 +151,33 @@ namespace InventoryWeb.Controllers
             ViewBag.months = JsonConvert.SerializeObject(depManager.datamonths);
             return View("ChargeBackReport");
             
+        }
+
+        public ActionResult trenAnalysisByExpenditure()
+        {
+            return View();
+        }
+
+        public ActionResult trendExpenditureReport(DateTime date1, DateTime date2)
+        {
+
+            List<Department> dep = catalogueBusinessLogic.getDepartments();
+            ReportsController depManager = new ReportsController();
+
+
+            foreach (Department d in dep)
+            {
+                depManager.spendingHistorytwo(date1, date2, d.DepartmentID);
+            }
+
+            ViewBag.dataSCI = JsonConvert.SerializeObject(depManager.dataSCI);
+            ViewBag.dataCOMM = JsonConvert.SerializeObject(depManager.dataCOMM);
+            ViewBag.dataCPSC = JsonConvert.SerializeObject(depManager.dataCPSC);
+            ViewBag.dataENGL = JsonConvert.SerializeObject(depManager.dataENGL);
+            ViewBag.dataREGR = JsonConvert.SerializeObject(depManager.dataREGR);
+            ViewBag.dataZOOL = JsonConvert.SerializeObject(depManager.dataZOOL);
+            ViewBag.months = JsonConvert.SerializeObject(depManager.datamonths);
+            return View("trenAnalysisByExpenditure");
         }
         public ActionResult ListDept()
         {
@@ -285,7 +308,7 @@ namespace InventoryWeb.Controllers
                     {
 
 
-                        itemList.Add(new RetrievalList { orderid = req.OrderID, itemDescription = req.Catalogue.Description, availableQuantity = Convert.ToString(req.Catalogue.Quantity), alreadyExisting = Convert.ToString(req.Actual), binNumber = req.Catalogue.BinNumber, neededQuantity = Convert.ToString(req.Needed), remarks = req.Remarks, requestId = Convert.ToString(req.RequestID) });
+                        itemList.Add(new RetrievalList { orderid = req.OrderID, itemDescription = req.Catalogue.Description, availableQuantity = Convert.ToString(req.Catalogue.Quantity), alreadyExisting = Convert.ToString(req.Actual), binNumber = req.Catalogue.BinNumber, neededQuantity = Convert.ToString(req.Needed-req.Actual), remarks = req.Remarks, requestId = Convert.ToString(req.RequestID) });
                         // alreadyexist = false;
                         // alreadyexist = false;
                     }
@@ -553,8 +576,10 @@ namespace InventoryWeb.Controllers
             JavaScriptSerializer js = new JavaScriptSerializer();
             var list = js.Deserialize<List<InventoryList>>(stream);
             Inventory inventory = new Inventory();
-            requestBackup = inventory.Request.Where(x => x.RequestStatus.Trim().ToUpper() == "APPROVED").OrderBy(y => y.RequestDate).ToList();
-
+            if (requestBackup.Count == 0)
+            {
+                requestBackup = inventory.Request.Where(x => x.RequestStatus.Trim().ToUpper() == "APPROVED").OrderBy(y => y.RequestDate).ToList();
+            }
             if (list.Any())
             {
                 foreach (var item in list)

@@ -171,7 +171,44 @@ namespace InventoryWeb.Controllers
                     }
                     else if (roles.Contains("DeptHead"))
                     {
-                        return RedirectToAction("ApproveOrReject", "DepManager");
+                        DateTime today = DateTime.Now.Date;
+                        string interimhead = "";
+                        UserBusinessLogic BL = new UserBusinessLogic();
+                        Inventory i = new Inventory();
+                        AspNetUsers dephead = i.AspNetUsers.Where(x => x.Id == user.Id).First<AspNetUsers>();
+                        ViewBag.depHead = BL.appointNewDepHead(dephead.Id);
+                        Department dep = i.Department.Where(x => x.DepartmentID == dephead.DepartmentID).First<Department>();
+
+                        for (int t = 0; t < ViewBag.depHead.Count; t++)
+                        {
+                            if (ViewBag.depHead[t].UserType == "InterimDepHead")
+                            {
+
+                                interimhead = ViewBag.depHead[t].UserType;
+                                break;
+                            }
+
+                        }
+                        
+                        if (interimhead != "" && today> dep.DepartmentHeadEndDate)
+                        {
+                            AspNetUsers interim = i.AspNetUsers.Where(x => x.UserType == "InterimDepHead" && x.DepartmentID == dephead.DepartmentID).First<AspNetUsers>();
+                            AspNetUserRoles role1 = i.AspNetUserRoles.Where(p => p.UserId == interim.Id).First();
+
+                            interim.UserType = "DeptStaff";
+                            dep.DepartmentHead = dephead.Id;
+                            i.AspNetUserRoles.Remove(role1);
+                            AspNetUserRoles userrole = new AspNetUserRoles();
+                            userrole.UserId = role1.UserId;
+                            userrole.RoleId = "4";
+                            i.AspNetUserRoles.Add(userrole);
+                            i.SaveChanges();
+                            roles = await UserManager.GetRolesAsync(user.Id);
+                            return RedirectToAction("ApproveOrReject", "DepManager");
+                            
+                        }
+                        else { return RedirectToAction("ApproveOrReject", "DepManager"); }
+                       
                     }
                     else if (roles.Contains("StoreSupervisor"))
                     {

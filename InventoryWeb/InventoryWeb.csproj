@@ -512,6 +512,7 @@
     <Content Include="Views\StoreSupervisor\ViewRequest.cshtml" />
     <Content Include="Views\StoreManager\ViewCatalogueItems.cshtml" />
     <Content Include="Views\StoreManager\ApproveOrReject.cshtml" />
+    <Content Include="Views\StoreClerk\trenAnalysisByExpenditure.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

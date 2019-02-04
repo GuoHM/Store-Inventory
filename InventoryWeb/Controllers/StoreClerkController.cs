@@ -121,10 +121,6 @@ namespace InventoryWeb.Controllers
             ViewBag.dataZOOL = JsonConvert.SerializeObject(depManager.dataZOOL);
             ViewBag.months = JsonConvert.SerializeObject(depManager.datamonths);
             return View("generateChargeBack");
-
-
-
-
         }
 
         public ActionResult trenAnalysisByItems()
@@ -155,6 +151,33 @@ namespace InventoryWeb.Controllers
             ViewBag.months = JsonConvert.SerializeObject(depManager.datamonths);
             return View("ChargeBackReport");
             
+        }
+
+        public ActionResult trenAnalysisByExpenditure()
+        {
+            return View();
+        }
+
+        public ActionResult trendExpenditureReport(DateTime date1, DateTime date2)
+        {
+
+            List<Department> dep = catalogueBusinessLogic.getDepartments();
+            ReportsController depManager = new ReportsController();
+
+
+            foreach (Department d in dep)
+            {
+                depManager.spendingHistorytwo(date1, date2, d.DepartmentID);
+            }
+
+            ViewBag.dataSCI = JsonConvert.SerializeObject(depManager.dataSCI);
+            ViewBag.dataCOMM = JsonConvert.SerializeObject(depManager.dataCOMM);
+            ViewBag.dataCPSC = JsonConvert.SerializeObject(depManager.dataCPSC);
+            ViewBag.dataENGL = JsonConvert.SerializeObject(depManager.dataENGL);
+            ViewBag.dataREGR = JsonConvert.SerializeObject(depManager.dataREGR);
+            ViewBag.dataZOOL = JsonConvert.SerializeObject(depManager.dataZOOL);
+            ViewBag.months = JsonConvert.SerializeObject(depManager.datamonths);
+            return View("trenAnalysisByExpenditure");
         }
         public ActionResult ListDept()
         {

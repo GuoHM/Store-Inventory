@@ -12,6 +12,7 @@
     <script src="~/Scripts/HighCharts/annotations.js"></script>
     <script src="~/Scripts/HighCharts/Highcharts.js"></script>
     <script src="~/Scripts/HighCharts/exporting.js"></script>
+    <script src="~/Scripts/HighCharts/ExportTable.js"></script>
     <script>
         $(document).ready(function () {
 
@@ -102,8 +103,7 @@
                 var startDate = new Date($("#date1").val());
                 var endDate = new Date($("#date2").val());
 
-                if (x == "" || y == "")
-                {
+                if (x == "" || y == "") {
                     alert("Start Date or End Date is Blank")
                 }
                 else if (endDate <= startDate) {

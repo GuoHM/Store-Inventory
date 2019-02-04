@@ -13,6 +13,7 @@ using Microsoft.AspNet.Identity;
 
 namespace InventoryWeb.Controllers
 {
+    [Authorize(Roles = "DeptHead,StoreManager")]
     public class DepManagerController : Controller
     {
         UserBusinessLogic BL = new UserBusinessLogic();

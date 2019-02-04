@@ -78,11 +78,17 @@
 
 					</div>
 					<table>
-						<tr>
-							<td>
-								<label>Remarks</label>
-							</td>
-						</tr>
+                        <tr>
+                            <td>
+                                <label>Remarks</label>
+                            </td>
+                            <td>
+                                <label>Total Price: </label>
+                            </td>
+                            <td>
+                                <label id="totalPrice"></label>
+                            </td>
+                        </tr>
 						<tr>
 							<td>
 								<textarea name="remarks" id="remarks" cols="40" rows="5"></textarea>
@@ -108,7 +114,7 @@
 		<div class="modal-content">
 			<form id="deleteForm">
 				<div class="modal-header">
-					<h4 class="modal-title">Success</h4>
+					<h4 class="modal-title">Approve Or Reject</h4>
 					<button type="button" class="close" data-dismiss="modal"
 							aria-hidden="true">
 						&times;
@@ -127,7 +133,7 @@
 </div>
 
 <script src="~/Scripts/bootstrap-table.js"></script>
-<script src="~/Scripts/tables/ApproveOrReject1.js"></script>
+<script src="~/Scripts/tables/ApproveOrReject.js"></script>
 
 <script src="~/Scripts/bootstrap-table-export.js"></script>
 <script src="//rawgit.com/hhurz/tableExport.jquery.plugin/master/tableExport.js"></script>

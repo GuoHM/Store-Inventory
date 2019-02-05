@@ -19,6 +19,7 @@ function selectItem(obj) {
         var price = SearchItemTable.rows[rows].cells[2].innerHTML;
         $("#ItemAddedTable").append("<tr align='center'><td>" + itemCode + "</td><td>" + Description + "</td><td>" + price + "</td><td>" + quantity + "</td><td>" + reason + "</td><td><input type='button'  value='remove' class='btn btn-danger' onclick='remove(this)'/></td></tr>");
         $(obj).parents("tr").remove();
+        $("#saveAdjustment").attr("disabled", false);
         totalPrice += Math.abs(quantity) * parseFloat(price.substr(1, price.length));
         document.getElementById("totalPrice").innerHTML = 'Total Price:$' + totalPrice+".00";
     }
@@ -30,10 +31,29 @@ function remove(obj) {
     var Description = ItemAddedTable.rows[rows].cells[1].innerHTML;
     var Price = ItemAddedTable.rows[rows].cells[2].innerHTML;
     var quantity = ItemAddedTable.rows[rows].cells[3].innerHTML;
-    $("#SearchItemTable").append("<tr align='center'><td>" + itemCode + "</td><td>" + Description + "</td><td>" + Price + "</td><td><input type='number' class='form-control quantity' placeholder='Quantity'></td><td><input type='text' class='form-control reason' placeholder='Reason'></td><td><input type='button'  value='Select' class='btn btn-primary' onclick='selectItem(this)'/></td></tr>");
+    if (!hasItemAlreadyExist(itemCode)) {
+        $("#SearchItemTable").append("<tr align='center'><td>" + itemCode + "</td><td>" + Description + "</td><td>" + Price + "</td><td><input type='number' class='form-control quantity' placeholder='Quantity'></td><td><input type='text' class='form-control reason' placeholder='Reason'></td><td><input type='button'  value='Select' class='btn btn-primary' onclick='selectItem(this)'/></td></tr>");
+        }
     $(obj).parents("tr").remove();
+    var tab = document.getElementById("ItemAddedTable");
+    var rows = tab.rows;
+ 
+    if (rows.length == 1) {
+        $("#saveAdjustment").attr("disabled", true);
+    }
     totalPrice -= Math.abs(quantity) * parseFloat(Price.substr(1, Price.length));
     document.getElementById("totalPrice").innerHTML = 'Total Price:$' + totalPrice+".00";
+}
+function hasItemAlreadyExist(itemDescription) {
+  
+    var tab = document.getElementById("SearchItemTable");
+    var rows = tab.rows;
+    for (var i = 0; i < rows.length; i++) {
+        if (rows[i].cells[0].innerHTML == itemDescription) {
+            return true;
+        }
+    }
+    return false;
 }
 var json;
 function confirm() {
@@ -96,7 +116,7 @@ function hasDuplicated(arr) {
     for (var i = 0; i < arr.length - 1; i++) {
         for (var j = 0; j < arr.length; j++) {
             if (i != j) {
-                if (arr[i].description == arr[j].description) {
+                if (arr[i].itemID == arr[j].itemID) {
                     return true;
                 }
             }

@@ -55,10 +55,6 @@ namespace InventoryWeb.Controllers
                 jui.Add(temp.Year.ToString()+temp.Month.ToString());
                 xaxis.Add(temp.ToString("MMM")+ temp.Year.ToString().Substring(2, 2));
                 temp = temp.AddMonths(1);
-            }
-
-            for (int i = 0; i < da; i++)
-            {
                 datapoints2.Add(0);
             }
 
@@ -337,10 +333,6 @@ namespace InventoryWeb.Controllers
                 jui.Add(temp.Year.ToString() + temp.Month.ToString());
                 xaxis.Add(temp.ToString("MMM") + temp.Year.ToString().Substring(2, 2));
                 temp = temp.AddMonths(1);
-            }
-
-            for (int i = 0; i < da; i++)
-            {
                 datapoints2.Add(0);
             }
 

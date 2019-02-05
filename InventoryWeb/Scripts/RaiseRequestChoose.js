@@ -8,7 +8,7 @@
     var rows = obj.parentNode.parentNode.rowIndex;
     var objInput = SearchItemTable.getElementsByClassName("form-control");
     var quantity = objInput[rows - 1].value;
-    if (quantity > 9999 || quantity <= 0 || quantity == "") {
+    if (quantity > 9999 || quantity <= 0 || quantity == "" || quantity % 1!=0) {
         alert("Invalid quantity!");
     }
     else {

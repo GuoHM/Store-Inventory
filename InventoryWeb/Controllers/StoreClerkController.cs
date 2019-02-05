@@ -252,7 +252,7 @@ namespace InventoryWeb.Controllers
                 Request request = reqBackup.Where(x => x.RequestID == req1.RequestID).First();
                 req1.Needed = req1.Actual - request.Actual;
             }
-            var data = req.Select(p => new { itemDescription = p.Catalogue.Description, quantity = p.Needed, uom = p.Catalogue.MeasureUnit, orderid = p.OrderID }).ToList();
+            var data = req.Select(p => new { itemDescription = p.Catalogue.Description, quantity = p.Needed, uom = p.Catalogue.MeasureUnit, orderid = p.OrderID }).Distinct().ToList();
 
             JsonResult json =  Json(data, JsonRequestBehavior.AllowGet);
             return json;

@@ -11,7 +11,7 @@ function selectItem(obj) {
     var quantity = objQuantity[rows - 1].value;
     var objReason = SearchItemTable.getElementsByClassName("reason");
     var reason = objReason[rows - 1].value;
-    if (reason === "" || quantity === "" || quantity > 999 || quantity<-999) {
+    if (reason === "" || quantity === "" || quantity > 999 || quantity < -999 || quantity <= 0 || quantity %1 !=0) {
         alert("Please input valid reason and quantity!");
     } else {
         var itemCode = SearchItemTable.rows[rows].cells[0].innerHTML;

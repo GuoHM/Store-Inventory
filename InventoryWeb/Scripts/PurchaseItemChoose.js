@@ -169,11 +169,26 @@ function isAllSame(arr) {
     return true;
 }  
 
+//function hasDuplicated(arr) {
+//    for (var i = 0; i + 1 < arr.length; i++) {
+//        if (arr[i].itemID == arr[i + 1].itemID) {
+//            return true;
+//        }
+//    }
+//    return false;
+//}
+
 function hasDuplicated(arr) {
-    for (var i = 0; i + 1 < arr.length; i++) {
-        if (arr[i].itemID == arr[i + 1].itemID) {
-            return true;
+
+    for (var i = 0; i < arr.length - 1; i++) {
+        for (var j = 0; j < arr.length; j++) {
+            if (i != j) {
+                if (arr[i].description == arr[j].description) {
+                    return true;
+                }
+            }
         }
+
     }
     return false;
 }

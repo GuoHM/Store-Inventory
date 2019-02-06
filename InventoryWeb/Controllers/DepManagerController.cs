@@ -131,21 +131,38 @@ namespace InventoryWeb.Controllers
             string userId = User.Identity.GetUserId();
             AspNetUsers user1 = i.AspNetUsers.Where(x => x.Id == userId).First<AspNetUsers>();
             ViewBag.usertype = user1.UserType;
+            ViewBag.Department = user1.DepartmentID.Substring(0,4);
             return View();
         }
 
-       
+
+
+
 
         public ActionResult spendingHistory(DateTime date1,DateTime date2)
         {
 
             string userId = User.Identity.GetUserId();
-            List<Order> spendings = BL.getDepSpendingHistory(date1,date2,userId);
-            
-            List<Object> months = new List<Object>();
+            ReportsController rep = new ReportsController();
+            List<Order> spendings = BL.getDepSpendingHistory(date1, date2, userId);
             List<Object> secondmonths = new List<Object>();
+            List<String> jui = new List<string>();
+            List<Object> xaxis = new List<object>();
             List<Object> years = new List<object>();
             List<decimal> datapoints2 = new List<decimal>();
+
+            int da = rep.GetMonthDifference(date1, date2);
+            DateTime temp = new DateTime();
+            temp = date1;
+
+            for (int i = 0; i < da; i++)
+            {
+
+                jui.Add(temp.Year.ToString() + temp.Month.ToString());
+                xaxis.Add(temp.ToString("MMM") + temp.Year.ToString().Substring(2, 2));
+                temp = temp.AddMonths(1);
+                datapoints2.Add(0);
+            }
 
             for (int i = 0; i < spendings.Count; i++)
             {
@@ -156,15 +173,17 @@ namespace InventoryWeb.Controllers
 
                 if (month == "1")
                 {
-                    if (!(secondmonths.Contains(month+year)))
+                    if (!(secondmonths.Contains(month + year)))
                     {
-                        months.Add("Jan"+" "+year.Substring(2,2));
+
                         secondmonths.Add(month + year);
-                        datapoints2.Add((decimal)spendings[i].TotalPrice);
+                        datapoints2.RemoveAt(jui.IndexOf(year + month));
+                        datapoints2.Insert(jui.IndexOf(year + month), (decimal)spendings[i].TotalPrice);
+
                     }
                     else
                     {
-                        datapoints2[datapoints2.Count - 1] += (decimal)spendings[i].TotalPrice;
+                        datapoints2[jui.IndexOf(year + month)] += (decimal)spendings[i].TotalPrice;
 
                     }
 
@@ -174,13 +193,14 @@ namespace InventoryWeb.Controllers
                 {
                     if (!(secondmonths.Contains(month + year)))
                     {
-                        months.Add("Feb" + " " + year.Substring(2, 2));
                         secondmonths.Add(month + year);
-                        datapoints2.Add((decimal)spendings[i].TotalPrice);
+                        datapoints2.RemoveAt(jui.IndexOf(year + month));
+                        datapoints2.Insert(jui.IndexOf(year + month), (decimal)spendings[i].TotalPrice);
+
                     }
                     else
                     {
-                        datapoints2[datapoints2.Count - 1] += (decimal)spendings[i].TotalPrice;
+                        datapoints2[jui.IndexOf(year + month)] += (decimal)spendings[i].TotalPrice;
 
                     }
                 }
@@ -189,15 +209,17 @@ namespace InventoryWeb.Controllers
 
                     if (!(secondmonths.Contains(month + year)))
                     {
-                        months.Add("Mar" + " " + year.Substring(2, 2));
+
                         secondmonths.Add(month + year);
-                        datapoints2.Add((decimal)spendings[i].TotalPrice);
+                        datapoints2.RemoveAt(jui.IndexOf(year + month));
+                        datapoints2.Insert(jui.IndexOf(year + month), (decimal)spendings[i].TotalPrice);
+
                     }
                     else
                     {
-                        
-                        datapoints2[datapoints2.Count - 1] += (decimal)spendings[i].TotalPrice;
-                        
+
+                        datapoints2[jui.IndexOf(year + month)] += (decimal)spendings[i].TotalPrice;
+
                     }
                 }
 
@@ -206,13 +228,14 @@ namespace InventoryWeb.Controllers
 
                     if (!(secondmonths.Contains(month + year)))
                     {
-                        months.Add("Apr" + " " + year.Substring(2, 2));
+
                         secondmonths.Add(month + year);
-                        datapoints2.Add((decimal)spendings[i].TotalPrice);
+                        datapoints2.RemoveAt(jui.IndexOf(year + month));
+                        datapoints2.Insert(jui.IndexOf(year + month), (decimal)spendings[i].TotalPrice);
                     }
                     else
                     {
-                        datapoints2[datapoints2.Count - 1] += (decimal)spendings[i].TotalPrice;
+                        datapoints2[jui.IndexOf(year + month)] += (decimal)spendings[i].TotalPrice;
 
                     }
                 }
@@ -221,13 +244,15 @@ namespace InventoryWeb.Controllers
                 {
                     if (!(secondmonths.Contains(month + year)))
                     {
-                        months.Add("May" + " " + year.Substring(2, 2));
+
                         secondmonths.Add(month + year);
-                        datapoints2.Add((decimal)spendings[i].TotalPrice);
+                        datapoints2.RemoveAt(jui.IndexOf(year + month));
+                        datapoints2.Insert(jui.IndexOf(year + month), (decimal)spendings[i].TotalPrice);
+
                     }
                     else
                     {
-                        datapoints2[datapoints2.Count - 1] += (decimal)spendings[i].TotalPrice;
+                        datapoints2[jui.IndexOf(year + month)] += (decimal)spendings[i].TotalPrice;
 
                     }
                 }
@@ -236,13 +261,14 @@ namespace InventoryWeb.Controllers
                 {
                     if (!(secondmonths.Contains(month + year)))
                     {
-                        months.Add("Jun" + " " + year.Substring(2, 2));
+
                         secondmonths.Add(month + year);
-                        datapoints2.Add((decimal)spendings[i].TotalPrice);
+                        datapoints2.RemoveAt(jui.IndexOf(year + month));
+                        datapoints2.Insert(jui.IndexOf(year + month), (decimal)spendings[i].TotalPrice);
                     }
                     else
                     {
-                        datapoints2[datapoints2.Count - 1] += (decimal)spendings[i].TotalPrice;
+                        datapoints2[jui.IndexOf(year + month)] += (decimal)spendings[i].TotalPrice;
 
                     }
                 }
@@ -251,13 +277,15 @@ namespace InventoryWeb.Controllers
                 {
                     if (!(secondmonths.Contains(month + year)))
                     {
-                        months.Add("Jul" + " " + year.Substring(2, 2));
+
                         secondmonths.Add(month + year);
-                        datapoints2.Add((decimal)spendings[i].TotalPrice);
+                        datapoints2.RemoveAt(jui.IndexOf(year + month));
+                        datapoints2.Insert(jui.IndexOf(year + month), (decimal)spendings[i].TotalPrice);
+
                     }
                     else
                     {
-                        datapoints2[datapoints2.Count - 1] += (decimal)spendings[i].TotalPrice;
+                        datapoints2[jui.IndexOf(year + month)] += (decimal)spendings[i].TotalPrice;
 
                     }
                 }
@@ -266,13 +294,15 @@ namespace InventoryWeb.Controllers
                 {
                     if (!(secondmonths.Contains(month + year)))
                     {
-                        months.Add("Aug" + " " + year.Substring(2, 2));
+
                         secondmonths.Add(month + year);
-                        datapoints2.Add((decimal)spendings[i].TotalPrice);
+                        datapoints2.RemoveAt(jui.IndexOf(year + month));
+                        datapoints2.Insert(jui.IndexOf(year + month), (decimal)spendings[i].TotalPrice);
+
                     }
                     else
                     {
-                        datapoints2[datapoints2.Count - 1] += (decimal)spendings[i].TotalPrice;
+                        datapoints2[jui.IndexOf(year + month)] += (decimal)spendings[i].TotalPrice;
 
                     }
                 }
@@ -281,13 +311,15 @@ namespace InventoryWeb.Controllers
                 {
                     if (!(secondmonths.Contains(month + year)))
                     {
-                        months.Add("Sep" + " " + year.Substring(2, 2));
+
                         secondmonths.Add(month + year);
-                        datapoints2.Add((decimal)spendings[i].TotalPrice);
+                        datapoints2.RemoveAt(jui.IndexOf(year + month));
+                        datapoints2.Insert(jui.IndexOf(year + month), (decimal)spendings[i].TotalPrice);
+
                     }
                     else
                     {
-                        datapoints2[datapoints2.Count - 1] += (decimal)spendings[i].TotalPrice;
+                        datapoints2[jui.IndexOf(year + month)] += (decimal)spendings[i].TotalPrice;
 
                     }
                 }
@@ -295,13 +327,15 @@ namespace InventoryWeb.Controllers
                 {
                     if (!(secondmonths.Contains(month + year)))
                     {
-                        months.Add("Oct" + " " + year.Substring(2, 2));
+
                         secondmonths.Add(month + year);
-                        datapoints2.Add((decimal)spendings[i].TotalPrice);
+                        datapoints2.RemoveAt(jui.IndexOf(year + month));
+                        datapoints2.Insert(jui.IndexOf(year + month), (decimal)spendings[i].TotalPrice);
+
                     }
                     else
                     {
-                        datapoints2[datapoints2.Count - 1] += (decimal)spendings[i].TotalPrice;
+                        datapoints2[jui.IndexOf(year + month)] += (decimal)spendings[i].TotalPrice;
 
                     }
                 }
@@ -309,13 +343,15 @@ namespace InventoryWeb.Controllers
                 {
                     if (!(secondmonths.Contains(month + year)))
                     {
-                        months.Add("Nov" + " " + year.Substring(2, 2));
+
                         secondmonths.Add(month + year);
-                        datapoints2.Add((decimal)spendings[i].TotalPrice);
+                        datapoints2.RemoveAt(jui.IndexOf(year + month));
+                        datapoints2.Insert(jui.IndexOf(year + month), (decimal)spendings[i].TotalPrice);
+
                     }
                     else
                     {
-                        datapoints2[datapoints2.Count - 1] += (decimal)spendings[i].TotalPrice;
+                        datapoints2[jui.IndexOf(year + month)] += (decimal)spendings[i].TotalPrice;
 
                     }
                 }
@@ -324,22 +360,24 @@ namespace InventoryWeb.Controllers
                 {
                     if (!(secondmonths.Contains(month + year)))
                     {
-                        months.Add("Dec" + " " + year.Substring(2, 2));
+
                         secondmonths.Add(month + year);
-                        datapoints2.Add((decimal)spendings[i].TotalPrice);
+                        datapoints2.RemoveAt(jui.IndexOf(year + month));
+                        datapoints2.Insert(jui.IndexOf(year + month), (decimal)spendings[i].TotalPrice);
+
                     }
                     else
                     {
-                        datapoints2[datapoints2.Count - 1] += (decimal)spendings[i].TotalPrice;
+                        datapoints2[jui.IndexOf(year + month)] += (decimal)spendings[i].TotalPrice;
 
                     }
                 }
             }
 
-          
-            
+
+
             ViewBag.datapoints2 = JsonConvert.SerializeObject(datapoints2);
-            ViewBag.datapoints3 = JsonConvert.SerializeObject(months);
+            ViewBag.datapoints3 = JsonConvert.SerializeObject(xaxis);
             return View("DepSpendingHistory");
         }
 

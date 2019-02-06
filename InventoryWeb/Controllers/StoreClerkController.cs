@@ -134,6 +134,7 @@ namespace InventoryWeb.Controllers
         {
 
             List<Department> dep = catalogueBusinessLogic.getDepartments();
+            ViewBag.catItem= catalogueBusinessLogic.getCatalogueById(dropDown1);
             ReportsController depManager = new ReportsController();
 
 

@@ -265,3 +265,7 @@ function closeWindow() {
     var myWindow = document.getElementById("DisbursementModal");
     myWindow.close();
 }
+function FinalDisbursementList() {
+    window.location.href = '/StoreClerk/SendGetDisbursement';
+    alert("Email has been sent to the corresponding Department Representatives");
+}

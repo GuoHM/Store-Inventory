@@ -28,7 +28,7 @@ namespace InventoryWeb.Controllers
             return View();
         }
 
-        public static int GetMonthDifference(DateTime startDate, DateTime endDate)
+        public int GetMonthDifference(DateTime startDate, DateTime endDate)
         {
             int monthsApart = 12 * (startDate.Year - endDate.Year) + startDate.Month - endDate.Month;
             return Math.Abs(monthsApart) + 1;

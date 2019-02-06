@@ -154,6 +154,7 @@ function savePurchaseOrder() {
 
 function lowStock() {
     $("#btnLowStock").attr("disabled", true);
+    $("#btnConfirm").attr("disabled", false);
     $.ajax({
         url: "/StoreClerk/LowStock",
         type: "get",

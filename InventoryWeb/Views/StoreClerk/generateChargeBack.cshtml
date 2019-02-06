@@ -29,7 +29,7 @@
                     <i class="fa fa-calendar">
                     </i>
                 </div>
-                <input class="form-control" id="date1" name="Date1" placeholder="YYYY/MM/DD" type="text" required />
+                <input class="form-control" id="date1" name="date1" placeholder="YYYY/MM/DD" type="text" required />
             </div>
         </div>
 
@@ -49,7 +49,7 @@
                     <i class="fa fa-calendar">
                     </i>
                 </div>
-                <input class="form-control" id="date2" name="Date2" placeholder="YYYY/MM/DD" type="text" required />
+                <input class="form-control" id="date2" name="date2" placeholder="YYYY/MM/DD" type="text" required />
             </div>
         </div>
         <br />
@@ -74,7 +74,7 @@
 
 <script>
     $(document).ready(function () {
-        var date_input = $('input[name="date1"]').Date; //our date input has the name "date"
+        var date_input = $('input[name="date1"]'); //our date input has the name "date"
         var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
         date_input.datepicker({
             format: 'yyyy/mm/dd',
@@ -87,7 +87,7 @@
 
 <script>
     $(document).ready(function () {
-        var date_input = $('input[name="date2"]').Date; //our date input has the name "date"
+        var date_input = $('input[name="date2"]'); //our date input has the name "date"
         var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
         date_input.datepicker({
             format: 'yyyy/mm/dd',
@@ -106,8 +106,7 @@
             var y = document.forms["myForm"]["date2"].value;
             var startDate = new Date($("#date1").val());
             var endDate = new Date($("#date2").val());
-            if (x == "" || y == "")
-            {
+            if (x == "" || y == "") {
                 alert("Start Date or End Date is Blank");
             }
             else if (endDate < startDate) {

@@ -207,34 +207,46 @@ namespace InventoryWeb.Controllers
             DisbursementList disbursement = new DisbursementList();
             CatalogueBusinessLogic catalogue = new CatalogueBusinessLogic();
             reqBackup = requestBackup;
-
-            foreach (int req1 in updateRequest)
+            if (updateRequest.Count != 0)
             {
-                List<Department> dep = disbursement.GetDisbursements(req1);
-                disbursementList.AddRange(dep);
 
+
+                foreach (int req1 in updateRequest)
+                {
+                    List<Department> dep = disbursement.GetDisbursements(req1);
+                    disbursementList.AddRange(dep);
+
+                }
+
+                var data = disbursementList.Distinct().Select(p => new
+                {
+                    departmentName = p.DepartmentName,
+                    representative = p.AspNetUsers.UserName,
+                    collectionPoint = p.CollectionPoint
+                }).ToList();
+
+                return Json(data, JsonRequestBehavior.AllowGet);
             }
-
-            var data = disbursementList.Distinct().Select(p => new
-            {
-                departmentName = p.DepartmentName,
-                representative = p.AspNetUsers.UserName,
-                collectionPoint = p.CollectionPoint
-            }).ToList();
-
-           
-            //EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
-            
-            //foreach (Department dept in disbursementList) {
-                //string content = emailBusinessLogic.ReadyForCollectionPoint(dept.DepartmentID);
- 
-             //List<string> toAddress = new List<string>();
-               // toAddress.Add("wangxiaoxiaoqiang@gmail.com");
-                //emailBusinessLogic.SendEmail("Team3", content, toAddress); }
-            return Json(data, JsonRequestBehavior.AllowGet);
+            return new JsonResult();
         }
 
+        public ActionResult SendGetDisbursement()
+        {
+            updateRequest = new List<int>();
+            requestBackup = new List<Request>();
+            reqBackup = new List<Request>(); ;
+            EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
 
+            foreach (var dept in disbursementList.Select(p=> new { p.DepartmentID }).Distinct())
+            {
+                string content = emailBusinessLogic.ReadyForCollectionPoint(dept.DepartmentID);
+
+                List<string> toAddress = new List<string>();
+                toAddress.Add("padmapriya.n026@gmail.com");
+                emailBusinessLogic.SendEmail("Team3", content, toAddress);                 
+            }
+            return RedirectToAction("RetrievalForm");
+                }
         public ActionResult GetDisbursementItems(List<DepartmentList> department)
         {
 
@@ -592,12 +604,12 @@ namespace InventoryWeb.Controllers
                     }
                 }
             }
-            //EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
-            //string content = emailBusinessLogic.LowStockNotification();
+            EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
+            string content = emailBusinessLogic.LowStockNotification();
 
-            //List<string> toAddress = new List<string>();
-            //toAddress.Add("wangxiaoxiaoqiang@gmail.com");
-            //emailBusinessLogic.SendEmail("Team3", content, toAddress);
+            List<string> toAddress = new List<string>();
+            toAddress.Add("wangxiaoxiaoqiang@gmail.com");
+            emailBusinessLogic.SendEmail("Team3", content, toAddress);
             catalogueBusinessLogic.ValidateOrderStatus();
 
             return new JsonResult();

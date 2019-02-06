@@ -555,6 +555,10 @@ function openDisbursementList() {
     window.location.href = '/StoreClerk/DisbursementList';
 }
 
+function FinalDisbursementList() {
+    window.location.href = '/StoreClerk/SendGetDisbursement';
+}
+
 function textboxValidation() {
    
     var tab = document.getElementById("RetrievalTable");

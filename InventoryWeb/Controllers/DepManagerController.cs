@@ -130,7 +130,7 @@ namespace InventoryWeb.Controllers
         {
             string userId = User.Identity.GetUserId();
             AspNetUsers user1 = i.AspNetUsers.Where(x => x.Id == userId).First<AspNetUsers>();
-            ViewBag.usertype = user1.UserType;
+            ViewBag.usertype = user1.DepartmentID.Substring(0,4);
             return View();
         }
 

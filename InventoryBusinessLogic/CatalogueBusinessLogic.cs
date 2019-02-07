@@ -78,7 +78,7 @@ namespace InventoryBusinessLogic
 
         }
 
-        public void Save(string id, int reorderlevel, int reorderquantity, int price)
+        public void Save(string id, int reorderlevel, int reorderquantity, double price)
         {
 
             Catalogue item1 = inventory.Catalogue.Where(P => P.ItemID == id).First<Catalogue>();

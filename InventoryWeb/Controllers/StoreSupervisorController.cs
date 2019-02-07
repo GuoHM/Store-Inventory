@@ -52,7 +52,7 @@ namespace InventoryWeb.Controllers
             new AdjustmentBusinessLogic().getAllAdjustment(userId);
             return View();
         }
-        public ActionResult Save(string itemid, int reorderlevel, int reorderquantity, int price)
+        public ActionResult Save(string itemid, int reorderlevel, int reorderquantity, double price)
         {
             new CatalogueBusinessLogic().Save(itemid, reorderlevel, reorderquantity, price);
             return View("ViewInventory");

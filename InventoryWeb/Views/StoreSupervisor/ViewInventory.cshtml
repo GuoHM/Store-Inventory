@@ -105,20 +105,27 @@
 		var charCode = (evt.which) ? evt.which : event.keyCode
 		if (charCode == 8)//back space
 			return true;
-		if (charCode < 48 || charCode > 57)//0-9
-		{
-			alert("Please Enter Only Numbers.");
-			return false;
-		}
+		//if ((charCode < 48 || charCode > 57) && (/^[0-9]+(\.[0-9]{1,2})$/
+		//{
+		//	alert("Please Enter Only Numbers.");
+		//	return false;
+		//}
 
 		return true;
 
 	}
 
+	
+
 	$(document).ready(function () {
 		$("#save").click(function (e) {
 			
-			
+			if (!(/^[0-9]+(\.[0-9]{1,2})$/).test($("#editprice").val())) {
+
+				alert("Please Enter in x.xx format");
+				e.preventDefault();
+
+			}
 
 			if (($("#editreorderquantity").val() == "") || ($("#editreorderlevel").val() == "") || ($("#editprice").val() == "")) {
 				alert("cannot be empty");

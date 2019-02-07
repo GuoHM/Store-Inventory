@@ -574,7 +574,7 @@ function textboxValidation() {
         var available = rows[i].cells[3].innerHTML;
         var needed = rows[i].cells[2].innerHTML;
         if (quantityPicked !== null && quantityPicked !== "") {
-            if (Number(quantityPicked) > 0 && quantityPicked % 1==0) { 
+            if (Number(quantityPicked) > 0 && quantityPicked % 1===0) { 
                 if (Number(quantityPicked) > Number(available)) {
                     alert("Can not pick more than available quantity");
                     verified = false;

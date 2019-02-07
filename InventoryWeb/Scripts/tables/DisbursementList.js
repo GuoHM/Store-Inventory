@@ -269,3 +269,6 @@ function FinalDisbursementList() {
     window.location.href = '/StoreClerk/SendGetDisbursement';
     alert("Email has been sent to the corresponding Department Representatives");
 }
+function deliverItems() {
+    window.location.href = '/StoreClerk/DeliveredItems';
+}

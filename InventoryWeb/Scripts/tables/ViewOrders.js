@@ -559,6 +559,10 @@ function FinalDisbursementList() {
     window.location.href = '/StoreClerk/SendGetDisbursement';
 }
 
+function deliverItems() {
+    window.location.href = '/StoreClerk/DeliveredItems';
+}
+
 function textboxValidation() {
    
     var tab = document.getElementById("RetrievalTable");

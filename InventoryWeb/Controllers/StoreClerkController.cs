@@ -31,10 +31,11 @@ namespace InventoryWeb.Controllers
         static List<RetrievalList> retrievals = new List<RetrievalList>();
         static List<orderlist> orders = new List<orderlist>();
         static List<Department> disbursementList = new List<Department>();
+        static List<Department> disbursementListBackup = new List<Department>();
         static List<Request> req = new List<Request>();
         OrderBusinessLogic orderbusinesslogic = new OrderBusinessLogic();
         static bool retrivalRequest = false;
-
+        List<String> disbursedList = new List<string>();
         public static List<int> updateRequest = new List<int>();
 
         public ActionResult RaiseRequest()
@@ -69,6 +70,7 @@ namespace InventoryWeb.Controllers
             for(int j = 0; j < i; j++)
             {
                 orderbusinesslogic.updateSignture(s.Get(j), v);
+                disbursedList.Add(s.Get(j));
             }
             
             return "success";
@@ -204,9 +206,17 @@ namespace InventoryWeb.Controllers
         public JsonResult GetDisbursementList()
         {
             disbursementList = new List<Department>();
+            disbursementListBackup = new List<Department>();
             DisbursementList disbursement = new DisbursementList();
             CatalogueBusinessLogic catalogue = new CatalogueBusinessLogic();
             reqBackup = requestBackup;
+            if(disbursementListBackup.Count!=0)
+            {
+                foreach(Department dep in disbursementListBackup)
+                {
+                    disbursementList.Add(dep);
+                }
+            }
             if (updateRequest.Count != 0)
             {
 
@@ -215,6 +225,7 @@ namespace InventoryWeb.Controllers
                 {
                     List<Department> dep = disbursement.GetDisbursements(req1);
                     disbursementList.AddRange(dep);
+                    disbursementListBackup.AddRange(dep);
 
                 }
 
@@ -224,7 +235,7 @@ namespace InventoryWeb.Controllers
                     representative = p.AspNetUsers.UserName,
                     collectionPoint = p.CollectionPoint
                 }).ToList();
-
+              
                 return Json(data, JsonRequestBehavior.AllowGet);
             }
             return new JsonResult();
@@ -232,10 +243,7 @@ namespace InventoryWeb.Controllers
 
         public ActionResult SendGetDisbursement()
         {
-            updateRequest = new List<int>();
-            requestBackup = new List<Request>();
-            reqBackup = new List<Request>(); ;
-            EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
+           EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
 
             foreach (var dept in disbursementList.Select(p=> new { p.DepartmentID }).Distinct())
             {
@@ -247,6 +255,27 @@ namespace InventoryWeb.Controllers
             }
             return RedirectToAction("RetrievalForm");
                 }
+
+        public ActionResult DeliveredItems()
+        {
+            if (disbursedList.Count != 0)
+            {
+                foreach (string str in disbursedList)
+                {
+                    foreach (var d in disbursementListBackup)
+                    {
+                        if (str.Substring(0, 4) == d.DepartmentName.Substring(0, 4))
+                        {
+                            disbursementListBackup.Remove(d);
+                        }
+                    }
+                }
+            }
+            disbursementList = new List<Department>();
+            updateRequest = new List<int>();
+            reqBackup = new List<Request>();
+            return RedirectToAction("RetrievalForm");
+        }
         public ActionResult GetDisbursementItems(List<DepartmentList> department)
         {
 

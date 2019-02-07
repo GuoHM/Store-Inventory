@@ -84,7 +84,7 @@ namespace InventoryBusinessLogic
         {
             try
             {
-                return inventory.Request.Where(x => x.OrderID == OrderId &&x.RequestStatus.ToUpper().Trim()=="APPROVED").ToList();
+                return inventory.Request.Where(x => x.OrderID == OrderId &&x.RequestStatus.ToUpper().Trim()=="APPROVED" && x.Actual != x.Needed).ToList();
             }
             catch (Exception)
             {

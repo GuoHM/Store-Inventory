@@ -205,8 +205,7 @@ namespace InventoryWeb.Controllers
         [HttpGet]
         public JsonResult GetDisbursementList()
         {
-            disbursementList = new List<Department>();
-            disbursementListBackup = new List<Department>();
+            disbursementList = new List<Department>();          
             DisbursementList disbursement = new DisbursementList();
             CatalogueBusinessLogic catalogue = new CatalogueBusinessLogic();
             reqBackup = requestBackup;

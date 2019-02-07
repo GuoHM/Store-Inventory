@@ -214,6 +214,12 @@ function selectedItems() {
 
         success: function (data) {
             alert("Updated Disbursement list");
+            window.location.reload();
+        },
+          error: function (XMLHttpRequest, textStatus, errorThrown) {
+              alert("Updated Disbursement list");
+              //window.location.reload();
+              window.location.href = '/StoreClerk/RetrievalForm';
         }
 
 

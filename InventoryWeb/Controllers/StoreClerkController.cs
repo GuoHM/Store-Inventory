@@ -218,8 +218,7 @@ namespace InventoryWeb.Controllers
             }
             if (updateRequest.Count != 0)
             {
-
-
+                
                 foreach (int req1 in updateRequest)
                 {
                     List<Department> dep = disbursement.GetDisbursements(req1);
@@ -230,12 +229,12 @@ namespace InventoryWeb.Controllers
             }
             if (disbursementList.Count != 0)
             {
-                var data = disbursementList.Distinct().Select(p => new
+                var data = disbursementList.Select(p => new
                 {
                     departmentName = p.DepartmentName,
                     representative = p.AspNetUsers.UserName,
                     collectionPoint = p.CollectionPoint
-                }).ToList();
+                }).Distinct().ToList();
 
                 return Json(data, JsonRequestBehavior.AllowGet);
             }

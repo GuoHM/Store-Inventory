@@ -1,6 +1,8 @@
 ﻿@model InventoryWeb.Models.RegisterViewModel
 @{
-    ViewBag.Title = "Register";
+                /**/
+
+                ViewBag.Title = "Register";
 }
 
 <h2>@ViewBag.Title.</h2>
@@ -35,9 +37,18 @@
             @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
         </div>
     </div>
+
+    <div class="form-group">
+        @Html.Label("user Role", new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @*@Html.DropDownList("Name")*@
+            @Html.DropDownList("UserRoles", (SelectList)ViewBag.Roles, " ")
+        </div>
+    </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" class="btn btn-default" value="Register" />
+
         </div>
     </div>
 }

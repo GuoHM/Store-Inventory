@@ -19,6 +19,7 @@ namespace InventoryWeb.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private static string loggedinUsername="";
 
         public AccountController()
         {
@@ -123,6 +124,7 @@ namespace InventoryWeb.Controllers
             {
                 case SignInStatus.Success:
                     var user = await UserManager.FindAsync(model.UserName, model.Password);
+                    loggedinUsername = model.UserName;
                     var roles = await UserManager.GetRolesAsync(user.Id);
 
                     if (roles.Contains("InterimDepHead"))
@@ -291,6 +293,19 @@ namespace InventoryWeb.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+            Inventory i = new Inventory();
+            UserBusinessLogic userlogic = new UserBusinessLogic();
+            string dept = userlogic.getUserByUsername(loggedinUsername).DepartmentID;
+            if (dept.Substring(0, 4) == "STOR")
+            {
+
+                ViewBag.Roles = new SelectList(i.AspNetRoles.Where(x=>x.Name.Substring(0,4)=="Stor").ToList(), "Name", "Name");
+            }
+            else
+            {
+                ViewBag.Roles = new SelectList(i.AspNetRoles.Where(u => u.Name.Contains("DeptStaff"))
+                                     .ToList(), "Name", "Name");
+            }
             return View();
         }
 
@@ -307,15 +322,39 @@ namespace InventoryWeb.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                   // await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    await this.UserManager.AddToRoleAsync(user.Id, model.UserRoles);
+                    Inventory i = new Inventory();
+                    UserBusinessLogic userlogic = new UserBusinessLogic();
+                    string dept = userlogic.getUserByUsername(loggedinUsername).DepartmentID;
+                    string userType = model.UserRoles;
 
-                    return RedirectToAction("Index", "Home");
+                    AspNetUsers newUser = i.AspNetUsers.Where(x => x.Id == user.Id).First();
+                    newUser.DepartmentID = dept;
+                    newUser.UserType = userType;
+
+                    i.SaveChanges();
+
+                   return RedirectToAction("ApproveOrReject", "DepManager");
+                }
+                Inventory inv = new Inventory();
+                UserBusinessLogic userlogic1 = new UserBusinessLogic();
+                string dept1 = userlogic1.getUserByUsername(loggedinUsername).DepartmentID;
+                if (dept1.Substring(0, 4) == "STOR")
+                {
+
+                    ViewBag.Roles = new SelectList(inv.AspNetRoles.Where(x => x.Name.Substring(0, 4) == "Stor").ToList(), "Name", "Name");
+                }
+                else
+                {
+                    ViewBag.Roles = new SelectList(inv.AspNetRoles.Where(u => u.Name.Contains("DeptStaff"))
+                                         .ToList(), "Name", "Name");
                 }
                 AddErrors(result);
             }

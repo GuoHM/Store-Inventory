@@ -143,6 +143,9 @@ namespace InventoryWeb.Controllers
         {
 
             string userId = User.Identity.GetUserId();
+            AspNetUsers user1 = i.AspNetUsers.Where(x => x.Id == userId).First<AspNetUsers>();
+            ViewBag.usertype = user1.UserType;
+            ViewBag.Department = user1.DepartmentID.Substring(0, 4);
             ReportsController rep = new ReportsController();
             List<Order> spendings = BL.getDepSpendingHistory(date1, date2, userId);
             List<Object> secondmonths = new List<Object>();
@@ -378,6 +381,7 @@ namespace InventoryWeb.Controllers
 
             ViewBag.datapoints2 = JsonConvert.SerializeObject(datapoints2);
             ViewBag.datapoints3 = JsonConvert.SerializeObject(xaxis);
+            
             return View("DepSpendingHistory");
         }
 

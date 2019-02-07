@@ -101,16 +101,17 @@ namespace InventoryWeb.Controllers
             return View();
         }
 
-        public ActionResult ChargeBackReport(DateTime date1, DateTime date2)
+        public ActionResult ChargeBackReport(DateTime Date1, DateTime Date2)
         {
-            
+
+            DateTime startDate =  Date1.Date; DateTime endDate = Date2.Date;
             List<Department> dep = catalogueBusinessLogic.getDepartments();
             ReportsController depManager = new ReportsController();
            
 
             foreach (Department d in dep)
             {
-               depManager.spendingHistorytwo(date1, date2, d.DepartmentID);
+               depManager.spendingHistorytwo(startDate.Date, endDate.Date, d.DepartmentID);
             }
 
             ViewBag.dataSCI = JsonConvert.SerializeObject(depManager.dataSCI);

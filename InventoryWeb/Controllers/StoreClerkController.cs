@@ -70,7 +70,7 @@ namespace InventoryWeb.Controllers
             for(int j = 0; j < i; j++)
             {
                 orderbusinesslogic.updateSignture(s.Get(j), v);
-                disbursedList.Add(s.Get(j));
+               
             }
             
             return "success";
@@ -209,9 +209,9 @@ namespace InventoryWeb.Controllers
             DisbursementList disbursement = new DisbursementList();
             CatalogueBusinessLogic catalogue = new CatalogueBusinessLogic();
             reqBackup = requestBackup;
-            if(disbursementListBackup.Count!=0)
+            if (disbursementListBackup.Count != 0)
             {
-                foreach(Department dep in disbursementListBackup)
+                foreach (Department dep in disbursementListBackup)
                 {
                     disbursementList.Add(dep);
                 }
@@ -227,16 +227,19 @@ namespace InventoryWeb.Controllers
                     disbursementListBackup.AddRange(dep);
 
                 }
-
+            }
+            if (disbursementList.Count != 0)
+            {
                 var data = disbursementList.Distinct().Select(p => new
                 {
                     departmentName = p.DepartmentName,
                     representative = p.AspNetUsers.UserName,
                     collectionPoint = p.CollectionPoint
                 }).ToList();
-              
+
                 return Json(data, JsonRequestBehavior.AllowGet);
             }
+            
             return new JsonResult();
         }
 
@@ -255,22 +258,22 @@ namespace InventoryWeb.Controllers
             return RedirectToAction("RetrievalForm");
                 }
 
-        public ActionResult DeliveredItems()
+        public ActionResult DeliveredItems(List<DepartmentList> department)
         {
-            if (disbursedList.Count != 0)
+            if (department.Count != 0)
             {
-                foreach (string str in disbursedList)
+                foreach (DepartmentList str in department)
                 {
-                    foreach (var d in disbursementListBackup)
+                    foreach (var d in disbursementList)
                     {
-                        if (str.Substring(0, 4) == d.DepartmentName.Substring(0, 4))
+                        if (str.deptName.Substring(0, 4) == d.DepartmentName.Substring(0, 4))
                         {
                             disbursementListBackup.Remove(d);
                         }
                     }
                 }
             }
-            disbursementList = new List<Department>();
+            //disbursementList = new List<Department>();
             updateRequest = new List<int>();
             reqBackup = new List<Request>();
             return RedirectToAction("RetrievalForm");

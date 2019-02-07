@@ -1,20 +1,13 @@
-﻿
-@{
-    ViewBag.Title = "generateChargeBack";
-}
-
-
-
-<div class="col-xs-2 column">
+﻿<div class="col-xs-2 column">
     @Html.Partial("~/Views/StoreManager/SideBar.cshtml")
 </div>
 
 <div class="col-sm-offset-3">
-    <h2>Generate Charge Back report</h2> <br /><br />
+    <h2>Trend Analysis By Expenditure</h2> <br /><br />
 </div>
 
 <div class="col-sm-offset-3">
-    <form action="ChargeBackReport" class="rep-form" name="myForm" id="form-3">
+    <form action="trendExpenditureReport" class="rep-form" name="myForm" id="form-3">
 
         <div class="form-group ">
             <label class="control-label col-sm-2 requiredField" for="date">
@@ -54,7 +47,7 @@
         </div>
         <br />
         <div class="col-sm-4">
-            <button type="submit" class="btn btn-success" id="button1">Generate Charge back</button>
+            <button type="submit" class="btn btn-success" id="button1">Generate Charge Back</button>
         </div>
 
     </form>
@@ -141,10 +134,10 @@
 
     Highcharts.chart('container1', {
         chart: {
-            type: 'column'
+            type: 'line'
         },
         title: {
-            text: 'Charge Back-report'
+            text: 'Trend Analysis By Expenditure'
         },
 
         xAxis: {
@@ -199,8 +192,3 @@
             });
         });
 </script>
-
-
-
-
-

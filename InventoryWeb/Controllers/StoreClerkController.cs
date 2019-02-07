@@ -101,16 +101,17 @@ namespace InventoryWeb.Controllers
             return View();
         }
 
-        public ActionResult ChargeBackReport(DateTime date1, DateTime date2)
+        public ActionResult ChargeBackReport(DateTime Date1, DateTime Date2)
         {
-            
+
+            DateTime startDate =  Date1.Date; DateTime endDate = Date2.Date;
             List<Department> dep = catalogueBusinessLogic.getDepartments();
             ReportsController depManager = new ReportsController();
            
 
             foreach (Department d in dep)
             {
-               depManager.spendingHistorytwo(date1, date2, d.DepartmentID);
+               depManager.spendingHistorytwo(startDate.Date, endDate.Date, d.DepartmentID);
             }
 
             ViewBag.dataSCI = JsonConvert.SerializeObject(depManager.dataSCI);
@@ -121,10 +122,6 @@ namespace InventoryWeb.Controllers
             ViewBag.dataZOOL = JsonConvert.SerializeObject(depManager.dataZOOL);
             ViewBag.months = JsonConvert.SerializeObject(depManager.datamonths);
             return View("generateChargeBack");
-
-
-
-
         }
 
         public ActionResult trenAnalysisByItems()
@@ -138,6 +135,7 @@ namespace InventoryWeb.Controllers
         {
 
             List<Department> dep = catalogueBusinessLogic.getDepartments();
+            ViewBag.catItem= catalogueBusinessLogic.getCatalogueById(dropDown1);
             ReportsController depManager = new ReportsController();
 
 
@@ -155,6 +153,33 @@ namespace InventoryWeb.Controllers
             ViewBag.months = JsonConvert.SerializeObject(depManager.datamonths);
             return View("ChargeBackReport");
             
+        }
+
+        public ActionResult trenAnalysisByExpenditure()
+        {
+            return View();
+        }
+
+        public ActionResult trendExpenditureReport(DateTime date1, DateTime date2)
+        {
+
+            List<Department> dep = catalogueBusinessLogic.getDepartments();
+            ReportsController depManager = new ReportsController();
+
+
+            foreach (Department d in dep)
+            {
+                depManager.spendingHistorytwo(date1, date2, d.DepartmentID);
+            }
+
+            ViewBag.dataSCI = JsonConvert.SerializeObject(depManager.dataSCI);
+            ViewBag.dataCOMM = JsonConvert.SerializeObject(depManager.dataCOMM);
+            ViewBag.dataCPSC = JsonConvert.SerializeObject(depManager.dataCPSC);
+            ViewBag.dataENGL = JsonConvert.SerializeObject(depManager.dataENGL);
+            ViewBag.dataREGR = JsonConvert.SerializeObject(depManager.dataREGR);
+            ViewBag.dataZOOL = JsonConvert.SerializeObject(depManager.dataZOOL);
+            ViewBag.months = JsonConvert.SerializeObject(depManager.datamonths);
+            return View("trenAnalysisByExpenditure");
         }
         public ActionResult ListDept()
         {
@@ -182,34 +207,46 @@ namespace InventoryWeb.Controllers
             DisbursementList disbursement = new DisbursementList();
             CatalogueBusinessLogic catalogue = new CatalogueBusinessLogic();
             reqBackup = requestBackup;
-
-            foreach (int req1 in updateRequest)
+            if (updateRequest.Count != 0)
             {
-                List<Department> dep = disbursement.GetDisbursements(req1);
-                disbursementList.AddRange(dep);
 
+
+                foreach (int req1 in updateRequest)
+                {
+                    List<Department> dep = disbursement.GetDisbursements(req1);
+                    disbursementList.AddRange(dep);
+
+                }
+
+                var data = disbursementList.Distinct().Select(p => new
+                {
+                    departmentName = p.DepartmentName,
+                    representative = p.AspNetUsers.UserName,
+                    collectionPoint = p.CollectionPoint
+                }).ToList();
+
+                return Json(data, JsonRequestBehavior.AllowGet);
             }
-
-            var data = disbursementList.Distinct().Select(p => new
-            {
-                departmentName = p.DepartmentName,
-                representative = p.AspNetUsers.UserName,
-                collectionPoint = p.CollectionPoint
-            }).ToList();
-
-           
-            //EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
-            
-            //foreach (Department dept in disbursementList) {
-                //string content = emailBusinessLogic.ReadyForCollectionPoint(dept.DepartmentID);
- 
-             //List<string> toAddress = new List<string>();
-               // toAddress.Add("wangxiaoxiaoqiang@gmail.com");
-                //emailBusinessLogic.SendEmail("Team3", content, toAddress); }
-            return Json(data, JsonRequestBehavior.AllowGet);
+            return new JsonResult();
         }
 
+        public ActionResult SendGetDisbursement()
+        {
+            updateRequest = new List<int>();
+            requestBackup = new List<Request>();
+            reqBackup = new List<Request>(); ;
+            EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
 
+            foreach (var dept in disbursementList.Select(p=> new { p.DepartmentID }).Distinct())
+            {
+                string content = emailBusinessLogic.ReadyForCollectionPoint(dept.DepartmentID);
+
+                List<string> toAddress = new List<string>();
+                toAddress.Add("padmapriya.n026@gmail.com");
+                emailBusinessLogic.SendEmail("Team3", content, toAddress);                 
+            }
+            return RedirectToAction("RetrievalForm");
+                }
         public ActionResult GetDisbursementItems(List<DepartmentList> department)
         {
 
@@ -229,7 +266,7 @@ namespace InventoryWeb.Controllers
                 Request request = reqBackup.Where(x => x.RequestID == req1.RequestID).First();
                 req1.Needed = req1.Actual - request.Actual;
             }
-            var data = req.Select(p => new { itemDescription = p.Catalogue.Description, quantity = p.Needed, uom = p.Catalogue.MeasureUnit, orderid = p.OrderID }).ToList();
+            var data = req.Select(p => new { itemDescription = p.Catalogue.Description, quantity = p.Needed, uom = p.Catalogue.MeasureUnit, orderid = p.OrderID }).Distinct().ToList();
 
             JsonResult json =  Json(data, JsonRequestBehavior.AllowGet);
             return json;
@@ -567,12 +604,12 @@ namespace InventoryWeb.Controllers
                     }
                 }
             }
-            //EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
-            //string content = emailBusinessLogic.LowStockNotification();
+            EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
+            string content = emailBusinessLogic.LowStockNotification();
 
-            //List<string> toAddress = new List<string>();
-            //toAddress.Add("wangxiaoxiaoqiang@gmail.com");
-            //emailBusinessLogic.SendEmail("Team3", content, toAddress);
+            List<string> toAddress = new List<string>();
+            toAddress.Add("wangxiaoxiaoqiang@gmail.com");
+            emailBusinessLogic.SendEmail("Team3", content, toAddress);
             catalogueBusinessLogic.ValidateOrderStatus();
 
             return new JsonResult();

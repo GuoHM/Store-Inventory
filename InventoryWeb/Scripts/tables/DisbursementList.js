@@ -151,7 +151,7 @@ var TableInit = function () {
                 return window.btoa(binary);
             }
             var jsonArray = JSON.parse(signature);
-            debugger;
+           
             if (jsonArray.signature) {
                 var str12 = arrayBufferToBase64(jsonArray.signature);
                 document.getElementById("signature").src = "data:image/png;base64," + str12;
@@ -264,4 +264,8 @@ var TableInit1 = function () {
 function closeWindow() {
     var myWindow = document.getElementById("DisbursementModal");
     myWindow.close();
+}
+function FinalDisbursementList() {
+    window.location.href = '/StoreClerk/SendGetDisbursement';
+    alert("Email has been sent to the corresponding Department Representatives");
 }

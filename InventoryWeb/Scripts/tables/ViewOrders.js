@@ -555,6 +555,10 @@ function openDisbursementList() {
     window.location.href = '/StoreClerk/DisbursementList';
 }
 
+function FinalDisbursementList() {
+    window.location.href = '/StoreClerk/SendGetDisbursement';
+}
+
 function textboxValidation() {
    
     var tab = document.getElementById("RetrievalTable");
@@ -566,7 +570,7 @@ function textboxValidation() {
         var available = rows[i].cells[3].innerHTML;
         var needed = rows[i].cells[2].innerHTML;
         if (quantityPicked !== null && quantityPicked !== "") {
-            if (Number(quantityPicked) >= 0) {
+            if (Number(quantityPicked) > 0 && quantityPicked % 1==0) { 
                 if (Number(quantityPicked) > Number(available)) {
                     alert("Can not pick more than available quantity");
                     verified = false;
@@ -579,7 +583,7 @@ function textboxValidation() {
                 }
                 }
             else {
-                alert("Negative numbers not accepted");
+                alert("Invalid Quantity!");
                 verified = false;
                 return false;
             }
@@ -620,6 +624,8 @@ function UpdateInventory() {
             data: JSON.stringify(jsonlist),
             success: function (data) {
                 alert("Updated Successfully");
+                window.location.reload();
+                
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 alert(XMLHttpRequest.status);
@@ -628,6 +634,8 @@ function UpdateInventory() {
             },
 
         });
+       
+        
     }
 };
 

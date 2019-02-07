@@ -30,7 +30,7 @@ namespace InventoryBusinessLogic
 
         public List<PurchaseOrder> GetAllPurchaseOrders()
         {
-            return inventory.PurchaseOrder.ToList();
+            return inventory.PurchaseOrder.OrderByDescending(x=>x.PurchaseDate).ToList();
         }
 
         public List<PurchaseItem> GetAllPurchaseOrderById(int orderID)

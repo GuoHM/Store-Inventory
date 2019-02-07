@@ -28,7 +28,7 @@ namespace InventoryWeb.Controllers
             return View();
         }
 
-        public static int GetMonthDifference(DateTime startDate, DateTime endDate)
+        public int GetMonthDifference(DateTime startDate, DateTime endDate)
         {
             int monthsApart = 12 * (startDate.Year - endDate.Year) + startDate.Month - endDate.Month;
             return Math.Abs(monthsApart) + 1;
@@ -47,18 +47,14 @@ namespace InventoryWeb.Controllers
             int da = GetMonthDifference(date1, date2);
             DateTime temp = new DateTime();
             temp = date1;
-            int temp2 = 0;
+            
             
             for (int i = 0; i < da; i++)
             {
                 
-                jui.Add(temp.Month.ToString());
-                xaxis.Add(temp.Year + "/" + temp.Month.ToString());
+                jui.Add(temp.Year.ToString()+temp.Month.ToString());
+                xaxis.Add(temp.ToString("MMM")+ temp.Year.ToString().Substring(2, 2));
                 temp = temp.AddMonths(1);
-            }
-
-            for (int i = 0; i < da; i++)
-            {
                 datapoints2.Add(0);
             }
 
@@ -75,19 +71,13 @@ namespace InventoryWeb.Controllers
                     {
                         
                         secondmonths.Add(month + year);
-
-                        if (!(jui[temp2] == "1"))
-                        {
-                           
-                            temp2++;
-                        }
-                        datapoints2.RemoveAt(temp2);
-                        datapoints2.Insert(temp2, (decimal)spendings[i].TotalPrice);
-                        temp2++;
+                        datapoints2.RemoveAt(jui.IndexOf(year+month));
+                        datapoints2.Insert(jui.IndexOf(year+month), (decimal)spendings[i].TotalPrice);
+                       
                     }
                     else
                     {
-                        datapoints2[temp2 - 1] += (decimal)spendings[i].TotalPrice;
+                        datapoints2[jui.IndexOf(year + month)] += (decimal)spendings[i].TotalPrice;
 
                     }
 
@@ -98,18 +88,13 @@ namespace InventoryWeb.Controllers
                     if (!(secondmonths.Contains(month + year)))
                     {
                         secondmonths.Add(month + year);
-                        if (!(jui[temp2] == "2"))
-                        {
-                           
-                            temp2++;
-                        }
-                        datapoints2.RemoveAt(temp2);
-                        datapoints2.Insert(temp2, (decimal)spendings[i].TotalPrice);
-                        temp2++;
+                        datapoints2.RemoveAt(jui.IndexOf(year + month));
+                        datapoints2.Insert(jui.IndexOf(year + month), (decimal)spendings[i].TotalPrice);
+                        
                     }
                     else
                     {
-                        datapoints2[temp2 - 1] += (decimal)spendings[i].TotalPrice;
+                        datapoints2[jui.IndexOf(year + month)] += (decimal)spendings[i].TotalPrice;
 
                     }
                 }
@@ -120,19 +105,14 @@ namespace InventoryWeb.Controllers
                     {
                         
                         secondmonths.Add(month + year);
-                        if (!(jui[temp2] == "3"))
-                        {
-                            
-                            temp2++;
-                        }
-                        datapoints2.RemoveAt(temp2);
-                        datapoints2.Insert(temp2, (decimal)spendings[i].TotalPrice);
-                        temp2++;
+                        datapoints2.RemoveAt(jui.IndexOf(year + month));
+                        datapoints2.Insert(jui.IndexOf(year + month), (decimal)spendings[i].TotalPrice);
+                        
                     }
                     else
                     {
 
-                        datapoints2[temp2 - 1] += (decimal)spendings[i].TotalPrice;
+                        datapoints2[jui.IndexOf(year + month)] += (decimal)spendings[i].TotalPrice;
 
                     }
                 }
@@ -144,19 +124,12 @@ namespace InventoryWeb.Controllers
                     {
                         
                         secondmonths.Add(month + year);
-                        if (!(jui[temp2] == "4"))
-                        {
-                           
-                            temp2++;
-                        }
-                        datapoints2.RemoveAt(temp2);
-                        datapoints2.Insert(temp2, (decimal)spendings[i].TotalPrice);
-                        
-                        temp2++;
+                        datapoints2.RemoveAt(jui.IndexOf(year + month));
+                        datapoints2.Insert(jui.IndexOf(year + month), (decimal)spendings[i].TotalPrice);
                     }
                     else
                     {
-                        datapoints2[temp2 - 1] += (decimal)spendings[i].TotalPrice;
+                        datapoints2[jui.IndexOf(year + month)] += (decimal)spendings[i].TotalPrice;
 
                     }
                 }
@@ -167,18 +140,13 @@ namespace InventoryWeb.Controllers
                     {
                         
                         secondmonths.Add(month + year);
-                        if (!(jui[temp2] == "5"))
-                        {
-                            
-                            temp2++;
-                        }
-                        datapoints2.RemoveAt(temp2);
-                        datapoints2.Insert(temp2, (decimal)spendings[i].TotalPrice);
-                        temp2++;
+                        datapoints2.RemoveAt(jui.IndexOf(year + month));
+                        datapoints2.Insert(jui.IndexOf(year + month), (decimal)spendings[i].TotalPrice);
+                        
                     }
                     else
                     {
-                        datapoints2[temp2 - 1] += (decimal)spendings[i].TotalPrice;
+                        datapoints2[jui.IndexOf(year + month)] += (decimal)spendings[i].TotalPrice;
 
                     }
                 }
@@ -189,19 +157,12 @@ namespace InventoryWeb.Controllers
                     {
                         
                         secondmonths.Add(month + year);
-                        if (!(jui[temp2] == "6"))
-                        {
-                           
-                            temp2++;
-                        }
-                        datapoints2.RemoveAt(temp2);
-                        datapoints2.Insert(temp2, (decimal)spendings[i].TotalPrice);
-                       
-                        temp2++;
+                        datapoints2.RemoveAt(jui.IndexOf(year + month));
+                        datapoints2.Insert(jui.IndexOf(year + month), (decimal)spendings[i].TotalPrice);
                     }
                     else
                     {
-                        datapoints2[temp2 - 1] += (decimal)spendings[i].TotalPrice;
+                        datapoints2[jui.IndexOf(year + month)] += (decimal)spendings[i].TotalPrice;
 
                     }
                 }
@@ -212,18 +173,13 @@ namespace InventoryWeb.Controllers
                     {
                         
                         secondmonths.Add(month + year);
-                        if (!(jui[temp2] == "7"))
-                        {
-                            
-                            temp2++;
-                        }
-                        datapoints2.RemoveAt(temp2);
-                        datapoints2.Insert(temp2, (decimal)spendings[i].TotalPrice);
-                        temp2++;
+                        datapoints2.RemoveAt(jui.IndexOf(year + month));
+                        datapoints2.Insert(jui.IndexOf(year + month), (decimal)spendings[i].TotalPrice);
+                        
                     }
                     else
                     {
-                        datapoints2[temp2 - 1] += (decimal)spendings[i].TotalPrice;
+                        datapoints2[jui.IndexOf(year + month)] += (decimal)spendings[i].TotalPrice;
 
                     }
                 }
@@ -234,18 +190,13 @@ namespace InventoryWeb.Controllers
                     {
                        
                         secondmonths.Add(month + year);
-                        if (!(jui[temp2] == "8"))
-                        {
-                          
-                            temp2++;
-                        }
-                        datapoints2.RemoveAt(temp2);
-                        datapoints2.Insert(temp2, (decimal)spendings[i].TotalPrice);
-                        temp2++;
+                        datapoints2.RemoveAt(jui.IndexOf(year + month));
+                        datapoints2.Insert(jui.IndexOf(year + month), (decimal)spendings[i].TotalPrice);
+                       
                     }
                     else
                     {
-                        datapoints2[temp2 - 1] += (decimal)spendings[i].TotalPrice;
+                        datapoints2[jui.IndexOf(year + month)] += (decimal)spendings[i].TotalPrice;
 
                     }
                 }
@@ -256,18 +207,13 @@ namespace InventoryWeb.Controllers
                     {
                         
                         secondmonths.Add(month + year);
-                        if (!(jui[temp2] == "9"))
-                        {
-                            
-                            temp2++;
-                        }
-                        datapoints2.RemoveAt(temp2);
-                        datapoints2.Insert(temp2, (decimal)spendings[i].TotalPrice);
-                        temp2++;
+                        datapoints2.RemoveAt(jui.IndexOf(year + month));
+                        datapoints2.Insert(jui.IndexOf(year + month), (decimal)spendings[i].TotalPrice);
+                        
                     }
                     else
                     {
-                        datapoints2[temp2 - 1] += (decimal)spendings[i].TotalPrice;
+                        datapoints2[jui.IndexOf(year + month)] += (decimal)spendings[i].TotalPrice;
 
                     }
                 }
@@ -277,19 +223,13 @@ namespace InventoryWeb.Controllers
                     {
                         
                         secondmonths.Add(month + year);
-                        if (!(jui[temp2] == "10"))
-                        {
-                           
-                            temp2++;
-                        }
-                        datapoints2.RemoveAt(temp2);
-                        datapoints2.Insert(temp2, (decimal)spendings[i].TotalPrice);
-                        temp2++;
+                        datapoints2.RemoveAt(jui.IndexOf(year + month));
+                        datapoints2.Insert(jui.IndexOf(year + month), (decimal)spendings[i].TotalPrice);
                          
                     }
                     else
                     {
-                        datapoints2[temp2 - 1] += (decimal)spendings[i].TotalPrice;
+                        datapoints2[jui.IndexOf(year + month)] += (decimal)spendings[i].TotalPrice;
 
                     }
                 }
@@ -299,18 +239,13 @@ namespace InventoryWeb.Controllers
                     {
                         
                         secondmonths.Add(month + year);
-                        if (!(jui[temp2] == "11"))
-                        {
-                            
-                            temp2++;
-                        }
-                        datapoints2.RemoveAt(temp2);
-                        datapoints2.Insert(temp2, (decimal)spendings[i].TotalPrice);
-                        temp2++;
+                        datapoints2.RemoveAt(jui.IndexOf(year + month));
+                        datapoints2.Insert(jui.IndexOf(year + month), (decimal)spendings[i].TotalPrice);
+                        
                     }
                     else
                     {
-                        datapoints2[temp2 - 1] += (decimal)spendings[i].TotalPrice;
+                        datapoints2[jui.IndexOf(year + month)] += (decimal)spendings[i].TotalPrice;
 
                     }
                 }
@@ -321,18 +256,13 @@ namespace InventoryWeb.Controllers
                     {
                         
                         secondmonths.Add(month + year);
-                        if (!(jui[temp2] == "12"))
-                        {
-                            
-                            temp2++;
-                        }
-                        datapoints2.RemoveAt(temp2);
-                        datapoints2.Insert(temp2, (decimal)spendings[i].TotalPrice);
-                        temp2++;
+                        datapoints2.RemoveAt(jui.IndexOf(year + month));
+                        datapoints2.Insert(jui.IndexOf(year + month), (decimal)spendings[i].TotalPrice);
+                       
                     }
                     else
                     {
-                        datapoints2[temp2 - 1] += (decimal)spendings[i].TotalPrice;
+                        datapoints2[jui.IndexOf(year + month)] += (decimal)spendings[i].TotalPrice;
 
                     }
                 }
@@ -395,18 +325,14 @@ namespace InventoryWeb.Controllers
             int da = GetMonthDifference(date1, date2);
             DateTime temp = new DateTime();
             temp = date1;
-            int temp2 = 0;
+            
 
             for (int i = 0; i < da; i++)
             {
 
-                jui.Add(temp.Month.ToString());
-                xaxis.Add(temp.Year + "/" + temp.Month.ToString());
+                jui.Add(temp.Year.ToString() + temp.Month.ToString());
+                xaxis.Add(temp.ToString("MMM") + temp.Year.ToString().Substring(2, 2));
                 temp = temp.AddMonths(1);
-            }
-
-            for (int i = 0; i < da; i++)
-            {
                 datapoints2.Add(0);
             }
 
@@ -423,19 +349,13 @@ namespace InventoryWeb.Controllers
                     {
 
                         secondmonths.Add(month + year);
-
-                        if (!(jui[temp2] == "1"))
-                        {
-
-                            temp2++;
-                        }
-                        datapoints2.RemoveAt(temp2);
-                        datapoints2.Insert(temp2, (decimal)req[i].Needed);
-                        temp2++;
+                        datapoints2.RemoveAt(jui.IndexOf(year + month));
+                        datapoints2.Insert(jui.IndexOf(year + month), (decimal)req[i].Needed);
+                       
                     }
                     else
                     {
-                        datapoints2[temp2 - 1] += (decimal)req[i].Needed;
+                        datapoints2[jui.IndexOf(year + month)] += (decimal)req[i].Needed;
 
                     }
 
@@ -446,18 +366,12 @@ namespace InventoryWeb.Controllers
                     if (!(secondmonths.Contains(month + year)))
                     {
                         secondmonths.Add(month + year);
-                        if (!(jui[temp2] == "2"))
-                        {
-
-                            temp2++;
-                        }
-                        datapoints2.RemoveAt(temp2);
-                        datapoints2.Insert(temp2, (decimal)req[i].Needed);
-                        temp2++;
+                        datapoints2.RemoveAt(jui.IndexOf(year + month));
+                        datapoints2.Insert(jui.IndexOf(year + month), (decimal)req[i].Needed);
                     }
                     else
                     {
-                        datapoints2[temp2 - 1] += (decimal)req[i].Needed;
+                        datapoints2[jui.IndexOf(year + month)] += (decimal)req[i].Needed;
 
                     }
                 }
@@ -468,19 +382,13 @@ namespace InventoryWeb.Controllers
                     {
 
                         secondmonths.Add(month + year);
-                        if (!(jui[temp2] == "3"))
-                        {
-
-                            temp2++;
-                        }
-                        datapoints2.RemoveAt(temp2);
-                        datapoints2.Insert(temp2, (decimal)req[i].Needed);
-                        temp2++;
+                        datapoints2.RemoveAt(jui.IndexOf(year + month));
+                        datapoints2.Insert(jui.IndexOf(year + month), (decimal)req[i].Needed);
                     }
                     else
                     {
 
-                        datapoints2[temp2 - 1] += (decimal)req[i].Needed;
+                        datapoints2[jui.IndexOf(year + month)] += (decimal)req[i].Needed;
 
                     }
                 }
@@ -492,19 +400,12 @@ namespace InventoryWeb.Controllers
                     {
 
                         secondmonths.Add(month + year);
-                        if (!(jui[temp2] == "4"))
-                        {
-
-                            temp2++;
-                        }
-                        datapoints2.RemoveAt(temp2);
-                        datapoints2.Insert(temp2, (decimal)req[i].Needed);
-
-                        temp2++;
+                        datapoints2.RemoveAt(jui.IndexOf(year + month));
+                        datapoints2.Insert(jui.IndexOf(year + month), (decimal)req[i].Needed);
                     }
                     else
                     {
-                        datapoints2[temp2 - 1] += (decimal)req[i].Needed;
+                        datapoints2[jui.IndexOf(year + month)] += (decimal)req[i].Needed;
 
                     }
                 }
@@ -515,18 +416,12 @@ namespace InventoryWeb.Controllers
                     {
 
                         secondmonths.Add(month + year);
-                        if (!(jui[temp2] == "5"))
-                        {
-
-                            temp2++;
-                        }
-                        datapoints2.RemoveAt(temp2);
-                        datapoints2.Insert(temp2, (decimal)req[i].Needed);
-                        temp2++;
+                        datapoints2.RemoveAt(jui.IndexOf(year + month));
+                        datapoints2.Insert(jui.IndexOf(year + month), (decimal)req[i].Needed);
                     }
                     else
                     {
-                        datapoints2[temp2 - 1] += (decimal)req[i].Needed;
+                        datapoints2[jui.IndexOf(year + month)] += (decimal)req[i].Needed;
 
                     }
                 }
@@ -537,19 +432,12 @@ namespace InventoryWeb.Controllers
                     {
 
                         secondmonths.Add(month + year);
-                        if (!(jui[temp2] == "6"))
-                        {
-
-                            temp2++;
-                        }
-                        datapoints2.RemoveAt(temp2);
-                        datapoints2.Insert(temp2, (decimal)req[i].Needed);
-
-                        temp2++;
+                        datapoints2.RemoveAt(jui.IndexOf(year + month));
+                        datapoints2.Insert(jui.IndexOf(year + month), (decimal)req[i].Needed);
                     }
                     else
                     {
-                        datapoints2[temp2 - 1] += (decimal)req[i].Needed;
+                        datapoints2[jui.IndexOf(year + month)] += (decimal)req[i].Needed;
 
                     }
                 }
@@ -560,18 +448,12 @@ namespace InventoryWeb.Controllers
                     {
 
                         secondmonths.Add(month + year);
-                        if (!(jui[temp2] == "7"))
-                        {
-
-                            temp2++;
-                        }
-                        datapoints2.RemoveAt(temp2);
-                        datapoints2.Insert(temp2, (decimal)req[i].Needed);
-                        temp2++;
+                        datapoints2.RemoveAt(jui.IndexOf(year + month));
+                        datapoints2.Insert(jui.IndexOf(year + month), (decimal)req[i].Needed);
                     }
                     else
                     {
-                        datapoints2[temp2 - 1] += (decimal)req[i].Needed;
+                        datapoints2[jui.IndexOf(year + month)] += (decimal)req[i].Needed;
 
                     }
                 }
@@ -582,18 +464,12 @@ namespace InventoryWeb.Controllers
                     {
 
                         secondmonths.Add(month + year);
-                        if (!(jui[temp2] == "8"))
-                        {
-
-                            temp2++;
-                        }
-                        datapoints2.RemoveAt(temp2);
-                        datapoints2.Insert(temp2, (decimal)req[i].Needed);
-                        temp2++;
+                        datapoints2.RemoveAt(jui.IndexOf(year + month));
+                        datapoints2.Insert(jui.IndexOf(year + month), (decimal)req[i].Needed);
                     }
                     else
                     {
-                        datapoints2[temp2 - 1] += (decimal)req[i].Needed;
+                        datapoints2[jui.IndexOf(year + month)] += (decimal)req[i].Needed;
 
                     }
                 }
@@ -604,18 +480,12 @@ namespace InventoryWeb.Controllers
                     {
 
                         secondmonths.Add(month + year);
-                        if (!(jui[temp2] == "9"))
-                        {
-
-                            temp2++;
-                        }
-                        datapoints2.RemoveAt(temp2);
-                        datapoints2.Insert(temp2, (decimal)req[i].Needed);
-                        temp2++;
+                        datapoints2.RemoveAt(jui.IndexOf(year + month));
+                        datapoints2.Insert(jui.IndexOf(year + month), (decimal)req[i].Needed);
                     }
                     else
                     {
-                        datapoints2[temp2 - 1] += (decimal)req[i].Needed;
+                        datapoints2[jui.IndexOf(year + month)] += (decimal)req[i].Needed;
 
                     }
                 }
@@ -625,19 +495,13 @@ namespace InventoryWeb.Controllers
                     {
 
                         secondmonths.Add(month + year);
-                        if (!(jui[temp2] == "10"))
-                        {
-
-                            temp2++;
-                        }
-                        datapoints2.RemoveAt(temp2);
-                        datapoints2.Insert(temp2, (int)req[i].Needed);
-                        temp2++;
+                        datapoints2.RemoveAt(jui.IndexOf(year + month));
+                        datapoints2.Insert(jui.IndexOf(year + month), (int)req[i].Needed);
 
                     }
                     else
                     {
-                        datapoints2[temp2 - 1] += (int)req[i].Needed;
+                        datapoints2[jui.IndexOf(year + month)] += (int)req[i].Needed;
 
                     }
                 }
@@ -647,18 +511,12 @@ namespace InventoryWeb.Controllers
                     {
 
                         secondmonths.Add(month + year);
-                        if (!(jui[temp2] == "11"))
-                        {
-
-                            temp2++;
-                        }
-                        datapoints2.RemoveAt(temp2);
-                        datapoints2.Insert(temp2, (decimal)req[i].Needed);
-                        temp2++;
+                        datapoints2.RemoveAt(jui.IndexOf(year + month));
+                        datapoints2.Insert(jui.IndexOf(year + month), (decimal)req[i].Needed);
                     }
                     else
                     {
-                        datapoints2[temp2 - 1] += (decimal)req[i].Needed;
+                        datapoints2[jui.IndexOf(year + month)] += (decimal)req[i].Needed;
 
                     }
                 }
@@ -669,18 +527,12 @@ namespace InventoryWeb.Controllers
                     {
 
                         secondmonths.Add(month + year);
-                        if (!(jui[temp2] == "12"))
-                        {
-
-                            temp2++;
-                        }
-                        datapoints2.RemoveAt(temp2);
-                        datapoints2.Insert(temp2, (decimal)req[i].Needed);
-                        temp2++;
+                        datapoints2.RemoveAt(jui.IndexOf(year + month));
+                        datapoints2.Insert(jui.IndexOf(year + month), (decimal)req[i].Needed);
                     }
                     else
                     {
-                        datapoints2[temp2 - 1] += (decimal)req[i].Needed;
+                        datapoints2[jui.IndexOf(year + month)] += (decimal)req[i].Needed;
 
                     }
                 }

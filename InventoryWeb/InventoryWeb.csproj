@@ -389,6 +389,7 @@
     <Content Include="Scripts\bootstrapValidator.min.js" />
     <Content Include="Scripts\HighCharts\annotations.js" />
     <Content Include="Scripts\HighCharts\exporting.js" />
+    <Content Include="Scripts\HighCharts\ExportTable.js" />
     <Content Include="Scripts\HighCharts\highcharts.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -512,6 +513,9 @@
     <Content Include="Views\StoreSupervisor\ViewRequest.cshtml" />
     <Content Include="Views\StoreManager\ViewCatalogueItems.cshtml" />
     <Content Include="Views\StoreManager\ApproveOrReject.cshtml" />
+    <Content Include="Views\StoreClerk\trenAnalysisByExpenditure.cshtml" />
+    <Content Include="Views\StoreManager\trenAnalysisByExpenditure.cshtml" />
+    <Content Include="Views\StoreSupervisor\trenAnalysisByExpenditure.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

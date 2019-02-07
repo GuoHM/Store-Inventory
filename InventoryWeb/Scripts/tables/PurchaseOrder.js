@@ -172,7 +172,7 @@ var TableInit = function () {
     }
     function InputTextBox(value, row, index) {
         return [
-            '<input type="text" maxlength="5" class="form-control" placeholder="Quantity" id="quantity">'
+            '<input type="number" maxlength="5" class="form-control" placeholder="Quantity" id="quantity">'
         ].join('');
     }
     function selectItem(value, row, index) {

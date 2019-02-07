@@ -6,12 +6,14 @@
 <div class="col-xs-2 column">
     @Html.Partial("~/Views/DepManager/SideBar.cshtml")
 </div>
+<link rel="stylesheet" href="https://formden.com/static/cdn/font-awesome/4.4.0/css/font-awesome.min.css" />
 
 <html>
 <head>
     <script src="~/Scripts/HighCharts/annotations.js"></script>
     <script src="~/Scripts/HighCharts/Highcharts.js"></script>
     <script src="~/Scripts/HighCharts/exporting.js"></script>
+    <script src="~/Scripts/HighCharts/ExportTable.js"></script>
     <script>
         $(document).ready(function () {
 
@@ -102,8 +104,7 @@
                 var startDate = new Date($("#date1").val());
                 var endDate = new Date($("#date2").val());
 
-                if (x == "" || y == "")
-                {
+                if (x == "" || y == "") {
                     alert("Start Date or End Date is Blank")
                 }
                 else if (endDate <= startDate) {
@@ -118,7 +119,7 @@
 </head>
 <body>
     <div class="col-sm-offset-3">
-        <h2>Department Spending History</h2> <br /><br />
+        <h2>Department Spending History (@ViewBag.Department)</h2> <br /><br />
     </div>
 
     <div class="col-sm-offset-3">
@@ -161,7 +162,7 @@
                 </div>
             </div>
             <br />
-            <div class="col-sm-4">
+            <div class="col-sm-offset-4">
                 <button type="submit" class="btn btn-success" id="button-2">Generate Spending History</button>
             </div>
 

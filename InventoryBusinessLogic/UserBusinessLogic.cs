@@ -124,16 +124,19 @@ namespace InventoryBusinessLogic
 
         }
 
-        public List<Order> getDepSpendingHistory(DateTime date1,DateTime date2, string id)
+        public List<Order> getDepSpendingHistory(DateTime startDate,DateTime endDate, string id)
         {
+
+            DateTime date2 = endDate.AddHours(23).AddMinutes(59).AddSeconds(59);
             AspNetUsers user1 = inventory.AspNetUsers.Where(x => x.Id == id).First<AspNetUsers>();
-            return inventory.Order.Where(x => x.DepartmentID.Substring(0,4)==user1.DepartmentID.Substring(0,4) && x.OrderDate >= date1 && x.OrderDate<= date2 ).ToList<Order>();
+            return inventory.Order.Where(x => x.DepartmentID.Substring(0,4)==user1.DepartmentID.Substring(0,4) && x.OrderDate >= startDate && x.OrderDate<= date2 ).ToList<Order>();
         }
 
-        public List<Order> getOverallSpendingHistory(DateTime date1, DateTime date2, string id)
+        public List<Order> getOverallSpendingHistory(DateTime startDate, DateTime endDate, string id)
         {
+            DateTime date2 = endDate.AddHours(23).AddMinutes(59).AddSeconds(59);
             Department dep = inventory.Department.Where(x => x.DepartmentID.Substring(0,4) == id.Substring(0,4)).First<Department>();
-            return inventory.Order.Where(x => x.DepartmentID.Substring(0, 4) == dep.DepartmentID.Substring(0, 4) && x.OrderDate >= date1 && x.OrderDate <= date2).OrderBy(x => x.OrderDate).ToList<Order>();
+            return inventory.Order.Where(x => x.DepartmentID.Substring(0, 4) == dep.DepartmentID.Substring(0, 4) && x.OrderDate >= startDate && x.OrderDate <= date2).OrderBy(x => x.OrderDate).ToList<Order>();
         }
 
         public List<Catalogue> getAllCatalogue()
@@ -141,13 +144,13 @@ namespace InventoryBusinessLogic
             return inventory.Catalogue.ToList<Catalogue>();
         }
 
-        public List<Request> getRequestOrders(DateTime date1,DateTime date2,string depID,string dropdown1)
+        public List<Request> getRequestOrders(DateTime startDate, DateTime endDate, string depID,string dropdown1)
 
         {
 
-
+            DateTime date2 = endDate.AddHours(23).AddMinutes(59).AddSeconds(59);
             Catalogue item = inventory.Catalogue.Where(x => x.ItemID == dropdown1).First<Catalogue>();
-            return inventory.Request.Where(x => x.ItemID.Equals(item.ItemID) &&  x.RequestDate >= date1 && x.RequestDate <= date2 && x.RequestStatus == "Approved" && x.OrderID.Substring(0,4) == depID.Substring(0,4)).OrderBy(x => x.RequestDate).ToList<Request>();
+            return inventory.Request.Where(x => x.ItemID.Equals(item.ItemID) &&  x.RequestDate >= startDate && x.RequestDate <= date2 && x.RequestStatus == "Approved" && x.OrderID.Substring(0,4) == depID.Substring(0,4)).OrderBy(x => x.RequestDate).ToList<Request>();
         }
 
      

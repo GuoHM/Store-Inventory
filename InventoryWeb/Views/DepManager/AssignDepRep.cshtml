@@ -42,7 +42,7 @@
 
                         @for (int i = 0; i < ViewBag.depList.Count; i++)
                         {
-                            if (ViewBag.depList[i].UserType != "DeptHead" && ViewBag.depList[i].UserType != "DeptRep" && ViewBag.depList[i].UserType != "Store Clerk")
+                            if (ViewBag.depList[i].UserType != "DeptHead" && ViewBag.depList[i].UserType != "DeptRep" && ViewBag.depList[i].UserType != "InterimDepHead")
 
                             {
                                 <option value="@ViewBag.depList[i].Id"> @ViewBag.depList[i].UserName </option>
@@ -56,7 +56,9 @@
 
                 <br />
 
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <div class="col-sm-offset-4">
+                    <button type="submit" class="btn btn-success" id="button-2">Save Dep Rep</button>
+                </div>
 
             </form>
         </div>

@@ -19,6 +19,7 @@ namespace InventoryWeb.Controllers
         public List<decimal> dataENGL = new List<decimal>();
         public List<decimal> dataREGR = new List<decimal>();
         public List<decimal> dataZOOL = new List<decimal>();
+        public List<decimal> dataSTORE = new List<decimal>();
         public List<Object> datamonths = new List<Object>();
         UserBusinessLogic BL = new UserBusinessLogic();
 
@@ -299,6 +300,12 @@ namespace InventoryWeb.Controllers
                 dataREGR = datapoints2;
 
             }
+            else if (depID.Trim() == "STORE")
+            {
+
+                dataSTORE = datapoints2;
+
+            }
             else
             {
 
@@ -567,6 +574,12 @@ namespace InventoryWeb.Controllers
             {
 
                 dataREGR = datapoints2;
+
+            }
+            else if (depID.Trim() == "STORE")
+            {
+
+                dataSTORE = datapoints2;
 
             }
             else

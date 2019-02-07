@@ -104,14 +104,14 @@ namespace InventoryWeb.Controllers
         public ActionResult ChargeBackReport(DateTime Date1, DateTime Date2)
         {
 
-            DateTime startDate =  Date1.Date; DateTime endDate = Date2.Date;
+            
             List<Department> dep = catalogueBusinessLogic.getDepartments();
             ReportsController depManager = new ReportsController();
            
 
             foreach (Department d in dep)
             {
-               depManager.spendingHistorytwo(startDate.Date, endDate.Date, d.DepartmentID);
+               depManager.spendingHistorytwo(Date1, Date2, d.DepartmentID);
             }
 
             ViewBag.dataSCI = JsonConvert.SerializeObject(depManager.dataSCI);
@@ -119,6 +119,7 @@ namespace InventoryWeb.Controllers
             ViewBag.dataCPSC = JsonConvert.SerializeObject(depManager.dataCPSC);
             ViewBag.dataENGL = JsonConvert.SerializeObject(depManager.dataENGL);
             ViewBag.dataREGR = JsonConvert.SerializeObject(depManager.dataREGR);
+            ViewBag.dataSTORE = JsonConvert.SerializeObject(depManager.dataSTORE);
             ViewBag.dataZOOL = JsonConvert.SerializeObject(depManager.dataZOOL);
             ViewBag.months = JsonConvert.SerializeObject(depManager.datamonths);
             return View("generateChargeBack");
@@ -149,6 +150,7 @@ namespace InventoryWeb.Controllers
             ViewBag.dataCPSC = JsonConvert.SerializeObject(depManager.dataCPSC);
             ViewBag.dataENGL = JsonConvert.SerializeObject(depManager.dataENGL);
             ViewBag.dataREGR = JsonConvert.SerializeObject(depManager.dataREGR);
+            ViewBag.dataSTORE = JsonConvert.SerializeObject(depManager.dataSTORE);
             ViewBag.dataZOOL = JsonConvert.SerializeObject(depManager.dataZOOL);
             ViewBag.months = JsonConvert.SerializeObject(depManager.datamonths);
             return View("ChargeBackReport");
@@ -177,6 +179,7 @@ namespace InventoryWeb.Controllers
             ViewBag.dataCPSC = JsonConvert.SerializeObject(depManager.dataCPSC);
             ViewBag.dataENGL = JsonConvert.SerializeObject(depManager.dataENGL);
             ViewBag.dataREGR = JsonConvert.SerializeObject(depManager.dataREGR);
+            ViewBag.dataSTORE = JsonConvert.SerializeObject(depManager.dataSTORE);
             ViewBag.dataZOOL = JsonConvert.SerializeObject(depManager.dataZOOL);
             ViewBag.months = JsonConvert.SerializeObject(depManager.datamonths);
             return View("trenAnalysisByExpenditure");

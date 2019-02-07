@@ -244,16 +244,16 @@ namespace InventoryWeb.Controllers
 
         public ActionResult SendGetDisbursement()
         {
-           EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
+           //EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
 
-            foreach (var dept in disbursementList.Select(p=> new { p.DepartmentID }).Distinct())
-            {
-                string content = emailBusinessLogic.ReadyForCollectionPoint(dept.DepartmentID);
+           // foreach (var dept in disbursementList.Select(p=> new { p.DepartmentID }).Distinct())
+           // {
+           //     string content = emailBusinessLogic.ReadyForCollectionPoint(dept.DepartmentID);
 
-                List<string> toAddress = new List<string>();
-                toAddress.Add("padmapriya.n026@gmail.com");
-                emailBusinessLogic.SendEmail("Team3", content, toAddress);                 
-            }
+           //     List<string> toAddress = new List<string>();
+           //     toAddress.Add("padmapriya.n026@gmail.com");
+           //     emailBusinessLogic.SendEmail("Team3", content, toAddress);                 
+           // }
             return RedirectToAction("RetrievalForm");
                 }
 
@@ -634,13 +634,13 @@ namespace InventoryWeb.Controllers
                     }
                 }
             }
-            EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
-            string content = emailBusinessLogic.LowStockNotification();
+            //EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
+            //string content = emailBusinessLogic.LowStockNotification();
 
-            List<string> toAddress = new List<string>();
-            toAddress.Add("wangxiaoxiaoqiang@gmail.com");
-            emailBusinessLogic.SendEmail("Team3", content, toAddress);
-            catalogueBusinessLogic.ValidateOrderStatus();
+            //List<string> toAddress = new List<string>();
+            //toAddress.Add("wangxiaoxiaoqiang@gmail.com");
+            //emailBusinessLogic.SendEmail("Team3", content, toAddress);
+            //catalogueBusinessLogic.ValidateOrderStatus();
 
             return new JsonResult();
 

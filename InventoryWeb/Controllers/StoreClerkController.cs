@@ -31,10 +31,11 @@ namespace InventoryWeb.Controllers
         static List<RetrievalList> retrievals = new List<RetrievalList>();
         static List<orderlist> orders = new List<orderlist>();
         static List<Department> disbursementList = new List<Department>();
+        static List<Department> disbursementListBackup = new List<Department>();
         static List<Request> req = new List<Request>();
         OrderBusinessLogic orderbusinesslogic = new OrderBusinessLogic();
         static bool retrivalRequest = false;
-
+        List<String> disbursedList = new List<string>();
         public static List<int> updateRequest = new List<int>();
 
         public ActionResult RaiseRequest()
@@ -69,6 +70,7 @@ namespace InventoryWeb.Controllers
             for(int j = 0; j < i; j++)
             {
                 orderbusinesslogic.updateSignture(s.Get(j), v);
+               
             }
             
             return "success";
@@ -206,50 +208,78 @@ namespace InventoryWeb.Controllers
         [HttpGet]
         public JsonResult GetDisbursementList()
         {
-            disbursementList = new List<Department>();
+            disbursementList = new List<Department>();          
             DisbursementList disbursement = new DisbursementList();
             CatalogueBusinessLogic catalogue = new CatalogueBusinessLogic();
             reqBackup = requestBackup;
+            if (disbursementListBackup.Count != 0)
+            {
+                foreach (Department dep in disbursementListBackup)
+                {
+                    disbursementList.Add(dep);
+                }
+            }
             if (updateRequest.Count != 0)
             {
-
-
+                
                 foreach (int req1 in updateRequest)
                 {
                     List<Department> dep = disbursement.GetDisbursements(req1);
                     disbursementList.AddRange(dep);
+                    disbursementListBackup.AddRange(dep);
 
                 }
-
-                var data = disbursementList.Distinct().Select(p => new
+            }
+            if (disbursementList.Count != 0)
+            {
+                var data = disbursementList.Select(p => new
                 {
                     departmentName = p.DepartmentName,
                     representative = p.AspNetUsers.UserName,
                     collectionPoint = p.CollectionPoint
-                }).ToList();
+                }).Distinct().ToList();
 
                 return Json(data, JsonRequestBehavior.AllowGet);
             }
+            
             return new JsonResult();
         }
 
         public ActionResult SendGetDisbursement()
         {
-            updateRequest = new List<int>();
-            requestBackup = new List<Request>();
-            reqBackup = new List<Request>(); ;
-            EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
+           //EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
 
-            foreach (var dept in disbursementList.Select(p=> new { p.DepartmentID }).Distinct())
-            {
-                string content = emailBusinessLogic.ReadyForCollectionPoint(dept.DepartmentID);
+           // foreach (var dept in disbursementList.Select(p=> new { p.DepartmentID }).Distinct())
+           // {
+           //     string content = emailBusinessLogic.ReadyForCollectionPoint(dept.DepartmentID);
 
-                List<string> toAddress = new List<string>();
-                toAddress.Add("padmapriya.n026@gmail.com");
-                emailBusinessLogic.SendEmail("Team3", content, toAddress);                 
-            }
+           //     List<string> toAddress = new List<string>();
+           //     toAddress.Add("padmapriya.n026@gmail.com");
+           //     emailBusinessLogic.SendEmail("Team3", content, toAddress);                 
+           // }
             return RedirectToAction("RetrievalForm");
                 }
+
+        public ActionResult DeliveredItems(List<DepartmentList> department)
+        {
+            if (department.Count != 0)
+            {
+                foreach (DepartmentList str in department)
+                {
+                    foreach (var d in disbursementList)
+                    {
+                        if (str.deptName.Substring(0, 4) == d.DepartmentName.Substring(0, 4))
+                        {
+                            disbursementListBackup.Remove(d);
+                        }
+                    }
+                }
+            }
+            //disbursementList = new List<Department>();
+            updateRequest = new List<int>();
+            reqBackup = new List<Request>();
+            return RedirectToAction("RetrievalForm");
+        }
         public ActionResult GetDisbursementItems(List<DepartmentList> department)
         {
 
@@ -607,13 +637,13 @@ namespace InventoryWeb.Controllers
                     }
                 }
             }
-            EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
-            string content = emailBusinessLogic.LowStockNotification();
+            //EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
+            //string content = emailBusinessLogic.LowStockNotification();
 
-            List<string> toAddress = new List<string>();
-            toAddress.Add("wangxiaoxiaoqiang@gmail.com");
-            emailBusinessLogic.SendEmail("Team3", content, toAddress);
-            catalogueBusinessLogic.ValidateOrderStatus();
+            //List<string> toAddress = new List<string>();
+            //toAddress.Add("wangxiaoxiaoqiang@gmail.com");
+            //emailBusinessLogic.SendEmail("Team3", content, toAddress);
+            //catalogueBusinessLogic.ValidateOrderStatus();
 
             return new JsonResult();
 

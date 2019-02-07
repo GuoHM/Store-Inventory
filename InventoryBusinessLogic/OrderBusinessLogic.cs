@@ -59,7 +59,7 @@ namespace InventoryBusinessLogic
 
             // return inventory.Order.Where(x=>x.Request.Any(y=>y.RequestStatus.Trim().ToUpper()=="APPROVED")).ToList();
             // return inventory.Order.Where(x => x.OrderStatus.ToUpper().Trim() == "APPROVED").ToList();
-           var reqs = inventory.Request.Where(x => x.RequestStatus.ToUpper().Trim() == "APPROVED").Select(x => x.OrderID).Distinct().ToList();
+           var reqs = inventory.Request.Where(x => x.RequestStatus.ToUpper().Trim() == "APPROVED" && x.Actual!=x.Needed).Select(x => x.OrderID).Distinct().ToList();
             List<Order> orders = new List<Order>();
             foreach(var req in reqs)
             {

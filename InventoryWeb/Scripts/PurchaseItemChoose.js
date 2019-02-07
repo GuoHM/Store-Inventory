@@ -18,7 +18,12 @@
         var price = SearchItemTable.rows[rows].cells[5].innerHTML;
         var uom = SearchItemTable.rows[rows].cells[6].innerHTML;
         var supplier = SearchItemTable.rows[rows].cells[7].innerHTML;
-        var totalprice = '$'+parseFloat(price.substr(1, price.length)) * orderQuantity+'.00';
+        debugger;
+        if (price.charAt(price.length - 2) != '0' && price.charAt(price.length - 1) != '0') {
+            var totalprice = '$' + parseFloat(price.substr(1, price.length)) * orderQuantity;
+        } else {
+            var totalprice = '$' + parseFloat(price.substr(1, price.length)) * orderQuantity + '.00';
+        }
         $("#ItemAddedTable").append("<tr align='center'><td><input class='checkbox' checked='checked' type='checkbox'></td><td>" + itemCode + "</td><td>" + Description + "</td><td>" + Quantity + "</td><td>" + ReorderQuantity + "</td><td>" + orderQuantity + "</td><td>" + totalprice + "</td><td>" + uom + "</td><td>" + supplier + "</td><td><input type='button'  value='remove' class='btn btn-danger' onclick='remove(this)'/></td></tr>");
         $(obj).parents("tr").remove();
         $("#btnConfirm").attr("disabled", false);
@@ -35,9 +40,14 @@ function remove(obj) {
     var totalprice = ItemAddedTable.rows[rows].cells[6].innerHTML;
     var uom = ItemAddedTable.rows[rows].cells[7].innerHTML;
     var supplier = ItemAddedTable.rows[rows].cells[8].innerHTML;
-    var price = totalprice.substr(1, totalprice.length) / orderQuantity;
+    var price = "" + totalprice.substr(1, totalprice.length) / orderQuantity;
+    if (price.length>1) {
+        var price = '$' + price;
+    } else {
+        var price = '$' + price + '.00';
+    }
     if (!hasItemAlreadyExist(itemCode)) {
-        $("#SearchItemTable").append("<tr align='center'><td>" + itemCode + "</td><td>" + Description + "</td><td>" + Quantity + "</td><td>" + ReorderQuantity + "</td><td><input type='number' class='form-control' placeholder='Quantity'></td><td>$" + price + ".00</td><td>" + uom + "</td><td>" + supplier + "</td><td><input type='button'  value='Select' class='btn btn-primary' onclick='selectItem(this)'/></td></tr>");
+        $("#SearchItemTable").append("<tr align='center'><td>" + itemCode + "</td><td>" + Description + "</td><td>" + Quantity + "</td><td>" + ReorderQuantity + "</td><td><input type='number' class='form-control' placeholder='Quantity'></td><td>" + price + "</td><td>" + uom + "</td><td>" + supplier + "</td><td><input type='button'  value='Select' class='btn btn-primary' onclick='selectItem(this)'/></td></tr>");
     }
     $(obj).parents("tr").remove();
     var tab = document.getElementById("ItemAddedTable");
@@ -76,7 +86,6 @@ function confirm() {
         alert("Please select item to purchase");
         $("#btnConfirm").attr("disabled", false);
     } else {
-        debugger;
         if (isAllSame(supplierlist) && !hasDuplicated(jsonlist)) {
             $.ajax({
                 url: "/StoreClerk/ConfirmOrder",
@@ -99,6 +108,9 @@ function confirm() {
                     $('#delieverTo').val("Logic University");
                     var now = new Date();
                     now.setDate(now.getDate() + 3);
+                    while (now.getDay() == '6' || now.getDay() == '0') {
+                        now.setDate(now.getDate() + 1);
+                    }
                     var day = ("0" + now.getDate()).slice(-2);
                     var month = ("0" + (now.getMonth() + 1)).slice(-2);
                     var date = now.getFullYear() + "-" + (month) + "-" + (day);
@@ -111,7 +123,7 @@ function confirm() {
                             + "</td><td>" + json.tablelist[i].totalPrice + "</td></tr>");
                         totalPrice += parseFloat(json.tablelist[i].totalPrice.substr(1, json.tablelist[i].totalPrice.length));
                     }
-                    document.getElementById("totalPrice").innerHTML = 'Total Price:$'+totalPrice+".00";
+                    document.getElementById("totalPrice").innerHTML = 'Total Price:$'+totalPrice;
                     $("#confirmTable").append("</tbody>");
                     $('#confirmModal').modal('show');
                 },

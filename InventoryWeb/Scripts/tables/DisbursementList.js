@@ -41,6 +41,18 @@ var TableInit = function () {
             showColumns: false,
             columns: [{
                 align: "center",
+                // title: 'Order ID',
+                checkbox: "true",
+                //onSelectAll: this.onSelectAll
+
+                // sortable: true,
+                //  field: 'OrderID',
+                //formatter: checkboxItem,
+                // events: selectAll,
+
+            },
+           {
+                align: "center",
                 title: 'Department Name',
                 sortable: true,
 
@@ -175,6 +187,44 @@ var TableInit = function () {
 
     return oTableInit;
 };
+function selectedItems() {
+    department = [];
+    var tab = document.getElementById("SearchItemTable");
+    var rows = tab.rows;
+
+    var objCheckBox = tab.getElementsByClassName('bs-checkbox ');
+
+    var supplierlist = new Array();
+    var orders = "";
+    for (var i = 1; i < objCheckBox.length; i++) {
+
+        if (objCheckBox[i].parentElement.className === "selected") {
+            var deptName = rows[i].cells[1].innerHTML;
+            var jsonobj = { "deptName": deptName }
+            department.push(jsonobj);
+        }
+    }
+    $.ajax({
+        contentType: 'application/json; charset=utf-8',
+        url: '/StoreClerk/DeliveredItems',
+        type: 'post',
+        dataType: 'json',
+        async: false,
+        data: JSON.stringify(department),
+
+        success: function (data) {
+            alert("Updated Disbursement list");
+            window.location.reload();
+        },
+          error: function (XMLHttpRequest, textStatus, errorThrown) {
+              alert("Updated Disbursement list");
+              //window.location.reload();
+              window.location.href = '/StoreClerk/RetrievalForm';
+        }
+
+
+    });
+};
 
 var TableInit1 = function () {
     var oTableInit = new Object();
@@ -268,4 +318,7 @@ function closeWindow() {
 function FinalDisbursementList() {
     window.location.href = '/StoreClerk/SendGetDisbursement';
     alert("Email has been sent to the corresponding Department Representatives");
+}
+function deliverItems() {
+    window.location.href = '/StoreClerk/DeliveredItems';
 }

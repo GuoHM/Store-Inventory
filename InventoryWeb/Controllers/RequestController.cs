@@ -75,12 +75,12 @@ namespace InventoryWeb.Controllers
                     }
                 }
             }
-            //EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
-            //string content = emailBusinessLogic.SendRequestNotification(username);
+            EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
+            string content = emailBusinessLogic.SendRequestNotification(username);
 
-            //List<string> toAddress = new List<string>();
-           // toAddress.Add("wangxiaoxiaoqiang@gmail.com");
-            //emailBusinessLogic.SendEmail("Team3", content, toAddress);
+            List<string> toAddress = new List<string>();
+            toAddress.Add("wangxiaoxiaoqiang@gmail.com");
+            emailBusinessLogic.SendEmail("Team3", content, toAddress);
 
             return new JsonResult();
         }

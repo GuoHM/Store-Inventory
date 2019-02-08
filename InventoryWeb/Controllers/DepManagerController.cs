@@ -40,12 +40,12 @@ namespace InventoryWeb.Controllers
         public ActionResult saveNewRep(string dropdown1)
         {
             BL.UpdateDepRep(dropdown1);
-            //EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
-            //string content = emailBusinessLogic.ChangeDeptRepNotification(dropdown1);
+            EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
+            string content = emailBusinessLogic.ChangeDeptRepNotification(dropdown1);
 
-            //List<string> toAddress = new List<string>();
-            //toAddress.Add("wangxiaoxiaoqiang@gmail.com");
-            //emailBusinessLogic.SendEmail("Team3", content, toAddress);
+            List<string> toAddress = new List<string>();
+            toAddress.Add("wangxiaoxiaoqiang@gmail.com");
+            emailBusinessLogic.SendEmail("Team3", content, toAddress);
             return RedirectToAction("AssignDepRep");
 
         }
@@ -75,12 +75,12 @@ namespace InventoryWeb.Controllers
             }
             
             BL.UpdateDepHead(dropdown1, date1, date2, interimhead);
-            //EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
-            //string content = emailBusinessLogic.ChangeDeptHeadNotification(dropdown1);
+            EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
+            string content = emailBusinessLogic.ChangeDeptHeadNotification(dropdown1);
 
-            //List<string> toAddress = new List<string>();
-            //toAddress.Add("wangxiaoxiaoqiang@gmail.com");
-            //emailBusinessLogic.SendEmail("Team3", content, toAddress);
+            List<string> toAddress = new List<string>();
+            toAddress.Add("wangxiaoxiaoqiang@gmail.com");
+            emailBusinessLogic.SendEmail("Team3", content, toAddress);
             return RedirectToAction("AssignDepHead");
 
         }
@@ -116,13 +116,13 @@ namespace InventoryWeb.Controllers
                 }
             }
             var item1 = list[0];
-            //EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
-            //int requestID = Convert.ToInt32(item1.orderId);
-            //string content = emailBusinessLogic.ApproveOrRejectNotification(requestID);
+            EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
+            int requestID = Convert.ToInt32(item1.orderId);
+            string content = emailBusinessLogic.ApproveOrRejectNotification(requestID);
 
-            //List<string> toAddress = new List<string>();
-            //toAddress.Add("wangxiaoxiaoqiang@gmail.com");
-            //emailBusinessLogic.SendEmail("Team3", content, toAddress);
+            List<string> toAddress = new List<string>();
+            toAddress.Add("wangxiaoxiaoqiang@gmail.com");
+            emailBusinessLogic.SendEmail("Team3", content, toAddress);
             return new JsonResult();
         }
 

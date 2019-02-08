@@ -62,6 +62,7 @@ namespace InventoryWeb.Controllers
             ViewBag.dataCPSC = JsonConvert.SerializeObject(depManager.dataCPSC);
             ViewBag.dataENGL = JsonConvert.SerializeObject(depManager.dataENGL);
             ViewBag.dataREGR = JsonConvert.SerializeObject(depManager.dataREGR);
+            ViewBag.dataSTORE = JsonConvert.SerializeObject(depManager.dataSTORE);
             ViewBag.dataZOOL = JsonConvert.SerializeObject(depManager.dataZOOL);
             ViewBag.months = JsonConvert.SerializeObject(depManager.datamonths);
             return View("generateChargeBack");
@@ -105,6 +106,7 @@ namespace InventoryWeb.Controllers
             ViewBag.dataCPSC = JsonConvert.SerializeObject(depManager.dataCPSC);
             ViewBag.dataENGL = JsonConvert.SerializeObject(depManager.dataENGL);
             ViewBag.dataREGR = JsonConvert.SerializeObject(depManager.dataREGR);
+            ViewBag.dataSTORE = JsonConvert.SerializeObject(depManager.dataSTORE);
             ViewBag.dataZOOL = JsonConvert.SerializeObject(depManager.dataZOOL);
             ViewBag.months = JsonConvert.SerializeObject(depManager.datamonths);
             return View("ChargeBackReport");
@@ -134,6 +136,7 @@ namespace InventoryWeb.Controllers
             ViewBag.dataCPSC = JsonConvert.SerializeObject(depManager.dataCPSC);
             ViewBag.dataENGL = JsonConvert.SerializeObject(depManager.dataENGL);
             ViewBag.dataREGR = JsonConvert.SerializeObject(depManager.dataREGR);
+            ViewBag.dataSTORE = JsonConvert.SerializeObject(depManager.dataSTORE);
             ViewBag.dataZOOL = JsonConvert.SerializeObject(depManager.dataZOOL);
             ViewBag.months = JsonConvert.SerializeObject(depManager.datamonths);
             return View("trenAnalysisByExpenditure");
@@ -168,13 +171,13 @@ namespace InventoryWeb.Controllers
                 }
             }
             var item1 = list[0];
-            //EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
-            //int requestID = Convert.ToInt32(item1.orderId);
-            //string content = emailBusinessLogic.ApproveOrRejectNotification(requestID);
+            EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
+            int requestID = Convert.ToInt32(item1.orderId);
+            string content = emailBusinessLogic.ApproveOrRejectNotification(requestID);
 
-            //List<string> toAddress = new List<string>();
-            //toAddress.Add("wangxiaoxiaoqiang@gmail.com");
-            //emailBusinessLogic.SendEmail("Team3", content, toAddress);
+            List<string> toAddress = new List<string>();
+            toAddress.Add("wangxiaoxiaoqiang@gmail.com");
+            emailBusinessLogic.SendEmail("Team3", content, toAddress);
             return new JsonResult();
         }
 

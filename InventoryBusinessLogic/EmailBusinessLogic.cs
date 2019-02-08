@@ -90,12 +90,12 @@ namespace InventoryBusinessLogic
             
             return MailBody;
         }
-       //2.郭浩明 Test Successful
-       // EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
-       //string content = emailBusinessLogic.SendRequestNotification(username);
-       //List<string> toAddress = new List<string>();
-       // toAddress.Add("wangxiaoxiaoqiang@gmail.com");
-       //  emailBusinessLogic.SendEmail("Team3", content, toAddress);
+        //2.郭浩明 Test Successful
+        //EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
+        //string content = emailBusinessLogic.SendRequestNotification(username);
+        //List<string> toAddress = new List<string>();
+        //toAddress.Add("wangxiaoxiaoqiang@gmail.com");
+        // emailBusinessLogic.SendEmail("Team3", content, toAddress);
         public string SendRequestNotification(string  userID)
         {
         
@@ -106,12 +106,12 @@ namespace InventoryBusinessLogic
 
             return MailBody;
         }
-      //3.郭浩明 Test Successful
-      //  EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
-      //  string content = emailBusinessLogic.NewVoucherNotification(adjustment.AdjustmentID, adjustment.UserID);
-      // List<string> toAddress = new List<string>();
-      //  toAddress.Add("wangxiaoxiaoqiang@gmail.com");
-      //   emailBusinessLogic.SendEmail("Team3", content, toAddress);
+        //3.郭浩明 Test Successful
+        //EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
+        //string content = emailBusinessLogic.NewVoucherNotification(adjustment.AdjustmentID, adjustment.UserID);
+        //List<string> toAddress = new List<string>();
+        //toAddress.Add("wangxiaoxiaoqiang@gmail.com");
+        // emailBusinessLogic.SendEmail("Team3", content, toAddress);
         public string NewVoucherNotification(int adjustmentID ,string userID )
         {
             
@@ -154,7 +154,7 @@ namespace InventoryBusinessLogic
 
             return MailBody;
         }
-       
+
         //5.RuiXiang Test Successful
         //EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
         //string content = emailBusinessLogic.ChangePointNotification(User.Identity.Name, CollectionPoint);
@@ -176,7 +176,7 @@ namespace InventoryBusinessLogic
         }
         //6. Ronith Test Successful
         //EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
-       // string content = emailBusinessLogic.ChangeDeptHeadNotification(dropdown1);
+        //string content = emailBusinessLogic.ChangeDeptHeadNotification(dropdown1);
 
         //List<string> toAddress = new List<string>();
         //toAddress.Add("wangxiaoxiaoqiang@gmail.com");
@@ -194,35 +194,43 @@ namespace InventoryBusinessLogic
         //EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
         //string content = emailBusinessLogic.ChangeDeptRepNotification(dropdown1);
 
-       // List<string> toAddress = new List<string>();
-       // toAddress.Add("wangxiaoxiaoqiang@gmail.com");
-       //     emailBusinessLogic.SendEmail("Team3", content, toAddress);
+        //List<string> toAddress = new List<string>();
+        //toAddress.Add("wangxiaoxiaoqiang@gmail.com");
+        //    emailBusinessLogic.SendEmail("Team3", content, toAddress);
         public string ChangeDeptRepNotification(string repID)
         {
             AspNetUsers departmentRep = inventory.AspNetUsers.Where(x => x.Id == repID).First();
             AspNetUsers departmentHead = inventory.AspNetUsers.Where(x => x.DepartmentID == departmentRep.DepartmentID).First();
-            
+
             string MailBody = "<p> Dear Store Clerk ,</p>";
-            MailBody += "<p> " + departmentHead.Name+" has changed their department representative to "+departmentRep.Name + ".<br> This is a system generated email.<br>Thank you </ p>";
+            MailBody += "<p> " + departmentHead.Name + " has changed their department representative to " + departmentRep.Name + ".<br> This is a system generated email.<br>Thank you </ p>";
 
             return MailBody;
         }
-        //8.Padma test successful
-       // var item1 = list[0];
-       // EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
-       // int requestID = Convert.ToInt32(item1.orderId);
-       // string content = emailBusinessLogic.ApproveOrRejectNotification(requestID);
 
-     //   List<string> toAddress = new List<string>();
-      //  toAddress.Add("wangxiaoxiaoqiang@gmail.com");
-        //    emailBusinessLogic.SendEmail("Team3", content, toAddress);
+            //8.Padma test successful
+            //var item1 = list[0];
+            //EmailBusinessLogic emailBusinessLogic = new EmailBusinessLogic();
+            //int requestID = Convert.ToInt32(item1.orderId);
+            //string content = emailBusinessLogic.ApproveOrRejectNotification(requestID);
+
+            //List<string> toAddress = new List<string>();
+            //toAddress.Add("wangxiaoxiaoqiang@gmail.com");
+            //emailBusinessLogic.SendEmail("Team3", content, toAddress);
+        
         public string ApproveOrRejectNotification(int requestID)
         {
 
             Request request = inventory.Request.Where(x => x.RequestID == requestID).First();
             AspNetUsers employee = request.AspNetUsers;
             string Mailbody = "<p> Dear " + employee.Name + ",</p>";
-            Mailbody += "<p> Your request has been " + request.RequestStatus + ".<br> This is a system generated email.<br>Thank you </ p>";
+            Mailbody += "<p> Your request has been " + request.RequestStatus;
+            if (request.Remarks != null && request.Remarks != "")
+            {
+                Mailbody += "<p> Reason: " + request.Remarks;
+            }
+
+            Mailbody += ".<br> This is a system generated email.<br>Thank you </ p>";
             return Mailbody;
         }
         //9.Padma test successful

@@ -106,6 +106,7 @@ namespace InventoryWeb.Controllers
             ViewBag.dataCPSC = JsonConvert.SerializeObject(depManager.dataCPSC);
             ViewBag.dataENGL = JsonConvert.SerializeObject(depManager.dataENGL);
             ViewBag.dataREGR = JsonConvert.SerializeObject(depManager.dataREGR);
+            ViewBag.dataSTORE = JsonConvert.SerializeObject(depManager.dataSTORE);
             ViewBag.dataZOOL = JsonConvert.SerializeObject(depManager.dataZOOL);
             ViewBag.months = JsonConvert.SerializeObject(depManager.datamonths);
             return View("generateChargeBack");
@@ -154,6 +155,7 @@ namespace InventoryWeb.Controllers
             ViewBag.dataCPSC = JsonConvert.SerializeObject(depManager.dataCPSC);
             ViewBag.dataENGL = JsonConvert.SerializeObject(depManager.dataENGL);
             ViewBag.dataREGR = JsonConvert.SerializeObject(depManager.dataREGR);
+            ViewBag.dataSTORE = JsonConvert.SerializeObject(depManager.dataSTORE);
             ViewBag.dataZOOL = JsonConvert.SerializeObject(depManager.dataZOOL);
             ViewBag.months = JsonConvert.SerializeObject(depManager.datamonths);
             return View("ChargeBackReport");
@@ -182,6 +184,7 @@ namespace InventoryWeb.Controllers
             ViewBag.dataCPSC = JsonConvert.SerializeObject(depManager.dataCPSC);
             ViewBag.dataENGL = JsonConvert.SerializeObject(depManager.dataENGL);
             ViewBag.dataREGR = JsonConvert.SerializeObject(depManager.dataREGR);
+            ViewBag.dataSTORE = JsonConvert.SerializeObject(depManager.dataSTORE);
             ViewBag.dataZOOL = JsonConvert.SerializeObject(depManager.dataZOOL);
             ViewBag.months = JsonConvert.SerializeObject(depManager.datamonths);
             return View("trenAnalysisByExpenditure");

@@ -107,9 +107,11 @@ function confirm() {
                     $('#attentionTo').val(json.attentionTo);
                     $('#delieverTo').val("Logic University");
                     var now = new Date();
-                    now.setDate(now.getDate() + 3);
-                    while (now.getDay() == '6' || now.getDay() == '0') {
+                    for (var i = 0; i < 3; i++) {
                         now.setDate(now.getDate() + 1);
+                        while (now.getDay() == '6' || now.getDay() == '0') {
+                            now.setDate(now.getDate() + 1);
+                        }
                     }
                     var day = ("0" + now.getDate()).slice(-2);
                     var month = ("0" + (now.getMonth() + 1)).slice(-2);

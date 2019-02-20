@@ -4,3 +4,6 @@
 <p>Login username:1</p>
 <p>Login password:123456</p>
 <img src="https://github.com/GuoHM/Store_Inventory/blob/master/InventoryWeb/Images/demo/demo1.png?raw=true"/>
+<img src="https://github.com/GuoHM/Store_Inventory/blob/master/InventoryWeb/Images/demo/demo2.png?raw=true"/>
+<img src="https://github.com/GuoHM/Store_Inventory/blob/master/InventoryWeb/Images/demo/demo3.png?raw=true"/>
+<img src="https://github.com/GuoHM/Store_Inventory/blob/master/InventoryWeb/Images/demo/demo4.png?raw=true"/>

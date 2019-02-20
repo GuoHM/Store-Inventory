@@ -59,7 +59,7 @@ namespace InventoryBusinessLogic
             PurchaseOrder purchaseOrder = inventory.PurchaseOrder.Where(x => x.PurchaseOrderID == orderID).First();
             List<PurchaseItem> purchaseItems = inventory.PurchaseItem.Where(x => x.PurchaseOrderID == orderID).ToList();
             string MailBody = "<p> Dear "+purchaseOrder.Supplier.ContactName+",</p>";
-            MailBody += "<p>Logic University has sent a purchase order by "+purchaseOrder.AspNetUsers.Name+". <br> <b>OrderID: " + purchaseOrder.PurchaseOrderID+"<br> Expected Date:  "+ purchaseOrder.ExpectedDate+ ".</b><br> Please find details below. <br>";
+            MailBody += "<p>Logic University has sent a purchase order by "+purchaseOrder.AspNetUsers.UserName+". <br> <b>OrderID: " + purchaseOrder.PurchaseOrderID+"<br> Expected Date:  "+ purchaseOrder.ExpectedDate+ ".</b><br> Please find details below. <br>";
             MailBody += "<div>";
             MailBody += "<table border='1'>";
             MailBody += "<tr>";
@@ -101,8 +101,8 @@ namespace InventoryBusinessLogic
         
             AspNetUsers employee = inventory.AspNetUsers.Where(x => x.Id == userID).First();
             AspNetUsers departmentHead = inventory.AspNetUsers.Where(x => x.DepartmentID == employee.DepartmentID).First();
-            string MailBody = "<p> Dear " + departmentHead.Name + ",</p>";
-            MailBody += "<p> Order request from "+employee.Name+" is awaiting your action.<br> This is a system generated email.<br>Thank you </ p>";
+            string MailBody = "<p> Dear " + departmentHead.UserName + ",</p>";
+            MailBody += "<p> Order request from "+employee.UserName+" is awaiting your action.<br> This is a system generated email.<br>Thank you </ p>";
 
             return MailBody;
         }
@@ -119,8 +119,8 @@ namespace InventoryBusinessLogic
             AspNetUsers employee = inventory.AspNetUsers.Where(x => x.Id == userID).First();
              Adjustment adjustment = inventory.Adjustment.Where(x => x.AdjustmentID == adjustmentID).First();
             AspNetUsers departmentHead = inventory.AspNetUsers.Where(x => x.DepartmentID == employee.DepartmentID).First();
-            string MailBody = "<p> Dear " + departmentHead.Name + ",</p>";
-            MailBody += "<p> Adjustment voucher request: "+adjustment.AdjustmentID+" from " + employee.Name + " is awaiting your action.<br> This is a system generated email.<br>Thank you </ p>";
+            string MailBody = "<p> Dear " + departmentHead.UserName + ",</p>";
+            MailBody += "<p> Adjustment voucher request: "+adjustment.AdjustmentID+" from " + employee.UserName + " is awaiting your action.<br> This is a system generated email.<br>Thank you </ p>";
 
             return MailBody;
         }
@@ -170,7 +170,7 @@ namespace InventoryBusinessLogic
 
  
             string MailBody = "<p> Dear Store Clerk,</p>";
-            MailBody += "<p> "+departmentRep.Name+" from "+ department.DepartmentName+" has requested to change collection point to "+newPoint+".<br> This is a system generated email.<br>Thank you </ p>";
+            MailBody += "<p> "+departmentRep.UserName+" from "+ department.DepartmentName+" has requested to change collection point to "+newPoint+".<br> This is a system generated email.<br>Thank you </ p>";
 
             return MailBody;
         }
@@ -186,7 +186,7 @@ namespace InventoryBusinessLogic
             
             AspNetUsers employee = inventory.AspNetUsers.Where(x => x.Id == employeeID).First();
             Department department = inventory.Department.Where(x => x.DepartmentID == employee.DepartmentID).First();
-            string MailBody = "<p> Dear " + employee.Name + ",</p>";
+            string MailBody = "<p> Dear " + employee.UserName + ",</p>";
             MailBody += "<p> The department head is authorising you from "+ department.DepartmentHeadStartDate+" to "+department.DepartmentHeadEndDate+" for department head duties.<br> This is a system generated email.<br> Thank you </ p > ";
             return MailBody;
         }
@@ -203,7 +203,7 @@ namespace InventoryBusinessLogic
             AspNetUsers departmentHead = inventory.AspNetUsers.Where(x => x.DepartmentID == departmentRep.DepartmentID).First();
 
             string MailBody = "<p> Dear Store Clerk ,</p>";
-            MailBody += "<p> " + departmentHead.Name + " has changed their department representative to " + departmentRep.Name + ".<br> This is a system generated email.<br>Thank you </ p>";
+            MailBody += "<p> " + departmentHead.UserName + " has changed their department representative to " + departmentRep.UserName + ".<br> This is a system generated email.<br>Thank you </ p>";
 
             return MailBody;
         }
@@ -223,7 +223,7 @@ namespace InventoryBusinessLogic
 
             Request request = inventory.Request.Where(x => x.RequestID == requestID).First();
             AspNetUsers employee = request.AspNetUsers;
-            string Mailbody = "<p> Dear " + employee.Name + ",</p>";
+            string Mailbody = "<p> Dear " + employee.UserName + ",</p>";
             Mailbody += "<p> Your request has been " + request.RequestStatus;
             if (request.Remarks != null && request.Remarks != "")
             {
@@ -238,7 +238,7 @@ namespace InventoryBusinessLogic
         {
             Department department = inventory.Department.Where(x => x.DepartmentID == departmentId).First();
             AspNetUsers departmentRep = inventory.AspNetUsers.Where(x => x.DepartmentID == departmentId).First();
-            string Mailbody = "<p> Dear " + departmentRep.Name + ",</p>";
+            string Mailbody = "<p> Dear " + departmentRep.UserName + ",</p>";
             Mailbody += "<p> Your " +department.DepartmentName+" items are ready for collection.<br> This is a system generated email.<br>Thank you </ p>";
             return Mailbody;
         }

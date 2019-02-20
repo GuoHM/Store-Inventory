@@ -369,6 +369,10 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\demo\demo1.png" />
+    <Content Include="Images\demo\demo2.png" />
+    <Content Include="Images\demo\demo3.png" />
+    <Content Include="Images\demo\demo4.png" />
     <Content Include="Images\logo.jpg" />
     <Content Include="Scripts\bootstrap-table-export.js" />
     <Content Include="Scripts\bootstrap-table.js" />
